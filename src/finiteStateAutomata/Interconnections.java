@@ -1,0 +1,42 @@
+package finiteStateAutomata;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Interconnections {
+	private HashSet<Transition> in;
+	private HashSet<Transition> out;
+	
+	public Interconnections() {
+		in = new HashSet<Transition>();
+		out = new HashSet<Transition>();
+	}
+	
+	public boolean newIn(Transition t) {
+		if(!in.contains(t))
+			return in.add(t);
+		return false;
+	}
+	
+	public boolean newOut(Transition t) {
+		if(!out.contains(t))
+			return out.add(t);
+		return false;
+	}
+	
+	public boolean remove(Transition t) {
+		return in.remove(t) || out.remove(t);
+	} 
+	
+	public boolean contains(Transition t) {
+		return in.contains(t) || out.contains(t);
+	}
+	
+	public Set<Transition> to(){
+		return in;
+	}
+	
+	public Set<Transition> from(){
+		return out;
+	}
+}

@@ -1,13 +1,15 @@
-package automaStatiFiniti;
+package finiteStateAutomata;
 
-public class Stato {
+public class State {
 	private String id;
 	private boolean diAccettazione;
 	
-	public Stato(String id) {
+	public State(String id) {
 		this.id = id;
 		this.diAccettazione = false;
 	}
+	
+	public String id() {return id;}
 	
 	public boolean accettazione() {
 		return this.diAccettazione;
@@ -24,7 +26,7 @@ public class Stato {
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		final Stato tmp = (Stato) obj;
+		final State tmp = (State) obj;
 		return this.id.equalsIgnoreCase(tmp.id);
 	}
 }

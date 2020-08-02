@@ -1,15 +1,15 @@
-package automaStatiFiniti;
+package finiteStateAutomata;
 
 import java.util.Objects;
 
-public class Transizione{
+public class Transition{
 	private static final String toStringFormat = "%s: %s--%s->%s";
 	private String id;
-	private Stato sorgente;
-	private Stato destinazione;
+	private State sorgente;
+	private State destinazione;
 	private String regex;
 	
-	public Transizione(String id, Stato sorg, Stato dest, String regex) {
+	public Transition(String id, State sorg, State dest, String regex) {
 		this.id = id;
 		this.sorgente = sorg;
 		this.destinazione = dest;
@@ -17,8 +17,8 @@ public class Transizione{
 	}
 	
 	public String id() {return id;}
-	public Stato getDa() {return sorgente;}
-	public Stato getA() {return destinazione;}
+	public State getDa() {return sorgente;}
+	public State getA() {return destinazione;}
 	public String getRegex() {return regex;}
 	public boolean setRegex(String newRegex) {
 		this.regex = newRegex;
@@ -30,9 +30,9 @@ public class Transizione{
 	}
 	
 	public boolean equals(Object obj) {
-		if(obj==null || !Transizione.class.isAssignableFrom(obj.getClass()))
+		if(obj==null || !Transition.class.isAssignableFrom(obj.getClass()))
 			return false;
-		final Transizione tmp = (Transizione) obj;
+		final Transition tmp = (Transition) obj;
 		return this.id.equalsIgnoreCase(tmp.id);
 	}
 	
