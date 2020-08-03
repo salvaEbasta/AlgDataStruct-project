@@ -11,11 +11,11 @@ public class State {
 	
 	public String id() {return id;}
 	
-	public boolean accettazione() {
+	public boolean isAccepting() {
 		return this.diAccettazione;
 	}
 	
-	public void setAccettazione(boolean accettazione) {
+	public void setAccepting(boolean accettazione) {
 		this.diAccettazione = accettazione;
 	}
 	

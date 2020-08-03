@@ -17,9 +17,9 @@ class TestFiniteStateMachine {
 		assertTrue(C1.id()=="C1");
 		
 		State _10 = new State("10");
-		_10.setAccettazione(true);
+		_10.setAccepting(true);
 		State _11 = new State("11");
-		_11.setAccettazione(true);
+		_11.setAccepting(true);
 		C1.inserisci(_11);
 		C1.inserisci(_10);
 		C1.setIniziale(_10);

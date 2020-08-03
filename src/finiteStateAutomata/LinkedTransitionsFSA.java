@@ -43,4 +43,14 @@ public class LinkedTransitionsFSA implements FiniteStateMachine{
 	public State actualState() {
 		return actual;
 	}
+	
+	@Override
+	public Set<Transition> to(State s){
+		return structure.get(s).to();
+	}
+	
+	@Override
+	public Set<Transition> from(State s){
+		return structure.get(s).from();
+	}
 }

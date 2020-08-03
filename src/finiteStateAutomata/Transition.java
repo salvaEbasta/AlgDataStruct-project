@@ -17,12 +17,21 @@ public class Transition{
 	}
 	
 	public String id() {return id;}
-	public State getDa() {return sorgente;}
-	public State getA() {return destinazione;}
-	public String getRegex() {return regex;}
+	public State source() {return sorgente;}
+	public State sink() {return destinazione;}
+	public String regex() {return regex;}
 	public boolean setRegex(String newRegex) {
 		this.regex = newRegex;
 		return true;
+	}
+	
+	public boolean isAuto() {
+		return sorgente.equals(destinazione);
+	}
+	
+	public boolean isParallel(Transition t) {
+		return sorgente.equals(t.sorgente) && 
+				destinazione.equals(t.destinazione);
 	}
 	
 	public int hashCode() {

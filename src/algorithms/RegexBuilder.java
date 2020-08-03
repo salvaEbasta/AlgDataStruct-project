@@ -1,5 +1,9 @@
 package algorithms;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
 import finiteStateAutomata.FiniteStateMachine;
 import finiteStateAutomata.State;
 import finiteStateAutomata.Transition;
@@ -8,46 +12,75 @@ public class RegexBuilder {
 	/**
 	 * @param asf
 	 * @return
-	 * Esecuzione:
-	 * 
-	 * if entra una transizione nello stato iniziale B_0
-	 * then:
-	 * 		crea nuovo stato iniziale n_0 e una eps-transizione da n_0 a B_0
-	 * else:
-	 * 		n_0 è stato iniziale
-	 * 
-	 * if esistono più stati di accettazione OR esiste una transizione uscente dall'unico stato di accettazione
-	 * then:
-	 * 		crea lo stato finale n_q
-	 * 		for ogni stato di accettazione B_q:
-	 * 			crea eps-transizione da B_q a n_q
-	 * else:
-	 * 		indicare come stato finale n_q l'unico stato di accettazione
-	 * 
-	 * N è l'ASF così ottenuto
-	 * 
-	 * while N ha più di una transizione
-	 * do:
-	 * 		if esiste una sequenza di transizioni(con num transizioni >=2) dove ogni stato non ha altre transizioni entranti o uscenti
-	 * 		then:
-	 * 			sostituisci la sequenza con una transizione che vada dal primo all'ultimo stato, con regex pari alla concatenazione delle regex
-	 * 		else if esiste un insieme di transizioni parallele uscenti dallo stato n e entranti in n^1
-	 * 		then:
-	 * 			sostituisci le transizioni con una transizione da n a n^1 con regex pari all'alternativa di ogni singola regex delle transizioni alternative
-	 * 		else:
-	 * 			sia n uno stato diverso da n_0 e diverso da n_q
-	 * 			for ogni transizione entrante in n, con origine n^1 diversa da n e regex r^1:
-	 * 				for ogni transizione uscente da n, con destinazione n^2 diversa da n e regex r^2:
-	 * 					if esiste un'autotransizione su n con regex r
-	 * 					then:
-	 * 						inserisci transizione da n^1 a n^2 con regex r^1(r)*r^2
-	 * 					else:
-	 * 						inserisci transizione da n^1 a n^2 con regex r^1r^2
-	 * 			rimuovi n e tutte le transizioni entranti e uscenti da n
-	 * return R, regex dell'unica transizione da n_0 a n_q
-	 * 
 	 */
-	public static String valuta(FiniteStateMachine asf) {
-		return "";
+	public static String compute(FiniteStateMachine N) {
+		//Initialization of N
+		State n0 = null;
+		if(N.to(N.initialState()).size() > 0) {
+			n0 = new State("n0");
+			N.insert(n0);
+			N.add(new Transition("n0-b0", n0, N.initialState(), ""));
+			N.setInitial(n0);
+		} else {
+			n0 = N.initialState();
+		}
+		State nq = new State("nq");
+		N.insert(nq);
+		N.acceptingStates().forEach((s)->N.add(new Transition(s.id()+"-"+nq.id(), s, nq, "")));
+		
+		HashMap<String, LinkedList<Transition>> markings = new HashMap<String, LinkedList<Transition>>();
+		
+		//main loop
+		while(N.states().size() > 2 || markings.values().stream().anyMatch(l->l.size()>0)) {
+			//sequence of transitions
+			List<Transition> sequence = TransitionFinder.oneWayPath(N);
+			if(sequence.size() > 0) {
+				Transition last = sequence.get(sequence.size()-1);
+				StringBuilder sb = new StringBuilder();
+				sequence.forEach(t->{
+					N.remove(t);
+					sb.append(t.regex());
+				});
+				State source = sequence.get(0).source();
+				State sink = last.sink();
+				Transition tmp = new Transition(source.id()+"-"+sink.id()+"_"+N.states().size(),
+						source,
+						sink,
+						sb.toString());
+				N.add(tmp);
+				if(last.sink().equals(nq) || last.source().isAccepting()) {
+					markings.put(last.source().id(), new LinkedList<Transition>());
+					markings.get(last.source().id()).add(tmp);
+				}
+			} else {
+				//parallel transitions
+				List<Transition> parallelT = findParallelTransitions(N);
+				if(parallelT.size() > 0) {
+				} else {
+					//parallel transitions with same mark
+					List<Transition> parallelSameMark = parellelSameMark(N, markings);
+					if(parallelSameMark.size() > 0) {
+						
+					} else {
+						
+					}
+				}
+				
+			} 
+		}
+		
+		//output building
+		StringBuilder sb = new StringBuilder("");
+		N.transitions().forEach(t->sb.append(t.regex()+"|"));
+		sb.deleteCharAt(sb.length()-1);
+		return sb.toString();
+	}
+	
+	private static List<Transition> findParallelTransitions(FiniteStateMachine N){
+		return null;
+	}
+	
+	private static List<Transition> parellelSameMark(FiniteStateMachine N, HashMap<String, LinkedList<Transition>> markings){
+		return null;
 	}
 }
