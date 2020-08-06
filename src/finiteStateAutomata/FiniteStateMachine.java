@@ -3,6 +3,7 @@ package finiteStateAutomata;
 import java.util.Set;
 
 public interface FiniteStateMachine {
+	public String id();
 	public Set<Transition> transitions();
 	public Set<State> states();
 	public Set<State> acceptingStates();
@@ -14,4 +15,7 @@ public interface FiniteStateMachine {
 	public boolean insert(State s);
 	public boolean setInitial(State s);
 	public boolean remove(Transition t);
+	public boolean remove(State s);
+	public boolean hasAuto(State s);
+	public Transition getAuto(State s);
 }

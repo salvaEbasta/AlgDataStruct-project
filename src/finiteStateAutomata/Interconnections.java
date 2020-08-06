@@ -39,4 +39,24 @@ public class Interconnections {
 	public Set<Transition> from(){
 		return out;
 	}
+	
+	public boolean hasAuto() {
+		HashSet<Transition> tmp = new HashSet<Transition>(out);
+		tmp.retainAll(in);
+		return !tmp.isEmpty();
+	}
+	
+	public Set<Transition> getAuto(){
+		HashSet<Transition> tmp = new HashSet<Transition>(out);
+		tmp.retainAll(in);
+		return tmp;
+	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(out.toString());
+		sb.deleteCharAt(0);
+		sb.insert(0, in.toString().replace("]", ", "));
+		return sb.toString();
+	}
 }

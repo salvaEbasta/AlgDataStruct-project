@@ -19,6 +19,10 @@ public class State {
 		this.diAccettazione = accettazione;
 	}
 	
+	public String toString() {
+		return id+((diAccettazione)?"||":"");
+	}
+	
 	public int hashCode() {
 		return id.hashCode();
 	}

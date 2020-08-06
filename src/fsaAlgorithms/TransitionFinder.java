@@ -1,6 +1,5 @@
-package algorithms;
+package fsaAlgorithms;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -78,28 +77,30 @@ public class TransitionFinder {
 		}
 	}
 	
-	public static List<Transition> parallelTransitions(FiniteStateMachine N){
-		List<Transition> parallels = new LinkedList<Transition>();
+	public static LinkedList<Transition> parallelTransitions(FiniteStateMachine N){
+		LinkedList<Transition> parallels = new LinkedList<Transition>();
 		for(State s : N.states()) {
-			if(findParallels(N.to(s), parallels).size() > 1 || findParallels(N.from(s), parallels).size() > 1)
+			if(findParallels(N.to(s), parallels).size() > 1)
+				break;
+			else if(findParallels(N.from(s), parallels).size() > 1)
 				break;
 		}
 		return parallels;
 	}
 	
-	public static List<Transition> findParallels(Set<Transition> transitions, List<Transition> parallels){
+	private static LinkedList<Transition> findParallels(Set<Transition> transitions, LinkedList<Transition> parallels){
 		parallels.clear();
-		Iterator<Transition> iter = transitions.iterator();
-		while(iter.hasNext()) {
-			Transition t = iter.next();
-			parallels.add(t);
-			List<Transition> tmp = new LinkedList<Transition>(transitions);
-			for(Transition t1:tmp)
-				if(t1.isParallel(t))
-					parallels.add(t1);
-			if(parallels.size() > 1)
+		LinkedList<Transition> queue = new LinkedList<Transition>(transitions);
+		while(queue.size() > 1) {
+			Transition tmp = queue.pop();
+			queue.forEach(t->{
+				if(t.isParallel(tmp))
+					parallels.add(t);
+			});
+			if(parallels.size() > 0) {
+				parallels.add(tmp);
 				break;
-			else
+			}else
 				parallels.clear();
 		}
 		return parallels;
