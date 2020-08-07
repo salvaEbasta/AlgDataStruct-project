@@ -1,12 +1,12 @@
-package fsaAlgorithms;
+package fsa_algorithms;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import finiteStateAutomata.FiniteStateMachine;
-import finiteStateAutomata.State;
-import finiteStateAutomata.Transition;
+import finite_state_automata.FiniteStateMachine;
+import finite_state_automata.State;
+import finite_state_automata.Transition;
 
 public class TransitionFinder {
 	
@@ -94,7 +94,7 @@ public class TransitionFinder {
 		while(queue.size() > 1) {
 			Transition tmp = queue.pop();
 			queue.forEach(t->{
-				if(t.isParallel(tmp))
+				if(t.isParallelTo(tmp))
 					parallels.add(t);
 			});
 			if(parallels.size() > 0) {

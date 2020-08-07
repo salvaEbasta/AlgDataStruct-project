@@ -1,4 +1,4 @@
-package finiteStateAutomata;
+package finite_state_automata;
 
 import java.util.HashSet;
 import java.util.Set;

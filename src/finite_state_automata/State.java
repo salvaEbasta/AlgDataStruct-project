@@ -1,4 +1,4 @@
-package finiteStateAutomata;
+package finite_state_automata;
 
 public class State {
 	private String id;

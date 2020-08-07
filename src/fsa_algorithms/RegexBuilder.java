@@ -1,4 +1,4 @@
-package fsaAlgorithms;
+package fsa_algorithms;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import finiteStateAutomata.FiniteStateMachine;
-import finiteStateAutomata.State;
-import finiteStateAutomata.Transition;
+import finite_state_automata.FiniteStateMachine;
+import finite_state_automata.State;
+import finite_state_automata.Transition;
 
 public class RegexBuilder {
 	
 	
 	/**
-	 * @param asf
+	 * @param N
 	 * @return
 	 */
 	public static String compute(FiniteStateMachine N) {
@@ -42,12 +42,9 @@ public class RegexBuilder {
 		
 		//main loop
 		while(N.states().size() > 2 || markings.values().stream().anyMatch(l->l.size()>0)) {
-			boolean handled = false;
 			//sequence of transitions
 			List<Transition> sequence = TransitionFinder.oneWayPath(N);
 			if(sequence.size() > 0) {
-				handled = true;
-				
 				Transition last = sequence.get(sequence.size()-1);
 				StringBuilder sb = new StringBuilder();
 				sequence.forEach(t->{
@@ -91,7 +88,7 @@ public class RegexBuilder {
 						LinkedList<Transition> marked = new LinkedList<Transition>(markings.get(key));
 						while(marked.size() > 1) {
 							Transition t = marked.pop();
-							marked.forEach(t1->{if(t1.isParallel(t)) markedParallels.add(t1);});
+							marked.forEach(t1->{if(t1.isParallelTo(t)) markedParallels.add(t1);});
 							if(markedParallels.size() > 1) {
 								markedParallels.add(t);
 								break;

@@ -1,4 +1,4 @@
-package finiteStateAutomata;
+package finite_state_automata;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class Transition{
 		return sorgente.equals(destinazione);
 	}
 	
-	public boolean isParallel(Transition t) {
+	public boolean isParallelTo(Transition t) {
 		return sorgente.equals(t.sorgente) && 
 				destinazione.equals(t.destinazione);
 	}

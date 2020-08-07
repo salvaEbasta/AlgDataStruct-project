@@ -6,10 +6,10 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import finiteStateAutomata.FiniteStateMachine;
-import finiteStateAutomata.LinkedTransitionsFSA;
-import finiteStateAutomata.State;
-import finiteStateAutomata.Transition;
+import finite_state_automata.FiniteStateMachine;
+import finite_state_automata.LinkedTransitionsFSA;
+import finite_state_automata.State;
+import finite_state_automata.Transition;
 
 class TestFiniteStateMachine {
 	
