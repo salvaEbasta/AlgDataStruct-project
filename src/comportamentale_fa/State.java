@@ -8,4 +8,6 @@ public class State {
 	public State(String id) {
 		this.id = id;
 	}
+	
+	public String id() {return id;}
 }
