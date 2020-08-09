@@ -8,6 +8,7 @@ public class Link {
 	private Event event;
 	
 	public Link(String id, ComportamentaleFA source, ComportamentaleFA destination) {
+		this.id = id;
 		this.source = source;
 		this.destination = destination;
 	}
@@ -18,6 +19,10 @@ public class Link {
 	
 	public void setEvent(Event event) {
 		this.event = event;
+	}	
+
+	public void setEmptyEvent() {
+		this.event = null;
 	}
 		
 	public String eventString() {

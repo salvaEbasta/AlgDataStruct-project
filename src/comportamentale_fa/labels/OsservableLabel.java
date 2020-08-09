@@ -5,5 +5,9 @@ public class OsservableLabel extends Label{
 	public OsservableLabel(String label) {
 		super("Ω", label);
 	}
+	
+	public OsservableLabel() {
+		super("Ω");
+	}
 
 }

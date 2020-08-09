@@ -61,12 +61,16 @@ public class Transition {
 		return out.isEmpty();
 	}
 	
+	public HashMap<Event, Link> getOutputEvents() {
+		return out;
+	}
+	
 	public boolean hasOsservableLabel() {
-		return omega != null;
+		return !omega.isEmpty();
 	}
 	
 	public boolean hasRelevantLabel() {
-		return f != null;
+		return !f.isEmpty();
 	}
 	
 	@Override
@@ -82,14 +86,15 @@ public class Transition {
 		if(!isInputEventEmpty())
 			sb.append(String.format("%s(%s))", in.id(), inputLink.id()));
 		if(!isOutputEventsEmpty()) {
-			Event[] keySet = (Event[]) out.keySet().toArray();
-			sb.append(String.format("/{%s(%s)", keySet[0].id(), out.get(keySet[0])));
+			Event[] keySet = new Event[out.size()];
+			keySet = out.keySet().toArray(keySet);
+			sb.append(String.format("/{%s(%s)", keySet[0].id(), out.get(keySet[0]).id()));
 			for(int i=1; i<keySet.length; i++) {
-				sb.append(String.format(",%s(%s)", keySet[i], out.get(keySet[i])));
+				sb.append(String.format(",%s(%s)", keySet[i], out.get(keySet[i]).id()));
 			}
 			sb.append("}");			
 		}
-		sb.append(String.format("[%s - %s]", omega == null? "ε" : omega, f == null? "ε" : f)); //creare costante per epsilon
+		sb.append(String.format("[%s - %s]", omega, f)); //creare costante per epsilon
 		return sb.toString();
 	}
 
