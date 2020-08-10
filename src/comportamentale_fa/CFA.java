@@ -54,6 +54,15 @@ public class CFA implements ComportamentaleFA{
 	}
 	
 	@Override
+	public boolean transitionTo(State s) {
+		if (structure.containsKey(s)) {
+			actual = s;
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
 	public Set<Transition> from(State s) {
 		if (structure.containsKey(s))
 			return structure.get(s).from();
@@ -104,6 +113,12 @@ public class CFA implements ComportamentaleFA{
 		StringBuilder sb = new StringBuilder();
 		sb.append(structure.toString());
 		return sb.toString();
+	}
+	
+	@Override
+	public boolean equals(Object otherCFA) {
+		CFA cfa = (CFA) otherCFA;
+		return this.id.equals(cfa.id);
 	}
 
 }

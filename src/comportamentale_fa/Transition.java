@@ -53,6 +53,14 @@ public class Transition {
 	public State source() {return source;}
 	public State sink() {return destination;}
 	
+	public Link getInputLink() {
+		return inputLink;
+	}
+	
+	public Event getInputEvent() {
+		return in;
+	}
+	
 	public boolean isInputEventEmpty() {
 		return in == null;
 	}
@@ -76,7 +84,7 @@ public class Transition {
 	@Override
 	public boolean equals(Object otherTransition) {
 		Transition other = (Transition) otherTransition;
-		return source.equals(other.source) && destination.equals(other.source) &&
+		return id.equals(other.id) && source.equals(other.source) && destination.equals(other.source) &&
 				in.equals(other.in) && out.equals(other.out);		
 	}
 	

@@ -1,8 +1,12 @@
 package test.comportamentale_fa;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,9 +22,10 @@ import comportamentale_fa.labels.RelevantLabel;
 
 class TestCFA {
 
-	@Test
-	void test() {
-		
+	private Transition t3a;
+	private Transition t2a;
+	
+	ComportamentaleFANet initialize() {
 		//AUTOMATA C2
 		ComportamentaleFA c2 = new CFA("C2");
 		State s20 = new State("20");
@@ -46,10 +51,10 @@ class TestCFA {
 		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
 		out2.put(e2, l2);
 		
-		Transition t2a = new Transition("t2a", s20, s21, e2, l2, out, new OsservableLabel("o2"), new RelevantLabel());
+		t2a = new Transition("t2a", s20, s21, e2, l2, out, new OsservableLabel("o2"), new RelevantLabel());
 		Transition t2b = new Transition("t2b", s21, s20, out, new OsservableLabel(), new RelevantLabel("r"));
 		
-		Transition t3a = new Transition("t3a", s30, s31, out2, new OsservableLabel("o3"), new RelevantLabel());
+		t3a = new Transition("t3a", s30, s31, out2, new OsservableLabel("o3"), new RelevantLabel());
 		Transition t3b = new Transition("t3b", s31, s30, e3, l3, new OsservableLabel(), new RelevantLabel());
 		Transition t3c = new Transition("t3c", s31, s31, e3, l3, new OsservableLabel(), new RelevantLabel("f"));
 		
@@ -66,18 +71,31 @@ class TestCFA {
 		c3.add(t3b);
 		c3.add(t3c);
 		
-		ArrayList<ComportamentaleFA> listCFA = new ArrayList<ComportamentaleFA>();
-		listCFA.add(c2); listCFA.add(c3);
+		
 		ArrayList<Link> listLink = new ArrayList<Link>();
-		listLink.add(l2); listLink.add(l3);
+		 listLink.add(l2); listLink.add(l3);
 		
-		ComportamentaleFANet net = new ComportamentaleFANet(listCFA, listLink);
-		System.out.println(net.status());
-		System.out.println(net.transition(t3a));
-		System.out.println(net.transition(t2a));
-		System.out.println(net.transition(t3c));
-
+		return new ComportamentaleFANet(listLink);
+	}
+	
+	@Test
+	void spazioComportamentale() {		
+		ComportamentaleFANet net = initialize();
+		System.out.println(net.spazioComportamentale());
 		
+		
+	}
+	
+	@Test
+	void enabledTransitions() {
+		ComportamentaleFANet net = initialize();
+		Set<Transition> enabledT = new HashSet<Transition>();
+		enabledT.add(t3a);
+		assertTrue(net.enabledTransitions().equals(enabledT));
+		net.transitionTo(t3a);
+		enabledT.remove(t3a);
+		enabledT.add(t2a);
+		assertTrue(net.enabledTransitions().equals(enabledT));
 	}
 
 }

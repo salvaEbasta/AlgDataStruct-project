@@ -13,8 +13,20 @@ public class Link {
 		this.destination = destination;
 	}
 	
+	public ComportamentaleFA getSource() {
+		return source;
+	}
+	
+	public ComportamentaleFA getDestination() {
+		return destination;
+	}
+	
 	public boolean hasEvent(){
 		return event != null;
+	}
+	
+	public Event getEvent() {
+		return event;
 	}
 	
 	public void setEvent(Event event) {
@@ -31,6 +43,10 @@ public class Link {
 	
 	public String id() {return id;}
 	
-	
+	@Override
+	public boolean equals(Object otherLink) {
+		Link link = (Link) otherLink;
+		return this.id.equals(link.id);
+	}
 	
 }
