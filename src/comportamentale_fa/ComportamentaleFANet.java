@@ -40,15 +40,21 @@ public class ComportamentaleFANet {
 	
 	private void buildSpazio(Set<Transition> enabledTransitions) {
 		status.addOutputTransitions(enabledTransitions);
-		ArrayList<State> actualStates = net.stream().map(cfa -> cfa.actualState()).collect(Collectors.toCollection(ArrayList::new));
-		ArrayList<Event> actualEvents = links.stream().map(link -> link.getEvent()).collect(Collectors.toCollection(ArrayList::new));
-		for(Transition transition: enabledTransitions) {
-			scatto(actualStates, actualEvents, transition); 
-		}		
+		if(enabledTransitions.size()>1) {
+			SpaceStatus stats = status.getCurrentStatus();
+			for(Transition transition: enabledTransitions) {
+				if(transition.id().equals("t3c")){
+					System.out.println();
+				}
+				scatto(stats, transition, true); 
+			}		
+		} else if (enabledTransitions.size()==1)
+			scatto(null, enabledTransitions.iterator().next(), false);
 	}
 	
-	private void scatto(ArrayList<State> actualStates, ArrayList<Event> actualEvents, Transition transition) {
-		restoreStatus(actualStates, actualEvents);
+	private void scatto(SpaceStatus stats, Transition transition, boolean doppio) {
+		if(doppio)
+			restoreStatus(stats);
 		transitionTo(transition);	
 		boolean added = status.add(net.stream().map(cfa -> cfa.actualState()).collect(Collectors .toCollection(ArrayList::new)),
 				links.stream().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new)), transition); 
@@ -56,12 +62,12 @@ public class ComportamentaleFANet {
 			buildSpazio(enabledTransitions());	
 	}
 	
-	private void restoreStatus(ArrayList<State> actualStates, ArrayList<Event> actualEvents) {
-		for(int i=0; i<actualStates.size();i++) {
-			net.get(i).transitionTo(actualStates.get(i));
+	private void restoreStatus(SpaceStatus stats) {
+		for(int i=0; i<stats.getStates().size();i++) {
+			net.get(i).transitionTo(stats.getStates().get(i));
 		}
-		for(int i=0; i<actualEvents.size();i++) {
-			links.get(i).setEvent(actualEvents.get(i));
+		for(int i=0; i<stats.getEvents().size();i++) {
+			links.get(i).setEvent(stats.getEvents().get(i));
 		}
 	}
 	
@@ -100,7 +106,7 @@ public class ComportamentaleFANet {
 				if(!transition.isInputEventEmpty()) {
 					Link link = links.get(links.indexOf(transition.getInputLink()));
 					Event transitionEvent = transition.getInputEvent();
-					if(link.getEvent() == null || !transitionEvent.equals(link.getEvent()))
+					if(!transitionEvent.equals(link.getEvent()))
 						enabled = false;
 				}
 				if(!transition.isOutputEventsEmpty()) {

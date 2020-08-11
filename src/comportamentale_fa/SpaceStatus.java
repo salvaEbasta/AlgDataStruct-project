@@ -1,7 +1,6 @@
 package comportamentale_fa;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +23,7 @@ public class SpaceStatus {
 	
 	public boolean isFinalState() {
 		for(Event event: linkEvents) {
-			if(event != null)
+			if(!event.isEmpty())
 				return false;
 		}
 		return true;
@@ -46,7 +45,7 @@ public class SpaceStatus {
 		}
 		sb.append(" |");
 		for(Event event: linkEvents) {
-			sb.append(" ").append(event == null? "ε" : event.id());
+			sb.append(" ").append(event.id());
 		}
 		sb.append(isFinalState()? "\t[Stato Finale]": "");
 		if(!in.isEmpty()) {
@@ -64,12 +63,24 @@ public class SpaceStatus {
 		return sb.toString();
 	}
 	
+	public ArrayList<State> getStates() {
+		return actualStates;
+	}
+	
+	public ArrayList<Event> getEvents() {
+		return linkEvents;
+	}
+	
 	public boolean equals(Object otherStatus) {
 		SpaceStatus other = (SpaceStatus) otherStatus;
-		ArrayList<State> copyActualStates = new ArrayList<State>(actualStates);
-		ArrayList<Event> copyLinkEvents = new ArrayList<Event>(linkEvents);
-		copyActualStates.removeAll(other.actualStates);
-		copyLinkEvents.removeAll(other.linkEvents);
-		return copyActualStates.isEmpty() && copyLinkEvents.isEmpty();
+		for(int i=0; i < actualStates.size(); i++){
+			if(!actualStates.get(i).equals(other.actualStates.get(i)))
+				return false;
+		}
+		for(int i=0; i < linkEvents.size(); i++){
+			if(!linkEvents.get(i).equals(other.linkEvents.get(i)))
+				return false;
+		}
+		return true;
 	}
 }

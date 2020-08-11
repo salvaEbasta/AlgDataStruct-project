@@ -10,4 +10,10 @@ public class State {
 	}
 	
 	public String id() {return id;}
+	
+	@Override
+	public boolean equals(Object otherState) {
+		State other = (State) otherState;
+		return this.id.equals(other.id);
+	}
 }

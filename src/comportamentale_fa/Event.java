@@ -8,13 +8,23 @@ public class Event {
 		this.id = id;
 	}
 	
+	public Event() {
+		this.id = "ε";
+	}
+	
 	public String id() {return id;}
+	
+	public boolean isEmpty() {
+		return id.equals("ε");
+	}
+	
+	public void setEmpty() {
+		this.id = "ε";
+	}
 	
 	@Override
 	public boolean equals(Object otherEvent) {
 		Event ev = (Event) otherEvent;
-		if(ev == null)
-			return false;
 		return this.id.equals(ev.id);
 	}
 		

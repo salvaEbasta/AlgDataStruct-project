@@ -42,7 +42,7 @@ public class Transition {
 		this.id = id;
 		this.source = source;
 		this.destination = destination;
-		this.in = null;
+		this.in = new Event();
 		this.inputLink = null;
 		this.out = out;
 		this.omega = omega;
@@ -62,7 +62,7 @@ public class Transition {
 	}
 	
 	public boolean isInputEventEmpty() {
-		return in == null;
+		return in.isEmpty();
 	}
 	
 	public boolean isOutputEventsEmpty() {

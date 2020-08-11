@@ -40,4 +40,8 @@ public class SpaceStatusList {
 		return status.addOutputTransition(enabledTransitions);
 	}
 
+	public SpaceStatus getCurrentStatus() {
+		return listStatus.get(listStatus.size()-1);
+	}
+
 }

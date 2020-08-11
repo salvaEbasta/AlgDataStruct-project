@@ -11,6 +11,7 @@ public class Link {
 		this.id = id;
 		this.source = source;
 		this.destination = destination;
+		this.event = new Event();
 	}
 	
 	public ComportamentaleFA getSource() {
@@ -22,7 +23,7 @@ public class Link {
 	}
 	
 	public boolean hasEvent(){
-		return event != null;
+		return !event.isEmpty();
 	}
 	
 	public Event getEvent() {
@@ -34,11 +35,11 @@ public class Link {
 	}	
 
 	public void setEmptyEvent() {
-		this.event = null;
+		this.event.setEmpty();
 	}
 		
 	public String eventString() {
-		return event == null? "ε" : event.id();
+		return event.id();
 	}
 	
 	public String id() {return id;}
