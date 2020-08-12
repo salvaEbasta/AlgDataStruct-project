@@ -16,7 +16,10 @@ public class SpaceStatus {
 	public SpaceStatus(String id, ArrayList<State> actualStates, ArrayList<Event> linkEvents) {
 		this.id = id;
 		this.actualStates = actualStates;
-		this.linkEvents = linkEvents;
+		this.linkEvents = new ArrayList<Event>();
+		for(Event event: linkEvents) {
+			this.linkEvents.add(new Event(event.id()));
+		}
 		in = new HashSet<Transition>();
 		out = new HashSet<Transition>();
 	}

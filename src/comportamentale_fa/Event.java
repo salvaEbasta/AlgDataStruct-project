@@ -22,6 +22,10 @@ public class Event {
 		this.id = "ε";
 	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	@Override
 	public boolean equals(Object otherEvent) {
 		Event ev = (Event) otherEvent;

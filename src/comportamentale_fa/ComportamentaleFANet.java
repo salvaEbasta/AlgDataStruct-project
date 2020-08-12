@@ -43,9 +43,6 @@ public class ComportamentaleFANet {
 		if(enabledTransitions.size()>1) {
 			SpaceStatus stats = status.getCurrentStatus();
 			for(Transition transition: enabledTransitions) {
-				if(transition.id().equals("t3c")){
-					System.out.println();
-				}
 				scatto(stats, transition, true); 
 			}		
 		} else if (enabledTransitions.size()==1)
@@ -78,9 +75,9 @@ public class ComportamentaleFANet {
 	            break;
 	        }
 	    }	
-		if(!transition.isInputEventEmpty()) {
+		if(!transition.isInputEventEmpty()) {			
 			Link link = links.get(links.indexOf(transition.getInputLink()));
-			link.setEmptyEvent();
+			link.setEmptyEvent();			
 		}
 		if(!transition.isOutputEventsEmpty()) {
 			HashMap<Event, Link> outputEvents = transition.getOutputEvents();

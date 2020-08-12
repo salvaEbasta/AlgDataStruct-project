@@ -87,6 +87,18 @@ class TestCFA {
 		System.out.println(net.spazioComportamentale());	
 	}
 	
+	@Test
+	void prova() {
+		ComportamentaleFA c2 = new CFA("C2");
+		ComportamentaleFA c3 = new CFA("C3");
+		Event e3 = new Event("e3");
+		Link l2 = new Link("L2", c3, c2);
+		System.out.println(e3.id());
+		l2.setEvent(e3);
+		l2.setEmptyEvent();
+		System.out.println(e3.id());
+	}
+	
 	@Test 
 	void eventEquals(){
 		Event onenull = new Event();

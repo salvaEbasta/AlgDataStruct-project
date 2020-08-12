@@ -31,7 +31,7 @@ public class Link {
 	}
 	
 	public void setEvent(Event event) {
-		this.event = event;
+		this.event.setId(event.id());
 	}	
 
 	public void setEmptyEvent() {
