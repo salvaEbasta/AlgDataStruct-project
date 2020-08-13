@@ -1,5 +1,7 @@
 package comportamentale_fa;
 
+import utility.Constants;
+
 public class Event {
 	
 	private String id;
@@ -9,21 +11,13 @@ public class Event {
 	}
 	
 	public Event() {
-		this.id = "ε";
+		this.id = Constants.EPSILON;
 	}
 	
 	public String id() {return id;}
 	
 	public boolean isEmpty() {
-		return id.equals("ε");
-	}
-	
-	public void setEmpty() {
-		this.id = "ε";
-	}
-	
-	public void setId(String id) {
-		this.id = id;
+		return id.equals(Constants.EPSILON);
 	}
 	
 	@Override

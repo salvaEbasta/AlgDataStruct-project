@@ -31,11 +31,11 @@ public class Link {
 	}
 	
 	public void setEvent(Event event) {
-		this.event.setId(event.id());
+		this.event = event;
 	}	
 
 	public void setEmptyEvent() {
-		this.event.setEmpty();
+		this.event = new Event();
 	}
 		
 	public String eventString() {

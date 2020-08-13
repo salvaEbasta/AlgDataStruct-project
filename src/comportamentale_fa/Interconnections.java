@@ -14,14 +14,32 @@ public class Interconnections {
 	
 	public boolean newIn(Transition t) {
 		if(!in.contains(t))
-			return in.add(t);
+			return in.add(t); //L'HashSet non dovrebbe già effettuare il controllo della presenza di un elemento in automatico? prima di aggiugnere l'elemento al set
 		return false;
+	}
+	
+	public boolean addAllIn(Set<Transition> setIn) {
+		int prevSize = in.size();
+		for(Transition t: setIn) {
+			if(!in.contains(t))
+				in.add(t);
+		}
+		return in.size() != prevSize;
 	}
 	
 	public boolean newOut(Transition t) {
 		if(!out.contains(t))
 			return out.add(t);
 		return false;
+	}
+	
+	public boolean addAllOut(Set<Transition> setOut) {
+		int prevSize = out.size();
+		for(Transition t: setOut) {
+			if(!out.contains(t))
+				out.add(t);
+		}
+		return out.size() != prevSize;
 	}
 	
 	public boolean remove(Transition t) {

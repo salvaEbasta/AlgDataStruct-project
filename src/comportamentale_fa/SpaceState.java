@@ -1,27 +1,21 @@
 package comportamentale_fa;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
-public class SpaceStatus {
+public class SpaceState {
 	
 	private String id;
 	private ArrayList<State> actualStates;
 	private ArrayList<Event> linkEvents;
-	private Set<Transition> in;
-	private Set<Transition> out;
 	
 	
-	public SpaceStatus(String id, ArrayList<State> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceState(String id, ArrayList<State> actualStates, ArrayList<Event> linkEvents) {
 		this.id = id;
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
 		for(Event event: linkEvents) {
 			this.linkEvents.add(new Event(event.id()));
 		}
-		in = new HashSet<Transition>();
-		out = new HashSet<Transition>();
 	}
 	
 	public boolean isFinalState() {
@@ -32,12 +26,12 @@ public class SpaceStatus {
 		return true;
 	}
 	
-	public boolean addInputTransition(Transition t) {
-		return in.add(t);
+	public ArrayList<State> getStates() {
+		return actualStates;
 	}
 	
-	public boolean addOutputTransition(Set<Transition> t) {
-		return out.addAll(t);
+	public ArrayList<Event> getEvents() {
+		return linkEvents;
 	}
 	
 	@Override
@@ -51,31 +45,12 @@ public class SpaceStatus {
 			sb.append(" ").append(event.id());
 		}
 		sb.append(isFinalState()? "\t[Stato Finale]": "");
-		if(!in.isEmpty()) {
-			sb.append("\n\t- Input Transitions: ");
-			for(Transition transition: in) {
-				sb.append(transition.id().concat(" "));
-			}
-		}
-		if(!out.isEmpty()) {
-			sb.append("\n\t- Output Transitions: ");
-			for(Transition transition: out) {
-				sb.append(transition.id().concat(" "));
-			}
-		}
 		return sb.toString();
 	}
 	
-	public ArrayList<State> getStates() {
-		return actualStates;
-	}
-	
-	public ArrayList<Event> getEvents() {
-		return linkEvents;
-	}
-	
+	@Override
 	public boolean equals(Object otherStatus) {
-		SpaceStatus other = (SpaceStatus) otherStatus;
+		SpaceState other = (SpaceState) otherStatus;
 		for(int i=0; i < actualStates.size(); i++){
 			if(!actualStates.get(i).equals(other.actualStates.get(i)))
 				return false;

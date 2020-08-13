@@ -15,5 +15,6 @@ public interface ComportamentaleFA {
 	public boolean setInitial(State s);
 	public boolean remove(Transition t);
 	public boolean remove(State s);
-	public boolean transitionTo(State s);
+	public boolean transitionTo(Transition t);
+	public boolean setActual(State s);
 }

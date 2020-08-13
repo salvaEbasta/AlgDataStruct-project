@@ -9,7 +9,7 @@ public class CFA implements ComportamentaleFA{
 	private String id;
 	private HashMap<State, Interconnections> structure;
 	private State initial;
-	private State actual;
+	private State actual; //forse meglio 'current'?
 	
 	public CFA(String id) {
 		this.id = id;
@@ -54,7 +54,16 @@ public class CFA implements ComportamentaleFA{
 	}
 	
 	@Override
-	public boolean transitionTo(State s) {
+	public boolean transitionTo(Transition t) {
+		if (structure.containsKey(t.sink()) && actual.equals(t.source())) {
+			actual = t.sink();
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean setActual(State s) {
 		if (structure.containsKey(s)) {
 			actual = s;
 			return true;

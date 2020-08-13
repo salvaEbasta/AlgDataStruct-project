@@ -1,10 +1,8 @@
 package test.comportamentale_fa;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +14,8 @@ import comportamentale_fa.ComportamentaleFA;
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.Event;
 import comportamentale_fa.Link;
-import comportamentale_fa.SpaceStatus;
-import comportamentale_fa.SpaceStatusList;
+import comportamentale_fa.SpaceTree;
+import comportamentale_fa.SpazioComportamentale;
 import comportamentale_fa.State;
 import comportamentale_fa.Transition;
 import comportamentale_fa.labels.OsservableLabel;
@@ -84,67 +82,10 @@ class TestCFA {
 	@Test
 	void spazioComportamentale() {		
 		ComportamentaleFANet net = initialize();
-		System.out.println(net.spazioComportamentale());	
-	}
-	
-	@Test
-	void prova() {
-		ComportamentaleFA c2 = new CFA("C2");
-		ComportamentaleFA c3 = new CFA("C3");
-		Event e3 = new Event("e3");
-		Link l2 = new Link("L2", c3, c2);
-		System.out.println(e3.id());
-		l2.setEvent(e3);
-		l2.setEmptyEvent();
-		System.out.println(e3.id());
-	}
-	
-	@Test 
-	void eventEquals(){
-		Event onenull = new Event();
-		Event twonull = new Event();
-		Event e3 = new Event("e3");
-		Event e2 = new Event("e2");
-		Event e2copia = new Event("e2");
-		assertTrue(e2.equals(e2copia));
-		assertFalse(e3.equals(e2));
-		assertFalse(e3.equals(onenull));
-		assertFalse(e2.equals(twonull));
-		assertTrue(onenull.equals(twonull));
-	}
-	
-	@Test
-	void spaceStatusList(){
-		SpaceStatusList list = new SpaceStatusList();
-		State s20 = new State("20");
-		State s21 = new State("21");
-		State s30 = new State("30");
-		State s31 = new State("31");
-		Event ev2 = new Event("e2");
-		Event ev3 = new Event("e3");
-		Event evnull = new Event();
-		assertTrue(creaStatus(list, s20,  s30, evnull, evnull));
-		assertTrue(creaStatus(list, s20,  s31, ev2, evnull));
-		assertTrue(creaStatus(list, s21,  s31, evnull, ev3));
-		assertTrue(creaStatus(list, s21,  s30, evnull, evnull));
-		assertTrue(creaStatus(list, s21,  s31, ev2, evnull));
-		assertTrue(creaStatus(list, s20,  s31, ev2, ev3));
-		assertTrue(creaStatus(list, s20,  s30, ev2, evnull));
-		assertTrue(creaStatus(list, s21,  s30, evnull, ev3));
-		assertTrue(creaStatus(list, s21,  s31, ev2, ev3));
-		assertTrue(creaStatus(list, s21,  s30, ev2, evnull));
-		assertTrue(creaStatus(list, s20,  s30, ev2, ev3));
-		assertTrue(creaStatus(list, s21,  s31, evnull, evnull));
-		assertTrue(creaStatus(list, s20,  s31, evnull, ev3));
-		assertTrue(creaStatus(list, s20,  s31, evnull, evnull));
-	}
-	
-	boolean creaStatus(SpaceStatusList list, State s1, State s2, Event ev1, Event ev2) {
-		ArrayList<State> states = new ArrayList<>();
-		states.add(s1); states.add(s2);
-		ArrayList<Event> events = new ArrayList<>();
-		events.add(ev1); events.add(ev2);
-		return list.add(states, events);		
+		SpazioComportamentale sc = new SpazioComportamentale(net);
+		SpaceTree computedSpace = sc.generaSpazio();
+		System.out.println(sc.toString());	
+			
 	}
 	
 	@Test

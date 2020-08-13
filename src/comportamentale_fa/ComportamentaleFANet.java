@@ -12,7 +12,6 @@ public class ComportamentaleFANet {
 	
 	private ArrayList<ComportamentaleFA> net;
 	private ArrayList<Link> links;
-	private SpaceStatusList status;
 	
 	public ComportamentaleFANet(ArrayList<Link> links) {
 		this.net = new ArrayList<ComportamentaleFA>();
@@ -24,44 +23,28 @@ public class ComportamentaleFANet {
 			if(!net.contains(link.getDestination()))
 				net.add(link.getDestination());
 		}
-		for(ComportamentaleFA cfa: net) {
-			cfa.transitionTo(cfa.initialState()); //imposta l'actual state allo stato iniziale
-		}
 		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3
-		status = new SpaceStatusList();
-		status.add(net.stream().map(cfa -> cfa.initialState()).collect(Collectors.toCollection(ArrayList::new)),
-				links.stream().map(link -> link.getEvent()).collect(Collectors.toCollection(ArrayList::new))); 
+		for(ComportamentaleFA cfa: net) {
+			cfa.setActual(cfa.initialState()); //imposta l'actual state allo stato iniziale
+		}
 	}
 	
-	public String spazioComportamentale() {
-		buildSpazio(enabledTransitions());
-		return status.toString();
+	
+	public ArrayList<State> getInitialStates(){
+		return net.stream().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	private void buildSpazio(Set<Transition> enabledTransitions) {
-		status.addOutputTransitions(enabledTransitions);
-		if(enabledTransitions.size()>1) {
-			SpaceStatus stats = status.getCurrentStatus();
-			for(Transition transition: enabledTransitions) {
-				scatto(stats, transition, true); 
-			}		
-		} else if (enabledTransitions.size()==1)
-			scatto(null, enabledTransitions.iterator().next(), false);
+	public ArrayList<State> getActualStates(){
+		return net.stream().map(cfa -> cfa.actualState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	private void scatto(SpaceStatus stats, Transition transition, boolean doppio) {
-		if(doppio)
-			restoreStatus(stats);
-		transitionTo(transition);	
-		boolean added = status.add(net.stream().map(cfa -> cfa.actualState()).collect(Collectors .toCollection(ArrayList::new)),
-				links.stream().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new)), transition); 
-		if(added)
-			buildSpazio(enabledTransitions());	
+	public ArrayList<Event> getActiveEvents() {
+		return links.stream().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	private void restoreStatus(SpaceStatus stats) {
+	void restoreState(SpaceState stats) {
 		for(int i=0; i<stats.getStates().size();i++) {
-			net.get(i).transitionTo(stats.getStates().get(i));
+			net.get(i).setActual(stats.getStates().get(i));
 		}
 		for(int i=0; i<stats.getEvents().size();i++) {
 			links.get(i).setEvent(stats.getEvents().get(i));
@@ -71,7 +54,7 @@ public class ComportamentaleFANet {
 	public void transitionTo(Transition transition) {
 		for (ComportamentaleFA cfa : net) {
 	        if (transition.source().equals(cfa.actualState())) {
-	        	cfa.transitionTo(transition.sink());
+	        	cfa.transitionTo(transition);
 	            break;
 	        }
 	    }	
