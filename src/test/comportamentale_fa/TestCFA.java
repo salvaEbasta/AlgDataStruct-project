@@ -14,12 +14,12 @@ import comportamentale_fa.ComportamentaleFA;
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.Event;
 import comportamentale_fa.Link;
-import comportamentale_fa.SpaceTree;
-import comportamentale_fa.SpazioComportamentale;
 import comportamentale_fa.State;
 import comportamentale_fa.Transition;
 import comportamentale_fa.labels.OsservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
+import spazio_comportamentale.SpaceInterconnections;
+import spazio_comportamentale.SpazioComportamentale;
 
 class TestCFA {
 
@@ -83,7 +83,11 @@ class TestCFA {
 	void spazioComportamentale() {		
 		ComportamentaleFANet net = initialize();
 		SpazioComportamentale sc = new SpazioComportamentale(net);
-		SpaceTree computedSpace = sc.generaSpazio();
+		SpaceInterconnections computedSpace = sc.generaSpazio();
+		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
+		System.out.println(sc.toString());	
+		sc.potatura();
+		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
 		System.out.println(sc.toString());	
 			
 	}

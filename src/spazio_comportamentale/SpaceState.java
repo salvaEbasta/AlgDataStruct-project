@@ -1,6 +1,9 @@
-package comportamentale_fa;
+package spazio_comportamentale;
 
 import java.util.ArrayList;
+
+import comportamentale_fa.Event;
+import comportamentale_fa.State;
 
 public class SpaceState {
 	
@@ -16,6 +19,10 @@ public class SpaceState {
 		for(Event event: linkEvents) {
 			this.linkEvents.add(new Event(event.id()));
 		}
+	}
+	
+	public String id() {
+		return id;
 	}
 	
 	public boolean isFinalState() {

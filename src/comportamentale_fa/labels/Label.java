@@ -1,8 +1,8 @@
 package comportamentale_fa.labels;
 
+import utility.Constants;
+
 public abstract class Label {
-	
-	private static final String EPSILON = "ε";
 	
 	private String symbol;
 	private String label;
@@ -14,11 +14,11 @@ public abstract class Label {
 	
 	public Label(String symbol) {
 		this.symbol = symbol;
-		this.label = EPSILON;
+		this.label = Constants.EPSILON;
 	}
 	
 	public boolean isEmpty() {
-		return label.equals(EPSILON);
+		return label.equals(Constants.EPSILON);
 	}
 	
 	public String getLabel() {

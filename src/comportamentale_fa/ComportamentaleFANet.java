@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import spazio_comportamentale.SpaceState;
+
 import java.util.Map.Entry;
 
 public class ComportamentaleFANet {
@@ -23,9 +26,9 @@ public class ComportamentaleFANet {
 			if(!net.contains(link.getDestination()))
 				net.add(link.getDestination());
 		}
-		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3
+		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3 (comodo per confrontare la soluzione)
 		for(ComportamentaleFA cfa: net) {
-			cfa.setActual(cfa.initialState()); //imposta l'actual state allo stato iniziale
+			cfa.setActual(cfa.initialState()); //imposta l'actual state allo stato iniziale (magari facciamo metodo setActualToInitial? )
 		}
 	}
 	
@@ -42,7 +45,7 @@ public class ComportamentaleFANet {
 		return links.stream().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	void restoreState(SpaceState stats) {
+	public void restoreState(SpaceState stats) {
 		for(int i=0; i<stats.getStates().size();i++) {
 			net.get(i).setActual(stats.getStates().get(i));
 		}

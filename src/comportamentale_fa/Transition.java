@@ -81,6 +81,16 @@ public class Transition {
 		return !f.isEmpty();
 	}
 	
+	public boolean hasLabel() {
+		return !omega.isEmpty() || !f.isEmpty();
+	}
+	
+	public String labels() {
+		if(hasLabel())
+			return String.format("[%s]", hasOsservableLabel()? omega : f);
+		return "";
+	}
+	
 	@Override
 	public boolean equals(Object otherTransition) {
 		Transition other = (Transition) otherTransition;
@@ -92,7 +102,7 @@ public class Transition {
 	public String toString(){
 		StringBuilder sb = new StringBuilder(String.format("%s: ", id));
 		if(!isInputEventEmpty())
-			sb.append(String.format("%s(%s))", in.id(), inputLink.id()));
+			sb.append(String.format("%s(%s)", in.id(), inputLink.id()));
 		if(!isOutputEventsEmpty()) {
 			Event[] keySet = new Event[out.size()];
 			keySet = out.keySet().toArray(keySet);
@@ -102,7 +112,8 @@ public class Transition {
 			}
 			sb.append("}");			
 		}
-		sb.append(String.format("[%s - %s]", omega, f)); //creare costante per epsilon
+		if(hasLabel())
+			sb.append(String.format("[%s]", hasOsservableLabel()? omega : f));
 		return sb.toString();
 	}
 
