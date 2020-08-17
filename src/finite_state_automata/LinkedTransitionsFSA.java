@@ -62,8 +62,8 @@ public class LinkedTransitionsFSA implements FiniteStateMachine{
 	}
 	@Override
 	public boolean add(Transition t) {
-		structure.get(t.source()).from().add(t);
-		structure.get(t.sink()).to().add(t);
+		structure.get(t.source()).newOut(t);
+		structure.get(t.sink()).newIn(t);
 		return true;
 	}
 	@Override

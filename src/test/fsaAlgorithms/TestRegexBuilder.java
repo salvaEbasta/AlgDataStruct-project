@@ -25,12 +25,20 @@ class TestRegexBuilder {
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
-		System.out.print(C1.toString());
 		return C1;
 	}
 
 	@Test
 	void test_benchmarkC1() {
+		FiniteStateMachine C1 = build_benchmarkC1();
+		String result = RegexBuilder.compute(C1);
+		
+		//System.out.println(result);
+		assertTrue(true);
+	}
+	
+	@Test
+	void test_benchmarkC1_v1() {
 		FiniteStateMachine C1 = build_benchmarkC1();
 		String result = RegexBuilder.compute(C1);
 		
