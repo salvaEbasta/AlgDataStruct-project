@@ -25,6 +25,10 @@ public class SpaceState {
 		return id;
 	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 	public boolean isFinalState() {
 		for(Event event: linkEvents) {
 			if(!event.isEmpty())

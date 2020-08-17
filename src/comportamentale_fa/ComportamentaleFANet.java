@@ -34,7 +34,7 @@ public class ComportamentaleFANet {
 	
 	
 	public ArrayList<ComportamentaleState> getInitialStates(){
-		return net.stream().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
+		return  net.stream().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
 	public ArrayList<ComportamentaleState> getActualStates(){

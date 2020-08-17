@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Automa<T extends Transition, I extends Interconnections<T>> implements AutomaInterface<T, I>{
+public abstract class Automa<S extends State, T extends Transition, I extends Interconnections<T>> implements AutomaInterface<S, T, I>{
 
 	private String id;
-	private HashMap<State, I> structure;
-	private State initial;
-	private State current;
+	private HashMap<S, I> structure;
+	private S initial;
+	private S current;
 	
 	public Automa(String id) {
 		this.id = id;
-		structure = new HashMap<State, I>();
+		structure = new HashMap<S, I>();
 		initial = null;
 		current = null;
 	}
@@ -33,27 +33,27 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 		return tmp;
 	}
 	@Override
-	public Set<State> states() {
-		return new HashSet<State>(structure.keySet());
+	public Set<S> states() {
+		return new HashSet<S>(structure.keySet());
 	}
 	
 	@Override
-	public HashMap<State, I> structure() {
+	public HashMap<S, I> structure() {
 		return structure;
 	}
 	
 	@Override
-	public State initialState() {
+	public S initialState() {
 		return initial;
 	}
 	
 	@Override
-	public State currentState() {
+	public S currentState() {
 		return current;
 	}
 	
 	@Override
-	public Set<T> to(State s) {
+	public Set<T> to(S s) {
 		if (structure.containsKey(s))
 			return structure.get(s).to();
 		else
@@ -61,16 +61,16 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	}
 	
 	@Override
-	public boolean transitionTo(Transition t) {
+	public boolean transitionTo(T t) {
 		if (structure.containsKey(t.destination()) && current.equals(t.source())) {
-			current = t.destination();
+			current = (S) t.destination();
 			return true;
 		}
 		return false;
 	}
 	
 	@Override
-	public boolean setCurrent(State s) {
+	public boolean setCurrent(S s) {
 		if (structure.containsKey(s)) {
 			current = s;
 			return true;
@@ -79,7 +79,7 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	}
 	
 	@Override
-	public Set<T> from(State s) {
+	public Set<T> from(S s) {
 		if (structure.containsKey(s))
 			return structure.get(s).from();
 		else
@@ -94,7 +94,7 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	}
 	
 	@Override
-	public boolean insert(State s) {
+	public boolean insert(S s) {
 		if(!structure.containsKey(s)) {
 			structure.put(s, newI());
 			return true;
@@ -114,7 +114,7 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	}
 	
 	@Override
-	public boolean setInitial(State s) {
+	public boolean setInitial(S s) {
 		initial = s;
 		return true;
 	}
@@ -127,7 +127,7 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	}
 	
 	@Override
-	public boolean remove(State s) {
+	public boolean remove(S s) {
 		if((initial!=null && initial.equals(s))||(current!=null && current.equals(s)))
 			return false;
 		structure.get(s).from().forEach(t->structure.get(t.destination()).to().remove(t));
@@ -145,7 +145,7 @@ public abstract class Automa<T extends Transition, I extends Interconnections<T>
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		Automa<T, I> automa = (Automa<T, I>) obj;
+		Automa<S, T, I> automa = (Automa<S, T, I>) obj;
 		return this.id.equals(automa.id);
 	}
 

@@ -35,10 +35,6 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 		return states.size();
 	}
 	
-//	public Set<SpaceState> statesSet() {
-//		return states.keySet();
-//	}
-	
 	public boolean add(SpaceState state) {
 		if(!containsKey(state)) {
 			return states.add(new SpaceStateTransitions(state));
@@ -56,6 +52,7 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 		for(SpaceStateTransitions stateTransition: setCopy) {
 			checkPotatura(stateTransition.getSource());
 		}
+		ridenominazione();
 		return size() != prevSize;
 	}
 	
@@ -74,6 +71,12 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 			if(state.hasOutputState(toRemove))
 				state.removeOutputState(toRemove);			
 		}
+	}
+	
+	public void ridenominazione() {
+		int i=0;
+		for(SpaceStateTransitions spaceTransitions: states)
+			spaceTransitions.getSource().setId(Integer.toString(i++));
 	}
 	
 	private Set<SpaceState> getInputStates(SpaceState to){

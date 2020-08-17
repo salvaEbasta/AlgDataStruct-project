@@ -2,7 +2,7 @@ package finite_state_automata;
 
 import commoninterfaces.Automa;
 
-public class LinkedTransitionsFSA extends Automa<FiniteTransition, FiniteInterconnections>{
+public class LinkedTransitionsFSA extends Automa<FiniteState, FiniteTransition, FiniteInterconnections>{
 	
 	
 	public LinkedTransitionsFSA(String id) {

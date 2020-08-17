@@ -9,7 +9,6 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import comportamentale_fa.CFA;
 import comportamentale_fa.ComportamentaleFA;
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.Event;
@@ -28,7 +27,7 @@ class TestCFA {
 	
 	ComportamentaleFANet initialize() {
 		//AUTOMATA C2
-		ComportamentaleFA c2 = new CFA("C2");
+		ComportamentaleFA c2 = new ComportamentaleFA("C2");
 		ComportamentaleState s20 = new ComportamentaleState("20");
 		ComportamentaleState s21 = new ComportamentaleState("21");
 		c2.insert(s20);
@@ -36,7 +35,7 @@ class TestCFA {
 		c2.setInitial(s20);
 		
 		//AUTOMATA C3
-		ComportamentaleFA c3 = new CFA("C3");
+		ComportamentaleFA c3 = new ComportamentaleFA("C3");
 		ComportamentaleState s30 = new ComportamentaleState("30");
 		ComportamentaleState s31 = new ComportamentaleState("31");
 		c3.insert(s30);
