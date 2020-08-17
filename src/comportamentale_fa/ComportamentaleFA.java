@@ -7,7 +7,7 @@ public interface ComportamentaleFA {
 	public Set<Transition> transitions();
 	public Set<State> states();
 	public State initialState();
-	public State actualState();
+	public State currentState();
 	public Set<Transition> to(State s);
 	public Set<Transition> from(State s);
 	public boolean add(Transition t);
@@ -16,5 +16,5 @@ public interface ComportamentaleFA {
 	public boolean remove(Transition t);
 	public boolean remove(State s);
 	public boolean transitionTo(Transition t);
-	public boolean setActual(State s);
+	public boolean setCurrent(State s);
 }

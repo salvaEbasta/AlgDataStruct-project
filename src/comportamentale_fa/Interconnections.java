@@ -14,7 +14,7 @@ public class Interconnections {
 	
 	public boolean newIn(Transition t) {
 		if(!in.contains(t))
-			return in.add(t); //L'HashSet non dovrebbe già effettuare il controllo della presenza di un elemento in automatico? prima di aggiugnere l'elemento al set
+			return in.add(t);
 		return false;
 	}
 	

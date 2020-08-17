@@ -9,13 +9,13 @@ public class CFA implements ComportamentaleFA{
 	private String id;
 	private HashMap<State, Interconnections> structure;
 	private State initial;
-	private State actual; //forse meglio 'current'?
+	private State current;
 	
 	public CFA(String id) {
 		this.id = id;
 		structure = new HashMap<State, Interconnections>();
 		initial = null;
-		actual = null;
+		current = null;
 	}
 	
 	public String id() {
@@ -41,8 +41,8 @@ public class CFA implements ComportamentaleFA{
 	}
 	
 	@Override
-	public State actualState() {
-		return actual;
+	public State currentState() {
+		return current;
 	}
 	
 	@Override
@@ -55,17 +55,17 @@ public class CFA implements ComportamentaleFA{
 	
 	@Override
 	public boolean transitionTo(Transition t) {
-		if (structure.containsKey(t.sink()) && actual.equals(t.source())) {
-			actual = t.sink();
+		if (structure.containsKey(t.sink()) && current.equals(t.source())) {
+			current = t.sink();
 			return true;
 		}
 		return false;
 	}
 	
 	@Override
-	public boolean setActual(State s) {
+	public boolean setCurrent(State s) {
 		if (structure.containsKey(s)) {
-			actual = s;
+			current = s;
 			return true;
 		}
 		return false;
@@ -110,7 +110,7 @@ public class CFA implements ComportamentaleFA{
 	
 	@Override
 	public boolean remove(State s) {
-		if((initial!=null && initial.equals(s))||(actual!=null && actual.equals(s)))
+		if((initial!=null && initial.equals(s))||(current!=null && current.equals(s)))
 			return false;
 		structure.get(s).from().forEach(t->structure.get(t.sink()).to().remove(t));
 		structure.get(s).to().forEach(t->structure.get(t.source()).from().remove(t));

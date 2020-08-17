@@ -28,7 +28,6 @@ public class SpazioComportamentale {
 	}
 	
 	private void buildSpace(SpaceState state, Set<Transition> enabledTransitions) {
-		//states.addOutputTransitions(state, enabledTransitions);
 		if(enabledTransitions.size()>1) {
 			for(Transition transition: enabledTransitions) {
 				net.restoreState(state);
