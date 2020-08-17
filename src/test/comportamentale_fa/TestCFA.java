@@ -14,8 +14,8 @@ import comportamentale_fa.ComportamentaleFA;
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.Event;
 import comportamentale_fa.Link;
-import comportamentale_fa.State;
-import comportamentale_fa.Transition;
+import comportamentale_fa.ComportamentaleState;
+import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.labels.OsservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 import spazio_comportamentale.SpaceInterconnections;
@@ -23,22 +23,22 @@ import spazio_comportamentale.SpazioComportamentale;
 
 class TestCFA {
 
-	private Transition t3a;
-	private Transition t2a;
+	private ComportamentaleTransition t3a;
+	private ComportamentaleTransition t2a;
 	
 	ComportamentaleFANet initialize() {
 		//AUTOMATA C2
 		ComportamentaleFA c2 = new CFA("C2");
-		State s20 = new State("20");
-		State s21 = new State("21");
+		ComportamentaleState s20 = new ComportamentaleState("20");
+		ComportamentaleState s21 = new ComportamentaleState("21");
 		c2.insert(s20);
 		c2.insert(s21);
 		c2.setInitial(s20);
 		
 		//AUTOMATA C3
 		ComportamentaleFA c3 = new CFA("C3");
-		State s30 = new State("30");
-		State s31 = new State("31");
+		ComportamentaleState s30 = new ComportamentaleState("30");
+		ComportamentaleState s31 = new ComportamentaleState("31");
 		c3.insert(s30);
 		c3.insert(s31);
 		c3.setInitial(s30);
@@ -52,12 +52,12 @@ class TestCFA {
 		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
 		out2.put(e2, l2);
 		
-		t2a = new Transition("t2a", s20, s21, e2, l2, out, new OsservableLabel("o2"), new RelevantLabel());
-		Transition t2b = new Transition("t2b", s21, s20, out, new OsservableLabel(), new RelevantLabel("r"));
+		t2a = new ComportamentaleTransition("t2a", s20, s21, e2, l2, out, new OsservableLabel("o2"), new RelevantLabel());
+		ComportamentaleTransition t2b = new ComportamentaleTransition("t2b", s21, s20, out, new OsservableLabel(), new RelevantLabel("r"));
 		
-		t3a = new Transition("t3a", s30, s31, out2, new OsservableLabel("o3"), new RelevantLabel());
-		Transition t3b = new Transition("t3b", s31, s30, e3, l3, new OsservableLabel(), new RelevantLabel());
-		Transition t3c = new Transition("t3c", s31, s31, e3, l3, new OsservableLabel(), new RelevantLabel("f"));
+		t3a = new ComportamentaleTransition("t3a", s30, s31, out2, new OsservableLabel("o3"), new RelevantLabel());
+		ComportamentaleTransition t3b = new ComportamentaleTransition("t3b", s31, s30, e3, l3, new OsservableLabel(), new RelevantLabel());
+		ComportamentaleTransition t3c = new ComportamentaleTransition("t3c", s31, s31, e3, l3, new OsservableLabel(), new RelevantLabel("f"));
 		
 		/*
 		 * System.out.println(t2a.toString()); System.out.println(t2b.toString());
@@ -95,7 +95,7 @@ class TestCFA {
 	@Test
 	void enabledTransitions() {
 		ComportamentaleFANet net = initialize();
-		Set<Transition> enabledT = new HashSet<Transition>();
+		Set<ComportamentaleTransition> enabledT = new HashSet<ComportamentaleTransition>();
 		enabledT.add(t3a);
 		assertTrue(net.enabledTransitions().equals(enabledT));
 		net.transitionTo(t3a);

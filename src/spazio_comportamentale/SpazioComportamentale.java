@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.Transition;
+import comportamentale_fa.ComportamentaleTransition;
 
 public class SpazioComportamentale {
 	
@@ -27,9 +27,9 @@ public class SpazioComportamentale {
 		return states;
 	}
 	
-	private void buildSpace(SpaceState state, Set<Transition> enabledTransitions) {
+	private void buildSpace(SpaceState state, Set<ComportamentaleTransition> enabledTransitions) {
 		if(enabledTransitions.size()>1) {
-			for(Transition transition: enabledTransitions) {
+			for(ComportamentaleTransition transition: enabledTransitions) {
 				net.restoreState(state);
 				scattoTransizione(state, transition); 
 			}		
@@ -39,7 +39,7 @@ public class SpazioComportamentale {
 			states.add(state);
 	}
 	
-	private void scattoTransizione(SpaceState source, Transition transition) {
+	private void scattoTransizione(SpaceState source, ComportamentaleTransition transition) {
 		net.transitionTo(transition);	
 		SpaceState next = new SpaceState(Integer.toString(states.size()), net.getActualStates(), net.getActiveEvents());
 		if(!states.containsKey(next))
@@ -61,17 +61,17 @@ public class SpazioComportamentale {
 		StringBuilder sb = new StringBuilder();
 		for(SpaceStateTransitions state: states) {
 			sb.append(state.getSource().toString());
-			HashMap<Transition, SpaceState>  in = states.getInputTransitions(state.getSource());
-			HashMap<Transition, SpaceState> out = state.getOutputTransitions();
+			HashMap<ComportamentaleTransition, SpaceState>  in = states.getInputTransitions(state.getSource());
+			HashMap<ComportamentaleTransition, SpaceState> out = state.getOutputTransitions();
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
-				for(Entry<Transition, SpaceState> entry: in.entrySet()) {
+				for(Entry<ComportamentaleTransition, SpaceState> entry: in.entrySet()) {
 					sb.append(String.format("\n\t\t* %s (da %s) %s", entry.getKey().id(), entry.getValue(), entry.getKey().labels()));
 				}
 			}
 			if(!out.isEmpty()) {
 				sb.append("\n\t- Output Transitions:");
-				for(Entry<Transition, SpaceState> entry: out.entrySet()) {
+				for(Entry<ComportamentaleTransition, SpaceState> entry: out.entrySet()) {
 					sb.append(String.format("\n\t\t* %s (verso %s) %s", entry.getKey().id(), entry.getValue(), entry.getKey().labels()));
 				}
 			}

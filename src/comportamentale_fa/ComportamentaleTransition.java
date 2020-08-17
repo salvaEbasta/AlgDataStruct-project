@@ -1,14 +1,13 @@
 package comportamentale_fa;
 
 import java.util.HashMap;
+
+import commoninterfaces.Transition;
 import comportamentale_fa.labels.OsservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 
-public class Transition {
+public class ComportamentaleTransition extends Transition{
 	
-	private String id;
-	private State source;
-	private State destination;	
 	private Event in;
 	private Link inputLink;
 	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
@@ -16,10 +15,8 @@ public class Transition {
 	private OsservableLabel omega;
 	private RelevantLabel f;
 	
-	public Transition(String id, State source, State destination, Event in, Link inputLink, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
-		this.id = id;
-		this.source = source;
-		this.destination = destination;
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
+		super(id, source, destination);
 		this.in = in;
 		this.inputLink = inputLink;
 		this.out = out;
@@ -27,10 +24,8 @@ public class Transition {
 		this.f = f;
 	}
 	
-	public Transition(String id, State source, State destination, Event in, Link inputLink, OsservableLabel omega, RelevantLabel f) {
-		this.id = id;
-		this.source = source;
-		this.destination = destination;
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, OsservableLabel omega, RelevantLabel f) {
+		super(id, source, destination);
 		this.in = in;
 		this.inputLink = inputLink;
 		this.out = new HashMap<Event, Link>();
@@ -38,20 +33,14 @@ public class Transition {
 		this.f = f;
 	}
 	
-	public Transition(String id, State source, State destination, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
-		this.id = id;
-		this.source = source;
-		this.destination = destination;
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
+		super(id, source, destination);
 		this.in = new Event();
 		this.inputLink = null;
 		this.out = out;
 		this.omega = omega;
 		this.f = f;
 	}
-
-	public String id() {return id;}
-	public State source() {return source;}
-	public State sink() {return destination;}
 	
 	public Link getInputLink() {
 		return inputLink;
@@ -89,18 +78,11 @@ public class Transition {
 		if(hasLabel())
 			return String.format("[%s]", hasOsservableLabel()? omega : f);
 		return "";
-	}
-	
-	@Override
-	public boolean equals(Object otherTransition) {
-		Transition other = (Transition) otherTransition;
-		return id.equals(other.id) && source.equals(other.source) && destination.equals(other.source) &&
-				in.equals(other.in) && out.equals(other.out);		
-	}
+	}	
 	
 	@Override
 	public String toString(){
-		StringBuilder sb = new StringBuilder(String.format("%s: ", id));
+		StringBuilder sb = new StringBuilder(String.format("%s: ", id()));
 		if(!isInputEventEmpty())
 			sb.append(String.format("%s(%s)", in.id(), inputLink.id()));
 		if(!isOutputEventsEmpty()) {

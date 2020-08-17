@@ -3,16 +3,16 @@ package spazio_comportamentale;
 import java.util.ArrayList;
 
 import comportamentale_fa.Event;
-import comportamentale_fa.State;
+import comportamentale_fa.ComportamentaleState;
 
 public class SpaceState {
 	
 	private String id;
-	private ArrayList<State> actualStates;
+	private ArrayList<ComportamentaleState> actualStates;
 	private ArrayList<Event> linkEvents;
 	
 	
-	public SpaceState(String id, ArrayList<State> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceState(String id, ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
 		this.id = id;
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
@@ -33,7 +33,7 @@ public class SpaceState {
 		return true;
 	}
 	
-	public ArrayList<State> getStates() {
+	public ArrayList<ComportamentaleState> getStates() {
 		return actualStates;
 	}
 	

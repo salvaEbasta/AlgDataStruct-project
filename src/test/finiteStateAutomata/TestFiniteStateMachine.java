@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Test;
 
 import finite_state_automata.FiniteStateMachine;
 import finite_state_automata.LinkedTransitionsFSA;
-import finite_state_automata.State;
-import finite_state_automata.Transition;
+import finite_state_automata.FiniteState;
+import finite_state_automata.FiniteTransition;
 
 class TestFiniteStateMachine {
 	
@@ -18,30 +18,30 @@ class TestFiniteStateMachine {
 		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
 		assertTrue(C1.id()=="C1");
 		
-		State _10 = new State("10");
-		State _11 = new State("11");
+		FiniteState _10 = new FiniteState("10");
+		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
 		C1.insert(_11);
 		C1.insert(_10);
 		C1.setInitial(_10);
 		
-		Set<State> states = C1.states();
+		Set<FiniteState> states = C1.states();
 		assertTrue(C1.initialState().equals(_10));
 		assertTrue(states.size() == 2);
 		assertTrue(states.contains(_11) && states.contains(_10));
 		
-		Set<State> accepting = C1.acceptingStates();
+		Set<FiniteState> accepting = C1.acceptingStates();
 		assertTrue(accepting.size() == 1);
 		assertTrue(accepting.contains(_11));
 		
-		Transition t1a = new Transition("t1a", _10, _11, "a");
-		Transition t1b = new Transition("t1b", _11, _10, "b");
-		Transition t1c = new Transition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
 		
-		Set<Transition> allT = C1.transitions();
+		Set<FiniteTransition> allT = C1.transitions();
 		assertTrue(allT.contains(t1a));
 		assertTrue(allT.contains(t1b));
 		assertTrue(allT.contains(t1c));
@@ -62,15 +62,15 @@ class TestFiniteStateMachine {
 	@Test
 	void remove_transitions() {
 		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
-		State _10 = new State("10");
-		State _11 = new State("11");
+		FiniteState _10 = new FiniteState("10");
+		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
 		C1.insert(_11);
 		C1.insert(_10);
 		C1.setInitial(_10);
-		Transition t1a = new Transition("t1a", _10, _11, "a");
-		Transition t1b = new Transition("t1b", _11, _10, "b");
-		Transition t1c = new Transition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
@@ -84,15 +84,15 @@ class TestFiniteStateMachine {
 	@Test
 	void remove_state() {
 		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
-		State _10 = new State("10");
-		State _11 = new State("11");
+		FiniteState _10 = new FiniteState("10");
+		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
 		C1.insert(_11);
 		C1.insert(_10);
 		C1.setInitial(_10);
-		Transition t1a = new Transition("t1a", _10, _11, "a");
-		Transition t1b = new Transition("t1b", _11, _10, "b");
-		Transition t1c = new Transition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);

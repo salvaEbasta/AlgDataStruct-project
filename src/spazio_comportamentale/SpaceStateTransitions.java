@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import comportamentale_fa.Transition;
+import comportamentale_fa.ComportamentaleTransition;
 
 public class SpaceStateTransitions {
 	
 	private SpaceState source;
-	private HashMap<Transition, SpaceState> out;
+	private HashMap<ComportamentaleTransition, SpaceState> out;
 	
 	public SpaceStateTransitions(SpaceState source) {
 		this.source = source;
-		out = new HashMap<Transition, SpaceState>();
+		out = new HashMap<ComportamentaleTransition, SpaceState>();
 	}
 	
 	public SpaceState getSource() {
@@ -25,13 +25,13 @@ public class SpaceStateTransitions {
 		return !out.isEmpty();
 	}
 	
-	public HashMap<Transition, SpaceState> getOutputTransitions(){
+	public HashMap<ComportamentaleTransition, SpaceState> getOutputTransitions(){
 		return out;
 	}
 	
-	public Transition getInputTransition(SpaceState to) {
+	public ComportamentaleTransition getInputTransition(SpaceState to) {
 		if(hasOutputState(to)) {
-			for(Entry<Transition, SpaceState> entry: out.entrySet()) {
+			for(Entry<ComportamentaleTransition, SpaceState> entry: out.entrySet()) {
 				if(entry.getValue().equals(to))
 					return entry.getKey();
 			}
@@ -39,7 +39,7 @@ public class SpaceStateTransitions {
 		return null;
 	}
 	
-	public boolean addOutputTransition(Transition t, SpaceState s) {
+	public boolean addOutputTransition(ComportamentaleTransition t, SpaceState s) {
 		if(!out.containsKey(t)) {
 			out.put(t, s);
 			return true;
@@ -61,8 +61,8 @@ public class SpaceStateTransitions {
 
 	public boolean removeOutputState(SpaceState toRemove) {
 		if(hasOutputState(toRemove)) {
-			Set<Entry<Transition, SpaceState>> entries = new HashSet<Entry<Transition, SpaceState>>(out.entrySet()); //evitare ConcurrentModificationException
-			for(Entry<Transition, SpaceState> entry: entries) {
+			Set<Entry<ComportamentaleTransition, SpaceState>> entries = new HashSet<Entry<ComportamentaleTransition, SpaceState>>(out.entrySet()); //evitare ConcurrentModificationException
+			for(Entry<ComportamentaleTransition, SpaceState> entry: entries) {
 				if(entry.getValue().equals(toRemove))
 					out.remove(entry.getKey());
 			}

@@ -4,17 +4,17 @@ import java.util.Set;
 
 public interface ComportamentaleFA {
 	public String id();
-	public Set<Transition> transitions();
-	public Set<State> states();
-	public State initialState();
-	public State currentState();
-	public Set<Transition> to(State s);
-	public Set<Transition> from(State s);
-	public boolean add(Transition t);
-	public boolean insert(State s);
-	public boolean setInitial(State s);
-	public boolean remove(Transition t);
-	public boolean remove(State s);
-	public boolean transitionTo(Transition t);
-	public boolean setCurrent(State s);
+	public Set<ComportamentaleTransition> transitions();
+	public Set<ComportamentaleState> states();
+	public ComportamentaleState initialState();
+	public ComportamentaleState currentState();
+	public Set<ComportamentaleTransition> to(ComportamentaleState s);
+	public Set<ComportamentaleTransition> from(ComportamentaleState s);
+	public boolean add(ComportamentaleTransition t);
+	public boolean insert(ComportamentaleState s);
+	public boolean setInitial(ComportamentaleState s);
+	public boolean remove(ComportamentaleTransition t);
+	public boolean remove(ComportamentaleState s);
+	public boolean transitionTo(ComportamentaleTransition t);
+	public boolean setCurrent(ComportamentaleState s);
 }

@@ -33,11 +33,11 @@ public class ComportamentaleFANet {
 	}
 	
 	
-	public ArrayList<State> getInitialStates(){
+	public ArrayList<ComportamentaleState> getInitialStates(){
 		return net.stream().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	public ArrayList<State> getActualStates(){
+	public ArrayList<ComportamentaleState> getActualStates(){
 		return net.stream().map(cfa -> cfa.currentState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
@@ -54,7 +54,7 @@ public class ComportamentaleFANet {
 		}
 	}
 	
-	public void transitionTo(Transition transition) {
+	public void transitionTo(ComportamentaleTransition transition) {
 		for (ComportamentaleFA cfa : net) {
 	        if (transition.source().equals(cfa.currentState())) {
 	        	cfa.transitionTo(transition);
@@ -80,11 +80,11 @@ public class ComportamentaleFANet {
 		}
 	}
 	
-	public Set<Transition> enabledTransitions() {
-		Set<Transition> enabledTransitions = new HashSet<Transition>();
+	public Set<ComportamentaleTransition> enabledTransitions() {
+		Set<ComportamentaleTransition> enabledTransitions = new HashSet<ComportamentaleTransition>();
 		for(ComportamentaleFA cfa: net) {
-			Set<Transition> transitions = cfa.from(cfa.currentState());
-			for(Transition transition: transitions) {
+			Set<ComportamentaleTransition> transitions = cfa.from(cfa.currentState());
+			for(ComportamentaleTransition transition: transitions) {
 				boolean enabled = true;
 				if(!transition.isInputEventEmpty()) {
 					Link link = links.get(links.indexOf(transition.getInputLink()));

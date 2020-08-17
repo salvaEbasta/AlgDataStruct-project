@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import comportamentale_fa.Transition;
+import comportamentale_fa.ComportamentaleTransition;
 
 import java.util.TreeSet;
 
@@ -85,8 +85,8 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 		return inputStates;
 	}
 	
-	public HashMap<Transition, SpaceState> getInputTransitions(SpaceState to){
-		HashMap<Transition, SpaceState> inputTransitions = new HashMap<Transition, SpaceState>();
+	public HashMap<ComportamentaleTransition, SpaceState> getInputTransitions(SpaceState to){
+		HashMap<ComportamentaleTransition, SpaceState> inputTransitions = new HashMap<ComportamentaleTransition, SpaceState>();
 		for(SpaceStateTransitions stateTransitions: states) {
 			if(stateTransitions.hasOutputState(to))
 				inputTransitions.put(stateTransitions.getInputTransition(to), stateTransitions.getSource());
@@ -94,7 +94,7 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 		return inputTransitions;
 	}
 	
-	public boolean addOutputTransition(SpaceState source, Transition transition, SpaceState outState) {
+	public boolean addOutputTransition(SpaceState source, ComportamentaleTransition transition, SpaceState outState) {
 		if(containsKey(source))
 			return get(source).addOutputTransition(transition, outState);
 		return false;		
@@ -116,7 +116,7 @@ public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 		return null;
 	}
 	
-	public HashMap<Transition, SpaceState> getOutputTransitions(SpaceState state) {
+	public HashMap<ComportamentaleTransition, SpaceState> getOutputTransitions(SpaceState state) {
 		if(containsKey(state))
 			return get(state).getOutputTransitions();
 		return null;
