@@ -1,10 +1,13 @@
 package commoninterfaces;
 
+import comportamentale_fa.labels.Label;
+
 public abstract class Transition<S extends State> {
 	
 	private String id;
 	private S source;
 	private S destination;
+	private Label regex;
 	
 	public Transition(String id, S source, S destination) {
 		this.id = id;
@@ -18,6 +21,14 @@ public abstract class Transition<S extends State> {
 	
 	public S source() {
 		return source;
+	}	
+	
+	public Label regex() {
+		return regex;
+	}
+	
+	public void setRegex(Label regex) {
+		this.regex = regex;
 	}
 	
 	public S sink() {

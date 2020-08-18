@@ -3,6 +3,7 @@ package comportamentale_fa;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
+import comportamentale_fa.labels.Label;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 
@@ -41,6 +42,15 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 		this.omega = omega;
 		this.f = f;
 	}
+	
+	
+	public RelevantLabel regex() {
+		return f;
+	}
+	
+	public void setRegex(RelevantLabel regex) {
+		f = regex;
+	}	
 	
 	public Link getInputLink() {
 		return inputLink;
