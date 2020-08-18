@@ -3,7 +3,7 @@ package commoninterfaces;
 import java.util.HashMap;
 import java.util.Set;
 
-public interface AutomaInterface<S extends State, T extends Transition, I extends Interconnections<T>>{
+public interface AutomaInterface<S extends State, T extends Transition>{
 	public String id();
 	public Set<T> transitions();
 	public Set<S> states();
@@ -11,7 +11,6 @@ public interface AutomaInterface<S extends State, T extends Transition, I extend
 	public S currentState();
 	public Set<T> to(S s);
 	public Set<T> from(S s);
-	public HashMap<S, I> structure();
 	public boolean add(T t);
 	public boolean insert(S s);
 	public boolean setInitial(S s);
