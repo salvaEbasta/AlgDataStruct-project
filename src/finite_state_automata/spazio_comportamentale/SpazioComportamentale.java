@@ -1,11 +1,12 @@
-package spazio_comportamentale;
+package finite_state_automata.spazio_comportamentale;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.Transition;
+import finite_state_automata.comportamental.ComportamentaleFANet;
+import finite_state_automata.comportamental.Transition;
+
+import java.util.Set;
 
 public class SpazioComportamentale {
 	

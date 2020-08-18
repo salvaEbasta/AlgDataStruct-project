@@ -1,24 +1,24 @@
-package comportamentale_fa;
+package finite_state_automata.comportamental;
 
 public class Link {
 
 	private String id;
-	private ComportamentaleFA source;
-	private ComportamentaleFA destination;
+	private ComportamentalFSM source;
+	private ComportamentalFSM destination;
 	private Event event;
 	
-	public Link(String id, ComportamentaleFA source, ComportamentaleFA destination) {
+	public Link(String id, ComportamentalFSM source, ComportamentalFSM destination) {
 		this.id = id;
 		this.source = source;
 		this.destination = destination;
 		this.event = new Event();
 	}
 	
-	public ComportamentaleFA getSource() {
+	public ComportamentalFSM getSource() {
 		return source;
 	}
 	
-	public ComportamentaleFA getDestination() {
+	public ComportamentalFSM getDestination() {
 		return destination;
 	}
 	

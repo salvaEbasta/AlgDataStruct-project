@@ -1,4 +1,4 @@
-package comportamentale_fa;
+package finite_state_automata.comportamental;
 
 import utility.Constants;
 
@@ -21,8 +21,10 @@ public class Event {
 	}
 	
 	@Override
-	public boolean equals(Object otherEvent) {
-		Event ev = (Event) otherEvent;
+	public boolean equals(Object obj) {
+		if(obj==null || !Event.class.isAssignableFrom(obj.getClass()))
+			return false;
+		final Event ev = (Event) obj;
 		return this.id.equals(ev.id);
 	}
 		

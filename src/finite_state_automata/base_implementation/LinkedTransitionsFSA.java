@@ -1,20 +1,24 @@
-package finite_state_automata;
+package finite_state_automata.base_implementation;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
+import finite_state_automata.FiniteStateMachine;
+import finite_state_automata.State;
+import finite_state_automata.Transition;
+
 public class LinkedTransitionsFSA implements FiniteStateMachine{
 	private String id;
 	private HashMap<State, Interconnections> structure;
 	private State initial;
-	private State actual;
+	private State current;
 	
 	public LinkedTransitionsFSA(String id) {
 		this.id = id;
 		structure = new HashMap<State, Interconnections>();
 		initial = null;
-		actual = null;
+		current = null;
 	}
 	public String id() {
 		return id;
@@ -43,8 +47,8 @@ public class LinkedTransitionsFSA implements FiniteStateMachine{
 		return initial;
 	}
 	@Override
-	public State actualState() {
-		return actual;
+	public State currentState() {
+		return current;
 	}
 	@Override
 	public Set<Transition> to(State s) {
@@ -87,7 +91,7 @@ public class LinkedTransitionsFSA implements FiniteStateMachine{
 	}
 	@Override
 	public boolean remove(State s) {
-		if((initial!=null && initial.equals(s))||(actual!=null && actual.equals(s)))
+		if((initial!=null && initial.equals(s))||(current!=null && current.equals(s)))
 			return false;
 		structure.get(s).from().forEach(t->structure.get(t.sink()).to().remove(t));
 		structure.get(s).to().forEach(t->structure.get(t.source()).from().remove(t));
@@ -107,5 +111,12 @@ public class LinkedTransitionsFSA implements FiniteStateMachine{
 		StringBuilder sb = new StringBuilder();
 		sb.append(structure.toString());
 		return sb.toString();
+	}
+	
+	public void clear() {
+		initial = null;
+		current = null;
+		structure.values().forEach(i->i.clear());
+		structure.clear();
 	}
 }

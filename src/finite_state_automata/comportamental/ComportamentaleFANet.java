@@ -1,4 +1,4 @@
-package comportamentale_fa;
+package finite_state_automata.comportamental;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,17 +7,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import spazio_comportamentale.SpaceState;
+import finite_state_automata.spazio_comportamentale.SpaceState;
 
 import java.util.Map.Entry;
 
 public class ComportamentaleFANet {
 	
-	private ArrayList<ComportamentaleFA> net;
+	private ArrayList<ComportamentalFSM> net;
 	private ArrayList<Link> links;
 	
 	public ComportamentaleFANet(ArrayList<Link> links) {
-		this.net = new ArrayList<ComportamentaleFA>();
+		this.net = new ArrayList<ComportamentalFSM>();
 		this.links = links;
 		for(Link link: links) {
 			link.setEmptyEvent();
@@ -27,7 +27,7 @@ public class ComportamentaleFANet {
 				net.add(link.getDestination());
 		}
 		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3 (comodo per confrontare la soluzione)
-		for(ComportamentaleFA cfa: net) {
+		for(ComportamentalFSM cfa: net) {
 			cfa.setCurrent(cfa.initialState()); //imposta l'actual state allo stato iniziale (magari facciamo metodo setActualToInitial? )
 		}
 	}
@@ -55,9 +55,9 @@ public class ComportamentaleFANet {
 	}
 	
 	public void transitionTo(Transition transition) {
-		for (ComportamentaleFA cfa : net) {
+		for (ComportamentalFSM cfa : net) {
 	        if (transition.source().equals(cfa.currentState())) {
-	        	cfa.transitionTo(transition);
+	        	cfa.activate(transition);
 	            break;
 	        }
 	    }	
@@ -82,7 +82,7 @@ public class ComportamentaleFANet {
 	
 	public Set<Transition> enabledTransitions() {
 		Set<Transition> enabledTransitions = new HashSet<Transition>();
-		for(ComportamentaleFA cfa: net) {
+		for(ComportamentalFSM cfa: net) {
 			Set<Transition> transitions = cfa.from(cfa.currentState());
 			for(Transition transition: transitions) {
 				boolean enabled = true;

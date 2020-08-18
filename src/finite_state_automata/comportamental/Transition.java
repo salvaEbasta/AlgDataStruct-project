@@ -1,4 +1,4 @@
-package comportamentale_fa;
+package finite_state_automata.comportamental;
 
 import java.util.HashMap;
 import comportamentale_fa.labels.OsservableLabel;

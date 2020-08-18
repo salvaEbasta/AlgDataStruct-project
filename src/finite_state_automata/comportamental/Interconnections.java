@@ -1,4 +1,4 @@
-package finite_state_automata;
+package finite_state_automata.comportamental;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,10 +18,28 @@ public class Interconnections {
 		return false;
 	}
 	
+	public boolean addAllIn(Set<Transition> setIn) {
+		int prevSize = in.size();
+		for(Transition t: setIn) {
+			if(!in.contains(t))
+				in.add(t);
+		}
+		return in.size() != prevSize;
+	}
+	
 	public boolean newOut(Transition t) {
 		if(!out.contains(t))
 			return out.add(t);
 		return false;
+	}
+	
+	public boolean addAllOut(Set<Transition> setOut) {
+		int prevSize = out.size();
+		for(Transition t: setOut) {
+			if(!out.contains(t))
+				out.add(t);
+		}
+		return out.size() != prevSize;
 	}
 	
 	public boolean remove(Transition t) {
@@ -38,18 +56,6 @@ public class Interconnections {
 	
 	public Set<Transition> from(){
 		return out;
-	}
-	
-	public boolean hasAuto() {
-		HashSet<Transition> tmp = new HashSet<Transition>(out);
-		tmp.retainAll(in);
-		return !tmp.isEmpty();
-	}
-	
-	public Set<Transition> getAuto(){
-		HashSet<Transition> tmp = new HashSet<Transition>(out);
-		tmp.retainAll(in);
-		return tmp;
 	}
 	
 	public String toString() {

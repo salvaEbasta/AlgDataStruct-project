@@ -8,7 +8,7 @@ public interface FiniteStateMachine {
 	public Set<State> states();
 	public Set<State> acceptingStates();
 	public State initialState();
-	public State actualState();
+	public State currentState();
 	public Set<Transition> to(State s);
 	public Set<Transition> from(State s);
 	public boolean add(Transition t);
@@ -18,4 +18,5 @@ public interface FiniteStateMachine {
 	public boolean remove(State s);
 	public boolean hasAuto(State s);
 	public Transition getAuto(State s);
+	public void clear();
 }

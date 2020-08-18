@@ -1,13 +1,12 @@
-package spazio_comportamentale;
+package finite_state_automata.spazio_comportamentale;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
-import comportamentale_fa.Transition;
-
 import java.util.TreeSet;
+
+import finite_state_automata.comportamental.Transition;
 
 public class SpaceInterconnections implements Iterable<SpaceStateTransitions>{
 	

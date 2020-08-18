@@ -1,9 +1,9 @@
-package spazio_comportamentale;
+package finite_state_automata.spazio_comportamentale;
 
 import java.util.ArrayList;
 
-import comportamentale_fa.Event;
-import comportamentale_fa.State;
+import finite_state_automata.comportamental.Event;
+import finite_state_automata.comportamental.State;
 
 public class SpaceState {
 	

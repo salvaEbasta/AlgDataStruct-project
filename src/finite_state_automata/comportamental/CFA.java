@@ -1,10 +1,12 @@
-package comportamentale_fa;
+package finite_state_automata.comportamental;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CFA implements ComportamentaleFA{
+import finite_state_automata.FiniteStateMachine;
+
+public class CFA implements ComportamentalFSM{
 
 	private String id;
 	private HashMap<State, Interconnections> structure;
@@ -21,6 +23,7 @@ public class CFA implements ComportamentaleFA{
 	public String id() {
 		return id;
 	}
+	
 	@Override
 	public Set<Transition> transitions() {
 		HashSet<Transition> tmp = new HashSet<Transition>();
@@ -30,6 +33,7 @@ public class CFA implements ComportamentaleFA{
 		});
 		return tmp;
 	}
+	
 	@Override
 	public Set<State> states() {
 		return new HashSet<State>(structure.keySet());
@@ -54,7 +58,7 @@ public class CFA implements ComportamentaleFA{
 	}
 	
 	@Override
-	public boolean transitionTo(Transition t) {
+	public boolean activate(Transition t) {
 		if (structure.containsKey(t.sink()) && current.equals(t.source())) {
 			current = t.sink();
 			return true;
@@ -128,6 +132,84 @@ public class CFA implements ComportamentaleFA{
 	public boolean equals(Object otherCFA) {
 		CFA cfa = (CFA) otherCFA;
 		return this.id.equals(cfa.id);
+	}
+
+	@Override
+	public State activate(Transition t) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<finite_state_automata.base_implementation.SimpleState> acceptingStates() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public finite_state_automata.base_implementation.SimpleState initialState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public finite_state_automata.base_implementation.SimpleState currentState() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<finite_state_automata.base_implementation.SimpleTransition> to(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<finite_state_automata.base_implementation.SimpleTransition> from(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean add(finite_state_automata.base_implementation.SimpleTransition t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean insert(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean setInitial(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean remove(finite_state_automata.base_implementation.SimpleTransition t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean remove(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasAuto(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public finite_state_automata.base_implementation.SimpleTransition getAuto(finite_state_automata.base_implementation.SimpleState s) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,7 +1,9 @@
-package comportamentale_fa;
+package finite_state_automata.base_implementation;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import finite_state_automata.Transition;
 
 public class Interconnections {
 	private HashSet<Transition> in;
@@ -18,28 +20,10 @@ public class Interconnections {
 		return false;
 	}
 	
-	public boolean addAllIn(Set<Transition> setIn) {
-		int prevSize = in.size();
-		for(Transition t: setIn) {
-			if(!in.contains(t))
-				in.add(t);
-		}
-		return in.size() != prevSize;
-	}
-	
 	public boolean newOut(Transition t) {
 		if(!out.contains(t))
 			return out.add(t);
 		return false;
-	}
-	
-	public boolean addAllOut(Set<Transition> setOut) {
-		int prevSize = out.size();
-		for(Transition t: setOut) {
-			if(!out.contains(t))
-				out.add(t);
-		}
-		return out.size() != prevSize;
 	}
 	
 	public boolean remove(Transition t) {
@@ -58,11 +42,28 @@ public class Interconnections {
 		return out;
 	}
 	
+	public boolean hasAuto() {
+		HashSet<Transition> tmp = new HashSet<Transition>(out);
+		tmp.retainAll(in);
+		return !tmp.isEmpty();
+	}
+	
+	public Set<Transition> getAuto(){
+		HashSet<Transition> tmp = new HashSet<Transition>(out);
+		tmp.retainAll(in);
+		return tmp;
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(out.toString());
 		sb.deleteCharAt(0);
 		sb.insert(0, in.toString().replace("]", ", "));
 		return sb.toString();
+	}
+	
+	public void clear() {
+		in.clear();
+		out.clear();
 	}
 }

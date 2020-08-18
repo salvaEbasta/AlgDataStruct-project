@@ -11,6 +11,7 @@ import java.util.logging.StreamHandler;
 import finite_state_automata.FiniteStateMachine;
 import finite_state_automata.State;
 import finite_state_automata.Transition;
+import finite_state_automata.base_implementation.BaseFSABuilder;
 
 public class RegexBuilder {
 	public static String compute(FiniteStateMachine N) {
@@ -21,16 +22,16 @@ public class RegexBuilder {
 		//Initialization of N
 		State n0 = null;
 		if(N.to(N.initialState()).size() > 0) {
-			n0 = new State("n0");
+			n0 = BaseFSABuilder.newState("n0");
 			N.insert(n0);
-			N.add(new Transition("n0-"+N.initialState().id(), n0, N.initialState(), ""));
+			N.add(BaseFSABuilder.newTransition("n0-"+N.initialState().id(), n0, N.initialState(), ""));
 			N.setInitial(n0);
 		} else {
 			n0 = N.initialState();
 		}
-		State nq = new State("nq");
+		State nq = BaseFSABuilder.newState("nq");
 		N.insert(nq);
-		N.acceptingStates().forEach((s)->N.add(new Transition(s.id()+"-"+nq.id(), s, nq, "")));
+		N.acceptingStates().forEach((s)->N.add(BaseFSABuilder.newTransition(s.id()+"-"+nq.id(), s, nq, "")));
 		
 		log.info("Post initialization: "+N.toString());
 		
@@ -62,7 +63,7 @@ public class RegexBuilder {
 					N.remove(t);
 					regexBuilder.append(t.regex());
 				});
-				Transition tmp = new Transition(source.id()+"-"+sink.id()+"_"+counter,
+				Transition tmp = BaseFSABuilder.newTransition(source.id()+"-"+sink.id()+"_"+counter,
 						source,
 						sink,
 						"");
@@ -89,7 +90,7 @@ public class RegexBuilder {
 				});
 				regexBuilder.append(")");
 				String id = head.source().id()+"-"+head.sink().id()+"_"+counter;
-				Transition union = new Transition(id,
+				Transition union = BaseFSABuilder.newTransition(id,
 						head.source(),
 						head.sink(),
 						regexBuilder.toString());
@@ -109,7 +110,7 @@ public class RegexBuilder {
 					regexBuilder.append("|"+t.regex());
 				});
 				regexBuilder.append(")");
-				Transition union = new Transition(head.source().id()+"-"+head.sink().id()+"_"+counter,
+				Transition union = BaseFSABuilder.newTransition(head.source().id()+"-"+head.sink().id()+"_"+counter,
 						head.source(),
 						head.sink(),
 						regexBuilder.toString());
@@ -134,7 +135,7 @@ public class RegexBuilder {
 							.filter(r2->!r2.isAuto())
 							.forEach(r2->{
 								String id = "t"+r1.id()+"- t"+r2.id();
-								Transition tmp = new Transition(id,
+								Transition tmp = BaseFSABuilder.newTransition(id,
 										r1.source(),
 										r2.sink(),
 										"");

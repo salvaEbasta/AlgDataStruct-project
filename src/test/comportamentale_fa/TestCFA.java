@@ -9,17 +9,17 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import comportamentale_fa.CFA;
-import comportamentale_fa.ComportamentaleFA;
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.Event;
-import comportamentale_fa.Link;
-import comportamentale_fa.State;
-import comportamentale_fa.Transition;
 import comportamentale_fa.labels.OsservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
-import spazio_comportamentale.SpaceInterconnections;
-import spazio_comportamentale.SpazioComportamentale;
+import finite_state_automata.comportamental.CFA;
+import finite_state_automata.comportamental.ComportamentalFSM;
+import finite_state_automata.comportamental.ComportamentaleFANet;
+import finite_state_automata.comportamental.Event;
+import finite_state_automata.comportamental.Link;
+import finite_state_automata.comportamental.State;
+import finite_state_automata.comportamental.Transition;
+import finite_state_automata.spazio_comportamentale.SpaceInterconnections;
+import finite_state_automata.spazio_comportamentale.SpazioComportamentale;
 
 class TestCFA {
 
@@ -28,7 +28,7 @@ class TestCFA {
 	
 	ComportamentaleFANet initialize() {
 		//AUTOMATA C2
-		ComportamentaleFA c2 = new CFA("C2");
+		ComportamentalFSM c2 = new CFA("C2");
 		State s20 = new State("20");
 		State s21 = new State("21");
 		c2.insert(s20);
@@ -36,7 +36,7 @@ class TestCFA {
 		c2.setInitial(s20);
 		
 		//AUTOMATA C3
-		ComportamentaleFA c3 = new CFA("C3");
+		ComportamentalFSM c3 = new CFA("C3");
 		State s30 = new State("30");
 		State s31 = new State("31");
 		c3.insert(s30);
