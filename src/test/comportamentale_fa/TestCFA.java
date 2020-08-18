@@ -15,8 +15,10 @@ import comportamentale_fa.Event;
 import comportamentale_fa.Link;
 import comportamentale_fa.ComportamentaleState;
 import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.labels.OsservableLabel;
+import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
+import spazio_comp_oss_lin.SpaceInterconnectionsOss;
+import spazio_comp_oss_lin.SpazioComportamentaleOss;
 import spazio_comportamentale.SpaceInterconnections;
 import spazio_comportamentale.SpazioComportamentale;
 
@@ -51,12 +53,12 @@ class TestCFA {
 		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
 		out2.put(e2, l2);
 		
-		t2a = new ComportamentaleTransition("t2a", s20, s21, e2, l2, out, new OsservableLabel("o2"), new RelevantLabel());
-		ComportamentaleTransition t2b = new ComportamentaleTransition("t2b", s21, s20, out, new OsservableLabel(), new RelevantLabel("r"));
+		t2a = new ComportamentaleTransition("t2a", s20, s21, e2, l2, out, new ObservableLabel("o2"), new RelevantLabel());
+		ComportamentaleTransition t2b = new ComportamentaleTransition("t2b", s21, s20, out, new ObservableLabel(), new RelevantLabel("r"));
 		
-		t3a = new ComportamentaleTransition("t3a", s30, s31, out2, new OsservableLabel("o3"), new RelevantLabel());
-		ComportamentaleTransition t3b = new ComportamentaleTransition("t3b", s31, s30, e3, l3, new OsservableLabel(), new RelevantLabel());
-		ComportamentaleTransition t3c = new ComportamentaleTransition("t3c", s31, s31, e3, l3, new OsservableLabel(), new RelevantLabel("f"));
+		t3a = new ComportamentaleTransition("t3a", s30, s31, out2, new ObservableLabel("o3"), new RelevantLabel());
+		ComportamentaleTransition t3b = new ComportamentaleTransition("t3b", s31, s30, e3, l3, new ObservableLabel(), new RelevantLabel());
+		ComportamentaleTransition t3c = new ComportamentaleTransition("t3c", s31, s31, e3, l3, new ObservableLabel(), new RelevantLabel("f"));
 		
 		/*
 		 * System.out.println(t2a.toString()); System.out.println(t2b.toString());
@@ -87,8 +89,20 @@ class TestCFA {
 		System.out.println(sc.toString());	
 		sc.potatura();
 		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
+		System.out.println(sc.toString());				
+	}
+	
+	@Test
+	void spazioComportamentaleOssLineare() {		
+		ComportamentaleFANet net = initialize();
+		SpazioComportamentaleOss sc = new SpazioComportamentaleOss(net);
+		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
+		SpaceInterconnectionsOss computedSpace = sc.generaSpazioOsservazione(obsLin);
+		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
 		System.out.println(sc.toString());	
-			
+		sc.potatura();
+		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
+		System.out.println(sc.toString());				
 	}
 	
 	@Test

@@ -3,7 +3,7 @@ package comportamentale_fa;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
-import comportamentale_fa.labels.OsservableLabel;
+import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 
 public class ComportamentaleTransition extends Transition{
@@ -12,10 +12,10 @@ public class ComportamentaleTransition extends Transition{
 	private Link inputLink;
 	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
 									//è possibile inserire più volte lo stesso "valore" Link
-	private OsservableLabel omega;
+	private ObservableLabel omega;
 	private RelevantLabel f;
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		this.in = in;
 		this.inputLink = inputLink;
@@ -24,7 +24,7 @@ public class ComportamentaleTransition extends Transition{
 		this.f = f;
 	}
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, OsservableLabel omega, RelevantLabel f) {
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		this.in = in;
 		this.inputLink = inputLink;
@@ -33,7 +33,7 @@ public class ComportamentaleTransition extends Transition{
 		this.f = f;
 	}
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, HashMap<Event, Link> out, OsservableLabel omega, RelevantLabel f) {
+	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		this.in = new Event();
 		this.inputLink = null;
@@ -62,7 +62,11 @@ public class ComportamentaleTransition extends Transition{
 		return out;
 	}
 	
-	public boolean hasOsservableLabel() {
+	public ObservableLabel getObservableLabel() {
+		return omega;
+	}
+	
+	public boolean hasObservableLabel() {
 		return !omega.isEmpty();
 	}
 	
@@ -76,7 +80,7 @@ public class ComportamentaleTransition extends Transition{
 	
 	public String labels() {
 		if(hasLabel())
-			return String.format("[%s]", hasOsservableLabel()? omega : f);
+			return String.format("[%s]", hasObservableLabel()? omega : f);
 		return "";
 	}	
 	
@@ -95,7 +99,7 @@ public class ComportamentaleTransition extends Transition{
 			sb.append("}");			
 		}
 		if(hasLabel())
-			sb.append(String.format("[%s]", hasOsservableLabel()? omega : f));
+			sb.append(String.format("[%s]", hasObservableLabel()? omega : f));
 		return sb.toString();
 	}
 

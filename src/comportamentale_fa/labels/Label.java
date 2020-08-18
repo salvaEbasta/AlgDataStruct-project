@@ -29,4 +29,10 @@ public abstract class Label {
 	public String toString() {
 		return String.format("%s: %s", symbol, label);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Label other = (Label) obj;
+		return this.symbol.equals(other.symbol) && this.label.equals(other.label);
+	}
 }

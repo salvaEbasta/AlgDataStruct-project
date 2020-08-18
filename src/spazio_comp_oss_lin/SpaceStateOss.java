@@ -9,21 +9,25 @@ import spazio_comportamentale.SpaceState;
 public class SpaceStateOss extends SpaceState{
 	
 	private int index;
+	private int ossSize;
 
-	public SpaceStateOss(String id, ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceStateOss(String id, ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents, int index, int ossSize) {
 		super(id, actualStates, linkEvents);
-		index = 0;
+		this.index = index;
+		this.ossSize = ossSize;	
 	}
 	
-	
-	public boolean isFinalState(int ossSize) {
+	@Override
+	public boolean isFinalState() {
 		return super.isFinalState() && index == ossSize;
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(super.toString());
+		String base = super.toString().replace("\t[Stato Finale]", "");
+		StringBuilder sb = new StringBuilder(base);
 		sb.append(String.format(" | %d", index));
+		sb.append(isFinalState()? "\t[Stato Finale]": "");
 		return sb.toString();
 	}
 	

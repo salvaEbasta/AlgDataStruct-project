@@ -80,6 +80,10 @@ public class ComportamentaleFANet {
 		}
 	}
 	
+	public ArrayList<ComportamentaleFA> getCFAs() {
+		return net;	
+	}
+	
 	public Set<ComportamentaleTransition> enabledTransitions() {
 		Set<ComportamentaleTransition> enabledTransitions = new HashSet<ComportamentaleTransition>();
 		for(ComportamentaleFA cfa: net) {
