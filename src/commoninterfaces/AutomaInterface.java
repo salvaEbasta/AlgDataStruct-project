@@ -18,4 +18,6 @@ public interface AutomaInterface<S extends State, T extends Transition<S>>{
 	public boolean transitionTo(T t);
 	public boolean setCurrent(S s);
 	public Set<S> acceptingStates();
+	public boolean hasAuto(S s);
+	public T getAuto(S s);
 }

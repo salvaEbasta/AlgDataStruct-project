@@ -5,13 +5,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
-import java.util.logging.StreamHandler;
 
 import commoninterfaces.AutomaInterface;
 import commoninterfaces.Builder;
 import commoninterfaces.State;
 import commoninterfaces.Transition;
+import comportamentale_fa.labels.Regex;
 
 public class RegexBuilder<S extends State, T extends Transition<S>> {
 	public String compute(AutomaInterface<S, T> N, Builder<S, T> builder) {
@@ -25,20 +24,24 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 			n0 = builder.newState("n0");
 			N.insert(n0);
 			T t = builder.newTransition("n0-"+N.initialState().id(), n0, N.initialState());
-			t.
+			t.setRegex(new Regex());
 			N.add(t);
 			N.setInitial(n0);
 		} else {
 			n0 = N.initialState();
 		}
-		State nq = builder.newState("nq");
+		S nq = builder.newState("nq");
 		N.insert(nq);
-		N.acceptingStates().forEach((s)->N.add(builder.newTransition(s.id()+"-"+nq.id(), s, nq, "")));
+		N.acceptingStates().forEach((s)->{
+			T t = builder.newTransition(s.id()+"-"+nq.id(), s, nq);
+			t.setRegex(new Regex());
+			N.add(t);
+			});
 		
 		log.info("Post initialization: "+N.toString());
 		
 		//Initialization of markings
-		HashMap<String, LinkedList<Transition>> markings = new HashMap<String, LinkedList<Transition>>();
+		HashMap<String, LinkedList<T>> markings = new HashMap<String, LinkedList<T>>();
 		
 		//To differentiate the id of the new transitions
 		int counter = 0;
@@ -51,39 +54,38 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 			regexBuilder.setLength(0);
 			
 			//Find a path of a single transition to and from a state of the sequence
-			LinkedList<Transition> transitions = TransitionFinder.oneWayPath(N);
+			LinkedList<T> transitions = new TransitionFinder<S,T>().oneWayPath(N);
 			StringBuilder mark = new StringBuilder();
 			if(transitions.size() > 0) {
 				log.info("Found one way path: "+transitions);
-				Transition last = transitions.pollLast();
+				T last = transitions.pollLast();
 				N.remove(last);
 				
-				State source = transitions.getFirst().source();
-				State sink = last.sink();
+				S source = transitions.getFirst().source();
+				S sink = last.sink();
 				regexBuilder.append("(");
 				transitions.forEach(t->{
 					N.remove(t);
 					regexBuilder.append(t.regex());
 				});
-				Transition tmp = builder.newTransition(source.id()+"-"+sink.id()+"_"+counter,
+				T tmp = builder.newTransition(source.id()+"-"+sink.id()+"_"+counter,
 						source,
-						sink,
-						"");
+						sink);
 				if(!last.sink().equals(nq) && !last.source().isAccepting()) {
 					regexBuilder.append(last.regex()+")");
 				}else {
 					regexBuilder.append(")");
 					if(!markings.containsKey(last.source().id()))
-						markings.put(last.source().id(), new LinkedList<Transition>());
+						markings.put(last.source().id(), new LinkedList<T>());
 					markings.get(last.source().id()).add(tmp);
 				}
-				tmp.setRegex(regexBuilder.toString());
+				tmp.setRegex(new Regex(regexBuilder.toString()));
 				N.add(tmp);
 				log.info("New transition: "+tmp.toString());
 			//Find transitions that are parallels
 			}else if(findParallelTransitions(N, transitions)){
 				log.info("Found parallels: "+transitions);
-				Transition head = transitions.pop();
+				T head = transitions.pop();
 				N.remove(head);
 				regexBuilder.append("("+head.regex());
 				transitions.forEach(t->{
@@ -92,16 +94,16 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 				});
 				regexBuilder.append(")");
 				String id = head.source().id()+"-"+head.sink().id()+"_"+counter;
-				Transition union = builder.newTransition(id,
+				T union = builder.newTransition(id,
 						head.source(),
-						head.sink(),
-						regexBuilder.toString());
+						head.sink());
+				union.setRegex(new Regex(regexBuilder.toString()));
 				N.add(union);
 				log.info("New transition: "+union.toString());
 			//Find transitions that have the same mark and are parallels
 			}else if(findSameMarkParallelTransitions(markings, transitions, mark)) {
 				log.info("Found same mark, parallels: "+transitions);
-				Transition head = transitions.pop();
+				T head = transitions.pop();
 				N.remove(head);
 				markings.get(mark.toString()).remove(head);
 				
@@ -112,21 +114,21 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 					regexBuilder.append("|"+t.regex());
 				});
 				regexBuilder.append(")");
-				Transition union = builder.newTransition(head.source().id()+"-"+head.sink().id()+"_"+counter,
+				T union = builder.newTransition(head.source().id()+"-"+head.sink().id()+"_"+counter,
 						head.source(),
-						head.sink(),
-						regexBuilder.toString());
+						head.sink());
+				union.setRegex(new Regex(regexBuilder.toString()));
 				N.add(union);
 				markings.get(mark.toString()).add(union);
 				log.info("New transition: "+union.toString());
 			}else {
 				log.info("Default procedure");
-				LinkedList<State> states = new LinkedList<State>(N.states());
-				State n_tmp = states.pop();
+				LinkedList<S> states = new LinkedList<S>(N.states());
+				S n_tmp = states.pop();
 				//n!=n0 && n!=nq
 				while(n_tmp.equals(n0) || n_tmp.equals(nq)) 
 					n_tmp = states.pop();
-				State n = n_tmp;
+				S n = n_tmp;
 				log.info("Selected state: "+n);
 				N.to(n)
 					.stream()
@@ -137,10 +139,9 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 							.filter(r2->!r2.isAuto())
 							.forEach(r2->{
 								String id = "t"+r1.id()+"- t"+r2.id();
-								Transition tmp = builder.newTransition(id,
+								T tmp = builder.newTransition(id,
 										r1.source(),
-										r2.sink(),
-										"");
+										r2.sink());
 								if(r2.sink().equals(nq) && n.isAccepting()) {
 									if(N.hasAuto(n)) {
 										regexBuilder.append("(");
@@ -151,7 +152,7 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 										regexBuilder.append(r1.regex());
 									}
 									if(!markings.containsKey(n.id()))
-										markings.put(n.id(), new LinkedList<Transition>());
+										markings.put(n.id(), new LinkedList<T>());
 									markings.get(n.id()).add(tmp);
 								}else if(N.hasAuto(n)) {
 									regexBuilder.append("(");
@@ -165,7 +166,7 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 									regexBuilder.append(r2.regex());
 									regexBuilder.append(")");
 								}
-								tmp.setRegex(regexBuilder.toString());
+								tmp.setRegex(new Regex(regexBuilder.toString()));
 								N.add(tmp);
 								log.info("New transition: "+tmp.toString());
 							});
@@ -191,8 +192,8 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 		return log;
 	}
 	
-	private static boolean findSameMarkParallelTransitions(HashMap<String, LinkedList<Transition>> marks,
-			LinkedList<Transition> transitions, StringBuilder key) {
+	private boolean findSameMarkParallelTransitions(HashMap<String, LinkedList<T>> marks,
+			LinkedList<T> transitions, StringBuilder key) {
 		transitions.clear();
 		key.setLength(0);
 		Iterator<String> iter = marks.keySet().iterator();
@@ -202,9 +203,9 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 			if(transitions.size() > 1)
 				break;
 			key.append(iter.next());
-			LinkedList<Transition> marked = new LinkedList<Transition>(marks.get(key.toString()));
+			LinkedList<T> marked = new LinkedList<T>(marks.get(key.toString()));
 			while(marked.size() > 1) {
-				Transition t = marked.pop();
+				T t = marked.pop();
 				marked.forEach(t1->{if(t1.isParallelTo(t)) transitions.add(t1);});
 				transitions.add(t);
 				
@@ -217,9 +218,9 @@ public class RegexBuilder<S extends State, T extends Transition<S>> {
 		return transitions.size() > 0;
 	}
 	
-	private boolean findParallelTransitions(FiniteStateMachine N, LinkedList<Transition> transitions) {
+	private boolean findParallelTransitions(AutomaInterface<S, T> N, LinkedList<T> transitions) {
 		transitions.clear();
-		transitions.addAll(TransitionFinder.parallelTransitions(N));
+		transitions.addAll(new TransitionFinder<S, T>().parallelTransitions(N));
 		return transitions.size() > 0;
 	}
 }

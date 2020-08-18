@@ -120,6 +120,16 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	}
 	
 	@Override
+	public boolean hasAuto(S s) {
+		return structure.get(s).hasAuto();
+	}
+	
+	@Override
+	public T getAuto(S s) {
+		return structure.get(s).getAuto().iterator().next();
+	}
+	
+	@Override
 	public String toString() {
 		return structure.toString();
 	}

@@ -3,9 +3,11 @@ package commoninterfaces;
 public abstract class State {
 	
 	protected String id;
+	public boolean accepting;
 	
 	public State(String id) {
 		this.id = id;
+		this.accepting = false;
 	}
 	
 	public String id() {
@@ -14,6 +16,14 @@ public abstract class State {
 	
 	public int hashCode() {
 		return id.hashCode();
+	}
+	
+	public boolean isAccepting() {
+		return accepting;
+	}
+	
+	public void setAccepting(boolean accepting) {
+		this.accepting = accepting;
 	}
 	
 	public boolean equals(Object obj) {
