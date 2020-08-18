@@ -2,7 +2,7 @@ package commoninterfaces;
 
 public abstract class State {
 	
-	private String id;
+	protected String id;
 	
 	public State(String id) {
 		this.id = id;

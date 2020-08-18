@@ -77,8 +77,8 @@ public class SpazioComportamentaleOss {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for(SpaceStateTransitionsOss state: states) {
-			sb.append(state.getSource().toString());
-			HashMap<ComportamentaleTransition, SpaceStateOss>  in = states.getInputTransitions(state.getSource());
+			sb.append(state.source().toString());
+			HashMap<ComportamentaleTransition, SpaceStateOss>  in = states.getInputTransitions(state.source());
 			HashMap<ComportamentaleTransition, SpaceStateOss> out = state.getOutputTransitions();
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");

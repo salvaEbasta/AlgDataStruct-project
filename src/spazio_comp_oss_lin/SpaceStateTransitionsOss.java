@@ -17,7 +17,7 @@ public class SpaceStateTransitionsOss {
 		out = new HashMap<ComportamentaleTransition, SpaceStateOss>();
 	}
 	
-	public SpaceStateOss getSource() {
+	public SpaceStateOss source() {
 		return source;
 	}
 	

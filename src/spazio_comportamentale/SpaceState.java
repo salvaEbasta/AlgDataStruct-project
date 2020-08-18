@@ -2,18 +2,17 @@ package spazio_comportamentale;
 
 import java.util.ArrayList;
 
+import commoninterfaces.State;
 import comportamentale_fa.Event;
 import comportamentale_fa.ComportamentaleState;
 
-public class SpaceState {
+public class SpaceState extends State{
 	
-	private String id;
 	private ArrayList<ComportamentaleState> actualStates;
-	private ArrayList<Event> linkEvents;
-	
+	private ArrayList<Event> linkEvents;	
 	
 	public SpaceState(String id, ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
-		this.id = id;
+		super(id);
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
 		for(Event event: linkEvents) {
@@ -21,12 +20,8 @@ public class SpaceState {
 		}
 	}
 	
-	public String id() {
-		return id;
-	}
-	
 	public void setId(String id) {
-		this.id = id;
+		super.id = id;
 	}
 	
 	public boolean isFinalState() {

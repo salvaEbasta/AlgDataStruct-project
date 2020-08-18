@@ -1,3 +1,4 @@
+
 package spazio_comp_oss_lin;
 
 import java.util.HashMap;
@@ -11,17 +12,17 @@ import java.util.TreeSet;
 
 public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsOss>{
 	
-	private TreeSet<SpaceStateTransitionsOss> states;
+	private TreeSet<SpaceTransitionOss> states;
 	
 	public SpaceInterconnectionsOss() {
-		states = new TreeSet<SpaceStateTransitionsOss>((SpaceStateTransitionsOss state1, SpaceStateTransitionsOss state2) -> {
-			return new Integer(state1.getSource().id()).compareTo(new Integer(state2.getSource().id()));
+		states = new TreeSet<SpaceTransitionOss>((SpaceTransitionOss state1, SpaceTransitionOss state2) -> {
+			return new Integer(state1.source().id()).compareTo(new Integer(state2.source().id()));
 		});		
 	}
 	
 	public boolean containsKey(SpaceStateOss key) { //faccio questo e non uso il metodo originale containsKey perchè quest'ultimo controlla prima gli hashcode e poi gli equals
-		for(SpaceStateTransitionsOss stateTransitions: states) {
-			if(stateTransitions.getSource().equals(key))
+		for(SpaceTransitionOss stateTransitions: states) {
+			if(stateTransitions.source().equals(key))
 				return true;
 		}
 		return false;
@@ -37,7 +38,7 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 	
 	public boolean add(SpaceStateOss state) {
 		if(!containsKey(state)) {
-			return states.add(new SpaceStateTransitionsOss(state));
+			return states.add(new SpaceTransitionOss(state));
 		}
 		return false;
 	}
@@ -48,9 +49,9 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 	
 	public boolean potatura() {
 		int prevSize = size();
-		TreeSet<SpaceStateTransitionsOss> setCopy = new TreeSet<SpaceStateTransitionsOss>(states);
+		TreeSet<SpaceStateTransitionsOss> setCopy = new TreeSet<SpaceTransitionOss>(states);
 		for(SpaceStateTransitionsOss stateTransition: setCopy) {
-			checkPotatura(stateTransition.getSource());
+			checkPotatura(stateTransition.source());
 		}
 		ridenominazione();
 		return size() != prevSize;
@@ -76,14 +77,14 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 	public void ridenominazione() {
 		int i=0;
 		for(SpaceStateTransitionsOss spaceTransitions: states)
-			spaceTransitions.getSource().setId(Integer.toString(i++));
+			spaceTransitions.source().setId(Integer.toString(i++));
 	}
 	
 	private Set<SpaceStateOss> getInputStates(SpaceStateOss to){
 		Set<SpaceStateOss> inputStates = new HashSet<SpaceStateOss>();
 		for(SpaceStateTransitionsOss stateTransitions: states) {
 			if(stateTransitions.hasOutputState(to))
-				inputStates.add(stateTransitions.getSource());
+				inputStates.add(stateTransitions.source());
 		}
 		return inputStates;
 	}
@@ -92,7 +93,7 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 		HashMap<ComportamentaleTransition, SpaceStateOss> inputTransitions = new HashMap<ComportamentaleTransition, SpaceStateOss>();
 		for(SpaceStateTransitionsOss stateTransitions: states) {
 			if(stateTransitions.hasOutputState(to))
-				inputTransitions.put(stateTransitions.getInputTransition(to), stateTransitions.getSource());
+				inputTransitions.put(stateTransitions.getInputTransition(to), stateTransitions.source());
 		}
 		return inputTransitions;
 	}
@@ -105,7 +106,7 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 	
 	private SpaceStateTransitionsOss get(SpaceStateOss s) {
 		for(SpaceStateTransitionsOss stateTransitions: states) {
-			if(stateTransitions.getSource().equals(s))
+			if(stateTransitions.source().equals(s))
 				return stateTransitions;
 		}
 		return null;
@@ -113,8 +114,8 @@ public class SpaceInterconnectionsOss implements Iterable<SpaceStateTransitionsO
 	
 	public SpaceStateOss getState(SpaceStateOss s) {
 		for(SpaceStateTransitionsOss stateTransitions: states) {
-			if(stateTransitions.getSource().equals(s))
-				return stateTransitions.getSource();
+			if(stateTransitions.source().equals(s))
+				return stateTransitions.source();
 		}
 		return null;
 	}
