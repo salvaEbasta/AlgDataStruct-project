@@ -7,8 +7,8 @@ public interface AutomaInterface<S extends State, T extends Transition, I extend
 	public String id();
 	public Set<T> transitions();
 	public Set<S> states();
-	public State initialState();
-	public State currentState();
+	public S initialState();
+	public S currentState();
 	public Set<T> to(S s);
 	public Set<T> from(S s);
 	public HashMap<S, I> structure();
