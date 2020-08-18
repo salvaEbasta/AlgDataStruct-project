@@ -3,7 +3,9 @@ package commoninterfaces;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Interconnections<T extends Transition> {
+import finite_state_automata.FiniteTransition;
+
+public class Interconnections<T> {
 	private HashSet<T> in;
 	private HashSet<T> out;
 	
@@ -56,6 +58,18 @@ public class Interconnections<T extends Transition> {
 	
 	public Set<T> from(){
 		return out;
+	}
+	
+	public boolean hasAuto() {
+		HashSet<T> tmp = new HashSet<T>(from());
+		tmp.retainAll(to());
+		return !tmp.isEmpty();
+	}
+	
+	public Set<T> getAuto(){
+		HashSet<T> tmp = new HashSet<T>(from());
+		tmp.retainAll(to());
+		return tmp;
 	}
 	
 	public String toString() {

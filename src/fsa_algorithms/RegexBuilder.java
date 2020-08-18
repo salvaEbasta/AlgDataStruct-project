@@ -8,30 +8,32 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
-import finite_state_automata.FiniteStateMachine;
-import finite_state_automata.State;
-import finite_state_automata.Transition;
-import finite_state_automata.base_implementation.BaseFSABuilder;
+import commoninterfaces.AutomaInterface;
+import commoninterfaces.Builder;
+import commoninterfaces.State;
+import commoninterfaces.Transition;
 
-public class RegexBuilder {
-	public static String compute(FiniteStateMachine N) {
+public class RegexBuilder<S extends State, T extends Transition<S>> {
+	public String compute(AutomaInterface<S, T> N, Builder<S, T> builder) {
 		Logger log = loggerSetup();
 		log.info(RegexBuilder.class.getSimpleName()+"::"+RegexBuilder.class.getMethods()[0].getName()+"...");
 		log.fine("initial: "+N.toString());
 		
 		//Initialization of N
-		State n0 = null;
+		S n0 = null;
 		if(N.to(N.initialState()).size() > 0) {
-			n0 = BaseFSABuilder.newState("n0");
+			n0 = builder.newState("n0");
 			N.insert(n0);
-			N.add(BaseFSABuilder.newTransition("n0-"+N.initialState().id(), n0, N.initialState(), ""));
+			T t = builder.newTransition("n0-"+N.initialState().id(), n0, N.initialState());
+			t.
+			N.add(t);
 			N.setInitial(n0);
 		} else {
 			n0 = N.initialState();
 		}
-		State nq = BaseFSABuilder.newState("nq");
+		State nq = builder.newState("nq");
 		N.insert(nq);
-		N.acceptingStates().forEach((s)->N.add(BaseFSABuilder.newTransition(s.id()+"-"+nq.id(), s, nq, "")));
+		N.acceptingStates().forEach((s)->N.add(builder.newTransition(s.id()+"-"+nq.id(), s, nq, "")));
 		
 		log.info("Post initialization: "+N.toString());
 		
@@ -63,7 +65,7 @@ public class RegexBuilder {
 					N.remove(t);
 					regexBuilder.append(t.regex());
 				});
-				Transition tmp = BaseFSABuilder.newTransition(source.id()+"-"+sink.id()+"_"+counter,
+				Transition tmp = builder.newTransition(source.id()+"-"+sink.id()+"_"+counter,
 						source,
 						sink,
 						"");
@@ -90,7 +92,7 @@ public class RegexBuilder {
 				});
 				regexBuilder.append(")");
 				String id = head.source().id()+"-"+head.sink().id()+"_"+counter;
-				Transition union = BaseFSABuilder.newTransition(id,
+				Transition union = builder.newTransition(id,
 						head.source(),
 						head.sink(),
 						regexBuilder.toString());
@@ -110,7 +112,7 @@ public class RegexBuilder {
 					regexBuilder.append("|"+t.regex());
 				});
 				regexBuilder.append(")");
-				Transition union = BaseFSABuilder.newTransition(head.source().id()+"-"+head.sink().id()+"_"+counter,
+				Transition union = builder.newTransition(head.source().id()+"-"+head.sink().id()+"_"+counter,
 						head.source(),
 						head.sink(),
 						regexBuilder.toString());
@@ -135,7 +137,7 @@ public class RegexBuilder {
 							.filter(r2->!r2.isAuto())
 							.forEach(r2->{
 								String id = "t"+r1.id()+"- t"+r2.id();
-								Transition tmp = BaseFSABuilder.newTransition(id,
+								Transition tmp = builder.newTransition(id,
 										r1.source(),
 										r2.sink(),
 										"");
@@ -215,7 +217,7 @@ public class RegexBuilder {
 		return transitions.size() > 0;
 	}
 	
-	private static boolean findParallelTransitions(FiniteStateMachine N, LinkedList<Transition> transitions) {
+	private boolean findParallelTransitions(FiniteStateMachine N, LinkedList<Transition> transitions) {
 		transitions.clear();
 		transitions.addAll(TransitionFinder.parallelTransitions(N));
 		return transitions.size() > 0;

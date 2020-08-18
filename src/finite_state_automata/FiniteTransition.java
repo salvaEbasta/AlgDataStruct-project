@@ -2,7 +2,7 @@ package finite_state_automata;
 
 import commoninterfaces.Transition;
 
-public class FiniteTransition extends Transition{
+public class FiniteTransition extends Transition<FiniteState>{
 	
 	private static final String toStringFormat = "%s: %s--%s->%s";
 	private String regex;
@@ -22,16 +22,16 @@ public class FiniteTransition extends Transition{
 	}
 	
 	public boolean isAuto() {
-		return source().equals(destination());
+		return source().equals(sink());
 	}
 	
 	public boolean isParallelTo(FiniteTransition t) {
 		return source().equals(t.source()) && 
-				destination().equals(t.destination());
+				sink().equals(t.sink());
 	}
 	
 	@Override
 	public String toString() {
-		return String.format(toStringFormat, id(), source(), regex, destination());
+		return String.format(toStringFormat, id(), source(), regex, sink());
 	}
 }

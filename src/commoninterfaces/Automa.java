@@ -1,20 +1,19 @@
 package commoninterfaces;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Automa<S extends State, T extends Transition, I extends Interconnections<T>> implements AutomaInterface<S, T, I>{
+public abstract class Automa<S extends State, T extends Transition<S>> implements AutomaInterface<S, T>{
 
 	private String id;
-	private HashMap<S, I> structure;
+	protected HashMap<S, Interconnections<T>> structure;
 	private S initial;
 	private S current;
 	
 	public Automa(String id) {
 		this.id = id;
-		structure = new HashMap<S, I>();
+		structure = new HashMap<S, Interconnections<T>>();
 		initial = null;
 		current = null;
 	}
@@ -38,11 +37,6 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	}
 	
 	@Override
-	public HashMap<S, I> structure() {
-		return structure;
-	}
-	
-	@Override
 	public S initialState() {
 		return initial;
 	}
@@ -62,8 +56,8 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	
 	@Override
 	public boolean transitionTo(T t) {
-		if (structure.containsKey(t.destination()) && current.equals(t.source())) {
-			current = (S) t.destination();
+		if (structure.containsKey(t.sink()) && current.equals(t.source())) {
+			current = (S) t.sink();
 			return true;
 		}
 		return false;
@@ -89,28 +83,17 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	@Override
 	public boolean add(T t) {
 		structure.get(t.source()).from().add(t);
-		structure.get(t.destination()).to().add(t);
+		structure.get(t.sink()).to().add(t);
 		return true;
 	}
 	
 	@Override
 	public boolean insert(S s) {
 		if(!structure.containsKey(s)) {
-			structure.put(s, newI());
+			structure.put(s, new Interconnections<T>());
 			return true;
 		}
 		return false;
-	}
-	
-	private I newI() {
-		I i = null;
-		try {
-			ParameterizedType pt = (ParameterizedType)this.getClass().getDeclaredField("structure").getGenericType();
-			i = (I) pt.getActualTypeArguments()[1].getClass().newInstance();
-		} catch (NoSuchFieldException | SecurityException | InstantiationException | IllegalAccessException e) {
-			i = (I) new Interconnections<T>();
-		}
-		return i;	
 	}
 	
 	@Override
@@ -122,7 +105,7 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	@Override
 	public boolean remove(T t) {
 		structure.get(t.source()).from().remove(t);
-		structure.get(t.destination()).to().remove(t);
+		structure.get(t.sink()).to().remove(t);
 		return true;
 	}
 	
@@ -130,7 +113,7 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	public boolean remove(S s) {
 		if((initial!=null && initial.equals(s))||(current!=null && current.equals(s)))
 			return false;
-		structure.get(s).from().forEach(t->structure.get(t.destination()).to().remove(t));
+		structure.get(s).from().forEach(t->structure.get(t.sink()).to().remove(t));
 		structure.get(s).to().forEach(t->structure.get(t.source()).from().remove(t));
 		structure.remove(s);
 		return true;
@@ -145,7 +128,7 @@ public abstract class Automa<S extends State, T extends Transition, I extends In
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		Automa<S, T, I> automa = (Automa<S, T, I>) obj;
+		Automa<S, T> automa = (Automa<S, T>) obj;
 		return this.id.equals(automa.id);
 	}
 

@@ -6,7 +6,7 @@ import commoninterfaces.Transition;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 
-public class ComportamentaleTransition extends Transition{
+public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 	
 	private Event in;
 	private Link inputLink;

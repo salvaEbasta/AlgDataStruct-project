@@ -1,12 +1,12 @@
 package commoninterfaces;
 
-public abstract class Transition {
+public abstract class Transition<S extends State> {
 	
 	private String id;
-	private State source;
-	private State destination;
+	private S source;
+	private S destination;
 	
-	public Transition(String id, State source, State destination) {
+	public Transition(String id, S source, S destination) {
 		this.id = id;
 		this.source = source;
 		this.destination = destination;
@@ -16,11 +16,11 @@ public abstract class Transition {
 		return id;
 	}
 	
-	public State source() {
+	public S source() {
 		return source;
 	}
 	
-	public State destination() {
+	public S sink() {
 		return destination;
 	}
 	

@@ -1,9 +1,8 @@
 package commoninterfaces;
 
-import java.util.HashMap;
 import java.util.Set;
 
-public interface AutomaInterface<S extends State, T extends Transition>{
+public interface AutomaInterface<S extends State, T extends Transition<S>>{
 	public String id();
 	public Set<T> transitions();
 	public Set<S> states();
@@ -18,4 +17,5 @@ public interface AutomaInterface<S extends State, T extends Transition>{
 	public boolean remove(S s);
 	public boolean transitionTo(T t);
 	public boolean setCurrent(S s);
+	public Set<S> acceptingStates();
 }
