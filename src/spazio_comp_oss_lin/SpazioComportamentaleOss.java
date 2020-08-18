@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import comportamentale_fa.ComportamentaleFA;
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.labels.ObservableLabel;
