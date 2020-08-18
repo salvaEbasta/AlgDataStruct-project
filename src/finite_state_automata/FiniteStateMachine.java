@@ -2,7 +2,7 @@ package finite_state_automata;
 
 import java.util.Set;
 
-public interface FiniteStateMachine{
+public interface FiniteStateMachine<S extends State, T extends Transition> {
 	public String id();
 	public Set<Transition> transitions();
 	public Set<State> states();

@@ -11,7 +11,7 @@ import finite_state_automata.spazio_comportamentale.SpaceState;
 
 import java.util.Map.Entry;
 
-public class ComportamentaleFANet {
+public class ComportamentaleFANet{
 	
 	private ArrayList<ComportamentalFSM> net;
 	private ArrayList<Link> links;
