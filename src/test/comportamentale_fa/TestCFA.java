@@ -21,8 +21,8 @@ import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceTransition;
 import spazio_comportamentale.SpazioComportamentale;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
-import spazio_comportamentale.oss_lineare.SpaceStateOss;
-import spazio_comportamentale.oss_lineare.SpazioComportamentaleOss;
+import spazio_comportamentale.oss_lineare.SpaceStateObs;
+import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
 class TestCFA {
 
@@ -88,16 +88,16 @@ class TestCFA {
 		SpazioComportamentale sc = new SpazioComportamentale(net);
 		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());	
-		computedSpace.potatura();
-		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace);				
+		System.out.println(computedSpace.toString());			
+//		computedSpace.potatura();
+//		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
+//		System.out.println(computedSpace);				
 	}
 	
 	@Test
 	void spazioComportamentaleOssLineare() {		
 		ComportamentaleFANet net = initialize();
-		SpazioComportamentaleOss sc = new SpazioComportamentaleOss(net);
+		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	

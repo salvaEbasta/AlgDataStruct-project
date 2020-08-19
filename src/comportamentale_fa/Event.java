@@ -21,6 +21,11 @@ public class Event {
 	}
 	
 	@Override
+	public String toString() {
+		return id;
+	}
+	
+	@Override
 	public boolean equals(Object otherEvent) {
 		Event ev = (Event) otherEvent;
 		return this.id.equals(ev.id);

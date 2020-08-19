@@ -11,13 +11,14 @@ public class SpaceState extends State{
 	private ArrayList<ComportamentaleState> actualStates;
 	private ArrayList<Event> linkEvents;	
 	
-	public SpaceState(String id, ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
-		super(id);
+	public SpaceState(ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
+		super("");
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
 		for(Event event: linkEvents) {
 			this.linkEvents.add(new Event(event.id()));
 		}
+		setId(content());
 	}
 	
 	public void setId(String id) {
@@ -40,6 +41,22 @@ public class SpaceState extends State{
 		return linkEvents;
 	}
 	
+	private String content() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(actualStates.toString()).append(" ");
+		sb.append(linkEvents.toString()).append(" ");
+		sb.append(isFinal()? "f": "");
+		return sb.toString();
+	}
+	
+//	@Override
+//	public int hashCode() {
+//		StringBuilder sb = new StringBuilder();
+//		sb.append(actualStates.toString()).append(" ");
+//		sb.append(linkEvents.toString()).append(" ");
+//		sb.append(isFinal()? "f": "");
+//		return sb.hashCode();
+//	}
 	
 	@Override
 	public String toString() {
@@ -51,7 +68,7 @@ public class SpaceState extends State{
 		for(Event event: linkEvents) {
 			sb.append(" ").append(event.id());
 		}
-		sb.append(isFinal()? "\t[Stato Finale]": "");
+		sb.append(isFinal()? " [Stato Finale]": "");
 		return sb.toString();
 	}
 	

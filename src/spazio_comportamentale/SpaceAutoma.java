@@ -26,7 +26,7 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		for(S state: setCopy) {
 			checkPotatura(state);
 		}
-		//ridenominazione();
+		ridenominazione();
 		return states().size() != prevSize;
 	}
 	
