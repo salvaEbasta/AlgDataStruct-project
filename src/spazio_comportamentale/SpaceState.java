@@ -24,7 +24,7 @@ public class SpaceState extends State{
 		super.id = id;
 	}
 	
-	public boolean isFinalState() {
+	public boolean isFinal() {
 		for(Event event: linkEvents) {
 			if(!event.isEmpty())
 				return false;
@@ -50,7 +50,7 @@ public class SpaceState extends State{
 		for(Event event: linkEvents) {
 			sb.append(" ").append(event.id());
 		}
-		sb.append(isFinalState()? "\t[Stato Finale]": "");
+		sb.append(isFinal()? "\t[Stato Finale]": "");
 		return sb.toString();
 	}
 	

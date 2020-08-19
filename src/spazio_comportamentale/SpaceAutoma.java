@@ -14,7 +14,7 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 	public Set<S> acceptingStates() {
 		Set<S> acceptingStates = new HashSet<S>();
 		for(S state: states()) {
-			if(state.isFinalState())
+			if(state.isFinal())
 				acceptingStates.add(state);
 		}
 		return acceptingStates;
@@ -26,12 +26,12 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		for(S state: setCopy) {
 			checkPotatura(state);
 		}
-		ridenominazione();
+		//ridenominazione();
 		return states().size() != prevSize;
 	}
 	
 	private void checkPotatura(S state) {
-		if(!state.isFinalState() && from(state).isEmpty()) {
+		if(!state.isFinal() && from(state).isEmpty()) {
 			Set<SpaceTransition<S>> inputTransitions = to(state);
 			remove(state);		
 			for(SpaceTransition<S> inputT : inputTransitions) 
@@ -55,13 +55,13 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
 				for(SpaceTransition<S> inTransition: in) {
-					sb.append(String.format("\n\t\t* %s (da %s) %s", inTransition.id(), inTransition.source(), inTransition.labels()));
+					sb.append(String.format("\n\t\t* %s", inTransition));
 				}
 			}
 			if(!out.isEmpty()) {
 				sb.append("\n\t- Output Transitions:");
 				for(SpaceTransition<S> outTransition: out) {
-					sb.append(String.format("\n\t\t* %s (verso %s) %s", outTransition.id(), outTransition.sink(), outTransition.labels()));
+					sb.append(String.format("\n\t\t* %s", outTransition));
 				}
 			}
 			sb.append("\n");

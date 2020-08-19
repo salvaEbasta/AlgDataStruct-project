@@ -18,8 +18,8 @@ public class SpaceStateOss extends SpaceState{
 	}
 	
 	@Override
-	public boolean isFinalState() {
-		return super.isFinalState() && index == ossSize;
+	public boolean isFinal() {
+		return super.isFinal() && index == ossSize;
 	}
 
 	@Override
@@ -27,13 +27,13 @@ public class SpaceStateOss extends SpaceState{
 		String base = super.toString().replace("\t[Stato Finale]", "");
 		StringBuilder sb = new StringBuilder(base);
 		sb.append(String.format(" | %d", index));
-		sb.append(isFinalState()? "\t[Stato Finale]": "");
+		sb.append(isFinal()? "\t[Stato Finale]": "");
 		return sb.toString();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
 		SpaceStateOss other = (SpaceStateOss) obj;
-		return super.equals(other) && this.index == other.index;
+		return super.equals(other) && this.index == other.index && this.ossSize == other.ossSize;
 	}
 }

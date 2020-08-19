@@ -12,9 +12,16 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 		this.transition = transition;
 		setRegex(transition.regex());
 	}
-
-	public String labels() {
-		return transition.labels();
+	
+	@Override
+	public boolean equals(Object obj) {
+		SpaceTransition<S> other = (SpaceTransition<S>) obj;
+		return transition.equals(other.transition) && source().equals(other.source())
+				&& sink().equals(other.sink());
 	}
-
+	
+	@Override
+	public String toString() {
+		return String.format("%s: da {%s} verso {%s} %s", id(), source(), sink(), transition.labels());
+	}
 }

@@ -102,9 +102,7 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	
 	@Override
 	public boolean remove(T t) {
-		structure.get(t.source()).from().remove(t);
-		structure.get(t.sink()).to().remove(t);
-		return true;
+		return structure.get(t.source()).from().remove(t) && structure.get(t.sink()).to().remove(t);
 	}
 	
 	@Override

@@ -8,22 +8,22 @@ import comportamentale_fa.ComportamentaleTransition;
 public class SpazioComportamentale {
 	
 	private ComportamentaleFANet net;
-	private SpaceAutomaComportamentale states;
+	private SpaceAutomaComportamentale spazioComp;
 	
 	public SpazioComportamentale(ComportamentaleFANet net) {
 		this.net = net;
-		states = new SpaceAutomaComportamentale("Spazio Comportamentale");		
+		spazioComp = new SpaceAutomaComportamentale("Spazio Comportamentale");		
 	}
 	
 	public SpaceAutomaComportamentale generaSpazio() {
-		if(states.states().isEmpty()) {
-			SpaceState initial = new SpaceState(Integer.toString(states.states().size()), net.getInitialStates(), net.getActiveEvents());
-			states.insert(initial);
-			states.setInitial(initial);
+		if(spazioComp.states().isEmpty()) {
+			SpaceState initial = new SpaceState(Integer.toString(spazioComp.states().size()), net.getInitialStates(), net.getActiveEvents());
+			spazioComp.insert(initial);
+			spazioComp.setInitial(initial);
 			buildSpace(initial, net.enabledTransitions());
 			net.restoreState(initial);
 		}
-		return states;
+		return spazioComp;
 	}
 	
 	private void buildSpace(SpaceState state, Set<ComportamentaleTransition> enabledTransitions) {
@@ -35,18 +35,18 @@ public class SpazioComportamentale {
 		} else if (enabledTransitions.size()==1)
 			scattoTransizione(state, enabledTransitions.iterator().next());
 		else 
-			states.insert(state);
+			spazioComp.insert(state);
 	}
 	
 	private void scattoTransizione(SpaceState source, ComportamentaleTransition transition) {
 		net.transitionTo(transition);	
-		SpaceState next = new SpaceState(Integer.toString(states.states().size()), net.getActualStates(), net.getActiveEvents());
-		if(states.insert(next)) {
+		SpaceState next = new SpaceState(Integer.toString(spazioComp.states().size()), net.getActualStates(), net.getActiveEvents());
+		if(!spazioComp.insert(next)) {
 			SpaceState toSearch = next;
-			next = states.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
+			next = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
 		}
 		SpaceTransition<SpaceState> spaceTransition = new SpaceTransition<SpaceState>(source, next, transition);
-		if(states.add(spaceTransition))
+		if(spazioComp.add(spaceTransition))
 			buildSpace(next, net.enabledTransitions());	
 	}
 

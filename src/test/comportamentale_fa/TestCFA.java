@@ -18,8 +18,10 @@ import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 import spazio_comportamentale.SpaceAutomaComportamentale;
+import spazio_comportamentale.SpaceTransition;
 import spazio_comportamentale.SpazioComportamentale;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
+import spazio_comportamentale.oss_lineare.SpaceStateOss;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleOss;
 
 class TestCFA {
@@ -102,7 +104,7 @@ class TestCFA {
 		System.out.println(computedSpace.toString());	
 		computedSpace.potatura();
 		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());				
+		System.out.println(computedSpace.toString());			
 	}
 	
 	@Test
