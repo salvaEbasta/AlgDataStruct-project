@@ -17,6 +17,10 @@ public class SpaceStateObs extends SpaceState{
 		this.ossSize = ossSize;	
 	}
 	
+	public SpaceStateObs(String id) {
+		super(id);
+	}
+
 	@Override
 	public boolean isFinal() {
 		return super.isFinal() && index == ossSize;

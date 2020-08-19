@@ -11,6 +11,13 @@ public class SpaceState extends State{
 	private ArrayList<ComportamentaleState> actualStates;
 	private ArrayList<Event> linkEvents;	
 	
+	
+	public SpaceState(String id) {
+		super(id);
+		this.actualStates = new ArrayList<ComportamentaleState>();
+		this.linkEvents = new ArrayList<Event>();
+	}
+	
 	public SpaceState(ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
 		super("");
 		this.actualStates = actualStates;
@@ -49,17 +56,10 @@ public class SpaceState extends State{
 		return sb.toString();
 	}
 	
-//	@Override
-//	public int hashCode() {
-//		StringBuilder sb = new StringBuilder();
-//		sb.append(actualStates.toString()).append(" ");
-//		sb.append(linkEvents.toString()).append(" ");
-//		sb.append(isFinal()? "f": "");
-//		return sb.hashCode();
-//	}
-	
 	@Override
 	public String toString() {
+		if(actualStates.isEmpty())
+			return id();
 		StringBuilder sb = new StringBuilder(String.format("Stato %s => %s",id, actualStates.get(0).id()));
 		for(int i=1; i<actualStates.size(); i++) {
 			sb.append(" ").append(actualStates.get(i).id());
@@ -75,11 +75,11 @@ public class SpaceState extends State{
 	@Override
 	public boolean equals(Object otherStatus) {
 		SpaceState other = (SpaceState) otherStatus;
-		for(int i=0; i < actualStates.size(); i++){
+		for(int i=0; i < actualStates.size() && i < other.actualStates.size(); i++){
 			if(!actualStates.get(i).equals(other.actualStates.get(i)))
 				return false;
 		}
-		for(int i=0; i < linkEvents.size(); i++){
+		for(int i=0; i < linkEvents.size() && i < other.linkEvents.size(); i++){
 			if(!linkEvents.get(i).equals(other.linkEvents.get(i)))
 				return false;
 		}

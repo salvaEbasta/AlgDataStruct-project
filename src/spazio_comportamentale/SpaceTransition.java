@@ -8,6 +8,11 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
 	private ComportamentaleTransition transition;
 
+	
+	public SpaceTransition(String id, S source, S destination) {
+		super(id, source, destination);	
+	}
+	
 	public SpaceTransition(S source, S destination, ComportamentaleTransition transition) {
 		super(transition.id(), source, destination);
 		this.transition = transition;

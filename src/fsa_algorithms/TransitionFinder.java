@@ -7,7 +7,7 @@ import commoninterfaces.State;
 import commoninterfaces.Transition;
 
 
-public class TransitionFinder<S extends State, T extends Transition<S>> {
+public class TransitionFinder {
 	
 	/**
 	 * Trova una sequenza di transizioni di dimensione >=2 dove ogni stato intermedio 
@@ -15,7 +15,7 @@ public class TransitionFinder<S extends State, T extends Transition<S>> {
 	 * @param N
 	 * @return
 	 */
-	public LinkedList<T> oneWayPath(AutomaInterface<S, T> N){
+	public static <S extends State, T extends Transition<S>> LinkedList<T> oneWayPath(AutomaInterface<S, T> N){
 		LinkedList<T> sequence = new LinkedList<T>();
 		for(S s : N.states()) {
 			//System.out.println("State : "+s);
@@ -29,12 +29,12 @@ public class TransitionFinder<S extends State, T extends Transition<S>> {
 		return sequence;
 	}
 	
-	private void buildSequence(AutomaInterface<S, T> N, S s, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildSequence(AutomaInterface<S, T> N, S s, LinkedList<T> sequence) {
 		buildUpstream(N, s, sequence);
 		buildDownstream(N, s, sequence);
 	}
 	
-	private void buildUpstream(AutomaInterface<S, T> N, S source, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildUpstream(AutomaInterface<S, T> N, S source, LinkedList<T> sequence) {
 		//System.out.println("Upstream of "+source+": "+N.to(source));
 		if(N.to(source).size() == 1 && N.from(source).size() == 1) {
 			T inT = N.to(source).iterator().next();
@@ -45,7 +45,7 @@ public class TransitionFinder<S extends State, T extends Transition<S>> {
 		}
 	}
 	
-	private void buildDownstream(AutomaInterface<S, T> N, S sink, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildDownstream(AutomaInterface<S, T> N, S sink, LinkedList<T> sequence) {
 		//System.out.println("Downstream of "+sink+": "+N.from(sink));
 		if(N.from(sink).size() == 1 && N.to(sink).size() == 1) {
 			T outT = N.from(sink).iterator().next();
@@ -56,7 +56,7 @@ public class TransitionFinder<S extends State, T extends Transition<S>> {
 		}
 	}
 	
-	public LinkedList<T> parallelTransitions(AutomaInterface<S, T> N){
+	public static <S extends State, T extends Transition<S>> LinkedList<T> parallelTransitions(AutomaInterface<S, T> N){
 		LinkedList<T> parallels = new LinkedList<T>();
 		LinkedList<T> transitions = new LinkedList<T>(N.transitions());
 		while(transitions.size() > 1) {

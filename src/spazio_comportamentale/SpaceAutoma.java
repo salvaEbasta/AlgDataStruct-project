@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import commoninterfaces.Automa;
 import commoninterfaces.Interconnections;
-import commoninterfaces.Transition;
 
 public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
 
