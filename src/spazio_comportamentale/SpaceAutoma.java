@@ -3,6 +3,8 @@ package spazio_comportamentale;
 import java.util.HashSet;
 import java.util.Set;
 import commoninterfaces.Automa;
+import commoninterfaces.Interconnections;
+import commoninterfaces.Transition;
 
 public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
 
@@ -26,7 +28,7 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		for(S state: setCopy) {
 			checkPotatura(state);
 		}
-		//ridenominazione();
+		ridenominazione();
 		return states().size() != prevSize;
 	}
 	
@@ -41,8 +43,12 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 	
 	public void ridenominazione() {
 		int i=0;
-		for(S state: states())
-			state.setId(Integer.toString(i++));
+		for(S state: states()) {
+			Interconnections<SpaceTransition<S>> interconnections = structure.get(state);	
+			structure.remove(state);
+			state.setId(Integer.toString(i++));			
+			structure.put(state, interconnections);			
+		}
 	}
 
 	@Override

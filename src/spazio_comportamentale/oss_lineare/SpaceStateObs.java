@@ -24,7 +24,7 @@ public class SpaceStateObs extends SpaceState{
 
 	@Override
 	public String toString() {
-		String base = super.toString().replace("\t[Stato Finale]", "");
+		String base = super.toString().replace(" [Stato Finale]", "");
 		StringBuilder sb = new StringBuilder(base);
 		sb.append(String.format(" | %d", index));
 		sb.append(isFinal()? " [Stato Finale]": "");
