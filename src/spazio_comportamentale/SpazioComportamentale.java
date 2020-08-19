@@ -20,7 +20,7 @@ public class SpazioComportamentale {
 			SpaceState initial = new SpaceState(Integer.toString(spazioComp.states().size()), net.getInitialStates(), net.getActiveEvents());
 			spazioComp.insert(initial);
 			spazioComp.setInitial(initial);
-			buildSpace(initial, net.enabledTransitions());
+			buildSpace(initial, net.enabledTransitions()); 
 			net.restoreInitial();
 		}
 		return spazioComp;
