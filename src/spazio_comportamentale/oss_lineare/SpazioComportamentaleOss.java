@@ -1,33 +1,33 @@
-package spazio_comp_oss_lin;
+package spazio_comportamentale.oss_lineare;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.labels.ObservableLabel;
+import spazio_comportamentale.SpaceTransition;
 
 public class SpazioComportamentaleOss {
 	
 	private ComportamentaleFANet net;
-	private SpaceInterconnectionsOss states;
+	private SpaceAutomaObsLin spaceComportamentaleOL;
 	
 	public SpazioComportamentaleOss(ComportamentaleFANet net) {
 		this.net = net;
-		states = new SpaceInterconnectionsOss();		
+		spaceComportamentaleOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare");		
 	}
 	
-	public SpaceInterconnectionsOss generaSpazioOsservazione(ObservableLabel[] observation) {
-		if(states.isEmpty()) {
+	public SpaceAutomaObsLin generaSpazioOsservazione(ObservableLabel[] observation) {
+		if(spaceComportamentaleOL.states().isEmpty()) {
 			int index = 0;
-			SpaceStateOss initial = new SpaceStateOss(Integer.toString(states.size()), net.getInitialStates(), net.getActiveEvents(), index, observation.length);
-			states.add(initial);
+			SpaceStateOss initial = new SpaceStateOss(Integer.toString(spaceComportamentaleOL.states().size()), net.getInitialStates(), net.getActiveEvents(), index, observation.length);
+			spaceComportamentaleOL.insert(initial);
+			spaceComportamentaleOL.setInitial(initial);
 			buildSpace(initial,  enabledTransitions(observation, index), observation, index);
 			net.restoreState(initial);
 		}
-		return states;
+		return spaceComportamentaleOL;
 	}
 	
 	private void buildSpace(SpaceStateOss state, Set<ComportamentaleTransition> enabledTransitions, ObservableLabel[] observation, int index) {
@@ -39,19 +39,20 @@ public class SpazioComportamentaleOss {
 		} else if (enabledTransitions.size()==1)
 			scattoTransizione(state, enabledTransitions.iterator().next(), observation, index);
 		else 
-			states.add(state);
+			spaceComportamentaleOL.insert(state);
 	}
 	
 	private void scattoTransizione(SpaceStateOss source, ComportamentaleTransition transition, ObservableLabel[] observation, int index) {
 		net.transitionTo(transition);
 		if(index<observation.length && transition.getObservableLabel().equals(observation[index]))
 			index++;
-		SpaceStateOss next = new SpaceStateOss(Integer.toString(states.size()), net.getActualStates(), net.getActiveEvents(), index, observation.length);
-		if(!states.containsKey(next))
-			states.add(next);
-		else 
-			next = states.getState(next);
-		if(states.addOutputTransition(source, transition, next))
+		SpaceStateOss next = new SpaceStateOss(Integer.toString(spaceComportamentaleOL.states().size()), net.getActualStates(), net.getActiveEvents(), index, observation.length);
+		if(!spaceComportamentaleOL.insert(next)) {
+			SpaceStateOss toSearch = next;
+			next = spaceComportamentaleOL.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
+		}
+		SpaceTransition<SpaceStateOss> spaceTransition = new SpaceTransition<SpaceStateOss>(source, next, transition);
+		if(spaceComportamentaleOL.add(spaceTransition))
 			buildSpace(next, enabledTransitions(observation, index), observation, index);	
 	}
 	
@@ -67,34 +68,8 @@ public class SpazioComportamentaleOss {
 		return enabledTransitions;
 	}
 	
-	public boolean potatura() {
-		if(!states.isEmpty())
-			return states.potatura();
-		return false;
-	}
 	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		for(SpaceStateTransitionsOss state: states) {
-			sb.append(state.source().toString());
-			HashMap<ComportamentaleTransition, SpaceStateOss>  in = states.getInputTransitions(state.source());
-			HashMap<ComportamentaleTransition, SpaceStateOss> out = state.getOutputTransitions();
-			if(!in.isEmpty()) {
-				sb.append("\n\t- Input Transitions:");
-				for(Entry<ComportamentaleTransition, SpaceStateOss> entry: in.entrySet()) {
-					sb.append(String.format("\n\t\t* %s (da %s) %s", entry.getKey().id(), entry.getValue(), entry.getKey().labels()));
-				}
-			}
-			if(!out.isEmpty()) {
-				sb.append("\n\t- Output Transitions:");
-				for(Entry<ComportamentaleTransition, SpaceStateOss> entry: out.entrySet()) {
-					sb.append(String.format("\n\t\t* %s (verso %s) %s", entry.getKey().id(), entry.getValue(), entry.getKey().labels()));
-				}
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
+	
+	
 
 }

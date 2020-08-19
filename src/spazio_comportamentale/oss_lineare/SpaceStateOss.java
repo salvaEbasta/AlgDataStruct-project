@@ -1,4 +1,4 @@
-package spazio_comp_oss_lin;
+package spazio_comportamentale.oss_lineare;
 
 import java.util.ArrayList;
 

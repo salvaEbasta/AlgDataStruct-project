@@ -43,7 +43,7 @@ public abstract class Transition<S extends State> {
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		final Transition tmp = (Transition) obj;
+		final Transition<S> tmp = (Transition<S>) obj;
 		return this.id().equalsIgnoreCase(tmp.id());
 	}
 	

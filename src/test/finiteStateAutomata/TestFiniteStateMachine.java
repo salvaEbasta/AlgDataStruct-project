@@ -2,11 +2,13 @@ package test.finiteStateAutomata;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import finite_state_automata.FiniteStateMachine;
+import commoninterfaces.Interconnections;
+import comportamentale_fa.labels.Regex;
 import finite_state_automata.LinkedTransitionsFSA;
 import finite_state_automata.FiniteState;
 import finite_state_automata.FiniteTransition;
@@ -15,7 +17,7 @@ class TestFiniteStateMachine {
 	
 	@Test
 	void building_benchmarkC1() {
-		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
+		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
 		assertTrue(C1.id()=="C1");
 		
 		FiniteState _10 = new FiniteState("10");
@@ -34,9 +36,9 @@ class TestFiniteStateMachine {
 		assertTrue(accepting.size() == 1);
 		assertTrue(accepting.contains(_11));
 		
-		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
-		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
-		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, new Regex("a"));
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, new Regex("b"));
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, new Regex("c"));
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
@@ -61,16 +63,16 @@ class TestFiniteStateMachine {
 	
 	@Test
 	void remove_transitions() {
-		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
+		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
 		FiniteState _10 = new FiniteState("10");
 		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
 		C1.insert(_11);
 		C1.insert(_10);
 		C1.setInitial(_10);
-		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
-		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
-		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, new Regex("a"));
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, new Regex("b"));
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, new Regex("c"));
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
@@ -83,16 +85,16 @@ class TestFiniteStateMachine {
 
 	@Test
 	void remove_state() {
-		FiniteStateMachine C1 = new LinkedTransitionsFSA("C1");
+		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
 		FiniteState _10 = new FiniteState("10");
 		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
 		C1.insert(_11);
 		C1.insert(_10);
 		C1.setInitial(_10);
-		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, "a");
-		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, "b");
-		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, "c");
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, new Regex("a"));
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, new Regex("b"));
+		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11, new Regex("c"));
 		C1.add(t1a);
 		C1.add(t1b);
 		C1.add(t1c);
@@ -107,5 +109,23 @@ class TestFiniteStateMachine {
 		
 		assertTrue(C1.states().size() == 1 && C1.states().contains(_11));
 		assertTrue(C1.transitions().size() == 0);
+	}
+	
+	@Test
+	void prova() {
+		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
+		FiniteState _10 = new FiniteState("10");
+		FiniteState _11 = new FiniteState("11");
+		_11.setAccepting(true);
+		C1.insert(_11);
+		C1.insert(_10);
+		C1.setInitial(_10);
+		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11, new Regex("a"));
+		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10, new Regex("b"));
+		FiniteTransition t1c = new FiniteTransition("t1a", _10, _11, new Regex("a"));
+		System.out.println(C1.add(t1a));
+		System.out.println(C1.add(t1b));
+		System.out.println(C1.add(t1a));
+		System.out.println(C1.add(t1c));
 	}
 }
