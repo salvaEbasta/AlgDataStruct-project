@@ -89,9 +89,9 @@ class TestCFA {
 		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
 		System.out.println(computedSpace.toString());			
-//		computedSpace.potatura();
-//		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-//		System.out.println(computedSpace);				
+		computedSpace.potatura();
+		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
+		System.out.println(computedSpace);				
 	}
 	
 	@Test

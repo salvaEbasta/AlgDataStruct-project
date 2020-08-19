@@ -26,12 +26,12 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		for(S state: setCopy) {
 			checkPotatura(state);
 		}
-		ridenominazione();
+		//ridenominazione();
 		return states().size() != prevSize;
 	}
 	
 	private void checkPotatura(S state) {
-		if(!state.isFinal() && from(state).isEmpty()) {
+		if(!state.isFinal() && from(state).isEmpty() && states().contains(state)) {
 			Set<SpaceTransition<S>> inputTransitions = to(state);
 			remove(state);		
 			for(SpaceTransition<S> inputT : inputTransitions) 
