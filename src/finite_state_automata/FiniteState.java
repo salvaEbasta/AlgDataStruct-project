@@ -4,28 +4,28 @@ import commoninterfaces.State;
 
 public class FiniteState extends State{
 
-	private boolean diAccettazione;
+	private boolean accepting;
 	
 	public FiniteState(String id) {
 		super(id);
-		this.diAccettazione = false;
+		this.accepting = false;
 	}
 	
 	public FiniteState(String id, boolean diAccettazione) {
 		super(id);
-		this.diAccettazione = diAccettazione;
+		this.accepting = diAccettazione;
 	}
 	
 	public boolean isAccepting() {
-		return this.diAccettazione;
+		return this.accepting;
 	}
 	
 	public void setAccepting(boolean accettazione) {
-		this.diAccettazione = accettazione;
+		this.accepting = accettazione;
 	}	
 	
 	@Override
 	public String toString() {
-		return id()+((diAccettazione)?"||":"");
+		return id()+((accepting)?"!":"");
 	}
 }

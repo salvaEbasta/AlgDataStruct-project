@@ -13,44 +13,33 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 	private Link inputLink;
 	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
 									//è possibile inserire più volte lo stesso "valore" Link
-	private ObservableLabel omega;
-	private RelevantLabel f;
 	
 	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
+		super.setObservableLabel(omega);
+		super.setRelevantLabel(f);
 		this.in = in;
 		this.inputLink = inputLink;
 		this.out = out;
-		this.omega = omega;
-		this.f = f;
 	}
 	
 	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
+		super.setObservableLabel(omega);
+		super.setRelevantLabel(f);
 		this.in = in;
 		this.inputLink = inputLink;
 		this.out = new HashMap<Event, Link>();
-		this.omega = omega;
-		this.f = f;
 	}
 	
 	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
+		super.setObservableLabel(omega);
+		super.setRelevantLabel(f);
 		this.in = new Event();
 		this.inputLink = null;
 		this.out = out;
-		this.omega = omega;
-		this.f = f;
 	}
-	
-	
-	public String regex() {
-		return f.getLabel();
-	}
-	
-	public void setRegex(RelevantLabel regex) {
-		f = regex;
-	}	
 	
 	public Link getInputLink() {
 		return inputLink;
@@ -72,28 +61,6 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 		return out;
 	}
 	
-	public ObservableLabel getObservableLabel() {
-		return omega;
-	}
-	
-	public boolean hasObservableLabel() {
-		return !omega.isEmpty();
-	}
-	
-	public boolean hasRelevantLabel() {
-		return !f.isEmpty();
-	}
-	
-	public boolean hasLabel() {
-		return !omega.isEmpty() || !f.isEmpty();
-	}
-	
-	public String labels() {
-		if(hasLabel())
-			return String.format("[%s]", hasObservableLabel()? omega : f);
-		return "";
-	}	
-	
 	@Override
 	public String toString(){
 		StringBuilder sb = new StringBuilder(String.format("%s: ", id()));
@@ -109,7 +76,7 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 			sb.append("}");			
 		}
 		if(hasLabel())
-			sb.append(String.format("[%s]", hasObservableLabel()? omega : f));
+			sb.append(labels());
 		return sb.toString();
 	}
 

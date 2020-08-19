@@ -21,6 +21,10 @@ public abstract class Label {
 		return label.equals(Constants.EPSILON);
 	}
 	
+	public boolean setLabel(String newLabel) {
+		this.label = newLabel;
+		return true;
+	}
 	public String getLabel() {
 		return label;
 	}
@@ -48,7 +52,9 @@ public abstract class Label {
 	
 	@Override
 	public boolean equals(Object obj) {
-		Label other = (Label) obj;
+		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
+			return false;
+		final Label other = (Label) obj;
 		return this.symbol.equals(other.symbol) && this.label.equals(other.label);
 	}
 }

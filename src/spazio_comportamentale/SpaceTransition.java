@@ -2,7 +2,6 @@ package spazio_comportamentale;
 
 import commoninterfaces.Transition;
 import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.labels.Regex;
 
 public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
@@ -10,13 +9,14 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 
 	
 	public SpaceTransition(String id, S source, S destination) {
-		super(id, source, destination);	
+		super(id, source, destination);
 	}
 	
 	public SpaceTransition(S source, S destination, ComportamentaleTransition transition) {
 		super(transition.id(), source, destination);
+		super.setObservableLabel(transition.observableLabelContent());
+		super.setRelevantLabel(transition.relevantLabelContent());
 		this.transition = transition;
-		setRegex(new Regex(transition.regex()));
 	}
 	
 	@Override
@@ -28,6 +28,8 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
 	@Override
 	public String toString() {
+		if(transition == null)
+			return String.format("%s: da {%s} verso {%s}", id(), source(), sink());
 		return String.format("%s: da {%s} verso {%s} %s", id(), source(), sink(), transition.labels());
 	}
 }

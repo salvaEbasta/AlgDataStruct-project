@@ -18,13 +18,10 @@ import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 import fsa_algorithms.RegexBuilder;
-import spazio_comportamentale.BuilderSpaceComportamentale;
 import spazio_comportamentale.SpaceAutomaComportamentale;
-import spazio_comportamentale.SpaceTransition;
 import spazio_comportamentale.SpazioComportamentale;
 import spazio_comportamentale.oss_lineare.BuilderSpaceComportamentaleObsLin;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
-import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
 class TestCFA {
@@ -116,6 +113,7 @@ class TestCFA {
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
+		computedSpace.potatura();	
 		String output = RegexBuilder.compute(computedSpace, new BuilderSpaceComportamentaleObsLin());
 		System.out.println(output);
 	}

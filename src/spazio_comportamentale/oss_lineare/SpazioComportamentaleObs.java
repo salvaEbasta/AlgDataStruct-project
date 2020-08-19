@@ -44,7 +44,7 @@ public class SpazioComportamentaleObs {
 	
 	private void scattoTransizione(SpaceStateObs source, ComportamentaleTransition transition, ObservableLabel[] observation, int index) {
 		net.transitionTo(transition);
-		if(index<observation.length && transition.getObservableLabel().equals(observation[index]))
+		if(index<observation.length && transition.observableLabel().equals(observation[index]))
 			index++;
 		SpaceStateObs destination = new SpaceStateObs(net.getActualStates(), net.getActiveEvents(), index, observation.length);
 		if(!spazioCompOL.insert(destination)) {
@@ -59,9 +59,9 @@ public class SpazioComportamentaleObs {
 	private Set<ComportamentaleTransition> enabledTransitions(ObservableLabel[] observation, int index) {
 		Set<ComportamentaleTransition> enabledTransitions = new HashSet<ComportamentaleTransition>();	
 		for(ComportamentaleTransition transition: net.enabledTransitions()) {
-			if(transition.getObservableLabel().isEmpty())
+			if(transition.observableLabel().isEmpty())
 				enabledTransitions.add(transition);
-			else if(index<observation.length && transition.getObservableLabel().equals(observation[index])) {
+			else if(index<observation.length && transition.observableLabel().equals(observation[index])) {
 				enabledTransitions.add(transition);
 			}		
 		}

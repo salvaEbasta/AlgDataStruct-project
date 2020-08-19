@@ -33,6 +33,8 @@ public class SpaceState extends State{
 	}
 	
 	public boolean isFinal() {
+		if(linkEvents.isEmpty())
+			return false;
 		for(Event event: linkEvents) {
 			if(!event.isEmpty())
 				return false;
