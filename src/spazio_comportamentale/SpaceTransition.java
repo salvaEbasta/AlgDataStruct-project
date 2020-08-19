@@ -2,6 +2,7 @@ package spazio_comportamentale;
 
 import commoninterfaces.Transition;
 import comportamentale_fa.ComportamentaleTransition;
+import comportamentale_fa.labels.Regex;
 
 public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
@@ -10,7 +11,7 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	public SpaceTransition(S source, S destination, ComportamentaleTransition transition) {
 		super(transition.id(), source, destination);
 		this.transition = transition;
-		setRegex(transition.regex());
+		setRegex(new Regex(transition.regex()));
 	}
 	
 	@Override
