@@ -44,8 +44,8 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState>{
 	}
 	
 	
-	public RelevantLabel regex() {
-		return f;
+	public String regex() {
+		return f.getLabel();
 	}
 	
 	public void setRegex(RelevantLabel regex) {

@@ -13,8 +13,8 @@ public class FiniteTransition extends Transition<FiniteState>{
 		this.regex = regex;
 	}
 	
-	public Regex regex() {
-		return regex;
+	public String regex() {
+		return regex.getLabel();
 	}
 	
 	public boolean setRegex(Regex newRegex) {

@@ -23,8 +23,16 @@ public abstract class Transition<S extends State> {
 		return source;
 	}	
 	
-	public Label regex() {
-		return regex;
+	public String regex() {
+		return regex.getLabel();
+	}
+	
+	public boolean isAuto() {
+		return source.equals(destination);
+	}
+	
+	public boolean isParallelTo(Transition<S> t) {
+		return this.source.equals(t.source) && this.destination.equals(t.destination);
 	}
 	
 	public void setRegex(Label regex) {

@@ -2,11 +2,12 @@ package fsa_algorithms;
 
 import java.util.LinkedList;
 
-import finite_state_automata.FiniteStateMachine;
-import finite_state_automata.State;
-import finite_state_automata.Transition;
+import commoninterfaces.AutomaInterface;
+import commoninterfaces.State;
+import commoninterfaces.Transition;
 
-public class TransitionFinder {
+
+public class TransitionFinder<S extends State, T extends Transition<S>> {
 	
 	/**
 	 * Trova una sequenza di transizioni di dimensione >=2 dove ogni stato intermedio 
@@ -14,9 +15,9 @@ public class TransitionFinder {
 	 * @param N
 	 * @return
 	 */
-	public static LinkedList<Transition> oneWayPath(FiniteStateMachine N){
-		LinkedList<Transition> sequence = new LinkedList<Transition>();
-		for(State s : N.states()) {
+	public LinkedList<T> oneWayPath(AutomaInterface<S, T> N){
+		LinkedList<T> sequence = new LinkedList<T>();
+		for(S s : N.states()) {
 			//System.out.println("State : "+s);
 			buildSequence(N, s, sequence);
 			//System.out.println("Result :"+sequence);
@@ -28,15 +29,15 @@ public class TransitionFinder {
 		return sequence;
 	}
 	
-	private static void buildSequence(FiniteStateMachine N, State s, LinkedList<Transition> sequence) {
+	private void buildSequence(AutomaInterface<S, T> N, S s, LinkedList<T> sequence) {
 		buildUpstream(N, s, sequence);
 		buildDownstream(N, s, sequence);
 	}
 	
-	private static void buildUpstream(FiniteStateMachine N, State source, LinkedList<Transition> sequence) {
+	private void buildUpstream(AutomaInterface<S, T> N, S source, LinkedList<T> sequence) {
 		//System.out.println("Upstream of "+source+": "+N.to(source));
 		if(N.to(source).size() == 1 && N.from(source).size() == 1) {
-			Transition inT = N.to(source).iterator().next();
+			T inT = N.to(source).iterator().next();
 			if(!inT.isAuto()) {
 				sequence.addFirst(inT);
 				buildUpstream(N, inT.source(), sequence);
@@ -44,10 +45,10 @@ public class TransitionFinder {
 		}
 	}
 	
-	private static void buildDownstream(FiniteStateMachine N, State sink, LinkedList<Transition> sequence) {
+	private void buildDownstream(AutomaInterface<S, T> N, S sink, LinkedList<T> sequence) {
 		//System.out.println("Downstream of "+sink+": "+N.from(sink));
 		if(N.from(sink).size() == 1 && N.to(sink).size() == 1) {
-			Transition outT = N.from(sink).iterator().next();
+			T outT = N.from(sink).iterator().next();
 			if(!outT.isAuto()) {
 				sequence.addLast(outT);
 				buildDownstream(N, outT.sink(), sequence);
@@ -55,11 +56,11 @@ public class TransitionFinder {
 		}
 	}
 	
-	public static LinkedList<Transition> parallelTransitions(FiniteStateMachine N){
-		LinkedList<Transition> parallels = new LinkedList<Transition>();
-		LinkedList<Transition> transitions = new LinkedList<Transition>(N.transitions());
+	public LinkedList<T> parallelTransitions(AutomaInterface<S, T> N){
+		LinkedList<T> parallels = new LinkedList<T>();
+		LinkedList<T> transitions = new LinkedList<T>(N.transitions());
 		while(transitions.size() > 1) {
-			Transition tmp = transitions.pop();
+			T tmp = transitions.pop();
 			transitions.forEach(t->{
 				if(t.isParallelTo(tmp))
 					parallels.add(t);

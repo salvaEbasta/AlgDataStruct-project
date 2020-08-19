@@ -34,15 +34,15 @@ public class ComportamentaleFANet {
 	
 	
 	public ArrayList<ComportamentaleState> getInitialStates(){
-		return  net.stream().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
+		return  net.stream().sequential().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
 	public ArrayList<ComportamentaleState> getActualStates(){
-		return net.stream().map(cfa -> cfa.currentState()).collect(Collectors .toCollection(ArrayList::new));
+		return net.stream().sequential().map(cfa -> cfa.currentState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
 	public ArrayList<Event> getActiveEvents() {
-		return links.stream().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new));
+		return links.stream().sequential().map(link -> link.getEvent()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
 	public void restoreState(SpaceState stats) {
