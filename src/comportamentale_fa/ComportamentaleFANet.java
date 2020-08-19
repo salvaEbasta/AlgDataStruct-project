@@ -54,6 +54,15 @@ public class ComportamentaleFANet {
 		}
 	}
 	
+	public void restoreInitial() {
+		for(ComportamentaleFA cfa: net) {
+			cfa.setCurrent(cfa.initialState());
+		}
+		for(Link link: links) {
+			link.setEmptyEvent();
+		}
+	}
+	
 	public void transitionTo(ComportamentaleTransition transition) {
 		for (ComportamentaleFA cfa : net) {
 	        if (transition.source().equals(cfa.currentState())) {
@@ -78,10 +87,6 @@ public class ComportamentaleFANet {
 				}			
 			}
 		}
-	}
-	
-	public ArrayList<ComportamentaleFA> getCFAs() {
-		return net;	
 	}
 	
 	public Set<ComportamentaleTransition> enabledTransitions() {

@@ -40,6 +40,7 @@ public class SpaceState extends State{
 		return linkEvents;
 	}
 	
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(String.format("Stato %s => %s",id, actualStates.get(0).id()));

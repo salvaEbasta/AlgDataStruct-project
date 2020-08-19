@@ -15,13 +15,13 @@ public class SpazioComportamentale {
 		spazioComp = new SpaceAutomaComportamentale("Spazio Comportamentale");		
 	}
 	
-	public SpaceAutomaComportamentale generaSpazio() {
+	public SpaceAutomaComportamentale generaSpazioComportamentale() {
 		if(spazioComp.states().isEmpty()) {
 			SpaceState initial = new SpaceState(Integer.toString(spazioComp.states().size()), net.getInitialStates(), net.getActiveEvents());
 			spazioComp.insert(initial);
 			spazioComp.setInitial(initial);
 			buildSpace(initial, net.enabledTransitions());
-			net.restoreState(initial);
+			net.restoreInitial();
 		}
 		return spazioComp;
 	}
@@ -40,14 +40,19 @@ public class SpazioComportamentale {
 	
 	private void scattoTransizione(SpaceState source, ComportamentaleTransition transition) {
 		net.transitionTo(transition);	
-		SpaceState next = new SpaceState(Integer.toString(spazioComp.states().size()), net.getActualStates(), net.getActiveEvents());
-		if(!spazioComp.insert(next)) {
-			SpaceState toSearch = next;
-			next = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
+		if(spazioComp.states().size() == 20)
+			System.out.println();
+		SpaceState destination = new SpaceState(Integer.toString(spazioComp.states().size()), net.getActualStates(), net.getActiveEvents());
+		if(!spazioComp.insert(destination)) {
+			SpaceState toSearch = destination;
+			destination = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
 		}
-		SpaceTransition<SpaceState> spaceTransition = new SpaceTransition<SpaceState>(source, next, transition);
-		if(spazioComp.add(spaceTransition))
-			buildSpace(next, net.enabledTransitions());	
+		SpaceTransition<SpaceState> spaceTransition = new SpaceTransition<SpaceState>(source, destination, transition);
+		boolean added = false;
+		if(added = spazioComp.add(spaceTransition)) {
+			System.out.println(added);
+			buildSpace(destination, net.enabledTransitions());	
+		}
 	}
 
 }
