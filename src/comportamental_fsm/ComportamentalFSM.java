@@ -6,7 +6,7 @@ import java.util.Set;
 
 import commoninterfaces.Automa;
 
-public class ComportamentalFSM extends Automa<ComportamentalState, ComportamentalTransition> implements Serializable{
+public class ComportamentalFSM extends Automa<ComportamentalState, ComportamentalTransition>{
 
 	/**
 	 * 

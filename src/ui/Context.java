@@ -164,7 +164,7 @@ public class Context {
 	public String savedCFAsList() {
 		StringBuilder sb = new StringBuilder("Lista di CFA salvati:\n");
 		for(ComportamentalFSM cfa: savedCFAs) {
-			sb.append("* ").append(cfa).append("\n");
+			sb.append("* ").append("Automa ").append(cfa.id()).append("\n");
 		}
 		return sb.toString();
 	}
@@ -209,19 +209,32 @@ public class Context {
 		if(hasSavedLink(id)) {
 			Link l = getSavedLinkFromId(id);
 			l.setSource(source);
-			l.setDestination(source);
+			l.setDestination(destination);
 			return true;
 		}
 		return false;
 	}	
 	
+	public void reset() {
+		newCFA = null;	
+		this.savedCFAs = new HashSet<>();
+		this.savedLinks = new HashSet<>();
+		this.savedStates = new HashSet<>();
+		this.savedEvents = new HashSet<>();
+		this.savedTransitions = new HashSet<>();
+	}
+	
 	public void loadNet(CFSMnetwork net) {
 		currentNet = net;
 	}
-
-	public void resetUnsavedWork() {
-		newCFA = null;	
+	
+	public CFSMnetwork getCurrentNet() {
+		return currentNet;
 	}
 
-	
+	public String currentNetDescription() {
+		return currentNet == null? "Rete non caricata" : currentNet.toString();
+		
+	}
+
 }

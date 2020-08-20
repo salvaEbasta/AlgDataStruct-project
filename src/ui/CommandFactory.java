@@ -3,6 +3,8 @@ package ui;
 import ui.commands.Annulla;
 import ui.commands.Back;
 import ui.commands.Exit;
+import ui.commands.GenerateSpace;
+import ui.commands.GenerateSpaceObs;
 import ui.commands.LinkCFAs;
 import ui.commands.LoadNet;
 import ui.commands.NewCFA;
@@ -17,6 +19,7 @@ import ui.commands.SetInitial;
 import ui.commands.ShowCFAs;
 import ui.commands.ShowEvents;
 import ui.commands.ShowLinks;
+import ui.commands.ShowNet;
 import ui.commands.ShowStates;
 import ui.commands.ShowTransitions;
 
@@ -49,6 +52,18 @@ public class CommandFactory {
 	
 	public Command loadNet() {
 		return new Command(CommandDescription.LOADNET, new LoadNet());
+	}
+	
+	public Command showNet() {
+		return new Command(CommandDescription.SHOWNET, new ShowNet());
+	}
+	
+	public Command generateSpace() {
+		return new Command(CommandDescription.GENERATESPACE, new GenerateSpace());
+	}
+	
+	public Command generateSpaceObs() {
+		return new Command(CommandDescription.GENERATESPACEOBS, new GenerateSpaceObs());
 	}
 	
 	public Command newCFA() {

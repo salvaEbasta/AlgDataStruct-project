@@ -1,9 +1,15 @@
 package comportamental_fsm.labels;
 
+import java.io.Serializable;
+
 import utility.Constants;
 
-public abstract class Label {
+public abstract class Label implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String symbol;
 	private String label;
 	

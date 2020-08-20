@@ -64,4 +64,9 @@ public class Command {
 		return description.hasName(comando);
 	}
 	
+	public boolean equals(Object obj) {
+		Command other = (Command) obj;
+		return this.description.equals(other.description);
+	}
+	
 }

@@ -2,7 +2,6 @@ package ui.commands;
 
 import java.util.HashMap;
 
-import commoninterfaces.State;
 import commoninterfaces.Transition;
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.ComportamentalTransition;

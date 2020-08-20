@@ -19,8 +19,7 @@ public class LoadNet implements CommandInterface, OneParameter{
 			return false;
 		}
 		context.loadNet(loadedNet);
-		System.out.println(loadedNet.getActualStates() + " <> " + loadedNet.getActiveEvents());
-		
+		System.out.println("Rete caricata correttamente!");
 		return true;
 	}
 

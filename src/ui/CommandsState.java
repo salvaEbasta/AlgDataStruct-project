@@ -20,6 +20,9 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().exit());
 			commandsList.add(new CommandFactory().newNet());
 			commandsList.add(new CommandFactory().loadNet());
+			commandsList.add(new CommandFactory().showNet());
+			commandsList.add(new CommandFactory().generateSpace());
+			commandsList.add(new CommandFactory().generateSpaceObs());
 			return commandsList;
 		}
 	},

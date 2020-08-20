@@ -1,0 +1,8 @@
+newcfa C2
+newstate 20
+newstate 21
+setinitial 20
+newtransition t2a
+newtransition t2b
+savecfa
+back

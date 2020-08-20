@@ -1,14 +1,14 @@
 package comportamental_fsm;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 
-public class ComportamentalTransition extends Transition<ComportamentalState> implements Serializable{
+public class ComportamentalTransition extends Transition<ComportamentalState>{
 	
+
 	/**
 	 * 
 	 */

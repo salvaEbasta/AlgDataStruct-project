@@ -1,11 +1,17 @@
 package commoninterfaces;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 
-public class Interconnections<S extends State, T extends Transition<S>> {
+public class Interconnections<S extends State, T extends Transition<S>> implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private HashSet<T> in;
 	private HashSet<T> out;
 	

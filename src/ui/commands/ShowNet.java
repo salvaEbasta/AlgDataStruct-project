@@ -2,7 +2,7 @@ package ui.commands;
 
 import ui.Context;
 
-public class Back implements CommandInterface, NoParameters{
+public class ShowNet implements CommandInterface, NoParameters{
 
 	/*
 	 * (non-Javadoc)
@@ -12,7 +12,7 @@ public class Back implements CommandInterface, NoParameters{
 	public boolean run(String[] args, Context context) {
 		if(!check(args, context))
 			return false;
-		context.getIOStream().writeln("Sei tornato al menù precedente.");
+		System.out.println(context.currentNetDescription());
 		return true;
 	}
 

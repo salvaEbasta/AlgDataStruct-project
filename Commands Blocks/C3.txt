@@ -1,0 +1,9 @@
+newcfa C3
+newstate 30
+newstate 31
+setinitial 30
+newtransition t3a
+newtransition t3b
+newtransition t3c
+savecfa
+back

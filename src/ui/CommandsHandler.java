@@ -1,11 +1,17 @@
 package ui;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ui.commands.NoParameters;
 import ui.stream.InOutStream;
 import utility.Constants;
 
@@ -30,6 +36,8 @@ public class CommandsHandler implements Closeable{
 	 * Contiene i comandi
 	 */
 	private ArrayList<Command> cList;
+	
+	private ArrayList<Command> previous;
 	
 	private Context context;
 	
@@ -100,7 +108,7 @@ public class CommandsHandler implements Closeable{
 		else if(command.equals("readcommands")) { 
 			String filename = args[0];
 			if(filename.matches("[^\\,\\/:*\"<>|]+\\.txt")) {
-			ArrayList<String> commandsList = new ReadCommands().readCommands(filename);
+			ArrayList<String> commandsList = readCommands(filename);
 			for(String readCommand: commandsList)
 				run(readCommand.trim());
 			}
@@ -111,17 +119,17 @@ public class CommandsHandler implements Closeable{
 				.filter((c)->c.hasName(command))
 				.findFirst().get()
 				.run(args, context)) {
-					if(new CommandFactory().newNet().hasName(command))
-						cList = CommandsState.NEWNET.getCommandsList();
-					else if(new CommandFactory().newCFA().hasName(command))
-						cList = CommandsState.NEWCFA.getCommandsList();
+					if(new CommandFactory().newNet().hasName(command)) 
+						cList = CommandsState.NEWNET.getCommandsList();					
+					else if(new CommandFactory().newCFA().hasName(command)) 
+						cList = CommandsState.NEWCFA.getCommandsList();					
 					else if(new CommandFactory().annulla().hasName(command))
 						cList = CommandsState.BASE.getCommandsList();
 					else if(new CommandFactory().back().hasName(command)) {
-						if(cList.equals(CommandsState.NEWCFA.getCommandsList()))
-								cList = CommandsState.NEWNET.getCommandsList();
-						else if(cList.equals(CommandsState.NEWNET.getCommandsList()))
-								cList = CommandsState.BASE.getCommandsList();
+						if(equalsCommandsList(CommandsState.NEWCFA.getCommandsList()))
+							cList = CommandsState.NEWNET.getCommandsList();	
+						else if(equalsCommandsList(CommandsState.NEWNET.getCommandsList()))
+						cList = CommandsState.BASE.getCommandsList();		
 					}
 						
 			}
@@ -129,12 +137,36 @@ public class CommandsHandler implements Closeable{
 
 	}
 	
+	private boolean equalsCommandsList(ArrayList<Command> commandsList) {
+		commandsList.removeAll(cList);
+		return commandsList.isEmpty();
+	}
+	
+	private ArrayList<String> readCommands(String path){
+		path = "Commands Blocks/".concat(path);
+		File file = new File(path);
+		if(file.exists() && file.canRead()) {			
+			try(BufferedReader in = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);){
+				String currentLine;
+				ArrayList<String> lista = new ArrayList<String>();
+				while ((currentLine = in.readLine()) != null) {
+					lista.add(currentLine);
+				}
+				in.close();
+				return lista;
+			} catch (IOException e) {
+				return new ArrayList<String>();
+			}
+		} else 
+			return new ArrayList<String>();		
+	}
+	
 	/* (non-Javadoc)
 	 * @see java.util.AbstractCollection#toString()
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder("I comandi a tua disposizione:");
-		sb.append(String.format(TOSTRING_FORMAT, "readcommands", "Legge ed esegue una serie di comandi da file txt", "readcommands [fileName].txt"));
+		sb.append(String.format(TOSTRING_FORMAT, CommandDescription.READCOMMANDS.getName(), CommandDescription.READCOMMANDS.getDescription(), CommandDescription.READCOMMANDS.getSyntax()));
 		cList.stream()
 			.forEachOrdered((c)->sb.append(String.format(TOSTRING_FORMAT, c.getName(), c.getDescription(), c.getSyntax())));
 		return sb.toString();

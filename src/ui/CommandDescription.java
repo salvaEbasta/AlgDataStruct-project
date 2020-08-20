@@ -9,8 +9,12 @@ public enum CommandDescription{
 	EXIT("exit", "Esci dal programma","exit"),
 	ANNULLA("annulla", "Annulla l'operazione in corso e torna al menù principale","annulla"),
 	BACK("back", "Torna al menù precedente","back"),
+	READCOMMANDS("readcommands", "Legge ed esegue una serie di comandi da file txt","readcommands [fileName].txt"),
 	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
 	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet"), 
+	SHOWNET("shownet", "Mostra una descrizione della rete di CFA caricata","shownet"), 
+	GENERATESPACE("generatespace", "Genera uno spazio comportamentale da una rete di CFA","generatespace"), 
+	GENERATESPACEOBS("generatespaceobs", "Genera uno spazio comportamentale da una rete di CFA con Osservazione Lineare","generatespaceobs"), 
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),
@@ -84,7 +88,7 @@ public enum CommandDescription{
 	 */
 	public boolean hasName(String comando) {
 		return this.name.equals(comando);
-	}
+	}	
 
 	
 }

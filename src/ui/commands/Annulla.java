@@ -8,7 +8,7 @@ public class Annulla implements CommandInterface, NoParameters{
 	public boolean run(String[] args, Context context) {
 		if(!check(args, context))
 			return false;
-		context.resetUnsavedWork();
+		context.reset();
 		return true;
 	}
 
