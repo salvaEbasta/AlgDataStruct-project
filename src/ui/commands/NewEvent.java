@@ -1,6 +1,6 @@
 package ui.commands;
 
-import comportamentale_fa.Event;
+import comportamental_fsm.Event;
 import ui.Context;
 
 public class NewEvent implements CommandInterface, OneParameter{

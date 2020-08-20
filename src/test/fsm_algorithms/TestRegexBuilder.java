@@ -1,20 +1,20 @@
-package test.fsaAlgorithms;
+package test.fsm_algorithms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import commoninterfaces.AutomaInterface;
-import finite_state_automata.LinkedTransitionsFSA;
-import finite_state_automata.FSMBuilder;
-import finite_state_automata.FiniteState;
-import finite_state_automata.FiniteTransition;
-import fsa_algorithms.RegexBuilder;
+import commoninterfaces.FiniteStateMachine;
+import finite_state_machine.FSMBuilder;
+import finite_state_machine.FiniteState;
+import finite_state_machine.FiniteTransition;
+import finite_state_machine.LinkedTransitionsFSA;
+import fsm_algorithms.RegexBuilder;
 
 class TestRegexBuilder {
 	@Test
 	void test_benchmarkC1() {
-		AutomaInterface<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
+		FiniteStateMachine<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
 		String result = RegexBuilder.relevanceRegex(C1, new FSMBuilder());
 		
 		System.out.println(result);
@@ -23,15 +23,15 @@ class TestRegexBuilder {
 	
 	@Test
 	void test_pg50() {
-		AutomaInterface<FiniteState, FiniteTransition> pg50 = build_pg50();
+		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
 		String result = RegexBuilder.relevanceRegex(pg50, new FSMBuilder());
 		System.out.println(result);
 		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(result.equalsIgnoreCase("((  )(( ε)|(f((r((fε)|( ε)))|ε))))"));
 	}
 
-	private static AutomaInterface<FiniteState, FiniteTransition> build_benchmarkC1() {
-		AutomaInterface<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("C1");
+	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {
+		FiniteStateMachine<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("C1");
 		FiniteState _10 = new FiniteState("10");
 		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
@@ -50,8 +50,8 @@ class TestRegexBuilder {
 		//System.out.print(C1.toString());
 		return C1;
 	}
-	private static AutomaInterface<FiniteState, FiniteTransition> build_pg50() {
-		AutomaInterface<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("pg50");
+	private static FiniteStateMachine<FiniteState, FiniteTransition> build_pg50() {
+		FiniteStateMachine<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("pg50");
 		FiniteState _1 = new FiniteState("1");
 		FiniteState _2 = new FiniteState("2");
 		FiniteState _3 = new FiniteState("3");

@@ -1,7 +1,7 @@
 package commoninterfaces;
 
-import comportamentale_fa.labels.ObservableLabel;
-import comportamentale_fa.labels.RelevantLabel;
+import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.RelevantLabel;
 
 public abstract class Transition<S extends State> {
 	

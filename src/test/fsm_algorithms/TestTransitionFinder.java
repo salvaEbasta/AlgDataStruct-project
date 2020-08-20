@@ -1,4 +1,4 @@
-package test.fsaAlgorithms;
+package test.fsm_algorithms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,15 +6,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import commoninterfaces.AutomaInterface;
-import finite_state_automata.LinkedTransitionsFSA;
-import finite_state_automata.FiniteState;
-import finite_state_automata.FiniteTransition;
-import fsa_algorithms.TransitionFinder;
+import commoninterfaces.FiniteStateMachine;
+import finite_state_machine.FiniteState;
+import finite_state_machine.FiniteTransition;
+import finite_state_machine.LinkedTransitionsFSA;
+import fsm_algorithms.TransitionFinder;
 
 public class TestTransitionFinder {
-	private static AutomaInterface<FiniteState, FiniteTransition> build_benchmarkC1() {
-		AutomaInterface<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("C1");
+	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {
+		FiniteStateMachine<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("C1");
 		FiniteState _10 = new FiniteState("10");
 		FiniteState _11 = new FiniteState("11");
 		_11.setAccepting(true);
@@ -36,7 +36,7 @@ public class TestTransitionFinder {
 	
 	@Test
 	void noOneWayPath() {
-		AutomaInterface<FiniteState, FiniteTransition> c1 = new LinkedTransitionsFSA("empty");
+		FiniteStateMachine<FiniteState, FiniteTransition> c1 = new LinkedTransitionsFSA("empty");
 		List<FiniteTransition> result = TransitionFinder.oneWayPath(c1);
 		
 		assertTrue(result.size() == 0);
@@ -44,7 +44,7 @@ public class TestTransitionFinder {
 	
 	@Test
 	void test_oneWayPath() {
-		AutomaInterface<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
+		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
 		List<FiniteTransition> result = TransitionFinder.oneWayPath(c1);
 		
 		assertTrue(result.size() == 0);
@@ -52,7 +52,7 @@ public class TestTransitionFinder {
 	
 	@Test
 	void noParallels() {
-		AutomaInterface<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
+		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
 		FiniteTransition t1c = c1.transitions().stream().filter(t->t.id().equals("t1c")).findAny().get();
 		c1.remove(t1c);
 		List<FiniteTransition> result = TransitionFinder.parallelTransitions(c1);
@@ -62,7 +62,7 @@ public class TestTransitionFinder {
 	
 	@Test
 	void test_findParallels() {
-		AutomaInterface<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
+		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
 		List<FiniteTransition> result = TransitionFinder.parallelTransitions(c1);
 		
 		assertTrue(result.size() == 2);

@@ -1,18 +1,18 @@
 package spazio_comportamentale;
 
 import commoninterfaces.Transition;
-import comportamentale_fa.ComportamentaleTransition;
+import comportamental_fsm.ComportamentalTransition;
 
 public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
-	private ComportamentaleTransition transition;
+	private ComportamentalTransition transition;
 
 	
 	public SpaceTransition(String id, S source, S destination) {
 		super(id, source, destination);
 	}
 	
-	public SpaceTransition(S source, S destination, ComportamentaleTransition transition) {
+	public SpaceTransition(S source, S destination, ComportamentalTransition transition) {
 		super(transition.id(), source, destination);
 		super.setObservableLabel(transition.observableLabelContent());
 		super.setRelevantLabel(transition.relevantLabelContent());

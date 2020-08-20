@@ -1,22 +1,27 @@
-package comportamentale_fa;
+package comportamental_fsm;
 
 import java.io.Serializable;
 
 import commoninterfaces.State;
 
-public class ComportamentaleState extends State implements Serializable{
+public class ComportamentalState extends State implements Serializable{
 		
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ComportamentaleState(String id) {
+	public ComportamentalState(String id) {
 		super(id);
 	}
 
 	@Override
 	public String toString() {
 		return id();
+	}
+	
+	@Override
+	public boolean isAccepting() {
+		return false;
 	}
 }

@@ -3,17 +3,17 @@ package spazio_comportamentale.oss_lineare;
 import java.util.HashSet;
 import java.util.Set;
 
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.labels.ObservableLabel;
+import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.ComportamentalTransition;
+import comportamental_fsm.labels.ObservableLabel;
 import spazio_comportamentale.SpaceTransition;
 
 public class SpazioComportamentaleObs {
 	
-	private ComportamentaleFANet net;
+	private CFSMnetwork net;
 	private SpaceAutomaObsLin spazioCompOL;
 	
-	public SpazioComportamentaleObs(ComportamentaleFANet net) {
+	public SpazioComportamentaleObs(CFSMnetwork net) {
 		this.net = net;
 		spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare");		
 	}
@@ -30,9 +30,9 @@ public class SpazioComportamentaleObs {
 		return spazioCompOL;
 	}
 	
-	private void buildSpace(SpaceStateObs state, Set<ComportamentaleTransition> enabledTransitions, ObservableLabel[] observation, int index) {
+	private void buildSpace(SpaceStateObs state, Set<ComportamentalTransition> enabledTransitions, ObservableLabel[] observation, int index) {
 		if(enabledTransitions.size()>1) {
-			for(ComportamentaleTransition transition: enabledTransitions) {
+			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);
 				scattoTransizione(state, transition, observation, index); 
 			}		
@@ -42,7 +42,7 @@ public class SpazioComportamentaleObs {
 			spazioCompOL.insert(state);
 	}
 	
-	private void scattoTransizione(SpaceStateObs source, ComportamentaleTransition transition, ObservableLabel[] observation, int index) {
+	private void scattoTransizione(SpaceStateObs source, ComportamentalTransition transition, ObservableLabel[] observation, int index) {
 		net.transitionTo(transition);
 		if(index<observation.length && transition.observableLabel().equals(observation[index]))
 			index++;
@@ -56,9 +56,9 @@ public class SpazioComportamentaleObs {
 			buildSpace(destination, enabledTransitions(observation, index), observation, index);	
 	}
 	
-	private Set<ComportamentaleTransition> enabledTransitions(ObservableLabel[] observation, int index) {
-		Set<ComportamentaleTransition> enabledTransitions = new HashSet<ComportamentaleTransition>();	
-		for(ComportamentaleTransition transition: net.enabledTransitions()) {
+	private Set<ComportamentalTransition> enabledTransitions(ObservableLabel[] observation, int index) {
+		Set<ComportamentalTransition> enabledTransitions = new HashSet<ComportamentalTransition>();	
+		for(ComportamentalTransition transition: net.enabledTransitions()) {
 			if(transition.observableLabel().isEmpty())
 				enabledTransitions.add(transition);
 			else if(index<observation.length && transition.observableLabel().equals(observation[index])) {
@@ -67,6 +67,4 @@ public class SpazioComportamentaleObs {
 		}
 		return enabledTransitions;
 	}
-
-
 }

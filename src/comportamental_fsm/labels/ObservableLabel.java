@@ -1,4 +1,4 @@
-package comportamentale_fa.labels;
+package comportamental_fsm.labels;
 
 public class ObservableLabel extends Label{
 

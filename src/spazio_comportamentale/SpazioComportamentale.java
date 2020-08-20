@@ -2,15 +2,15 @@ package spazio_comportamentale;
 
 import java.util.Set;
 
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.ComportamentaleTransition;
+import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.ComportamentalTransition;
 
 public class SpazioComportamentale {
 	
-	private ComportamentaleFANet net;
+	private CFSMnetwork net;
 	private SpaceAutomaComportamentale spazioComp;
 	
-	public SpazioComportamentale(ComportamentaleFANet net) {
+	public SpazioComportamentale(CFSMnetwork net) {
 		this.net = net;
 		spazioComp = new SpaceAutomaComportamentale("Spazio Comportamentale");		
 	}
@@ -26,9 +26,9 @@ public class SpazioComportamentale {
 		return spazioComp;
 	}
 	
-	private void buildSpace(SpaceState state, Set<ComportamentaleTransition> enabledTransitions) {
+	private void buildSpace(SpaceState state, Set<ComportamentalTransition> enabledTransitions) {
 		if(enabledTransitions.size()>1) {
-			for(ComportamentaleTransition transition: enabledTransitions) {
+			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);
 				scattoTransizione(state, transition); 
 			}		
@@ -38,7 +38,7 @@ public class SpazioComportamentale {
 			spazioComp.insert(state);
 	}
 	
-	private void scattoTransizione(SpaceState source, ComportamentaleTransition transition) {
+	private void scattoTransizione(SpaceState source, ComportamentalTransition transition) {
 		net.transitionTo(transition);	
 		if(spazioComp.states().size() == 20)
 			System.out.println();
@@ -54,5 +54,4 @@ public class SpazioComportamentale {
 			buildSpace(destination, net.enabledTransitions());	
 		}
 	}
-
 }

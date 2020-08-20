@@ -1,4 +1,4 @@
-package fsa_algorithms;
+package fsm_algorithms;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,13 +6,13 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import commoninterfaces.AutomaInterface;
-import commoninterfaces.Builder;
+import commoninterfaces.FiniteStateMachine;
+import commoninterfaces.ComponentBuilder;
 import commoninterfaces.State;
 import commoninterfaces.Transition;
 
 public class RegexBuilder {
-	public static <S extends State, T extends Transition<S>> String relevanceRegex(AutomaInterface<S, T> N, Builder<S, T> builder) {
+	public static <S extends State, T extends Transition<S>> String relevanceRegex(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
 		Logger log = loggerSetup();
 		log.info(RegexBuilder.class.getSimpleName()+"::relevanceRegex...");
 		log.fine("initial: "+N.toString());
@@ -141,7 +141,7 @@ public class RegexBuilder {
 	}
 	
 	@Deprecated
-	public static <S extends State, T extends Transition<S>> HashMap<String, LinkedList<T>> regexForEachAccepting(AutomaInterface<S, T> N, Builder<S, T> builder) {
+	public static <S extends State, T extends Transition<S>> HashMap<String, LinkedList<T>> regexForEachAccepting(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
 		Logger log = loggerSetup();
 		log.info(RegexBuilder.class.getSimpleName()+"::regexForEachAccepting...");
 		log.fine("initial: "+N.toString());
@@ -352,7 +352,7 @@ public class RegexBuilder {
 		return transitions.size() > 0;
 	}
 	
-	private static <S extends State, T extends Transition<S>> boolean findParallelTransitions(AutomaInterface<S, T> N, LinkedList<T> transitions) {
+	private static <S extends State, T extends Transition<S>> boolean findParallelTransitions(FiniteStateMachine<S, T> N, LinkedList<T> transitions) {
 		transitions.clear();
 		transitions.addAll(TransitionFinder.parallelTransitions(N));
 		return transitions.size() > 0;

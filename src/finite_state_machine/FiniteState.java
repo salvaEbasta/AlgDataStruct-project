@@ -1,4 +1,4 @@
-package finite_state_automata;
+package finite_state_machine;
 
 import commoninterfaces.State;
 

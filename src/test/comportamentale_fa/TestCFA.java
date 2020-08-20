@@ -1,6 +1,6 @@
 package test.comportamentale_fa;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,15 +9,15 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import comportamentale_fa.ComportamentaleFA;
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.Event;
-import comportamentale_fa.Link;
-import comportamentale_fa.ComportamentaleState;
-import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.labels.ObservableLabel;
-import comportamentale_fa.labels.RelevantLabel;
-import fsa_algorithms.RegexBuilder;
+import comportamental_fsm.ComportamentalFSM;
+import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.ComportamentalState;
+import comportamental_fsm.ComportamentalTransition;
+import comportamental_fsm.Event;
+import comportamental_fsm.Link;
+import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.RelevantLabel;
+import fsm_algorithms.RegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpazioComportamentale;
 import spazio_comportamentale.oss_lineare.BuilderSpaceComportamentaleObsLin;
@@ -26,22 +26,23 @@ import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
 class TestCFA {
 
-	private ComportamentaleTransition t3a;
-	private ComportamentaleTransition t2a;
+	private ComportamentalTransition t3a;
+	private ComportamentalTransition t2a;
+	private ComportamentalTransition t2b;
 	
-	ComportamentaleFANet initialize() {
+	CFSMnetwork initialize() {
 		//AUTOMATA C2
-		ComportamentaleFA c2 = new ComportamentaleFA("C2");
-		ComportamentaleState s20 = new ComportamentaleState("20");
-		ComportamentaleState s21 = new ComportamentaleState("21");
+		ComportamentalFSM c2 = new ComportamentalFSM("C2");
+		ComportamentalState s20 = new ComportamentalState("20");
+		ComportamentalState s21 = new ComportamentalState("21");
 		c2.insert(s20);
 		c2.insert(s21);
 		c2.setInitial(s20);
 		
 		//AUTOMATA C3
-		ComportamentaleFA c3 = new ComportamentaleFA("C3");
-		ComportamentaleState s30 = new ComportamentaleState("30");
-		ComportamentaleState s31 = new ComportamentaleState("31");
+		ComportamentalFSM c3 = new ComportamentalFSM("C3");
+		ComportamentalState s30 = new ComportamentalState("30");
+		ComportamentalState s31 = new ComportamentalState("31");
 		c3.insert(s30);
 		c3.insert(s31);
 		c3.setInitial(s30);
@@ -55,12 +56,12 @@ class TestCFA {
 		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
 		out2.put(e2, l2);
 		
-		t2a = new ComportamentaleTransition("t2a", s20, s21, e2, l2, out, new ObservableLabel("o2"), new RelevantLabel());
-		ComportamentaleTransition t2b = new ComportamentaleTransition("t2b", s21, s20, out, new ObservableLabel(), new RelevantLabel("r"));
+		t2a = new ComportamentalTransition("t2a", s20, s21, e2, l2, out, new ObservableLabel("o2"), new RelevantLabel());
+		t2b = new ComportamentalTransition("t2b", s21, s20, out, new ObservableLabel(), new RelevantLabel("r"));
 		
-		t3a = new ComportamentaleTransition("t3a", s30, s31, out2, new ObservableLabel("o3"), new RelevantLabel());
-		ComportamentaleTransition t3b = new ComportamentaleTransition("t3b", s31, s30, e3, l3, new ObservableLabel(), new RelevantLabel());
-		ComportamentaleTransition t3c = new ComportamentaleTransition("t3c", s31, s31, e3, l3, new ObservableLabel(), new RelevantLabel("f"));
+		t3a = new ComportamentalTransition("t3a", s30, s31, out2, new ObservableLabel("o3"), new RelevantLabel());
+		ComportamentalTransition t3b = new ComportamentalTransition("t3b", s31, s30, e3, l3, new ObservableLabel(), new RelevantLabel());
+		ComportamentalTransition t3c = new ComportamentalTransition("t3c", s31, s31, e3, l3, new ObservableLabel(), new RelevantLabel("f"));
 		
 		/*
 		 * System.out.println(t2a.toString()); System.out.println(t2b.toString());
@@ -79,12 +80,12 @@ class TestCFA {
 		ArrayList<Link> listLink = new ArrayList<Link>();
 		 listLink.add(l2); listLink.add(l3);
 		
-		return new ComportamentaleFANet(listLink);
+		return new CFSMnetwork(listLink);
 	}
 	
 	@Test
 	void spazioComportamentale() {		
-		ComportamentaleFANet net = initialize();
+		CFSMnetwork net = initialize();
 		SpazioComportamentale sc = new SpazioComportamentale(net);
 		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
@@ -100,7 +101,7 @@ class TestCFA {
 	
 	@Test
 	void spazioComportamentaleOssLineare() {		
-		ComportamentaleFANet net = initialize();
+		CFSMnetwork net = initialize();
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
@@ -116,7 +117,7 @@ class TestCFA {
 	
 	@Test
 	void diagnostica() {
-		ComportamentaleFANet net = initialize();
+		CFSMnetwork net = initialize();
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
@@ -130,14 +131,22 @@ class TestCFA {
 	
 	@Test
 	void enabledTransitions() {
-		ComportamentaleFANet net = initialize();
-		Set<ComportamentaleTransition> enabledT = new HashSet<ComportamentaleTransition>();
+		CFSMnetwork net = initialize();
+		Set<ComportamentalTransition> enabledT = new HashSet<ComportamentalTransition>();
 		enabledT.add(t3a);
 		assertTrue(net.enabledTransitions().equals(enabledT));
 		net.transitionTo(t3a);
 		enabledT.remove(t3a);
 		enabledT.add(t2a);
 		assertTrue(net.enabledTransitions().equals(enabledT));
+	}
+	
+	@Test
+	void test_silentTransitions() {
+		CFSMnetwork net = initialize();
+		assertTrue(!t3a.isSilent());
+		assertTrue(!t2a.isSilent());
+		assertTrue(t2b.isSilent());
 	}
 
 }

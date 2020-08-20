@@ -1,4 +1,4 @@
-package comportamentale_fa;
+package comportamental_fsm;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -12,17 +12,17 @@ import spazio_comportamentale.SpaceState;
 
 import java.util.Map.Entry;
 
-public class ComportamentaleFANet implements Serializable{
+public class CFSMnetwork implements Serializable{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<ComportamentaleFA> net;
+	private ArrayList<ComportamentalFSM> net;
 	private ArrayList<Link> links;
 	
-	public ComportamentaleFANet(ArrayList<Link> links) {
-		this.net = new ArrayList<ComportamentaleFA>();
+	public CFSMnetwork(ArrayList<Link> links) {
+		this.net = new ArrayList<ComportamentalFSM>();
 		this.links = links;
 		for(Link link: links) {
 			link.setEmptyEvent();
@@ -32,17 +32,17 @@ public class ComportamentaleFANet implements Serializable{
 				net.add(link.getDestination());
 		}
 		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3 (comodo per confrontare la soluzione)
-		for(ComportamentaleFA cfa: net) {
+		for(ComportamentalFSM cfa: net) {
 			cfa.setCurrent(cfa.initialState()); //imposta l'actual state allo stato iniziale (magari facciamo metodo setActualToInitial? )
 		}
 	}
 	
 	
-	public ArrayList<ComportamentaleState> getInitialStates(){
+	public ArrayList<ComportamentalState> getInitialStates(){
 		return  net.stream().sequential().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
-	public ArrayList<ComportamentaleState> getActualStates(){
+	public ArrayList<ComportamentalState> getActualStates(){
 		return net.stream().sequential().map(cfa -> cfa.currentState()).collect(Collectors .toCollection(ArrayList::new));
 	}
 	
@@ -60,7 +60,7 @@ public class ComportamentaleFANet implements Serializable{
 	}
 	
 	public void restoreInitial() {
-		for(ComportamentaleFA cfa: net) {
+		for(ComportamentalFSM cfa: net) {
 			cfa.setCurrent(cfa.initialState());
 		}
 		for(Link link: links) {
@@ -68,8 +68,8 @@ public class ComportamentaleFANet implements Serializable{
 		}
 	}
 	
-	public void transitionTo(ComportamentaleTransition transition) {
-		for (ComportamentaleFA cfa : net) {
+	public void transitionTo(ComportamentalTransition transition) {
+		for (ComportamentalFSM cfa : net) {
 	        if (transition.source().equals(cfa.currentState())) {
 	        	cfa.transitionTo(transition);
 	            break;
@@ -94,11 +94,11 @@ public class ComportamentaleFANet implements Serializable{
 		}
 	}
 	
-	public Set<ComportamentaleTransition> enabledTransitions() {
-		Set<ComportamentaleTransition> enabledTransitions = new HashSet<ComportamentaleTransition>();
-		for(ComportamentaleFA cfa: net) {
-			Set<ComportamentaleTransition> transitions = cfa.from(cfa.currentState());
-			for(ComportamentaleTransition transition: transitions) {
+	public Set<ComportamentalTransition> enabledTransitions() {
+		Set<ComportamentalTransition> enabledTransitions = new HashSet<ComportamentalTransition>();
+		for(ComportamentalFSM cfa: net) {
+			Set<ComportamentalTransition> transitions = cfa.from(cfa.currentState());
+			for(ComportamentalTransition transition: transitions) {
 				boolean enabled = true;
 				if(!transition.isInputEventEmpty()) {
 					Link link = links.get(links.indexOf(transition.getInputLink()));

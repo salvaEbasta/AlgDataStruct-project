@@ -1,7 +1,7 @@
 package ui.commands;
 
 import commoninterfaces.State;
-import comportamentale_fa.ComportamentaleState;
+import comportamental_fsm.ComportamentalState;
 import ui.Context;
 
 public class SetInitial implements CommandInterface, OneParameter{
@@ -14,7 +14,7 @@ public class SetInitial implements CommandInterface, OneParameter{
 		State s = context.getSavedStateFromId(id);
 		boolean set = false;;
 		if(s != null)
-			set = context.setInitialStateOnNewCFA((ComportamentaleState) s);
+			set = context.setInitialStateOnNewCFA((ComportamentalState) s);
 		if(set)
 			context.getIOStream().writeln(String.format("Nuovo stato iniziale %s impostato correttamente!", id));
 		else

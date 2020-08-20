@@ -1,8 +1,8 @@
 package spazio_comportamentale;
 
-import commoninterfaces.Builder;
+import commoninterfaces.ComponentBuilder;
 
-public class BuilderSpaceComportamentale implements Builder<SpaceState, SpaceTransition<SpaceState>>{
+public class BuilderSpaceComportamentale implements ComponentBuilder<SpaceState, SpaceTransition<SpaceState>>{
 
 	@Override
 	public SpaceState newState(String id) {

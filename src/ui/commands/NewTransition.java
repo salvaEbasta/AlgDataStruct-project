@@ -4,12 +4,12 @@ import java.util.HashMap;
 
 import commoninterfaces.State;
 import commoninterfaces.Transition;
-import comportamentale_fa.ComportamentaleState;
-import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.Event;
-import comportamentale_fa.Link;
-import comportamentale_fa.labels.ObservableLabel;
-import comportamentale_fa.labels.RelevantLabel;
+import comportamental_fsm.ComportamentalState;
+import comportamental_fsm.ComportamentalTransition;
+import comportamental_fsm.Event;
+import comportamental_fsm.Link;
+import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.RelevantLabel;
 import ui.Context;
 
 public class NewTransition implements CommandInterface, OneParameter{
@@ -32,10 +32,10 @@ public class NewTransition implements CommandInterface, OneParameter{
 			return false;
 		}
 		context.getIOStream().writeln(context.savedStatesList());
-		ComportamentaleState source = getState(context, "Indicare l'id dello Stato sorgente (oppure 'exit' per annullare): ");
+		ComportamentalState source = getState(context, "Indicare l'id dello Stato sorgente (oppure 'exit' per annullare): ");
 		if(source == null)
 			return false;
-		ComportamentaleState destination = getState(context, "Indicare l'id dello Stato di destinazione (oppure 'exit' per annullare): ");
+		ComportamentalState destination = getState(context, "Indicare l'id dello Stato di destinazione (oppure 'exit' per annullare): ");
 		if(destination == null)
 			return false;
 		String ans = context.getIOStream().yesOrNo("Inserire un evento di input?");
@@ -81,11 +81,11 @@ public class NewTransition implements CommandInterface, OneParameter{
 			if(!label.isEmpty())
 				rel = new RelevantLabel(label);
 		}
-		ComportamentaleTransition transition = null;
+		ComportamentalTransition transition = null;
 		if(eIn.isEmpty())
-			transition = new ComportamentaleTransition(id, source, destination, eOut, obs, rel);
+			transition = new ComportamentalTransition(id, source, destination, eOut, obs, rel);
 		else
-			transition = new ComportamentaleTransition(id, source, destination, eIn, lIn, eOut, obs, rel);
+			transition = new ComportamentalTransition(id, source, destination, eIn, lIn, eOut, obs, rel);
 		
 		boolean added = context.saveTransition((Transition)transition);
 		if(added) {
@@ -99,7 +99,7 @@ public class NewTransition implements CommandInterface, OneParameter{
 	}
 
 	
-	private ComportamentaleState getState(Context context, String message) {
+	private ComportamentalState getState(Context context, String message) {
 		boolean found = false;
 		String id = null;
 		do {
@@ -108,7 +108,7 @@ public class NewTransition implements CommandInterface, OneParameter{
 				return null;
 			found = context.hasSavedState(id);
 		} while(!found);
-		return (ComportamentaleState) context.getSavedStateFromId(id);
+		return (ComportamentalState) context.getSavedStateFromId(id);
 	}
 
 	private Event getEvent(Context context, String message) {

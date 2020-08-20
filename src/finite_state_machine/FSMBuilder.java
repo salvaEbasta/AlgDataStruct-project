@@ -1,8 +1,8 @@
-package finite_state_automata;
+package finite_state_machine;
 
-import commoninterfaces.Builder;
+import commoninterfaces.ComponentBuilder;
 
-public class FSMBuilder implements Builder<FiniteState, FiniteTransition>{
+public class FSMBuilder implements ComponentBuilder<FiniteState, FiniteTransition>{
 
 	@Override
 	public FiniteState newState(String id) {

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Automa<S extends State, T extends Transition<S>> implements AutomaInterface<S, T>{
+public abstract class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>{
 
 	private String id;
 	protected HashMap<S, Interconnections<S, T>> structure;
@@ -125,6 +125,11 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	@Override
 	public T getAuto(S s) {
 		return structure.get(s).getAuto().iterator().next();
+	}
+	
+	@Override
+	public boolean hasState(S s) {
+		return structure.containsKey(s);
 	}
 	
 	@Override

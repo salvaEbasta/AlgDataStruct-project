@@ -1,8 +1,8 @@
-package fsa_algorithms;
+package fsm_algorithms;
 
 import java.util.LinkedList;
 
-import commoninterfaces.AutomaInterface;
+import commoninterfaces.FiniteStateMachine;
 import commoninterfaces.State;
 import commoninterfaces.Transition;
 
@@ -15,7 +15,7 @@ public class TransitionFinder {
 	 * @param N
 	 * @return
 	 */
-	public static <S extends State, T extends Transition<S>> LinkedList<T> oneWayPath(AutomaInterface<S, T> N){
+	public static <S extends State, T extends Transition<S>> LinkedList<T> oneWayPath(FiniteStateMachine<S, T> N){
 		LinkedList<T> sequence = new LinkedList<T>();
 		for(S s : N.states()) {
 			//System.out.println("State : "+s);
@@ -29,12 +29,12 @@ public class TransitionFinder {
 		return sequence;
 	}
 	
-	private static <S extends State, T extends Transition<S>> void buildSequence(AutomaInterface<S, T> N, S s, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildSequence(FiniteStateMachine<S, T> N, S s, LinkedList<T> sequence) {
 		buildUpstream(N, s, sequence);
 		buildDownstream(N, s, sequence);
 	}
 	
-	private static <S extends State, T extends Transition<S>> void buildUpstream(AutomaInterface<S, T> N, S source, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildUpstream(FiniteStateMachine<S, T> N, S source, LinkedList<T> sequence) {
 		//System.out.println("Upstream of "+source+": "+N.to(source));
 		if(N.to(source).size() == 1 && N.from(source).size() == 1) {
 			T inT = N.to(source).iterator().next();
@@ -45,7 +45,7 @@ public class TransitionFinder {
 		}
 	}
 	
-	private static <S extends State, T extends Transition<S>> void buildDownstream(AutomaInterface<S, T> N, S sink, LinkedList<T> sequence) {
+	private static <S extends State, T extends Transition<S>> void buildDownstream(FiniteStateMachine<S, T> N, S sink, LinkedList<T> sequence) {
 		//System.out.println("Downstream of "+sink+": "+N.from(sink));
 		if(N.from(sink).size() == 1 && N.to(sink).size() == 1) {
 			T outT = N.from(sink).iterator().next();
@@ -56,7 +56,7 @@ public class TransitionFinder {
 		}
 	}
 	
-	public static <S extends State, T extends Transition<S>> LinkedList<T> parallelTransitions(AutomaInterface<S, T> N){
+	public static <S extends State, T extends Transition<S>> LinkedList<T> parallelTransitions(FiniteStateMachine<S, T> N){
 		LinkedList<T> parallels = new LinkedList<T>();
 		LinkedList<T> transitions = new LinkedList<T>(N.transitions());
 		while(transitions.size() > 1) {

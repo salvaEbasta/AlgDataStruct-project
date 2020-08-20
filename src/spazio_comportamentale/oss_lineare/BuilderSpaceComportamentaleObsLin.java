@@ -1,9 +1,9 @@
 package spazio_comportamentale.oss_lineare;
 
-import commoninterfaces.Builder;
+import commoninterfaces.ComponentBuilder;
 import spazio_comportamentale.SpaceTransition;
 
-public class BuilderSpaceComportamentaleObsLin implements Builder<SpaceStateObs, SpaceTransition<SpaceStateObs>>{
+public class BuilderSpaceComportamentaleObsLin implements ComponentBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>{
 
 	@Override
 	public SpaceStateObs newState(String id) {

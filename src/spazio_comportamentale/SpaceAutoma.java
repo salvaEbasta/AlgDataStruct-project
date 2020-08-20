@@ -61,36 +61,11 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		}
 		return ridenominazione;
 	}
-
-	public SpaceAutoma<S> silentClosure(S state){
-		SpaceAutoma<S> silentClosure = new SpaceAutoma<S>(state.id()+"_silentClosure");
-		if(!this.structure.containsKey(state))
-			return silentClosure;
-		else if(!this.initialState().equals(state) || !structure.get(state).hasObservableEntering())
-			return silentClosure;
-		else {
-			buildSilentClosure(state, silentClosure);
-			return silentClosure;
-		}
-	}
-	
-	private void buildSilentClosure(S state, SpaceAutoma<S> closure) {
-		closure.insert(state);
-		closure.setInitial(state);
-		LinkedList<SpaceTransition<S>> queue = new LinkedList<SpaceTransition<S>>(structure.get(state).from());
-		while(queue.size() > 0) {
-			SpaceTransition<S> current = queue.pop();
-			if(!current.isSilent()) {
-				closure.insert(current.sink());
-				closure.add(current);
-				queue.addAll(structure.get(current.sink()).from());
-			}
-		}
-	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("SpaceAutoma: %s\n", id()));
 		for(S state: states()) {
 			sb.append(state.toString());
 			Set<SpaceTransition<S>>  in = to(state);

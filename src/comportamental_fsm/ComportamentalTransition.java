@@ -1,13 +1,13 @@
-package comportamentale_fa;
+package comportamental_fsm;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
-import comportamentale_fa.labels.ObservableLabel;
-import comportamentale_fa.labels.RelevantLabel;
+import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.RelevantLabel;
 
-public class ComportamentaleTransition extends Transition<ComportamentaleState> implements Serializable{
+public class ComportamentalTransition extends Transition<ComportamentalState> implements Serializable{
 	
 	/**
 	 * 
@@ -18,7 +18,7 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState> 
 	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
 									//è possibile inserire più volte lo stesso "valore" Link
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
+	public ComportamentalTransition(String id, ComportamentalState source, ComportamentalState destination, Event in, Link inputLink, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		super.setObservableLabel(omega);
 		super.setRelevantLabel(f);
@@ -27,7 +27,7 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState> 
 		this.out = out;
 	}
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, Event in, Link inputLink, ObservableLabel omega, RelevantLabel f) {
+	public ComportamentalTransition(String id, ComportamentalState source, ComportamentalState destination, Event in, Link inputLink, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		super.setObservableLabel(omega);
 		super.setRelevantLabel(f);
@@ -36,7 +36,7 @@ public class ComportamentaleTransition extends Transition<ComportamentaleState> 
 		this.out = new HashMap<Event, Link>();
 	}
 	
-	public ComportamentaleTransition(String id, ComportamentaleState source, ComportamentaleState destination, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
+	public ComportamentalTransition(String id, ComportamentalState source, ComportamentalState destination, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
 		super.setObservableLabel(omega);
 		super.setRelevantLabel(f);

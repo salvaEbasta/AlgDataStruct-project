@@ -3,22 +3,22 @@ package spazio_comportamentale;
 import java.util.ArrayList;
 
 import commoninterfaces.State;
-import comportamentale_fa.Event;
-import comportamentale_fa.ComportamentaleState;
+import comportamental_fsm.ComportamentalState;
+import comportamental_fsm.Event;
 
 public class SpaceState extends State{
 	
-	private ArrayList<ComportamentaleState> actualStates;
+	private ArrayList<ComportamentalState> actualStates;
 	private ArrayList<Event> linkEvents;	
 	
 	
 	public SpaceState(String id) {
 		super(id);
-		this.actualStates = new ArrayList<ComportamentaleState>();
+		this.actualStates = new ArrayList<ComportamentalState>();
 		this.linkEvents = new ArrayList<Event>();
 	}
 	
-	public SpaceState(ArrayList<ComportamentaleState> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceState(ArrayList<ComportamentalState> actualStates, ArrayList<Event> linkEvents) {
 		super("");
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
@@ -42,12 +42,20 @@ public class SpaceState extends State{
 		return true;
 	}
 	
-	public ArrayList<ComportamentaleState> getStates() {
+	public ArrayList<ComportamentalState> getStates() {
 		return actualStates;
+	}
+	
+	public boolean hasState(ComportamentalState s) {
+		return this.actualStates.contains(s);
 	}
 	
 	public ArrayList<Event> getEvents() {
 		return linkEvents;
+	}
+	
+	public boolean hasEvent(Event e) {
+		return linkEvents.contains(e);
 	}
 	
 	private String content() {

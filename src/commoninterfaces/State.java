@@ -1,9 +1,9 @@
 package commoninterfaces;
 
-public abstract class State {
+public class State {
 	
 	protected String id;
-	public boolean accepting;
+	private boolean accepting;
 	
 	public State(String id) {
 		this.id = id;
@@ -30,7 +30,6 @@ public abstract class State {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
 		final State tmp = (State) obj;
-		return this.id.equalsIgnoreCase(tmp.id);
+		return this.id.equals(tmp.id);
 	}
-
 }

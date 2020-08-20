@@ -1,6 +1,6 @@
 package ui.commands;
 
-import comportamentale_fa.Link;
+import comportamental_fsm.Link;
 import ui.Context;
 
 public class NewLink implements CommandInterface, OneParameter{

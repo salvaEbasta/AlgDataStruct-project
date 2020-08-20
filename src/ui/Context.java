@@ -5,27 +5,27 @@ import java.util.Set;
 
 import commoninterfaces.State;
 import commoninterfaces.Transition;
-import comportamentale_fa.ComportamentaleFA;
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.ComportamentaleState;
-import comportamentale_fa.ComportamentaleTransition;
-import comportamentale_fa.Event;
-import comportamentale_fa.Link;
+import comportamental_fsm.ComportamentalFSM;
+import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.ComportamentalState;
+import comportamental_fsm.ComportamentalTransition;
+import comportamental_fsm.Event;
+import comportamental_fsm.Link;
 import ui.stream.InOutStream;
 
 public class Context {
 	
 	private InOutStream io;
 	
-	private Set<ComportamentaleFA> savedCFAs;
+	private Set<ComportamentalFSM> savedCFAs;
 	private Set<Link> savedLinks;
 	private Set<State> savedStates;
 	private Set<Event> savedEvents;
 	private Set<Transition<State>> savedTransitions;
 	
-	private ComportamentaleFA newCFA;
+	private ComportamentalFSM newCFA;
 	
-	private ComportamentaleFANet currentNet;
+	private CFSMnetwork currentNet;
 	
 	public Context(InOutStream io) {
 		this.io = io;
@@ -149,8 +149,8 @@ public class Context {
 		return sb.toString();
 	}
 	
-	public ComportamentaleFA getSavedCFAfromId(String id) {
-		for(ComportamentaleFA cfa: savedCFAs) {
+	public ComportamentalFSM getSavedCFAfromId(String id) {
+		for(ComportamentalFSM cfa: savedCFAs) {
 			if(cfa.id().equals(id))
 				return cfa;
 		}
@@ -163,7 +163,7 @@ public class Context {
 	
 	public String savedCFAsList() {
 		StringBuilder sb = new StringBuilder("Lista di CFA salvati:\n");
-		for(ComportamentaleFA cfa: savedCFAs) {
+		for(ComportamentalFSM cfa: savedCFAs) {
 			sb.append("* ").append(cfa).append("\n");
 		}
 		return sb.toString();
@@ -174,10 +174,10 @@ public class Context {
 	}
 	
 	public void createNewCFA(String id) {
-		newCFA = new ComportamentaleFA(id);
+		newCFA = new ComportamentalFSM(id);
 	}			
 	
-	public boolean setInitialStateOnNewCFA(ComportamentaleState s) {
+	public boolean setInitialStateOnNewCFA(ComportamentalState s) {
 		if(newCFA != null) 
 			return newCFA.setInitial(s);
 		return false;		
@@ -192,20 +192,20 @@ public class Context {
 		return saved;		
 	}	
 
-	public boolean addStateToNewCFA(ComportamentaleState s) {
+	public boolean addStateToNewCFA(ComportamentalState s) {
 		if(newCFA == null)
 			return false;
 		return newCFA.insert(s);
 	}
 
 
-	public boolean addTransitionToNewCFA(ComportamentaleTransition t) {
+	public boolean addTransitionToNewCFA(ComportamentalTransition t) {
 		if(newCFA == null)
 			return false;
 		return newCFA.add(t);
 	}
 
-	public boolean linkCFAs(String id, ComportamentaleFA source, ComportamentaleFA destination) {
+	public boolean linkCFAs(String id, ComportamentalFSM source, ComportamentalFSM destination) {
 		if(hasSavedLink(id)) {
 			Link l = getSavedLinkFromId(id);
 			l.setSource(source);
@@ -215,7 +215,7 @@ public class Context {
 		return false;
 	}	
 	
-	public void loadNet(ComportamentaleFANet net) {
+	public void loadNet(CFSMnetwork net) {
 		currentNet = net;
 	}
 

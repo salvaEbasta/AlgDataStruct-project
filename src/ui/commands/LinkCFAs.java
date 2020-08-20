@@ -1,6 +1,6 @@
 package ui.commands;
 
-import comportamentale_fa.ComportamentaleFA;
+import comportamental_fsm.ComportamentalFSM;
 import ui.Context;
 
 public class LinkCFAs implements CommandInterface, OneParameter{
@@ -21,10 +21,10 @@ public class LinkCFAs implements CommandInterface, OneParameter{
 			return false;
 		}
 		context.getIOStream().writeln(context.savedCFAsList());
-		ComportamentaleFA source = getCFA(context, "Indicare l'id del CFA sorgente (oppure 'exit' per annullare): ");
+		ComportamentalFSM source = getCFA(context, "Indicare l'id del CFA sorgente (oppure 'exit' per annullare): ");
 		if(source == null)
 			return false;
-		ComportamentaleFA destination = getCFA(context, "Indicare l'id del CFA destinazione (oppure 'exit' per annullare): ");
+		ComportamentalFSM destination = getCFA(context, "Indicare l'id del CFA destinazione (oppure 'exit' per annullare): ");
 		if(destination == null)
 			return false;
 		boolean linked = context.linkCFAs(id, source, destination);
@@ -35,7 +35,7 @@ public class LinkCFAs implements CommandInterface, OneParameter{
 		return linked;
 	}
 	
-	private ComportamentaleFA getCFA(Context context, String message) {
+	private ComportamentalFSM getCFA(Context context, String message) {
 		boolean found = false;
 		String id = null;
 		do {

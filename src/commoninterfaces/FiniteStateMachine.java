@@ -2,7 +2,7 @@ package commoninterfaces;
 
 import java.util.Set;
 
-public interface AutomaInterface<S extends State, T extends Transition<S>>{
+public interface FiniteStateMachine<S extends State, T extends Transition<S>>{
 	public String id();
 	public Set<T> transitions();
 	public Set<S> states();
@@ -20,4 +20,5 @@ public interface AutomaInterface<S extends State, T extends Transition<S>>{
 	public Set<S> acceptingStates();
 	public boolean hasAuto(S s);
 	public T getAuto(S s);
+	public boolean hasState(S s);
 }

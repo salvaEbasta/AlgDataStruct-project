@@ -3,8 +3,8 @@ package ui.commands;
 import java.io.File;
 import java.util.ArrayList;
 
-import comportamentale_fa.ComportamentaleFANet;
-import comportamentale_fa.Link;
+import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.Link;
 import ui.Context;
 import utility.FileHandler;
 
@@ -31,7 +31,7 @@ public class SaveNet implements CommandInterface, OneParameter{
 				return false;
 			}
 		}
-		ComportamentaleFANet net = new ComportamentaleFANet(links);
+		CFSMnetwork net = new CFSMnetwork(links);
 		String fileName = PARENT.concat(args[0]);
 		File file = new File(fileName);
 		if(file.exists()) {

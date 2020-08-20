@@ -1,4 +1,4 @@
-package comportamentale_fa;
+package comportamental_fsm;
 
 import java.io.Serializable;
 

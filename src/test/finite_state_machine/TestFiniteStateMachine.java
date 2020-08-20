@@ -1,4 +1,4 @@
-package test.finiteStateAutomata;
+package test.finite_state_machine;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,9 +6,9 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import finite_state_automata.LinkedTransitionsFSA;
-import finite_state_automata.FiniteState;
-import finite_state_automata.FiniteTransition;
+import finite_state_machine.FiniteState;
+import finite_state_machine.FiniteTransition;
+import finite_state_machine.LinkedTransitionsFSA;
 
 class TestFiniteStateMachine {
 	

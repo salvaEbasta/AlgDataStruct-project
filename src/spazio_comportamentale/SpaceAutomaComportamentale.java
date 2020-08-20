@@ -6,5 +6,10 @@ public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 		super(id);
 	}
 	
-	
+	public boolean hasEnteringObsTransitions(SpaceState s) {
+		if(hasState(s))
+			return super.structure.get(s).hasObservableEntering();
+		else
+			return false;
+	}
 }

@@ -75,7 +75,7 @@ public class Interconnections<S extends State, T extends Transition<S>> {
 	public boolean hasObservableEntering() {
 		Iterator<T> iter = in.iterator();
 		while(iter.hasNext())
-			if(iter.next().isSilent())
+			if(!iter.next().isSilent())
 				return true;
 		return false;
 	}

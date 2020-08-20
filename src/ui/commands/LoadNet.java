@@ -1,6 +1,6 @@
 package ui.commands;
 
-import comportamentale_fa.ComportamentaleFANet;
+import comportamental_fsm.CFSMnetwork;
 import ui.Context;
 import utility.FileHandler;
 
@@ -13,7 +13,7 @@ public class LoadNet implements CommandInterface, OneParameter{
 		if(!check(args, context))
 			return false;
 		String filename = PARENT.concat(args[0]).concat(".ser");
-		ComportamentaleFANet loadedNet = (ComportamentaleFANet) new FileHandler().load(filename);
+		CFSMnetwork loadedNet = (CFSMnetwork) new FileHandler().load(filename);
 		if(loadedNet == null) {
 			context.getIOStream().writeln(String.format("ERRORE: Nessuna rete CFA trovata nel file '%s'", filename));
 			return false;
