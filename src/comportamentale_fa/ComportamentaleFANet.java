@@ -1,5 +1,6 @@
 package comportamentale_fa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,8 +12,12 @@ import spazio_comportamentale.SpaceState;
 
 import java.util.Map.Entry;
 
-public class ComportamentaleFANet {
+public class ComportamentaleFANet implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<ComportamentaleFA> net;
 	private ArrayList<Link> links;
 	

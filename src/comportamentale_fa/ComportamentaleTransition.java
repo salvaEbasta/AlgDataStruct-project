@@ -1,13 +1,18 @@
 package comportamentale_fa;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 
-public class ComportamentaleTransition extends Transition<ComportamentaleState>{
+public class ComportamentaleTransition extends Transition<ComportamentaleState> implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Event in;
 	private Link inputLink;
 	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
