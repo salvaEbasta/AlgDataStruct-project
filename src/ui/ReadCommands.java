@@ -10,22 +10,22 @@ import java.util.ArrayList;
 
 public class ReadCommands{
 
-	
-	public ArrayList<String> readLines(String path) throws IllegalStateException, IOException{
+	public ArrayList<String> readCommands(String path){
 		File file = new File(path);
-		if(file.exists() && file.canRead()) {
-			BufferedReader in = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);
-			String currentLine;
-			ArrayList<String> lista = new ArrayList<String>();
-			while ((currentLine = in.readLine()) != null) {
-				lista.add(currentLine);
+		if(file.exists() && file.canRead()) {			
+			try(BufferedReader in = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8);){
+				String currentLine;
+				ArrayList<String> lista = new ArrayList<String>();
+				while ((currentLine = in.readLine()) != null) {
+					lista.add(currentLine);
+				}
+				in.close();
+				return lista;
+			} catch (IOException e) {
+				return new ArrayList<String>();
 			}
-			in.close();
-			return lista;
-		} else {
-			throw new IllegalStateException("Can't read this file");
-		}
-		
+		} else 
+			return new ArrayList<String>();		
 	}
 
 }

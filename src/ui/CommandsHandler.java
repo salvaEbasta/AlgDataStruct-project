@@ -97,6 +97,14 @@ public class CommandsHandler implements Closeable{
 		
 		if(command.equals("help"))
 			context.getIOStream().writeln(toString());
+		else if(command.equals("readcommands")) { 
+			String filename = args[0];
+			if(filename.matches("[^\\,\\/:*\"<>|]+\\.txt")) {
+			ArrayList<String> commandsList = new ReadCommands().readCommands(filename);
+			for(String readCommand: commandsList)
+				run(readCommand.trim());
+			}
+		}
 		else if(!contains(command)) 
 			context.getIOStream().writeln(Constants.ERROR_UNKNOWN_COMMAND);
 		else if(cList.stream()
@@ -126,6 +134,7 @@ public class CommandsHandler implements Closeable{
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder("I comandi a tua disposizione:");
+		sb.append(String.format(TOSTRING_FORMAT, "readcommands", "Legge ed esegue una serie di comandi da file txt", "readcommands [fileName].txt"));
 		cList.stream()
 			.forEachOrdered((c)->sb.append(String.format(TOSTRING_FORMAT, c.getName(), c.getDescription(), c.getSyntax())));
 		return sb.toString();
