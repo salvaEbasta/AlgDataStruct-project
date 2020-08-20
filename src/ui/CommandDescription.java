@@ -14,6 +14,7 @@ public enum CommandDescription{
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),
+	SAVENET("savenet", "Salva la rete su file specificato","savenet [fileName]"),
 	NEWSTATE("newstate", "Crea un nuovo Stato Comportamentale","newstate [id]"),
 	NEWEVENT("newevent", "Crea un nuovo Evento","newevent [id]"),
 	NEWTRANSITION("newtransition", "Crea una nuova Transizione Comportamentale","newtransition [id]"),

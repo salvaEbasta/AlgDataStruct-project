@@ -1,0 +1,20 @@
+newnet
+newlink l
+newcfa c1
+newstate 10
+newstate 11
+setinitial 10
+newtransition t1
+savecfa
+annulla
+newnet
+newcfa c2
+newstate 20
+newstate 21
+setinitial 20
+newtransition t2
+savecfa
+annulla
+newnet
+linkcfas l
+savenet net1

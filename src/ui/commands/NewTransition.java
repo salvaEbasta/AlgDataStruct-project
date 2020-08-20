@@ -35,7 +35,7 @@ public class NewTransition implements CommandInterface, OneParameter{
 		ComportamentaleState source = getState(context, "Indicare l'id dello Stato sorgente (oppure 'exit' per annullare): ");
 		if(source == null)
 			return false;
-		ComportamentaleState destination = getState(context, "Indicare l'id delo Stato di destinazione (oppure 'exit' per annullare): ");
+		ComportamentaleState destination = getState(context, "Indicare l'id dello Stato di destinazione (oppure 'exit' per annullare): ");
 		if(destination == null)
 			return false;
 		String ans = context.getIOStream().yesOrNo("Inserire un evento di input?");
@@ -67,22 +67,18 @@ public class NewTransition implements CommandInterface, OneParameter{
 				ans = context.getIOStream().yesOrNo("Inserire un altro evento di output?");
 			} while(ans.equalsIgnoreCase("y"));
 		}			
-		ObservableLabel obs = null;
+		ObservableLabel obs = new ObservableLabel();;
 		ans = context.getIOStream().yesOrNo("Creare una etichetta di Osservabilità?");
 		if(ans.equalsIgnoreCase("y")){
 			String label = context.getIOStream().read("Inserire nome per l'etichetta di Osservabilità: ");
-			if(label.isEmpty())
-				obs = new ObservableLabel();
-			else
+			if(!label.isEmpty())
 				obs = new ObservableLabel(label);
 		}
-		RelevantLabel rel = null;
+		RelevantLabel rel = new RelevantLabel();
 		ans = context.getIOStream().yesOrNo("Creare una etichetta di Rilevanza?");
 		if(ans.equalsIgnoreCase("y")){
 			String label = context.getIOStream().read("Inserire nome per l'etichetta di Rilevanza: ");
-			if(label.isEmpty())
-				rel = new RelevantLabel();
-			else
+			if(!label.isEmpty())
 				rel = new RelevantLabel(label);
 		}
 		ComportamentaleTransition transition = null;

@@ -51,6 +51,7 @@ public class FileHandler{
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
+				e.printStackTrace();
 				return false;
 			}
 		}
@@ -60,6 +61,7 @@ public class FileHandler{
 				return true;
 			}
 		}catch(IOException e) {
+			e.printStackTrace();
 			return false;
 		}
 		return false;

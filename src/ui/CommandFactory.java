@@ -12,6 +12,7 @@ import ui.commands.NewNet;
 import ui.commands.NewState;
 import ui.commands.NewTransition;
 import ui.commands.SaveCFA;
+import ui.commands.SaveNet;
 import ui.commands.SetInitial;
 import ui.commands.ShowCFAs;
 import ui.commands.ShowEvents;
@@ -62,6 +63,10 @@ public class CommandFactory {
 		return new Command(CommandDescription.LINKCFAS, new LinkCFAs());
 	}
 	
+	public Command saveNet() {
+		return new Command(CommandDescription.SAVENET, new SaveNet());
+	}
+	
 	public Command newState() {
 		return new Command(CommandDescription.NEWSTATE, new NewState());
 	}	
@@ -101,6 +106,7 @@ public class CommandFactory {
 	public Command showTransitions() {
 		return new Command(CommandDescription.SHOWTRANSITIONS, new ShowTransitions());
 	}
+
 		
 	
 }

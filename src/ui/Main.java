@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import ui.stream.SimpleStreamAdapter;
 import utility.Constants;
@@ -34,7 +35,18 @@ public class Main {
 		handler = new CommandsHandler(ssa);
 		do {
 			String command = ssa.read(Constants.EMPTY_STRING);
-			handler.run(command.trim());
+			if(command.startsWith("readcommands ")) {
+				String filename = command.replaceFirst("^readcommands ", Constants.EMPTY_STRING);
+				try {
+					ArrayList<String> commandsList = new ReadCommands().readLines(filename);
+					for(String readCommand: commandsList)
+						handler.run(readCommand.trim());
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else				
+				handler.run(command.trim());
 		}while(true);
 	}	
 }

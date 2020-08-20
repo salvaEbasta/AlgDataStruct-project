@@ -29,7 +29,7 @@ public class LinkCFAs implements CommandInterface, OneParameter{
 			return false;
 		boolean linked = context.linkCFAs(id, source, destination);
 		if(linked)
-			context.getIOStream().writeln(String.format("CFA %s e %s collegate correttamente tramite link %s!", source, destination, id));
+			context.getIOStream().writeln(String.format("CFA %s e %s collegate correttamente tramite link %s!", source.id(), destination.id(), id));
 		else
 			context.getIOStream().writeln(String.format("ERRORE: Impossibile collegare le CFA!", id));
 		return linked;

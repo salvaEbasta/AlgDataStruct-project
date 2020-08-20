@@ -6,6 +6,7 @@ import java.util.Set;
 import commoninterfaces.State;
 import commoninterfaces.Transition;
 import comportamentale_fa.ComportamentaleFA;
+import comportamentale_fa.ComportamentaleFANet;
 import comportamentale_fa.ComportamentaleState;
 import comportamentale_fa.ComportamentaleTransition;
 import comportamentale_fa.Event;
@@ -24,6 +25,7 @@ public class Context {
 	
 	private ComportamentaleFA newCFA;
 	
+	private ComportamentaleFANet currentNet;
 	
 	public Context(InOutStream io) {
 		this.io = io;
@@ -212,6 +214,10 @@ public class Context {
 		}
 		return false;
 	}	
+	
+	public void loadNet(ComportamentaleFANet net) {
+		currentNet = net;
+	}
 
 	public void resetUnsavedWork() {
 		newCFA = null;	

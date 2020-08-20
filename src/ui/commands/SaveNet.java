@@ -27,7 +27,7 @@ public class SaveNet implements CommandInterface, OneParameter{
 		ArrayList<Link> links = new ArrayList<Link>(context.getSavedLinks());
 		for(Link link: links) {
 			if(link.getSource() == null || link.getDestination() == null) {
-				context.getIOStream().writeln(String.format("ERRORE: Il link %s non ha uno stato sorgente o di destinazione!", link.id()));
+				context.getIOStream().writeln(String.format("ERRORE: Il link %s non ha un CFA sorgente o di destinazione!", link.id()));
 				return false;
 			}
 		}

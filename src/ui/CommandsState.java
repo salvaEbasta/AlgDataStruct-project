@@ -41,6 +41,7 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().showCFAs());
 			commandsList.add(new CommandFactory().showLinks());
 			commandsList.add(new CommandFactory().showEvents());
+			commandsList.add(new CommandFactory().saveNet());
 //			commandsList.add(new CommandFactory().logout());
 //			commandsList.add(new CommandFactory().modify());
 //			commandsList.add(new CommandFactory().newEvent());
