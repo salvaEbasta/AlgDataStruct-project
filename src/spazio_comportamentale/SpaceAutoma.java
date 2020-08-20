@@ -23,10 +23,6 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		return acceptingStates;
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Fa SOLO la potatura dell'albero
 	 * @return
