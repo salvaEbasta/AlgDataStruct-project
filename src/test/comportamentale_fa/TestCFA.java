@@ -114,7 +114,7 @@ class TestCFA {
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
 		computedSpace.potatura();	
-		String output = RegexBuilder.compute(computedSpace, new BuilderSpaceComportamentaleObsLin());
+		String output = RegexBuilder.relevanceRegex(computedSpace, new BuilderSpaceComportamentaleObsLin());
 		System.out.println(output);
 	}
 	

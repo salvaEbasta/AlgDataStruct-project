@@ -15,17 +15,19 @@ class TestRegexBuilder {
 	@Test
 	void test_benchmarkC1() {
 		AutomaInterface<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
-		String result = RegexBuilder.compute(C1, new FSMBuilder());
+		String result = RegexBuilder.relevanceRegex(C1, new FSMBuilder());
 		
 		System.out.println(result);
-		assertTrue(result.equalsIgnoreCase("(ε(((c|a)b))*((c|a)b)(c|a))"));
+		assertTrue(result.equalsIgnoreCase("(ε(((c|a)b))*((c|a)b)((c|a)ε))"));
 	}
 	
 	@Test
 	void test_pg50() {
 		AutomaInterface<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String result = RegexBuilder.compute(pg50, new FSMBuilder());
+		String result = RegexBuilder.relevanceRegex(pg50, new FSMBuilder());
 		System.out.println(result);
+		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
+		assertTrue(result.equalsIgnoreCase("((  )(( ε)|(f((r((fε)|( ε)))|ε))))"));
 	}
 
 	private static AutomaInterface<FiniteState, FiniteTransition> build_benchmarkC1() {
