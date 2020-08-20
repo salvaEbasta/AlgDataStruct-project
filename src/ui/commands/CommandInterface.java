@@ -1,6 +1,6 @@
-package ui;
+package ui.commands;
 
-
+import ui.Context;
 
 /**
  * Interfaccia funzionale con il compito di definire il comportamento dei comandi attraverso l'utilizzo di parametri
@@ -15,5 +15,5 @@ public interface CommandInterface {
 	 * @param context il contesto nel quale deve agire il comando
 	 * @return l'esito del comando
 	 */
-	public boolean run(String[] args, InOutStream iOStream);
+	public boolean run(String[] args, Context context);
 }

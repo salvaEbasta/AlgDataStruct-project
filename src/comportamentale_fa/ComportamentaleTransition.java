@@ -3,7 +3,6 @@ package comportamentale_fa;
 import java.util.HashMap;
 
 import commoninterfaces.Transition;
-import comportamentale_fa.labels.Label;
 import comportamentale_fa.labels.ObservableLabel;
 import comportamentale_fa.labels.RelevantLabel;
 

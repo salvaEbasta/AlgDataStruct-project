@@ -6,7 +6,21 @@ package ui;
  */
 public enum CommandDescription{
 	
-	EXIT("exit", "Esci dal programma","exit");
+	EXIT("exit", "Esci dal programma","exit"),
+	ANNULLA("annulla", "Annulla l'operazione in corso e torna al menù principale","annulla"),
+	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
+	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
+	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
+	NEWSTATE("newstate", "Crea un nuovo Stato Comportamentale","newstate [id]"),
+	NEWEVENT("newevent", "Crea un nuovo Evento","newevent [id]"),
+	NEWTRANSITION("newtransition", "Crea una nuova Transizione Comportamentale","newtransition [id]"),
+	SETINITIAL("setinitial", "Imposta lo stato con l'id specificato come iniziale per la CFA","setinitial [id]"),
+	SAVECFA("savecfa", "Salva la CFA su cui si sta lavorando","savecfa"),
+	SHOWCFAS("showcfas", "Mostra i CFA attualmente creati","showcfas"),
+	SHOWLINKS("showlinks", "Mostra i Link attualmente creati","showlinks"),
+	SHOWSTATES("showstates", "Mostra gli Stati attualmente creati","showstates"),
+	SHOWEVENTS("showevents", "Mostra gli Event attualmente creati","showevents"),
+	SHOWTRANSITIONS("showtransitions", "Mostra le Transizioni attualmente create","showtransitions");
 	
 	
 	/**

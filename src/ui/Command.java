@@ -1,5 +1,6 @@
 package ui;
 
+import ui.commands.CommandInterface;
 
 /**
  * Classe che consente di definire un comando a partire da una descrizione e di un compito
@@ -51,8 +52,8 @@ public class Command {
 	 * (non-Javadoc)
 	 * @see main.commands.strategy.CommandInterface#run(java.lang.String[], main.commands.Context)
 	 */
-	public boolean run(String[] args, InOutStream iOStream) {
-		return algorithm.run(args, iOStream);
+	public boolean run(String[] args, Context context) {
+		return algorithm.run(args, context);
 	}	
 
 	/*

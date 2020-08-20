@@ -1,5 +1,8 @@
-package ui;
+package ui.commands;
 
+import ui.Context;
+import ui.InOutStream;
+import utility.Constants;
 
 public class Exit implements CommandInterface, NoParameters{
 
@@ -8,8 +11,8 @@ public class Exit implements CommandInterface, NoParameters{
 	 * @see main.commands.strategy.Commands#run(java.lang.String[], main.commands.Context)
 	 */
 	@Override
-	public boolean run(String[] args, InOutStream io) {
-		if(!check(args, io, "Troppi parametri"))
+	public boolean run(String[] args, Context context) {
+		if(!check(args, context))
 			return false;
 		System.exit(0);
 		return true;

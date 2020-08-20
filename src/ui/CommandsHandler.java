@@ -30,7 +30,7 @@ public class CommandsHandler implements Closeable{
 	 */
 	private ArrayList<Command> cList;
 	
-	private InOutStream IOStream;
+	private Context context;
 	
 	
 	/**
@@ -39,8 +39,8 @@ public class CommandsHandler implements Closeable{
 	 */
 	public CommandsHandler(InOutStream IOStream) {
 		cList = new ArrayList<Command>();
-		this.IOStream = IOStream;
-		cList.add(new CommandFactory().exit());
+		this.context = new Context(IOStream);
+		cList = CommandsState.BASE.getCommandsList();
 	}
 
 	
@@ -94,10 +94,22 @@ public class CommandsHandler implements Closeable{
 			args[0] = parameters;
 		}
 		
-		cList.stream()
-		.filter((c)->c.hasName(command))
-		.findFirst().get()
-		.run(args, IOStream);
+		if(command.equals("help"))
+			context.getIOStream().writeln(toString());
+		else if(!contains(command)) 
+			context.getIOStream().writeln(Constants.ERROR_UNKNOWN_COMMAND);
+		else if(cList.stream()
+				.filter((c)->c.hasName(command))
+				.findFirst().get()
+				.run(args, context)) {
+					if(new CommandFactory().newNet().hasName(command))
+						cList = CommandsState.NEWNET.getCommandsList();
+					else if(new CommandFactory().newCFA().hasName(command))
+						cList = CommandsState.NEWCFA.getCommandsList();
+					else if(new CommandFactory().annulla().hasName(command))
+						cList = CommandsState.BASE.getCommandsList();
+			}
+		context.getIOStream().write(Constants.NEW_LINE + Constants.WAITING);
 
 	}
 	
@@ -117,6 +129,6 @@ public class CommandsHandler implements Closeable{
 	 */
 	@Override
 	public void close() throws IOException {
-		
+		context.getIOStream().close();
 	}
 }

@@ -29,7 +29,7 @@ public class Main {
 				e.printStackTrace();
 			}
 		}));
-		System.out.println("Benvenuto\n >>");
+		System.out.print(Constants.WELCOME);
 		handler = new CommandsHandler(ssa);
 		do {
 			String command = ssa.read(Constants.EMPTY_STRING);
