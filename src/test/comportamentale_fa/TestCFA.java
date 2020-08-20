@@ -115,7 +115,9 @@ class TestCFA {
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
 		computedSpace.potatura();	
 		String output = RegexBuilder.relevanceRegex(computedSpace, new BuilderSpaceComportamentaleObsLin());
-		System.out.println(output);
+		System.out.println("Result: "+output);
+		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
+		assertTrue(output.equals("((εε)((εε)|(f((r((εε)|(fε)))|ε))))"));
 	}
 	
 	@Test
