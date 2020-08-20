@@ -91,7 +91,11 @@ class TestCFA {
 		System.out.println(computedSpace.toString());	
 		computedSpace.potatura();
 		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace);				
+		System.out.println(computedSpace);	
+		System.out.println("*************************\n\tRIDENOMINAZIONE:\n*************************");
+		System.out.println(computedSpace.ridenominazione());
+		System.out.println("*************************\n\tDOPO RIDENOMINAZIONE:\n*************************");	
+		System.out.println(computedSpace);
 	}
 	
 	@Test
@@ -104,7 +108,10 @@ class TestCFA {
 		System.out.println(computedSpace.toString());	
 		computedSpace.potatura();
 		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());			
+		System.out.println(computedSpace.toString());
+		computedSpace.ridenominazione();
+		System.out.println("*************************\n\tDOPO RIDENOMINAZIONE:\n*************************");	
+		System.out.println(computedSpace);		
 	}
 	
 	@Test
@@ -113,9 +120,10 @@ class TestCFA {
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
 		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
 		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
-		computedSpace.potatura();	
+		computedSpace.potatura();
+		computedSpace.ridenominazione();
 		String output = RegexBuilder.relevanceRegex(computedSpace, new BuilderSpaceComportamentaleObsLin());
-		System.out.println("Result: "+output);
+		//System.out.println("Result: "+output);
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(output.equals("((εε)((εε)|(f((r((εε)|(fε)))|ε))))"));
 	}

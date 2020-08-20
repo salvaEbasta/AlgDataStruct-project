@@ -75,6 +75,10 @@ public abstract class Transition<S extends State> {
 		return !obs.isEmpty();
 	}
 	
+	public boolean isSilent() {
+		return obs.isEmpty();
+	}
+	
 	public boolean hasRelevantLabel() {
 		return !rel.isEmpty();
 	}
@@ -101,7 +105,7 @@ public abstract class Transition<S extends State> {
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		final Transition<S> tmp = (Transition<S>) obj;
+		final Transition<State> tmp = (Transition<State>) obj;
 		return this.id().equalsIgnoreCase(tmp.id());
 	}
 	

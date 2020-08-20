@@ -5,5 +5,6 @@ public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 	public SpaceAutomaComportamentale(String id) {
 		super(id);
 	}
-
+	
+	
 }

@@ -7,13 +7,13 @@ import java.util.Set;
 public abstract class Automa<S extends State, T extends Transition<S>> implements AutomaInterface<S, T>{
 
 	private String id;
-	protected HashMap<S, Interconnections<T>> structure;
+	protected HashMap<S, Interconnections<S, T>> structure;
 	private S initial;
 	private S current;
 	
 	public Automa(String id) {
 		this.id = id;
-		structure = new HashMap<S, Interconnections<T>>();
+		structure = new HashMap<S, Interconnections<S, T>>();
 		initial = null;
 		current = null;
 	}
@@ -88,7 +88,7 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	@Override
 	public boolean insert(S s) {
 		if(!structure.containsKey(s)) {
-			structure.put(s, new Interconnections<T>());
+			structure.put(s, new Interconnections<S, T>());
 			return true;
 		}
 		return false;

@@ -1,11 +1,13 @@
 package spazio_comportamentale;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 import commoninterfaces.Automa;
 import commoninterfaces.Interconnections;
 
-public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
+public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
 
 	public SpaceAutoma(String id) {
 		super(id);
@@ -21,6 +23,10 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		return acceptingStates;
 	}
 	
+	/**
+	 * Fa SOLO la potatura dell'albero
+	 * @return
+	 */
 	public boolean potatura() {
 		int prevSize = states().size();
 		Set<S> setCopy = new HashSet<S>(states());
@@ -40,16 +46,48 @@ public abstract class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceT
 		}
 	}
 	
-	public void ridenominazione() {
+	/**
+	 * Svolge la ridenominazione
+	 */
+	public HashMap<Integer, S> ridenominazione() {
+		HashMap<Integer, S> ridenominazione = new HashMap<Integer, S>();
 		int i=0;
 		for(S state: states()) {
-			Interconnections<SpaceTransition<S>> interconnections = structure.get(state);	
+			ridenominazione.put(i, state);
+			Interconnections<S, SpaceTransition<S>> interconnections = structure.get(state);	
 			structure.remove(state);
 			state.setId(Integer.toString(i++));			
 			structure.put(state, interconnections);			
 		}
+		return ridenominazione;
 	}
 
+	public SpaceAutoma<S> silentClosure(S state){
+		SpaceAutoma<S> silentClosure = new SpaceAutoma<S>(state.id()+"_silentClosure");
+		if(!this.structure.containsKey(state))
+			return silentClosure;
+		else if(!this.initialState().equals(state) || !structure.get(state).hasObservableEntering())
+			return silentClosure;
+		else {
+			buildSilentClosure(state, silentClosure);
+			return silentClosure;
+		}
+	}
+	
+	private void buildSilentClosure(S state, SpaceAutoma<S> closure) {
+		closure.insert(state);
+		closure.setInitial(state);
+		LinkedList<SpaceTransition<S>> queue = new LinkedList<SpaceTransition<S>>(structure.get(state).from());
+		while(queue.size() > 0) {
+			SpaceTransition<S> current = queue.pop();
+			if(!current.isSilent()) {
+				closure.insert(current.sink());
+				closure.add(current);
+				queue.addAll(structure.get(current.sink()).from());
+			}
+		}
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

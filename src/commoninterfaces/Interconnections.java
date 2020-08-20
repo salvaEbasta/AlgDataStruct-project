@@ -1,11 +1,11 @@
 package commoninterfaces;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
-import finite_state_automata.FiniteTransition;
 
-public class Interconnections<T> {
+public class Interconnections<S extends State, T extends Transition<S>> {
 	private HashSet<T> in;
 	private HashSet<T> out;
 	
@@ -70,6 +70,14 @@ public class Interconnections<T> {
 		HashSet<T> tmp = new HashSet<T>(from());
 		tmp.retainAll(to());
 		return tmp;
+	}
+	
+	public boolean hasObservableEntering() {
+		Iterator<T> iter = in.iterator();
+		while(iter.hasNext())
+			if(iter.next().isSilent())
+				return true;
+		return false;
 	}
 	
 	public String toString() {
