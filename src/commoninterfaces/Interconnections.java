@@ -80,6 +80,12 @@ public class Interconnections<S extends State, T extends Transition<S>> {
 		return false;
 	}
 	
+	public Set<T> transitions(){
+		HashSet<T> transitions = new HashSet<T>(in);
+		transitions.addAll(out);
+		return transitions;
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(out.toString());
