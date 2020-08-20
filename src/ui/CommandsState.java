@@ -19,7 +19,7 @@ public enum CommandsState implements InitCommandsList{
 			ArrayList<Command> commandsList = new ArrayList<Command>();
 			commandsList.add(new CommandFactory().exit());
 			commandsList.add(new CommandFactory().newNet());
-			//commandsList.add(new CommandFactory().login());
+			commandsList.add(new CommandFactory().loadNet());
 			return commandsList;
 		}
 	},
@@ -32,11 +32,15 @@ public enum CommandsState implements InitCommandsList{
 		@Override
 		public ArrayList<Command> getCommandsList(){
 			ArrayList<Command> commandsList = new ArrayList<Command>();
+			commandsList.add(new CommandFactory().back());
 			commandsList.add(new CommandFactory().annulla());
 			commandsList.add(new CommandFactory().newCFA());
 			commandsList.add(new CommandFactory().newLink());
+			commandsList.add(new CommandFactory().newEvent());
+			commandsList.add(new CommandFactory().linkCFAs());
 			commandsList.add(new CommandFactory().showCFAs());
 			commandsList.add(new CommandFactory().showLinks());
+			commandsList.add(new CommandFactory().showEvents());
 //			commandsList.add(new CommandFactory().logout());
 //			commandsList.add(new CommandFactory().modify());
 //			commandsList.add(new CommandFactory().newEvent());
@@ -60,13 +64,12 @@ public enum CommandsState implements InitCommandsList{
 			@Override
 			public ArrayList<Command> getCommandsList(){
 				ArrayList<Command> commandsList = new ArrayList<Command>();
+				commandsList.add(new CommandFactory().back());
 				commandsList.add(new CommandFactory().annulla());
-				commandsList.add(new CommandFactory().newState());
-				commandsList.add(new CommandFactory().newEvent());
+				commandsList.add(new CommandFactory().newState());				
 				commandsList.add(new CommandFactory().newTransition());
 				commandsList.add(new CommandFactory().setInitial());
 				commandsList.add(new CommandFactory().showStates());
-				commandsList.add(new CommandFactory().showEvents());
 				commandsList.add(new CommandFactory().showTransitions());
 //				commandsList.add(new CommandFactory().showWorkInProgress());
 //				commandsList.add(new CommandFactory().showNoticeboard());

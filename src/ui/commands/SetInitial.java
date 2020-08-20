@@ -11,7 +11,7 @@ public class SetInitial implements CommandInterface, OneParameter{
 		if(!check(args, context))
 			return false;
 		String id = args[0];
-		State s = context.getStateFromId(id);
+		State s = context.getSavedStateFromId(id);
 		boolean set = false;;
 		if(s != null)
 			set = context.setInitialStateOnNewCFA((ComportamentaleState) s);

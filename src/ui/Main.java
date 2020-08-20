@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 
+import ui.stream.SimpleStreamAdapter;
 import utility.Constants;
 
 

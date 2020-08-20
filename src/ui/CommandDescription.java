@@ -8,9 +8,12 @@ public enum CommandDescription{
 	
 	EXIT("exit", "Esci dal programma","exit"),
 	ANNULLA("annulla", "Annulla l'operazione in corso e torna al menù principale","annulla"),
+	BACK("back", "Torna al menù precedente","back"),
 	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
+	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet"), 
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
+	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),
 	NEWSTATE("newstate", "Crea un nuovo Stato Comportamentale","newstate [id]"),
 	NEWEVENT("newevent", "Crea un nuovo Evento","newevent [id]"),
 	NEWTRANSITION("newtransition", "Crea una nuova Transizione Comportamentale","newtransition [id]"),

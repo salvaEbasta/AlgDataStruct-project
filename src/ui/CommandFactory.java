@@ -1,7 +1,10 @@
 package ui;
 
 import ui.commands.Annulla;
+import ui.commands.Back;
 import ui.commands.Exit;
+import ui.commands.LinkCFAs;
+import ui.commands.LoadNet;
 import ui.commands.NewCFA;
 import ui.commands.NewEvent;
 import ui.commands.NewLink;
@@ -34,9 +37,17 @@ public class CommandFactory {
 	public Command annulla() {
 		return new Command(CommandDescription.ANNULLA, new Annulla());
 	}
+	
+	public Command back() {
+		return new Command(CommandDescription.BACK, new Back());
+	}
 
 	public Command newNet() {
 		return new Command(CommandDescription.NEWNET, new NewNet());
+	}
+	
+	public Command loadNet() {
+		return new Command(CommandDescription.LOADNET, new LoadNet());
 	}
 	
 	public Command newCFA() {
@@ -45,6 +56,10 @@ public class CommandFactory {
 
 	public Command newLink() {
 		return new Command(CommandDescription.NEWLINK, new NewLink());
+	}
+	
+	public Command linkCFAs() {
+		return new Command(CommandDescription.LINKCFAS, new LinkCFAs());
 	}
 	
 	public Command newState() {

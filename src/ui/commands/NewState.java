@@ -13,7 +13,7 @@ public class NewState implements CommandInterface, OneParameter{
 		boolean added = context.saveState(new ComportamentaleState(id));
 		if(added) {
 			context.getIOStream().writeln(String.format("Nuovo Stato con id %s creato correttamente!", id));
-			context.addStateToNewCFA((ComportamentaleState) context.getStateFromId(id));
+			context.addStateToNewCFA((ComportamentaleState) context.getSavedStateFromId(id));
 		}
 		else
 			context.getIOStream().writeln(String.format("ERRORE: Uno Stato con id %s è già presente!", id));

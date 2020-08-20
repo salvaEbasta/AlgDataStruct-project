@@ -2,7 +2,7 @@ package ui.commands;
 
 import ui.Context;
 
-public class Exit implements CommandInterface, NoParameters{
+public class Back implements CommandInterface, NoParameters{
 
 	/*
 	 * (non-Javadoc)
@@ -12,7 +12,6 @@ public class Exit implements CommandInterface, NoParameters{
 	public boolean run(String[] args, Context context) {
 		if(!check(args, context))
 			return false;
-		System.exit(0);
 		return true;
 	}
 

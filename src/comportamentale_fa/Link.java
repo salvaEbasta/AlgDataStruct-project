@@ -18,8 +18,16 @@ public class Link {
 		return source;
 	}
 	
+	public void setSource(ComportamentaleFA source) {
+		this.source = source;
+	}
+	
 	public ComportamentaleFA getDestination() {
 		return destination;
+	}
+	
+	public void setDestination(ComportamentaleFA destination) {
+		this.destination = destination;
 	}
 	
 	public boolean hasEvent(){
@@ -43,6 +51,11 @@ public class Link {
 	}
 	
 	public String id() {return id;}
+	
+	public String toString() {
+		return String.format("Link %s: %s => %s", id, source == null? "vuoto" : "CFA ".concat(source.id()),
+				destination == null? "vuoto" : "CFA ".concat(destination.id()));
+	}
 	
 	@Override
 	public boolean equals(Object otherLink) {

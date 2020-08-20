@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ui.stream.InOutStream;
 import utility.Constants;
 
 
@@ -108,6 +109,13 @@ public class CommandsHandler implements Closeable{
 						cList = CommandsState.NEWCFA.getCommandsList();
 					else if(new CommandFactory().annulla().hasName(command))
 						cList = CommandsState.BASE.getCommandsList();
+					else if(new CommandFactory().back().hasName(command)) {
+						if(cList.equals(CommandsState.NEWCFA.getCommandsList()))
+								cList = CommandsState.NEWNET.getCommandsList();
+						else if(cList.equals(CommandsState.NEWNET.getCommandsList()))
+								cList = CommandsState.BASE.getCommandsList();
+					}
+						
 			}
 		context.getIOStream().write(Constants.NEW_LINE + Constants.WAITING);
 

@@ -1,4 +1,4 @@
-package ui;
+package ui.stream;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -16,6 +16,13 @@ public interface InOutStream extends Closeable{
 	 * @return la stringa letta dallo stream in ingresso
 	 */
 	public String read(String str);
+	
+	/**
+	 * Legge una stringa corrispondente a una risposta
+	 * @param str ciò che si deve leggere
+	 * @return la stringa letta dallo stream in ingresso
+	 */
+	public String yesOrNo(String str);
 	
 	/**
 	 * Inserisce una stringa nello stream di uscita

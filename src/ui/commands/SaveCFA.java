@@ -12,8 +12,12 @@ public class SaveCFA implements CommandInterface, NoParameters{
 	public boolean run(String[] args,  Context context) {
 		if(!check(args, context))
 			return false;
-		context.getIOStream().writeln("CFA creata correttamente!");
-		return true;
+		boolean created = context.saveCFA();
+		if(created)
+			context.getIOStream().writeln("CFA creata correttamente!");
+		else
+			context.getIOStream().writeln(String.format("ERRORE: Nella CFA non sono presenti abbastanza Stati o Transizioni, oppure non è stato impostato uno Stato Iniziale!"));	
+		return created;
 	}
 
 }

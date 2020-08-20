@@ -1,4 +1,4 @@
-package ui;
+package ui.stream;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -10,6 +10,9 @@ import java.util.Scanner;
  *
  */
 public class SimpleStreamAdapter implements InOutStream{
+	
+	public static final String YES = "y";
+	public static final String NO = "n";
 	
 	/**
 	 * Lo scanner in ingresso
@@ -54,6 +57,15 @@ public class SimpleStreamAdapter implements InOutStream{
 	@Override
 	public void close() throws IOException{
 		in.close();
+	}
+
+	@Override
+	public String yesOrNo(String str) {
+		String ans = null;
+		do {
+			ans = read(str.concat(String.format(" (%s|%s) ", YES, NO)));
+		} while(!ans.equalsIgnoreCase(YES) && !ans.equalsIgnoreCase(NO));
+		return ans;
 	}
 	
 }
