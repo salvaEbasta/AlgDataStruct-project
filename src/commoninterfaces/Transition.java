@@ -1,10 +1,16 @@
 package commoninterfaces;
 
+import java.io.Serializable;
+
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 
-public abstract class Transition<S extends State> {
+public abstract class Transition<S extends State> implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private S source;
 	private S destination;

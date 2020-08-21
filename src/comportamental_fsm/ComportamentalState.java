@@ -1,10 +1,8 @@
 package comportamental_fsm;
 
-import java.io.Serializable;
-
 import commoninterfaces.State;
 
-public class ComportamentalState extends State implements Serializable{
+public class ComportamentalState extends State{
 		
 	/**
 	 * 

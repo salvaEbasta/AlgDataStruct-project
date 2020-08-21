@@ -37,6 +37,13 @@ public class CFSMnetwork implements Serializable{
 		}
 	}
 	
+	public ArrayList<ComportamentalFSM> net(){
+	return net;
+	}
+	
+	public ArrayList<Link> links(){
+	return links;
+	}
 	
 	public ArrayList<ComportamentalState> getInitialStates(){
 		return  net.stream().sequential().map(cfa -> cfa.initialState()).collect(Collectors .toCollection(ArrayList::new));
@@ -120,6 +127,10 @@ public class CFSMnetwork implements Serializable{
 			}
 		}
 		return enabledTransitions;
+	}
+	
+	public String toString() {
+		return "CFA:\n" + net.toString() + "\n\nLinks:\n" + links.toString(); 
 	}
 
 }

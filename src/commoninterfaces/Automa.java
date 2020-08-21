@@ -1,11 +1,18 @@
 package commoninterfaces;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>{
+import spazio_comportamentale.SpaceTransition;
 
+public abstract class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	protected HashMap<S, Interconnections<S, T>> structure;
 	private S initial;
@@ -132,7 +139,27 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	
 	@Override
 	public String toString() {
-		return structure.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("Automa: %s\n", id()));
+		for(S state: states()) {
+			sb.append(state.toString());
+			Set<T>  in = to(state);
+			Set<T> out = from(state);
+			if(!in.isEmpty()) {
+				sb.append("\n\t- Input Transitions:");
+				for(T inTransition: in) {
+					sb.append(String.format("\n\t\t* %s", inTransition));
+				}
+			}
+			if(!out.isEmpty()) {
+				sb.append("\n\t- Output Transitions:");
+				for(T outTransition: out) {
+					sb.append(String.format("\n\t\t* %s", outTransition));
+				}
+			}
+			sb.append("\n");
+		}
+		return sb.toString();
 	}
 	
 	@Override

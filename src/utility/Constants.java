@@ -13,5 +13,7 @@ public class Constants {
 	public static final String WELCOME = String.format("Benvenuto nel programma!\n%s.\n\n> ", INSERT_HELP);
 
 	public static final String TOO_PARAMETERS = "Troppi parametri";
+	
+	public static final String NO_LOADED_NET = "ERRORE: Nessuna rete di CFA caricata!";
 
 }

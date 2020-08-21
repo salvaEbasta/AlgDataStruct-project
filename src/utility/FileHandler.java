@@ -15,6 +15,10 @@ import java.io.ObjectOutputStream;
 public class FileHandler{
 	
 	private static final long EMPTY_FILE = 0;
+	
+	public static final String COMMANDS_PATH = "Commands Blocks/";
+	public static final String NETS_PATH = "Saved Nets/";
+	
 
 	/**
 	 * Carica un oggetto salvato in un file
