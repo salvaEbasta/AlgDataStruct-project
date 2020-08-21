@@ -1,7 +1,8 @@
 package ui.context;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.labels.ObservableLabel;
@@ -20,12 +21,11 @@ public class CurrentNet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
-	private ArrayList<SpaceAutomaObsLin> listSaol;
-	private ArrayList<ObservableLabel[]> listaOsservazioni;
+	private HashMap<ObservableLabel[], SpaceAutomaObsLin> listaOsservazioni;
 	
 	public CurrentNet(CFSMnetwork net) {
 		this.net = net;
-		listaOsservazioni = new ArrayList<ObservableLabel[]>();
+		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
 	}
 	
 	public SpaceAutomaComportamentale generateSpace() {
@@ -36,11 +36,11 @@ public class CurrentNet implements Serializable{
 	
 	public SpaceAutomaObsLin generateSpaceObs(ObservableLabel[] labels) {
 		SpaceAutomaObsLin saol = null;
-		if(listaOsservazioni.contains(labels)) {
-			//get spazio c o l corrispondente a labels
-		} else {
+		if(listaOsservazioni.containsKey(labels))
+			saol = listaOsservazioni.get(labels);
+		else {
 			saol = new SpazioComportamentaleObs(net).generaSpazioOsservazione(labels);
-			listSaol.add(saol);
+			listaOsservazioni.put(labels, saol);
 		}
 		return saol;
 	}
@@ -48,9 +48,20 @@ public class CurrentNet implements Serializable{
 	public void reset() {
 		net = null;
 		sac = null;
-		listaOsservazioni = new ArrayList<ObservableLabel[]>();
+		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
 	}
 
+	public String observationDescription() {
+		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n");
+		for(Entry<ObservableLabel[], SpaceAutomaObsLin> entry: listaOsservazioni.entrySet()) {
+			sb.append("SPAZIO COMPORTAMENTALE GENERATO per osservazione ");
+			sb.append(entry.getKey());
+			sb.append(":\n*****************************************************");
+			sb.append(entry.getValue()).append("\n\n");
+		}
+		return sb.toString();
+	}
+	
 	@Override
 	public String toString() {
 		return net.toString();		

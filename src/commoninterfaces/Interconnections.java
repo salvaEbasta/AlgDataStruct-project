@@ -20,6 +20,11 @@ public class Interconnections<S extends State, T extends Transition<S>> implemen
 		out = new HashSet<T>();
 	}
 	
+	public Interconnections(Interconnections<S,T> interconnections) {
+		in = new HashSet<T>(interconnections.in);
+		out = new HashSet<T>(interconnections.out);
+	}
+	
 	public boolean newIn(T t) {
 		if(!in.contains(t))
 			return in.add(t);

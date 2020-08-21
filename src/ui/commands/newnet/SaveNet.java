@@ -33,7 +33,10 @@ public class SaveNet implements CommandInterface, OneParameter{
 				return false;
 			}
 		}
+		
 		CFSMnetwork net = new CFSMnetwork(links);
+
+				
 		String fileName = PARENT.concat(args[0]);
 		File file = new File(fileName);
 		if(file.exists()) {
@@ -41,7 +44,7 @@ public class SaveNet implements CommandInterface, OneParameter{
 			if(ans.equalsIgnoreCase("n"));
 				fileName = fileName.concat(" (Copy)");
 		}
-		boolean saved = new FileHandler().save(fileName.concat(".ser"), net); //context.createNewNet(net);
+		boolean saved = new FileHandler().save(fileName.concat(".ser"), context.createNewNet(net));
 		if(saved)
 			context.getIOStream().writeln(String.format("Rete di CFA salvata correttamente nel percorso %s!", fileName));
 		else

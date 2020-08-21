@@ -1,6 +1,5 @@
 package comportamental_fsm;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,6 +14,10 @@ public class ComportamentalFSM extends Automa<ComportamentalState, Comportamenta
 
 	public ComportamentalFSM(String id) {
 		super(id);
+	}
+	
+	public ComportamentalFSM(ComportamentalFSM cfa) {
+		super(cfa);
 	}
 	
 	@Override

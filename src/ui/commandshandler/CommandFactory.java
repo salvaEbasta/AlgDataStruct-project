@@ -23,6 +23,8 @@ import ui.commands.newnet.ShowEvents;
 import ui.commands.newnet.ShowLinks;
 import ui.commands.spacecomp.GenerateSpace;
 import ui.commands.spacecomp.GenerateSpaceObs;
+import ui.commands.spacecomp.ShowObservations;
+import ui.commands.spacecomp.UpdateNet;
 
 /**
  * Classe con il compito di fornire una nuova istanza di un comando
@@ -59,6 +61,10 @@ public class CommandFactory {
 		return new Command(CommandDescription.SHOWNET, new ShowNet());
 	}
 	
+	public Command updateNet() {
+		return new Command(CommandDescription.UPDATENET, new UpdateNet());
+	}
+	
 	public Command spaceComp() {
 		return new Command(CommandDescription.SPACECOMP, new SpaceComp());
 	}
@@ -69,6 +75,10 @@ public class CommandFactory {
 	
 	public Command generateSpaceObs() {
 		return new Command(CommandDescription.GENERATESPACEOBS, new GenerateSpaceObs());
+	}
+	
+	public Command showObservations() {
+		return new Command(CommandDescription.SHOWOBS, new ShowObservations());
 	}
 	
 	public Command newCFA() {

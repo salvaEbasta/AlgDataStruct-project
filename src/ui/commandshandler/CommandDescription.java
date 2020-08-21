@@ -2,7 +2,7 @@ package ui.commandshandler;
 
 /**
  * Classe enum rappresentante la descrizione di un comando disponibile all'utente
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 public enum CommandDescription{
@@ -14,9 +14,11 @@ public enum CommandDescription{
 	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
 	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet"), 
 	SHOWNET("shownet", "Mostra una descrizione della rete di CFA caricata","shownet"), 
+	UPDATENET("updatenet", "Aggiorna il file della rete attualmente caricata","updatenet"), 
 	SPACECOMP("spacecomp", "Sottomenù per la generazione di Spazi Comportamentali da rete","spacecomp"), 
 	GENERATESPACE("generatespace", "Genera uno spazio comportamentale da una rete di CFA","generatespace"), 
 	GENERATESPACEOBS("generatespaceobs", "Genera uno spazio comportamentale da una rete di CFA con Osservazione Lineare","generatespaceobs"), 
+	SHOWOBS("showobs", "Mostra le Osservazioni Lineari effettuate sulla rete","showobs"), 
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),

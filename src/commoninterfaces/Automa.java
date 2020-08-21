@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import spazio_comportamentale.SpaceTransition;
-
 public abstract class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable{
 
 	/**
@@ -23,6 +21,14 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 		structure = new HashMap<S, Interconnections<S, T>>();
 		initial = null;
 		current = null;
+	}
+	
+	public Automa(Automa<S, T> automa) {
+		this.id = automa.id;
+		this.structure = new HashMap<S, Interconnections<S, T>>();
+		automa.structure.entrySet().forEach(e -> this.structure.put(e.getKey(), new Interconnections<S, T>(e.getValue())));
+		this.initial = automa.initial;
+		this.current = automa.current;
 	}
 	
 	public String id() {

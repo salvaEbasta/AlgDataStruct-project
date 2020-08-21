@@ -24,8 +24,13 @@ public class Context {
 		return workspace;
 	}
 	
-	public void loadNet(CFSMnetwork net) {
+	public CurrentNet createNewNet(CFSMnetwork net) {
 		currentNet = new CurrentNet(net);
+		return currentNet;
+	}
+	
+	public void loadNet(CurrentNet currentNet) {
+		this.currentNet = currentNet;
 	}
 	
 	public CurrentNet getCurrentNet() {
@@ -53,6 +58,7 @@ public class Context {
 		currentCFA = null;
 		workspace.reset();
 	}
+
 	
 
 }

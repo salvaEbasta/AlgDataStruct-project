@@ -25,6 +25,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		CurrentNet net = context.getCurrentNet();				
 		ArrayList<ObservableLabel> labelList = new ArrayList<ObservableLabel>();
 		String ans = "";
+		context.getIOStream().writeln("ATTENZIONE: se l'Osservazione Lineare inserita non corrisponde a una traiettoria della rete, lo spazio potrebbe risultare incoerente.");
 		do {
 			String label = context.getIOStream().read("Inserire nome per l'etichetta di Osservabilità: ");
 			if(!label.isEmpty()) {
