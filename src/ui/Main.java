@@ -1,6 +1,8 @@
 package ui;
 
 import java.io.IOException;
+
+import ui.commandshandler.CommandsHandler;
 import ui.stream.SimpleStreamAdapter;
 import utility.Constants;
 
