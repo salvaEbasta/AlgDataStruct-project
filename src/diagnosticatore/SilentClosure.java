@@ -15,6 +15,7 @@ import utility.Constants;
  *
  */
 public class SilentClosure extends SpaceAutomaComportamentale{
+	private static final long serialVersionUID = -5172582068115487212L;
 	private HashMap<SpaceState, String> decorations;
 	
 	public SilentClosure(String id) {
