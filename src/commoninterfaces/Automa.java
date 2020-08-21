@@ -107,8 +107,6 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 	
 	@Override
 	public boolean remove(S s) {
-		if(structure.get(s) == null)
-			System.out.println();
 		if((initial!=null && initial.equals(s))||(current!=null && current.equals(s)))
 			return false;		
 		structure.get(s).from().forEach(t->structure.get(t.sink()).to().remove(t));

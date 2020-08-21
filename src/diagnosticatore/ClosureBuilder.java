@@ -2,6 +2,7 @@ package diagnosticatore;
 
 import java.util.LinkedList;
 
+import fsm_algorithms.RegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -24,12 +25,17 @@ public class ClosureBuilder {
 				closure.insert(current.sink());
 				closure.add(current);
 				queue.addAll(space.from(current.sink()));
+			}else {
+				closure.setDecorable(current.source());
 			}
 		}
 	}
 	
 	public static SilentClosure decorate(SilentClosure closure) {
-		
+		closure.decorableStates().forEach(s->{
+			String relevantRegex = RegexBuilder.regexForEachAccepting(N, builder);
+			closure.decore(s, relevantRegex);
+		});
 		return closure;
 	}
 	

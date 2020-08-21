@@ -1,130 +1,66 @@
 package diagnosticatore;
 
+import java.util.HashMap;
 import java.util.Set;
 
-import commoninterfaces.FiniteStateMachine;
-import commoninterfaces.Interconnections;
+import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
-import spazio_comportamentale.SpaceTransition;
+import utility.Constants;
 
-public class SilentClosure implements FiniteStateMachine<SpaceState, SpaceTransition<SpaceState>>{
-	private String id;
-	private SpaceState initial;
-	private Interconnections<SpaceState, SpaceTransition<SpaceState>> structure;
-	private Interconnections<SpaceState, SpaceTransition<SpaceState>> toOutside;
-	
+/**
+ * Descrive una chiusura silenziosa. Si comporta come uno spazio comportamentale
+ * per tutti gli stati e le transizioni interne alla chiusura. Possiedono, inoltre, per
+ * ogni stato finale|d'uscita una decorazione
+ * @author Matteo
+ *
+ */
+public class SilentClosure extends SpaceAutomaComportamentale{
+	private HashMap<SpaceState, String> decorations;
 	
 	public SilentClosure(String id) {
-		this.id = id;
-		this.structure = new Interconnections<SpaceState, SpaceTransition<SpaceState>>();
-		this.toOutside = new Interconnections<SpaceState, SpaceTransition<SpaceState>>();
-		this.initial = null;
+		super(id);
+		decorations = new HashMap<SpaceState, String>();
 	}
-
-	@Override
-	public String id() {
-		return id;
-	}
-
-	@Override
-	public Set<SpaceTransition<SpaceState>> transitions() {
-		Set<SpaceTransition<SpaceState>> tmp = structure.transitions();
-		tmp.addAll(toOutside.transitions());
-		return tmp;
-	}
-
-	@Override
-	public Set<SpaceState> states() {
-		return structure.allKeys;
-	}
-
-	@Override
-	public SpaceState initialState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public SpaceState currentState() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<SpaceTransition<SpaceState>> to(SpaceState s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<SpaceTransition<SpaceState>> from(SpaceState s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean add(SpaceTransition<SpaceState> t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
+	
 	public boolean insert(SpaceState s) {
-		// TODO Auto-generated method stub
+		if(super.insert(s)) {
+			if(s.isFinal())
+				decorations.put(s, Constants.EPSILON);
+			return true;
+		}
 		return false;
 	}
-
-	@Override
-	public boolean setInitial(SpaceState s) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean remove(SpaceTransition<SpaceState> t) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
+	
 	public boolean remove(SpaceState s) {
-		// TODO Auto-generated method stub
+		if(super.remove(s)) {
+			decorations.remove(s);
+			return true;
+		}
 		return false;
 	}
-
-	@Override
-	public boolean transitionTo(SpaceTransition<SpaceState> t) {
-		// TODO Auto-generated method stub
+	
+	public boolean setDecorable(SpaceState s) {
+		if(super.hasState(s))
+			if(!decorations.containsKey(s)) {
+				decorations.put(s, Constants.EPSILON);
+				return true;
+			}
 		return false;
 	}
-
-	@Override
-	public boolean setCurrent(SpaceState s) {
-		// TODO Auto-generated method stub
+	
+	public Set<SpaceState> decorableStates(){
+		return decorations.keySet();
+	}
+	
+	public boolean decore(SpaceState s, String decoration) {
+		if(decorations.containsKey(s)) {
+			decorations.put(s, decoration);
+			return true;
+		}
 		return false;
 	}
-
-	@Override
-	public Set<SpaceState> acceptingStates() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasAuto(SpaceState s) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public SpaceTransition<SpaceState> getAuto(SpaceState s) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean hasState(SpaceState s) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public String getDecorationOf(SpaceState s) {
+		return decorations.get(s);
 	}
 }

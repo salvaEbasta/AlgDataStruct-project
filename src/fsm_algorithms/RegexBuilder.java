@@ -30,7 +30,7 @@ public class RegexBuilder {
 		}
 		
 		S nq = null;
-		if(N.acceptingStates().size()>1 || N.from(N.acceptingStates().iterator().next()).size()>0) {
+		if(N.acceptingStates().size() > 1 || N.from(N.acceptingStates().iterator().next()).size() > 0) {
 			nq = builder.newState("nq");
 			N.insert(nq);
 			for(S s:N.acceptingStates())
