@@ -141,7 +141,7 @@ public class RegexBuilder {
 	}
 	
 	@Deprecated
-	public static <S extends State, T extends Transition<S>> HashMap<String, LinkedList<T>> regexForEachAccepting(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
+	public static <S extends State, T extends Transition<S>> HashMap<S, String> endPointRelevanceRegex(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
 		Logger log = loggerSetup();
 		log.info(RegexBuilder.class.getSimpleName()+"::regexForEachAccepting...");
 		log.fine("initial: "+N.toString());

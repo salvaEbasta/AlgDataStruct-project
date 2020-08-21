@@ -53,7 +53,7 @@ public class SilentClosure extends SpaceAutomaComportamentale{
 		return decorations.keySet();
 	}
 	
-	public boolean decore(SpaceState s, String decoration) {
+	public boolean decorate(SpaceState s, String decoration) {
 		if(decorations.containsKey(s)) {
 			decorations.put(s, decoration);
 			return true;
@@ -63,5 +63,15 @@ public class SilentClosure extends SpaceAutomaComportamentale{
 	
 	public String getDecorationOf(SpaceState s) {
 		return decorations.get(s);
+	}
+	
+	public String diagnosis() {
+		StringBuilder sb = new StringBuilder();
+		decorations.entrySet().forEach(e->{
+			if(e.getKey().isFinal())
+				sb.append(e.getValue()+"|");
+		});
+		sb.deleteCharAt(sb.length()-1);
+		return sb.toString();
 	}
 }
