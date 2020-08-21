@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-public class Interconnections<S extends State, T extends Transition<S>> implements Serializable{
+public class Interconnections<S extends State, T extends Transition<S>> implements Serializable, Cloneable{
 	
 	/**
 	 * 
@@ -103,5 +103,17 @@ public class Interconnections<S extends State, T extends Transition<S>> implemen
 		sb.deleteCharAt(0);
 		sb.insert(0, in.toString().replace("]", ", "));
 		return sb.toString();
+	}
+	
+	@Override
+	public Object clone() {
+		try {
+			Interconnections<S, T> deepCopy = (Interconnections<S, T>) super.clone();
+			deepCopy.in.addAll(this.in);
+			deepCopy.out.addAll(this.out);
+			return deepCopy;
+		}catch(CloneNotSupportedException e) {
+			return new Interconnections<S, T>();
+		}
 	}
 }

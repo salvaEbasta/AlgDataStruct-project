@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable{
+public class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable, Cloneable{
 
 	/**
 	 * 
@@ -176,4 +176,28 @@ public abstract class Automa<S extends State, T extends Transition<S>> implement
 		return this.id.equals(automa.id);
 	}
 
+	@Override
+	public Set<S> acceptingStates() {
+		HashSet<S> tmp = new HashSet<S>();
+		structure.keySet().forEach(s->{
+			if(s.isAccepting())
+				tmp.add(s);
+		});
+		return tmp;
+	}
+	
+	@Override
+	public Object clone() {
+		try {
+			Automa<S, T> deepCopy = (Automa<S, T>) super.clone();
+			structure.forEach((key, value)->{
+				deepCopy.structure.put(key, (Interconnections<S, T>) value.clone());
+			});
+			deepCopy.initial = this.initial;
+			deepCopy.current = this.current;
+			return deepCopy;
+		}catch(CloneNotSupportedException e) {
+			return new Automa<S, T>(this.id);
+		}
+	}
 }

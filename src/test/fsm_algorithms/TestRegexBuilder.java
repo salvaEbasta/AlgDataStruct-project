@@ -2,6 +2,8 @@ package test.fsm_algorithms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 
 import commoninterfaces.FiniteStateMachine;
@@ -28,6 +30,13 @@ class TestRegexBuilder {
 		System.out.println(result);
 		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(result.equalsIgnoreCase("((  )(( ε)|(f((r((fε)|( ε)))|ε))))"));
+	}
+	
+	@Test
+	void test_pg50_decorations() {
+		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
+		Map<FiniteState, String> map = RegexBuilder.relevantRegexForAcceptingState(pg50, new FSMBuilder());
+		System.out.println(map);
 	}
 
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {

@@ -13,10 +13,6 @@ import spazio_comportamentale.SpaceState;
 import java.util.Map.Entry;
 
 public class CFSMnetwork implements Serializable{
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ComportamentalFSM> net;
 	private ArrayList<Link> links;

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import commoninterfaces.Automa;
+import commoninterfaces.Interconnections;
 
 public class LinkedTransitionsFSA extends Automa<FiniteState, FiniteTransition>{
 	
@@ -29,5 +30,14 @@ public class LinkedTransitionsFSA extends Automa<FiniteState, FiniteTransition>{
 		}
 		return acceptingStates;
 	}
-
+	
+	@Override
+	public Object clone() {
+		LinkedTransitionsFSA deepCopy = new LinkedTransitionsFSA(super.id());
+		super.structure.forEach((key,value)->
+			deepCopy.structure.put(key, (Interconnections<FiniteState, FiniteTransition>)value.clone()));
+		deepCopy.setInitial(this.initialState());
+		deepCopy.setCurrent(this.currentState());
+		return deepCopy;
+	}
 }
