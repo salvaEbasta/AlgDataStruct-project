@@ -1,6 +1,7 @@
 package diagnosticatore;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import spazio_comportamentale.SpaceAutomaComportamentale;
@@ -74,4 +75,15 @@ public class SilentClosure extends SpaceAutomaComportamentale{
 		sb.deleteCharAt(sb.length()-1);
 		return sb.toString();
 	}
+	
+	public Set<SpaceState> exitStates(){
+		HashSet<SpaceState> tmp = new HashSet<SpaceState>();
+		decorations.keySet().forEach(s->{
+			if(!s.isFinal())
+				tmp.add(s);
+		});
+		return tmp;
+	}
+	
+	
 }

@@ -114,6 +114,4 @@ public abstract class Transition<S extends State> implements Serializable{
 		final Transition<State> tmp = (Transition<State>) obj;
 		return this.id().equalsIgnoreCase(tmp.id());
 	}
-	
-
 }

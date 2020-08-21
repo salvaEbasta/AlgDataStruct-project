@@ -1,17 +1,15 @@
 package diagnosticatore;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
-import fsm_algorithms.RegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
 
 public class ClosureBuilder {
 	public static SilentClosure build(SpaceAutomaComportamentale space, SpaceState state){
-		SilentClosure silentClosure = new SilentClosure(state.id()+"_silentClosure");
+		SilentClosure silentClosure = new SilentClosure(state.id());
 		if(space.hasState(state) && (space.initialState().equals(state) || space.hasEnteringObsTransitions(state)))
 			composeSilentClosure(space, state, silentClosure);
 		return silentClosure;
@@ -42,30 +40,7 @@ public class ClosureBuilder {
 	@Deprecated
 	public static ClosureSpace buildSpace(SpaceAutomaComportamentale space) {
 		ClosureSpace cSpace = new ClosureSpace();
-		Iterator<SpaceTransition<SpaceState>> iter = space.transitions().iterator();
-		while(iter.hasNext()) {
-			SpaceTransition<SpaceState> origin = iter.next();
-			if(origin.isSilent())
-				continue;
-			else if(cSpace.contains(origin.sink().id()))
-				continue;
-			else {
-				SilentClosure sink = build(space, origin.sink());
-				decorate(sink);
-				cSpace.add(sink);
-				SilentClosure source = null;
-				if(!cSpace.contains(origin.source().id())) {
-					source = build(space, origin.sink());
-					decorate(source);
-					cSpace.add(source);
-				}else {
-					source = cSpace.getStateWith(origin.source().id());
-				}
-				ClosureTransition t = new ClosureTransition(origin.id(), source, sink);
-				t.setRelevantLabel(origin.relevantLabelContent() + source.getDecorationOf(origin.source()));
-				cSpace.insert(t);
-			}
-		}
-		return null;
+		
+		return cSpace;
 	}
 }
