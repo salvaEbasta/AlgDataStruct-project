@@ -48,10 +48,7 @@ public class SpazioComportamentale {
 			destination = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
 		}
 		SpaceTransition<SpaceState> spaceTransition = new SpaceTransition<SpaceState>(source, destination, transition);
-		boolean added = false;
-		if(added = spazioComp.add(spaceTransition)) {
-			//System.out.println(added);
+		if(spazioComp.add(spaceTransition))
 			buildSpace(destination, net.enabledTransitions());	
-		}
 	}
 }

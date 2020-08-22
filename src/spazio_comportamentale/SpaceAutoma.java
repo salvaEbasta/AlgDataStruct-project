@@ -2,12 +2,16 @@ package spazio_comportamentale;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 import commoninterfaces.Automa;
 import commoninterfaces.Interconnections;
 
 public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public SpaceAutoma(String id) {
 		super(id);
@@ -61,6 +65,8 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		}
 		return ridenominazione;
 	}
+	
+
 	
 
 }

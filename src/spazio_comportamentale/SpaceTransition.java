@@ -5,6 +5,10 @@ import comportamental_fsm.ComportamentalTransition;
 
 public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ComportamentalTransition transition;
 
 	

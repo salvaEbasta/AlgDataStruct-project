@@ -8,6 +8,10 @@ import comportamental_fsm.Event;
 
 public class SpaceState extends State{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<ComportamentalState> actualStates;
 	private ArrayList<Event> linkEvents;	
 	

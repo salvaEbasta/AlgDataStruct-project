@@ -14,13 +14,13 @@ public class SpazioComportamentaleObs {
 	private SpaceAutomaObsLin spazioCompOL;
 	
 	public SpazioComportamentaleObs(CFSMnetwork net) {
-		this.net = net;
-		spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare");		
+		this.net = net;		
 	}
 	
 	public SpaceAutomaObsLin generaSpazioOsservazione(ObservableLabel[] observation) {
-		if(spazioCompOL.states().isEmpty()) {
+		if(spazioCompOL == null) {
 			int index = 0;
+			spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
 			SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), index, observation.length);
 			spazioCompOL.insert(initial);
 			spazioCompOL.setInitial(initial);

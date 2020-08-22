@@ -1,8 +1,8 @@
 package commoninterfaces;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable, Cloneable{
@@ -12,20 +12,20 @@ public class Automa<S extends State, T extends Transition<S>> implements FiniteS
 	 */
 	private static final long serialVersionUID = 1L;
 	private String id;
-	protected HashMap<S, Interconnections<S, T>> structure;
+	protected LinkedHashMap<S, Interconnections<S, T>> structure;
 	private S initial;
 	private S current;
 	
 	public Automa(String id) {
 		this.id = id;
-		structure = new HashMap<S, Interconnections<S, T>>();
+		structure = new LinkedHashMap<S, Interconnections<S, T>>();
 		initial = null;
 		current = null;
 	}
 	
 	public Automa(Automa<S, T> automa) {
 		this.id = automa.id;
-		this.structure = new HashMap<S, Interconnections<S, T>>();
+		this.structure = new LinkedHashMap<S, Interconnections<S, T>>();
 		automa.structure.entrySet().forEach(e -> this.structure.put(e.getKey(), new Interconnections<S, T>(e.getValue())));
 		this.initial = automa.initial;
 		this.current = automa.current;
@@ -141,12 +141,23 @@ public class Automa<S extends State, T extends Transition<S>> implements FiniteS
 	@Override
 	public boolean hasState(S s) {
 		return structure.containsKey(s);
+	}	
+
+	@Override
+	public Set<S> acceptingStates() {
+		HashSet<S> tmp = new HashSet<S>();
+		structure.keySet().forEach(s->{
+			if(s.isAccepting())
+				tmp.add(s);
+		});
+		return tmp;
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("Automa: %s\n", id()));
+		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
 		for(S state: states()) {
 			sb.append(state.toString());
 			Set<T>  in = to(state);
@@ -174,16 +185,6 @@ public class Automa<S extends State, T extends Transition<S>> implements FiniteS
 			return false;
 		Automa<S, T> automa = (Automa<S, T>) obj;
 		return this.id.equals(automa.id);
-	}
-
-	@Override
-	public Set<S> acceptingStates() {
-		HashSet<S> tmp = new HashSet<S>();
-		structure.keySet().forEach(s->{
-			if(s.isAccepting())
-				tmp.add(s);
-		});
-		return tmp;
 	}
 	
 	@Override

@@ -3,7 +3,6 @@ package ui.context;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.labels.ObservableLabel;
 import spazio_comportamentale.SpaceAutomaComportamentale;
@@ -29,8 +28,11 @@ public class CurrentNet implements Serializable{
 	}
 	
 	public SpaceAutomaComportamentale generateSpace() {
-		if(sac == null)
+		if(sac == null) {
 			sac = new SpazioComportamentale(net).generaSpazioComportamentale();
+			//sac.potatura();
+			//sac.ridenominazione();
+		}
 		return sac;
 	}
 	
@@ -40,9 +42,21 @@ public class CurrentNet implements Serializable{
 			saol = listaOsservazioni.get(labels);
 		else {
 			saol = new SpazioComportamentaleObs(net).generaSpazioOsservazione(labels);
+			saol.potatura();
+			saol.ridenominazione();
 			listaOsservazioni.put(labels, saol);
 		}
 		return saol;
+	}
+	
+	public String generatedSpacesDescription(){
+		StringBuilder sb = new StringBuilder("Spazi generati per la rete:\n");
+		if(sac != null)
+			sb.append(String.format("0 - %s\n", sac.id()));
+		int index = 1;
+		for(SpaceAutomaObsLin spaceOL: listaOsservazioni.values())
+			sb.append(String.format("%d - %s\n", index++, spaceOL.id()));
+		return sb.toString();
 	}
 	
 	public void reset() {
@@ -50,15 +64,22 @@ public class CurrentNet implements Serializable{
 		sac = null;
 		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
 	}
+	
+	public boolean hasObservableLabel(String label) {
+		return net.getObservabelLabels().contains(new ObservableLabel(label));
+	}
 
+	public String obsLabel() {
+		StringBuilder sb = new StringBuilder("Lista di etichette di Osservabilità nella rete:\n");
+		for(ObservableLabel obs : net.getObservabelLabels())
+			sb.append(String.format("* %s\n", obs.getLabel()));
+		return sb.toString();
+	}
+	
 	public String observationDescription() {
-		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n");
-		for(Entry<ObservableLabel[], SpaceAutomaObsLin> entry: listaOsservazioni.entrySet()) {
-			sb.append("SPAZIO COMPORTAMENTALE GENERATO per osservazione ");
-			sb.append(entry.getKey());
-			sb.append(":\n*****************************************************");
+		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n\n");
+		for(Entry<ObservableLabel[], SpaceAutomaObsLin> entry: listaOsservazioni.entrySet())
 			sb.append(entry.getValue()).append("\n\n");
-		}
 		return sb.toString();
 	}
 	
