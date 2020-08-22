@@ -8,6 +8,10 @@ import spazio_comportamentale.SpaceState;
 
 public class SpaceStateObs extends SpaceState{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int index;
 	private int ossSize;
 

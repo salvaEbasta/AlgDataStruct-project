@@ -4,6 +4,10 @@ import commoninterfaces.Transition;
 
 public class FiniteTransition extends Transition<FiniteState>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static final String toStringFormat = "%s: %s--(o:%s|r:%s)-->%s";
 	
 	public FiniteTransition(String id, FiniteState source, FiniteState dest) {

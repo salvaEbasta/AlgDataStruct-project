@@ -9,6 +9,11 @@ import commoninterfaces.Interconnections;
 public class LinkedTransitionsFSA extends Automa<FiniteState, FiniteTransition>{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public LinkedTransitionsFSA(String id) {
 		super(id);
 	}

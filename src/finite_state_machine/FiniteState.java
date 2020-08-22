@@ -4,6 +4,10 @@ import commoninterfaces.State;
 
 public class FiniteState extends State{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean accepting;
 	
 	public FiniteState(String id) {
