@@ -30,10 +30,14 @@ public class CurrentNet implements Serializable{
 	public SpaceAutomaComportamentale generateSpace() {
 		if(sac == null) {
 			sac = new SpazioComportamentale(net).generaSpazioComportamentale();
-			//sac.potatura();
-			//sac.ridenominazione();
+			sac.potatura();
+			sac.ridenominazione();
 		}
 		return sac;
+	}	
+	
+	public CFSMnetwork getNet() {
+		return net;
 	}
 	
 	public SpaceAutomaObsLin generateSpaceObs(ObservableLabel[] labels) {
