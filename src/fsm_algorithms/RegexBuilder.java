@@ -14,6 +14,10 @@ import commoninterfaces.Transition;
 public class RegexBuilder {
 	private static final Logger log = loggerSetup();
 	
+	public static <S extends State, T extends Transition<S>> String mask() {
+		return null;
+	}
+	
 	public static <S extends State, T extends Transition<S>> String relevanceRegex(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
 		log.info(RegexBuilder.class.getSimpleName()+"::relevanceRegex...");
 		log.fine("initial: "+N.toString());
@@ -108,30 +112,32 @@ public class RegexBuilder {
 				
 				log.info("Selected state: "+n);
 				
-				N.to(n)
-					.stream()
-					.filter(r1->!r1.isAuto())
-					.forEach(r1->{
-						N.from(n)
-							.stream()
-							.filter(r2->!r2.isAuto())
-							.forEach(r2->{
-								String id = "t"+r1.id()+"- t"+r2.id();
-								T tmp = builder.newTransition(id,
-										r1.source(),
-										r2.sink());
-								regexBuilder.append("(");
-								regexBuilder.append(r1.relevantLabelContent());
-								if(N.hasAuto(n))
-									regexBuilder.append("("+N.getAuto(n).relevantLabelContent()+")*");
-								regexBuilder.append(r2.relevantLabelContent());
-								regexBuilder.append(")");
-								tmp.setRelevantLabel(regexBuilder.toString());
-								N.add(tmp);
-								
-								log.info("New transition: "+tmp.toString());
-							});
-					});
+				for(T r1 : N.to(n)) {
+					if(r1.isAuto())
+						continue;
+					for(T r2 : N.from(n)) {
+						if(r2.isAuto())
+							continue;
+						
+						String id = r1.id()+"-"+r2.id()+"_"+counter;
+						T tmp = builder.newTransition(id,
+								r1.source(),
+								r2.sink());
+						regexBuilder.setLength(0);
+						regexBuilder.append("(");
+						regexBuilder.append(r1.relevantLabelContent());
+						if(N.hasAuto(n))
+							regexBuilder.append("("+N.getAuto(n).relevantLabelContent()+")*");
+						regexBuilder.append(r2.relevantLabelContent());
+						regexBuilder.append(")");
+						tmp.setRelevantLabel(regexBuilder.toString());
+						N.add(tmp);
+						counter++;
+						
+						log.info("New transition: "+tmp.toString());
+					}
+				}
+				
 				N.remove(n);
 			}
 			counter++;
@@ -142,34 +148,25 @@ public class RegexBuilder {
 		return N.from(n0).iterator().next().relevantLabelContent();
 	}
 	
-	@Deprecated
-	public static <S extends State, T extends Transition<S>> HashMap<S, String> relevantRegexForAcceptingState(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder){
-		log.info(RegexBuilder.class.getSimpleName()+"::relevantRegexForAcceptingState...");
+	public static <S extends State, T extends Transition<S>> String relevanceRegex(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder, S last){
+		log.info(RegexBuilder.class.getSimpleName()+"::relevantRegex...");
+		log.info("Selected final state: "+last);
 		log.fine("initial: "+N.toString());
 		
-		HashMap<S, String> map = new HashMap<S, String>();
-
 		//Initialization of N
+		//Definition of n0
+		S n0 = null;
 		if(N.to(N.initialState()).size() > 0) {
-			S n0 = builder.newState("n0");
+			n0 = builder.newState("n0");
 			N.insert(n0);
 			T t = builder.newTransition("n0-"+N.initialState().id(), n0, N.initialState());
 			N.add(t);
 			N.setInitial(n0);
+		}else {
+			n0 = N.initialState();
 		}
-		
-		N.acceptingStates().forEach(s->{
-			map.put(s, compute((FiniteStateMachine<S, T>) N.clone(), builder, s));
-		});
-		return map;
-	}
-	
-	@Deprecated
-	private static <S extends State, T extends Transition<S>> String compute(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder, S last){
-		log.info("Relevant Regex for "+last);
-		S n0 = N.initialState();
 
-		//Definition nq
+		//Definition of nq
 		S nq = null;
 		if(N.from(last).size() > 0) {
 			nq = builder.newState("nq");
@@ -180,7 +177,7 @@ public class RegexBuilder {
 		}
 		
 		log.info("Post initialization: "+N.toString());
-		
+
 		//To differentiate the id of the new transitions
 		int counter = 0;
 		
@@ -246,30 +243,31 @@ public class RegexBuilder {
 				
 				log.info("Selected state: "+n);
 				
-				N.to(n)
-					.stream()
-					.filter(r1->!r1.isAuto())
-					.forEach(r1->{
-						N.from(n)
-							.stream()
-							.filter(r2->!r2.isAuto())
-							.forEach(r2->{
-								String id = "t"+r1.id()+"- t"+r2.id();
-								T tmp = builder.newTransition(id,
-										r1.source(),
-										r2.sink());
-								regexBuilder.append("(");
-								regexBuilder.append(r1.relevantLabelContent());
-								if(N.hasAuto(n))
-									regexBuilder.append("("+N.getAuto(n).relevantLabelContent()+")*");
-								regexBuilder.append(r2.relevantLabelContent());
-								regexBuilder.append(")");
-								tmp.setRelevantLabel(regexBuilder.toString());
-								N.add(tmp);
-								
-								log.info("New transition: "+tmp.toString());
-							});
-					});
+				for(T r1 : N.to(n)) {
+					if(r1.isAuto())
+						continue;
+					for(T r2 : N.from(n)) {
+						if(r2.isAuto())
+							continue;
+
+						String id = r1.id()+"-"+r2.id()+"_"+counter;
+						T tmp = builder.newTransition(id,
+								r1.source(),
+								r2.sink());
+						regexBuilder.setLength(0);
+						regexBuilder.append("(");
+						regexBuilder.append(r1.relevantLabelContent());
+						if(N.hasAuto(n))
+							regexBuilder.append("("+N.getAuto(n).relevantLabelContent()+")*");
+						regexBuilder.append(r2.relevantLabelContent());
+						regexBuilder.append(")");
+						tmp.setRelevantLabel(regexBuilder.toString());
+						N.add(tmp);
+						counter++;
+						
+						log.info("New transition: "+tmp.toString());
+					}
+				}
 				N.remove(n);
 			}
 			counter++;

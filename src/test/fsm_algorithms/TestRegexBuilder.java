@@ -2,8 +2,6 @@ package test.fsm_algorithms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 import commoninterfaces.FiniteStateMachine;
@@ -12,6 +10,7 @@ import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
 import fsm_algorithms.RegexBuilder;
+import utility.Constants;
 
 class TestRegexBuilder {
 	@Test
@@ -33,10 +32,51 @@ class TestRegexBuilder {
 	}
 	
 	@Test
-	void test_pg50_decorations() {
+	void test_pg50_decorations_state4() {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		Map<FiniteState, String> map = RegexBuilder.relevantRegexForAcceptingState(pg50, new FSMBuilder());
-		System.out.println(map);
+		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("4"));
+		//System.out.println(regex);
+		regex = regex.replace("(", "");
+		regex = regex.replace(")", "");
+		regex = regex.replace(Constants.EPSILON, "");
+		regex = regex.strip();
+		assertTrue(regex.equals("f"));
+	}
+	
+	@Test
+	void test_pg50_decorations_state7() {
+		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
+		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("7"));
+		//System.out.println(regex);
+		regex = regex.replace("(", "");
+		regex = regex.replace(")", "");
+		regex = regex.replace(Constants.EPSILON, "");
+		regex = regex.strip();
+		assertTrue(regex.equals("frf"));
+	}
+	
+	@Test
+	void test_pg50_decorations_state8() {
+		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
+		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("8"));
+		//System.out.println(regex);
+		regex = regex.replace("(", "");
+		regex = regex.replace(")", "");
+		regex = regex.replace(Constants.EPSILON, "");
+		regex = regex.strip();
+		assertTrue(regex.equals("fr"));
+	}
+	
+	@Test
+	void test_pg50_decorations_state5() {
+		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
+		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("5"));
+		//System.out.println(regex);
+		regex = regex.replace("(", "");
+		regex = regex.replace(")", "");
+		regex = regex.replace(Constants.EPSILON, "");
+		regex = regex.strip();
+		assertTrue(regex.isBlank());
 	}
 
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {

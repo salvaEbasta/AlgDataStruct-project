@@ -1,8 +1,9 @@
 package diagnosticatore;
 
 import java.util.LinkedList;
-import java.util.Map;
 
+import fsm_algorithms.RegexBuilder;
+import spazio_comportamentale.BuilderSpaceComportamentale;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -32,15 +33,14 @@ public class ClosureBuilder {
 	}
 	
 	public static SilentClosure decorate(SilentClosure closure) {
-		Map<SpaceState, String> decorations = null;
-		decorations.entrySet().forEach(e->closure.decorate(e.getKey(), e.getValue()));
+		for(SpaceState s : closure.decorableStates())
+			closure.decorate(s, RegexBuilder.relevanceRegex(closure, new BuilderSpaceComportamentale(), s));
 		return closure;
 	}
 	
 	@Deprecated
 	public static ClosureSpace buildSpace(SpaceAutomaComportamentale space) {
-		ClosureSpace cSpace = new ClosureSpace();
 		
-		return cSpace;
+		return null;
 	}
 }
