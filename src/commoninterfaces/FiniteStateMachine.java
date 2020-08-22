@@ -2,7 +2,7 @@ package commoninterfaces;
 
 import java.util.Set;
 
-public interface FiniteStateMachine<S extends State, T extends Transition<S>> extends Cloneable{
+public interface FiniteStateMachine<S extends StateInterface, T extends Transition<S>> extends Cloneable{
 	public String id();
 	public Set<T> transitions();
 	public Set<S> states();

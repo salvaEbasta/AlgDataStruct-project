@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-public class Interconnections<S extends State, T extends Transition<S>> implements Serializable, Cloneable{
+public class Interconnections<S extends StateInterface, T extends Transition<S>> implements Serializable, Cloneable{
 	
 	/**
 	 * 
@@ -101,7 +101,7 @@ public class Interconnections<S extends State, T extends Transition<S>> implemen
 		StringBuilder sb = new StringBuilder();
 		sb.append(out.toString());
 		sb.deleteCharAt(0);
-		sb.insert(0, in.toString().replace("]", ", "));
+		sb.insert(0, in.toString().concat("+"));
 		return sb.toString();
 	}
 	

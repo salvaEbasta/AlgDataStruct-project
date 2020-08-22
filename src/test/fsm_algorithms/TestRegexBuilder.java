@@ -17,18 +17,17 @@ class TestRegexBuilder {
 	void test_benchmarkC1() {
 		FiniteStateMachine<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
 		String result = RegexBuilder.relevanceRegex(C1, new FSMBuilder());
-		
-		System.out.println(result);
-		assertTrue(result.equalsIgnoreCase("(ε(((c|a)b))*((c|a)b)((c|a)ε))"));
+		//System.out.println(result);
+		assertTrue(result.equalsIgnoreCase("ε((c|a)b)*(c|a)ε"));
 	}
 	
 	@Test
 	void test_pg50() {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
 		String result = RegexBuilder.relevanceRegex(pg50, new FSMBuilder());
-		System.out.println(result);
+		//System.out.println(result);
 		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
-		assertTrue(result.equalsIgnoreCase("((  )(( ε)|(f((r((fε)|( ε)))|ε))))"));
+		assertTrue(result.equalsIgnoreCase("  ( ε|f(r(fε| ε)|ε))"));
 	}
 	
 	@Test

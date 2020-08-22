@@ -2,7 +2,7 @@ package commoninterfaces;
 
 import java.io.Serializable;
 
-public class State implements Serializable {
+public class State implements StateInterface, Serializable {
 	private static final long serialVersionUID = 1L;
 	protected String id;
 	private boolean accepting;

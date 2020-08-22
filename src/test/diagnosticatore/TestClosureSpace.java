@@ -4,13 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
 
-import comportamental_fsm.ComportamentalFSM;
 import comportamental_fsm.CFSMnetwork;
+import comportamental_fsm.ComportamentalFSM;
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.ComportamentalTransition;
 import comportamental_fsm.Event;
@@ -18,13 +16,11 @@ import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 import diagnosticatore.ClosureBuilder;
-import diagnosticatore.SilentClosure;
-import spazio_comportamentale.SpaceAutoma;
+import diagnosticatore.ClosureSpace;
 import spazio_comportamentale.SpaceAutomaComportamentale;
-import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;
 
-class TestSilentClosure {
+class TestClosureSpace {
 	private static CFSMnetwork initialize_pg26() {
 		//AUTOMATA C2
 		ComportamentalFSM c2 = new ComportamentalFSM("C2");
@@ -78,38 +74,11 @@ class TestSilentClosure {
 	}
 	
 	@Test
-	void test_pg59_21_31_eps_e3() {
+	void test_pg69() {
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
-		System.out.println(rename);
-		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
-		int key = -1;
-		while(iter.hasNext()) {
-			Entry<Integer, SpaceState> e = iter.next();
-			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
-				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
-					key = e.getKey();
-		}
-		//System.out.println("key: "+key);
-		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.build(pg38, rename.get(key));
+		ClosureSpace pg69 = ClosureBuilder.buildSpace(pg38);
+		System.out.println(pg69.toString());
 		
-		//System.out.println(closure.toString());
-		assertTrue(closure.states().size() == 7);
-		assertTrue(closure.states().contains(rename.get(key)));
-		assertTrue(closure.acceptingStates().size() == 4);
-		assertTrue(closure.exitStates().size() == 3);
+		assertTrue(pg69.states().size() == 7);
 	}
-	
-	@Test
-	void test_pg59_initialState() {
-		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		SilentClosure closure = ClosureBuilder.build(pg38, pg38.initialState());
-		//System.out.println(closure.toString());
-		
-		assertTrue(closure.states().contains(pg38.initialState()) && closure.states().size() == 1);
-		assertTrue(closure.transitions().size() == 0);
-		assertTrue(closure.exitStates().size() == 1);
-	}
-
 }

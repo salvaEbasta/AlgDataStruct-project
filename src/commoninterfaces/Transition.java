@@ -5,22 +5,18 @@ import java.io.Serializable;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 
-public abstract class Transition<S extends State> implements Serializable{
-	
-	/**
-	 * 
-	 */
+public class Transition<S extends StateInterface> implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private S source;
-	private S destination;
+	private S sink;
 	private RelevantLabel rel;
 	private ObservableLabel obs;
 	
-	public Transition(String id, S source, S destination) {
+	public Transition(String id, S source, S sink) {
 		this.id = id;
 		this.source = source;
-		this.destination = destination;
+		this.sink = sink;
 		this.rel = new RelevantLabel();
 		this.obs = new ObservableLabel();
 	}
@@ -60,11 +56,11 @@ public abstract class Transition<S extends State> implements Serializable{
 	}
 	
 	public boolean isAuto() {
-		return source.equals(destination);
+		return source.equals(sink);
 	}
 	
 	public boolean isParallelTo(Transition<S> t) {
-		return this.source.equals(t.source) && this.destination.equals(t.destination);
+		return this.source.equals(t.source) && this.sink.equals(t.sink);
 	}
 	
 	public boolean setRelevantLabel(String newLabel) {
@@ -100,7 +96,7 @@ public abstract class Transition<S extends State> implements Serializable{
 	}	
 	
 	public S sink() {
-		return destination;
+		return sink;
 	}
 	
 	public int hashCode() {
@@ -112,6 +108,17 @@ public abstract class Transition<S extends State> implements Serializable{
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
 		final Transition<State> tmp = (Transition<State>) obj;
-		return this.id().equalsIgnoreCase(tmp.id());
+		return id.equalsIgnoreCase(tmp.id()) 
+				&& source.equals(tmp.source)
+				&& sink.equals(tmp.sink);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(id.concat(":["));
+		sb.append(source.id()+"->"+sink.id());
+		sb.append(", "+obs.toString()+", "+rel.toString()+"]");
+		return sb.toString();
 	}
 }

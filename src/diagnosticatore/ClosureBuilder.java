@@ -27,7 +27,7 @@ public class ClosureBuilder {
 				closure.add(current);
 				queue.addAll(space.from(current.sink()));
 			}else {
-				closure.setDecorable(current.source());
+				closure.setExiting(current.source());
 			}
 		}
 	}
@@ -38,9 +38,49 @@ public class ClosureBuilder {
 		return closure;
 	}
 	
-	@Deprecated
 	public static ClosureSpace buildSpace(SpaceAutomaComportamentale space) {
+		ClosureSpace cs = new ClosureSpace(space.id());
+		SilentClosure initial = build(space, space.initialState());
+		decorate(initial);
+		LinkedList<SilentClosure> queue = new LinkedList<SilentClosure>();
+		queue.add(initial);
+		composeClosureSpace(space, queue, cs);
+		return cs;
+	}
+	
+	private static void composeClosureSpace(
+			SpaceAutomaComportamentale space,
+			LinkedList<SilentClosure> queue , ClosureSpace cSpace) {
+		if(queue.size() > 0) {
+			SilentClosure closure = queue.pop();
+			cSpace.insert(closure);
+			for(SpaceState s : closure.exitStates()) {
+				for(SpaceTransition<SpaceState> t : space.from(s)) {
+					if(!t.isSilent()) {
+						handleTransition(t, space, closure, queue, cSpace);
+					}
+				}
+			}
+			composeClosureSpace(space, queue, cSpace);
+		}
+	}
+	
+	private static void handleTransition(
+			SpaceTransition<SpaceState> t, SpaceAutomaComportamentale space,
+			SilentClosure closure, LinkedList<SilentClosure> queue , ClosureSpace cSpace) {
 		
-		return null;
+		SilentClosure sink = null;
+		if(!cSpace.hasState(t.sink().id())) {
+			sink = build(space, t.sink());
+			decorate(sink);
+			cSpace.insert(sink);
+			queue.add(sink);
+		}else {
+			sink = cSpace.getState(t.sink().id());
+		}
+		ClosureTransition newT = new ClosureTransition(t.id(), closure, sink);
+		newT.setObservableLabel(t.observableLabel());
+		newT.setRelevantLabel(closure.getDecorationOf(t.source())+t.relevantLabelContent());
+		cSpace.add(newT);
 	}
 }

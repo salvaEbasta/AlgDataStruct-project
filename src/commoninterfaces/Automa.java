@@ -5,11 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-public class Automa<S extends State, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable, Cloneable{
-
-	/**
-	 * 
-	 */
+public class Automa<S extends StateInterface, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable, Cloneable{
 	private static final long serialVersionUID = 1L;
 	private String id;
 	protected LinkedHashMap<S, Interconnections<S, T>> structure;
