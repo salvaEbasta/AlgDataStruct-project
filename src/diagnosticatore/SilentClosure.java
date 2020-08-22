@@ -134,4 +134,5 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		sb.append("\n");
 		return sb.toString();
 	}
+	
 }
