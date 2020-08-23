@@ -27,7 +27,7 @@ public class SpazioComportamentale {
 	}
 	
 	private void buildSpace(SpaceState state, Set<ComportamentalTransition> enabledTransitions) {
-		if(enabledTransitions.size()>1) {
+		if(enabledTransitions.size() > 1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);
 				scattoTransizione(state, transition); 
@@ -39,9 +39,7 @@ public class SpazioComportamentale {
 	}
 	
 	private void scattoTransizione(SpaceState source, ComportamentalTransition transition) {
-		net.transitionTo(transition);	
-		if(spazioComp.states().size() == 20)
-			System.out.println();
+		net.transitionTo(transition);
 		SpaceState destination = new SpaceState(net.getActualStates(), net.getActiveEvents());
 		if(!spazioComp.insert(destination)) {
 			SpaceState toSearch = destination;

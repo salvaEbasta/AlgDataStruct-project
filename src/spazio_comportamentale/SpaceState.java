@@ -88,15 +88,24 @@ public class SpaceState extends State{
 	
 	@Override
 	public boolean equals(Object otherStatus) {
-		SpaceState other = (SpaceState) otherStatus;
-		for(int i=0; i < actualStates.size() && i < other.actualStates.size(); i++){
-			if(!actualStates.get(i).equals(other.actualStates.get(i)))
-				return false;
+		if(otherStatus==null || !SpaceState.class.isAssignableFrom(otherStatus.getClass()))
+			return false;
+		final SpaceState other = (SpaceState) otherStatus;
+		
+		if(!id().equals(other.id))
+			return false;
+		else if(actualStates.size()!=other.actualStates.size())
+			return false;
+		else if(linkEvents.size()!=other.linkEvents.size())
+			return false;
+		else {
+			for(int i=0; i < actualStates.size(); i++)
+				if(!actualStates.get(i).equals(other.actualStates.get(i)))
+					return false;
+			for(int i=0; i < linkEvents.size(); i++)
+				if(!linkEvents.get(i).equals(other.linkEvents.get(i)))
+					return false;
+			return true;
 		}
-		for(int i=0; i < linkEvents.size() && i < other.linkEvents.size(); i++){
-			if(!linkEvents.get(i).equals(other.linkEvents.get(i)))
-				return false;
-		}
-		return true;
 	}
 }

@@ -107,7 +107,7 @@ public class Transition<S extends StateInterface> implements Serializable{
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
-		final Transition<State> tmp = (Transition<State>) obj;
+		final Transition<S> tmp = (Transition<S>) obj;
 		return id.equalsIgnoreCase(tmp.id()) 
 				&& source.equals(tmp.source)
 				&& sink.equals(tmp.sink);

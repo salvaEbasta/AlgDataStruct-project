@@ -80,5 +80,8 @@ class TestClosureSpace {
 		System.out.println(pg69.toString());
 		
 		assertTrue(pg69.states().size() == 7);
+		assertTrue(pg69.transitions().size() == 12);
+		
+		assertTrue(pg69.from(pg69.initialState()).size()==1);
 	}
 }

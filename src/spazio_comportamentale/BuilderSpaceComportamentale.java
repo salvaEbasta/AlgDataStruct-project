@@ -10,8 +10,8 @@ public class BuilderSpaceComportamentale implements ComponentBuilder<SpaceState,
 	}
 
 	@Override
-	public SpaceTransition<SpaceState> newTransition(String id, SpaceState source, SpaceState destination) {
-		return new SpaceTransition<SpaceState>(id, source, destination);
+	public SpaceTransition<SpaceState> newTransition(String id, SpaceState source, SpaceState sink) {
+		return new SpaceTransition<SpaceState>(id, source, sink);
 	}
 
 }

@@ -16,6 +16,10 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 	public SpaceAutoma(String id) {
 		super(id);
 	}
+	
+	public SpaceAutoma(SpaceAutoma<S> sa) {
+		super(sa);
+	}
 
 	@Override
 	public Set<S> acceptingStates() {

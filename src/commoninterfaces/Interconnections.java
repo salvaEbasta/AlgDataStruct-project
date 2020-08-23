@@ -99,9 +99,8 @@ public class Interconnections<S extends StateInterface, T extends Transition<S>>
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
+		sb.append(in.toString().concat("+"));
 		sb.append(out.toString());
-		sb.deleteCharAt(0);
-		sb.insert(0, in.toString().concat("+"));
 		return sb.toString();
 	}
 	

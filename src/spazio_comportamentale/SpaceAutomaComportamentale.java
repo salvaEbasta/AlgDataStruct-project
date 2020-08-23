@@ -13,6 +13,10 @@ public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 		super(id);
 	}
 	
+	public SpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
+		super(sac);
+	}
+	
 	/**
 	 * Controlla se uno stato ha una transizione entrante osservabile
 	 * @param s
@@ -27,7 +31,7 @@ public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 	
 	@Override
 	public Object clone() {
-		SpaceAutomaComportamentale deepCopy = (SpaceAutomaComportamentale) super.clone();
+		SpaceAutomaComportamentale deepCopy = new SpaceAutomaComportamentale(this);
 		return deepCopy;
 	}
 	

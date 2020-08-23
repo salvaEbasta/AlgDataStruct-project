@@ -30,10 +30,20 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		accepting = false;
 	}
 	
+	public SilentClosure(SilentClosure sc) {
+		super(sc);
+		this.accepting = sc.accepting;
+		this.decorations = new HashMap<>();
+		sc.decorations.forEach((k,v)->this.decorations.put(k, v));
+		this.exiting = new HashSet<>(sc.exiting);
+	}
+	
 	public boolean insert(SpaceState s) {
 		if(super.insert(s)) {
-			if(s.isFinal())
+			if(s.isFinal()) {
 				decorations.put(s, Constants.EPSILON);
+				accepting = true;
+			}
 			return true;
 		}
 		return false;
@@ -43,6 +53,12 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		if(super.remove(s)) {
 			exiting.remove(s);
 			decorations.remove(s);
+			accepting = false;
+			for(SpaceState state:decorations.keySet())
+				if(state.isFinal()) {
+					accepting = true;
+					break;
+				}
 			return true;
 		}
 		return false;
@@ -68,7 +84,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		return false;
 	}
 	
-	public String getDecorationOf(SpaceState s) {
+	public String decorationOf(SpaceState s) {
 		return decorations.get(s);
 	}
 	
@@ -78,7 +94,8 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 			if(e.getKey().isFinal())
 				sb.append(e.getValue()+"|");
 		});
-		sb.deleteCharAt(sb.length()-1);
+		if(sb.length() > 0)
+			sb.deleteCharAt(sb.length()-1);
 		return sb.toString();
 	}
 	
@@ -95,18 +112,10 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 	public boolean isAccepting() {
 		return accepting;
 	}
-
-	@Override
-	public void setAccepting(boolean accepting) {
-		this.accepting = accepting;
-	}
 	
 	@Override
 	public Object clone() {
-		SilentClosure deepCopy = (SilentClosure) super.clone();
-		deepCopy.accepting = this.accepting;
-		deepCopy.decorations = new HashMap<>(this.decorations);
-		deepCopy.exiting = new HashSet<>(this.exiting);
+		SilentClosure deepCopy = new SilentClosure(this);
 		return deepCopy;
 	}
 	
@@ -115,7 +124,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		if(obj==null || !SilentClosure.class.isAssignableFrom(obj.getClass()))
 			return false;
 		final SilentClosure tmp = (SilentClosure) obj;
-		return tmp.id().equals(id());
+		return id().equals(tmp.id());
 	}
 	
 	@Override

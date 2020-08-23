@@ -66,6 +66,7 @@ public class ClosureBuilder {
 		LinkedList<SilentClosure> queue = new LinkedList<SilentClosure>();
 		queue.add(initial);
 		composeClosureSpace(space, queue, cs);
+		cs.setInitial(initial);
 		return cs;
 	}
 	
@@ -100,7 +101,7 @@ public class ClosureBuilder {
 		}
 		ClosureTransition newT = new ClosureTransition(t.id(), closure, sink);
 		newT.setObservableLabel(t.observableLabel());
-		newT.setRelevantLabel(closure.getDecorationOf(t.source())+t.relevantLabelContent());
+		newT.setRelevantLabel(closure.decorationOf(t.source())+t.relevantLabelContent());
 		cSpace.add(newT);
 	}
 }

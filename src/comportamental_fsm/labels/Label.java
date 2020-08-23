@@ -61,6 +61,6 @@ public abstract class Label implements Serializable{
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
 		final Label other = (Label) obj;
-		return this.symbol.equals(other.symbol) && this.label.equals(other.label);
+		return symbol.equals(other.symbol) && label.equals(other.label);
 	}
 }

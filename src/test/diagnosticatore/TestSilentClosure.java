@@ -93,12 +93,16 @@ class TestSilentClosure {
 		//System.out.println("State: "+ridenominazione.get(key));
 		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
 		
-		//System.out.println(closure.toString());
+		System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 7);
 		assertTrue(closure.states().contains(rename.get(key)));
 		assertTrue(closure.transitions().size() == 6);
 		assertTrue(closure.acceptingStates().size() == 5);
 		assertTrue(closure.exitStates().size() == 3);
+		
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().equals("fε|frε|frf|εε"));
 	}
 	
 	@Test
@@ -124,6 +128,10 @@ class TestSilentClosure {
 		assertTrue(closure.transitions().size() == 0);
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
+
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
@@ -149,6 +157,10 @@ class TestSilentClosure {
 		assertTrue(closure.transitions().size() == 0);
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
+		
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
@@ -172,8 +184,12 @@ class TestSilentClosure {
 		assertTrue(closure.states().size() == 3);
 		assertTrue(closure.states().contains(rename.get(key)));
 		assertTrue(closure.transitions().size() == 2);
-		assertTrue(closure.acceptingStates().size() == 3);
-		assertTrue(closure.exitStates().size() == 3);
+		assertTrue(closure.acceptingStates().size() == 2);
+		assertTrue(closure.exitStates().size() == 2);
+
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
@@ -199,6 +215,10 @@ class TestSilentClosure {
 		assertTrue(closure.transitions().size() == 4);
 		assertTrue(closure.acceptingStates().size() == 2);
 		assertTrue(closure.exitStates().size() == 2);
+
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
@@ -224,6 +244,10 @@ class TestSilentClosure {
 		assertTrue(closure.transitions().size() == 3);
 		assertTrue(closure.acceptingStates().size() == 2);
 		assertTrue(closure.exitStates().size() == 2);
+
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
@@ -236,6 +260,24 @@ class TestSilentClosure {
 		assertTrue(closure.transitions().size() == 0);
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
+
+		ClosureBuilder.decorate(closure);
+		//System.out.println(closure.diagnosis());
+		assertTrue(closure.diagnosis().equals("ε"));
+	}
+	
+	@Test
+	void test_equals() {
+		SilentClosure c1 = new SilentClosure("1");
+		SilentClosure c2 = new SilentClosure("1");
+		SilentClosure c3 = new SilentClosure("3");
+		assertTrue(c1.equals(c2));
+		assertFalse(c1.equals(c3));
+
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, pg38.initialState());
+		c1 = new SilentClosure(closure.id());
+		assertTrue(closure.equals(c1));
 	}
 
 }

@@ -12,14 +12,17 @@ public class State implements StateInterface, Serializable {
 		this.accepting = false;
 	}
 	
+	@Override
 	public String id() {
 		return id;
 	}
 	
+	@Override
 	public int hashCode() {
 		return id.hashCode();
 	}
 	
+	@Override
 	public boolean isAccepting() {
 		return accepting;
 	}
@@ -28,6 +31,7 @@ public class State implements StateInterface, Serializable {
 		this.accepting = accepting;
 	}
 	
+	@Override
 	public boolean equals(Object obj) {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;

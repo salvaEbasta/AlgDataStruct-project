@@ -4,8 +4,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import commoninterfaces.Automa;
+import commoninterfaces.Transition;
 
-public class ClosureSpace extends Automa<SilentClosure, ClosureTransition>{
+public class ClosureSpace extends Automa<SilentClosure, Transition<SilentClosure>>{
 	private static final long serialVersionUID = 1L;
 
 	public ClosureSpace(String id) {
@@ -33,21 +34,21 @@ public class ClosureSpace extends Automa<SilentClosure, ClosureTransition>{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("Automa: %s\n", id()));
+		sb.append(String.format("ClosureSpace: %s\n", id()));
 		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
 		for(SilentClosure state: states()) {
-			sb.append(state.toString());
-			Set<ClosureTransition>  in = to(state);
-			Set<ClosureTransition> out = from(state);
+			sb.append(state.id());
+			Set<Transition<SilentClosure>>  in = to(state);
+			Set<Transition<SilentClosure>> out = from(state);
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
-				for(ClosureTransition inTransition: in) {
+				for(Transition<SilentClosure> inTransition: in) {
 					sb.append(String.format("\n\t\t* %s", inTransition));
 				}
 			}
 			if(!out.isEmpty()) {
 				sb.append("\n\t- Output Transitions:");
-				for(ClosureTransition outTransition: out) {
+				for(Transition<SilentClosure> outTransition: out) {
 					sb.append(String.format("\n\t\t* %s", outTransition));
 				}
 			}
