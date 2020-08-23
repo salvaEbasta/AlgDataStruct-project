@@ -85,7 +85,12 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 	public Set<SpaceState> exitStates(){
 		return exiting;
 	}
-
+	
+	@Override
+	public Set<SpaceState> acceptingStates(){
+		return new HashSet<SpaceState>(decorations.keySet());
+	}
+	
 	@Override
 	public boolean isAccepting() {
 		return accepting;
@@ -103,6 +108,14 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		deepCopy.decorations = new HashMap<>(this.decorations);
 		deepCopy.exiting = new HashSet<>(this.exiting);
 		return deepCopy;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj==null || !SilentClosure.class.isAssignableFrom(obj.getClass()))
+			return false;
+		final SilentClosure tmp = (SilentClosure) obj;
+		return tmp.id().equals(id());
 	}
 	
 	@Override

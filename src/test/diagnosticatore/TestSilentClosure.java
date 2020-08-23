@@ -19,7 +19,6 @@ import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 import diagnosticatore.ClosureBuilder;
 import diagnosticatore.SilentClosure;
-import spazio_comportamentale.SpaceAutoma;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;
@@ -78,7 +77,7 @@ class TestSilentClosure {
 	}
 	
 	@Test
-	void test_pg59_21_31_eps_e3() {
+	void test_pg65_2() {
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -92,23 +91,150 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.build(pg38, rename.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
 		
 		//System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 7);
 		assertTrue(closure.states().contains(rename.get(key)));
-		assertTrue(closure.acceptingStates().size() == 4);
+		assertTrue(closure.transitions().size() == 6);
+		assertTrue(closure.acceptingStates().size() == 5);
 		assertTrue(closure.exitStates().size() == 3);
 	}
 	
 	@Test
-	void test_pg59_initialState() {
+	void test_pg65_1() {
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		SilentClosure closure = ClosureBuilder.build(pg38, pg38.initialState());
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31")))
+					key = e.getKey();
+		}
+		//System.out.println("key: "+key);
+		//System.out.println("State: "+ridenominazione.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		
+		//System.out.println(closure.toString());
+		assertTrue(closure.states().size() == 1);
+		assertTrue(closure.states().contains(rename.get(key)));
+		assertTrue(closure.transitions().size() == 0);
+		assertTrue(closure.acceptingStates().size() == 1);
+		assertTrue(closure.exitStates().size() == 1);
+	}
+	
+	@Test
+	void test_pg65_10() {
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("30")))
+					key = e.getKey();
+		}
+		//System.out.println("key: "+key);
+		//System.out.println("State: "+ridenominazione.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		
+		//System.out.println(closure.toString());
+		assertTrue(closure.states().size() == 1);
+		assertTrue(closure.states().contains(rename.get(key)));
+		assertTrue(closure.transitions().size() == 0);
+		assertTrue(closure.acceptingStates().size() == 1);
+		assertTrue(closure.exitStates().size() == 1);
+	}
+	
+	@Test
+	void test_pg65_8() {
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31")))
+					key = e.getKey();
+		}
+		//System.out.println("key: "+key);
+		//System.out.println("State: "+ridenominazione.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		
+		System.out.println(closure.toString());
+		assertTrue(closure.states().size() == 3);
+		assertTrue(closure.states().contains(rename.get(key)));
+		assertTrue(closure.transitions().size() == 2);
+		assertTrue(closure.acceptingStates().size() == 3);
+		assertTrue(closure.exitStates().size() == 3);
+	}
+	
+	@Test
+	void test_pg65_11() {
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
+					key = e.getKey();
+		}
+		//System.out.println("key: "+key);
+		//System.out.println("State: "+ridenominazione.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		
+		//System.out.println(closure.toString());
+		assertTrue(closure.states().size() == 5);
+		assertTrue(closure.states().contains(rename.get(key)));
+		assertTrue(closure.transitions().size() == 4);
+		assertTrue(closure.acceptingStates().size() == 2);
+		assertTrue(closure.exitStates().size() == 2);
+	}
+	
+	@Test
+	void test_pg65_12() {
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
+					key = e.getKey();
+		}
+		//System.out.println("key: "+key);
+		//System.out.println("State: "+ridenominazione.get(key));
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		
+		//System.out.println(closure.toString());
+		assertTrue(closure.states().size() == 4);
+		assertTrue(closure.states().contains(rename.get(key)));
+		assertTrue(closure.transitions().size() == 3);
+		assertTrue(closure.acceptingStates().size() == 2);
+		assertTrue(closure.exitStates().size() == 2);
+	}
+	
+	@Test
+	void test_pg65_initialState() {
+		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
+		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, pg38.initialState());
 		//System.out.println(closure.toString());
 		
 		assertTrue(closure.states().contains(pg38.initialState()) && closure.states().size() == 1);
 		assertTrue(closure.transitions().size() == 0);
+		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
 	}
 
