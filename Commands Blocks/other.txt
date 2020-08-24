@@ -1,0 +1,11 @@
+newnet
+newlink L
+newevent op
+newevent cl
+readcommands s.txt
+readcommands b.txt
+robot linkcfas L
+s
+b
+endrobot
+savenet other

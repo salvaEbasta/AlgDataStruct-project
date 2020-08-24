@@ -1,0 +1,96 @@
+newcfa b
+newstate 0
+newstate 1
+setinitial 0
+robot newtransition b1
+0 //stato sorgente
+1 //stato destinazione
+y //eventi input?
+op //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+opn //label oss
+n //label rel?
+endrobot
+robot newtransition b2
+1 //stato sorgente
+0 //stato destinazione
+y //eventi input?
+cl //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+cls //label oss
+n //label rel?
+endrobot
+robot newtransition b3
+0 //stato sorgente
+0 //stato destinazione
+y //eventi input?
+op //evento input
+L //link evento input
+n //eventi output?
+n //label oss?
+y //label rel?
+f3 //label rel
+endrobot
+robot newtransition b4
+1 //stato sorgente
+1 //stato destinazione
+y //eventi input?
+cl //evento input
+L //link evento input
+n //eventi output?
+n //label oss?
+y //label rel?
+f4 //label rel
+endrobot
+robot newtransition b5
+0 //stato sorgente
+0 //stato destinazione
+y //eventi input?
+cl //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+nop //label oss
+n //label rel?
+endrobot
+robot newtransition b6
+1 //stato sorgente
+1 //stato destinazione
+y //eventi input?
+op //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+nop //label oss
+n //label rel?
+endrobot
+robot newtransition b7
+0 //stato sorgente
+1 //stato destinazione
+y //eventi input?
+op //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+opn //label oss
+y //label rel?
+f5 //label rel
+endrobot
+robot newtransition b8
+1 //stato sorgente
+0 //stato destinazione
+y //eventi input?
+op //evento input
+L //link evento input
+n //eventi output?
+y //label oss?
+cls //label oss
+y //label rel?
+f6 //label rel
+endrobot
+savecfa
+back

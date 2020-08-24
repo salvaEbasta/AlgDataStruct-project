@@ -1,0 +1,35 @@
+newcfa C1
+newstate 10
+newstate 11
+setinitial 10
+robot newtransition t1a
+10 //stato sorgente
+11 //stato sorgente
+y //eventi input?
+e1 //evento input
+L1 //link input
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition t1b
+11 //stato sorgente
+10 //stato sorgente
+y //eventi input?
+e2 //evento input
+L3 //link input
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition t1c
+10 //stato sorgente
+11 //stato sorgente
+n //eventi input?
+n //eventi output?
+n //label oss?
+y //label rel?
+f1 //label rel
+endrobot
+savecfa
+back

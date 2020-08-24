@@ -1,0 +1,54 @@
+newcfa s
+newstate 0
+newstate 1
+setinitial 0
+robot newtransition s1
+1 //stato sorgente
+0 //stato destinazione
+n //eventi input?
+y //eventi output?
+cl //evento output
+L //link eventi output
+n //altri eventi output?
+y //label oss?
+act //label oss
+n //label rel?
+endrobot
+robot newtransition s2
+0 //stato sorgente
+1 //stato destinazione
+n //eventi input?
+y //eventi output?
+op //evento output
+L //link eventi output
+n //altri eventi output?
+y //label oss?
+sby //label oss
+n //label rel?
+endrobot
+robot newtransition s3
+0 //stato sorgente
+0 //stato destinazione
+n //eventi input?
+y //eventi output?
+cl //evento output
+L //link eventi output
+n //altri eventi output?
+n //label oss?
+y //label rel?
+f1 //label rel
+endrobot
+robot newtransition s4
+1 //stato sorgente
+1 //stato destinazione
+n //eventi input?
+y //eventi output?
+op //evento output
+L //link eventi output
+n //altri eventi output?
+n //label oss?
+y //label rel?
+f2 //label rel
+endrobot
+savecfa
+back
