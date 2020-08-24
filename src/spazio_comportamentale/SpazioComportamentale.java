@@ -1,33 +1,40 @@
 package spazio_comportamentale;
 
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
 
-public class SpazioComportamentale {
-	
+public class SpazioComportamentale implements Callable<SpaceAutomaComportamentale>{
+
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale spazioComp;
-	
+
 	public SpazioComportamentale(CFSMnetwork net) {
 		this.net = net;
 		spazioComp = new SpaceAutomaComportamentale("Spazio Comportamentale");		
 	}
-	
-	public SpaceAutomaComportamentale generaSpazioComportamentale() {
+
+	@Override
+	public SpaceAutomaComportamentale call() throws Exception {
 		if(spazioComp.states().isEmpty()) {
 			SpaceState initial = new SpaceState(net.getInitialStates(), net.getActiveEvents());
 			spazioComp.insert(initial);
 			spazioComp.setInitial(initial);
 			buildSpace(initial, net.enabledTransitions()); 
 			net.restoreInitial();
+			spazioComp.potatura();
+			spazioComp.ridenominazione();
 		}
 		return spazioComp;
 	}
-	
+
 	private void buildSpace(SpaceState state, Set<ComportamentalTransition> enabledTransitions) {
-		if(enabledTransitions.size() > 1) {
+
+		// try { Thread.sleep(1000); } catch (InterruptedException e) { 			 }
+
+		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);
 				scattoTransizione(state, transition); 
@@ -37,9 +44,11 @@ public class SpazioComportamentale {
 		else 
 			spazioComp.insert(state);
 	}
-	
+
 	private void scattoTransizione(SpaceState source, ComportamentalTransition transition) {
-		net.transitionTo(transition);
+		net.transitionTo(transition);	
+		if(spazioComp.states().size() == 20)
+			System.out.println();
 		SpaceState destination = new SpaceState(net.getActualStates(), net.getActiveEvents());
 		if(!spazioComp.insert(destination)) {
 			SpaceState toSearch = destination;
@@ -49,10 +58,11 @@ public class SpazioComportamentale {
 		if(spazioComp.add(spaceTransition))
 			buildSpace(destination, net.enabledTransitions());	
 	}
-	
-	public SpaceAutomaComportamentale currentSpazioComportamentale() {
-		if(spazioComp == null)
+
+	public SpaceAutomaComportamentale getMidSpazioComportamentale() {
+		if(spazioComp.states().isEmpty())
 			return new SpaceAutomaComportamentale("Spazio Comportamentale");	
 		return spazioComp;
 	}
+
 }

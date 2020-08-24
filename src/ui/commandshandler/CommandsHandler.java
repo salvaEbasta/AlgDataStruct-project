@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ui.context.Context;
+import ui.context.RobotWriter;
 import ui.stream.InOutStream;
 import utility.Constants;
 import utility.FileHandler;
@@ -107,9 +108,20 @@ public class CommandsHandler implements Closeable{
 		else if(command.equals("readcommands") && !parameters.isEmpty()) { 
 			String filename = args[0];
 			if(filename.matches("[^\\,\\/:*\"<>|]+\\.txt")) {
-			ArrayList<String> commandsList = readCommands(filename);
-			for(String readCommand: commandsList)
-				run(readCommand.trim());
+				ArrayList<String> commandsList = readCommands(filename);
+				for(int i=0; i<commandsList.size(); i++) {
+					String readCommand = stripComments(commandsList.get(i));
+					if(readCommand.startsWith("robot ")) {
+						readCommand = readCommand.replaceFirst("^robot ", Constants.EMPTY_STRING);
+						ArrayList<String> autoLines = new ArrayList<String>();
+						while(i<commandsList.size() && !stripComments(commandsList.get(++i)).equals("endrobot"))
+							autoLines.add(stripComments(commandsList.get(i)));	
+						i--;
+						Thread robot = new Thread(new RobotWriter(autoLines));
+						robot.start();						
+					}			
+						run(readCommand.trim());				
+				}
 			}
 		}
 		else if(!contains(command)) 
@@ -138,6 +150,10 @@ public class CommandsHandler implements Closeable{
 			}
 		context.getIOStream().write(Constants.NEW_LINE + Constants.WAITING);
 
+	}
+	
+	private String stripComments(String str) {
+		return str.replaceFirst("(?<=[^/]+)//[^/\n]*$", Constants.EMPTY_STRING).trim();
 	}
 	
 	private boolean equalsCommandsList(ArrayList<Command> commandsList) {

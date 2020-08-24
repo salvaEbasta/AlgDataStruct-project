@@ -2,30 +2,36 @@ package spazio_comportamentale.oss_lineare;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
 import comportamental_fsm.labels.ObservableLabel;
 import spazio_comportamentale.SpaceTransition;
 
-public class SpazioComportamentaleObs {
+public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
 	
 	private CFSMnetwork net;
+	private ObservableLabel[] observation;
 	private SpaceAutomaObsLin spazioCompOL;
 	
-	public SpazioComportamentaleObs(CFSMnetwork net) {
+	public SpazioComportamentaleObs(CFSMnetwork net, ObservableLabel[] observation) {
 		this.net = net;		
+		this.observation = observation;
 	}
 	
-	public SpaceAutomaObsLin generaSpazioOsservazione(ObservableLabel[] observation) {
+	@Override
+	public SpaceAutomaObsLin call() {
 		if(spazioCompOL == null) {
 			int index = 0;
-			spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
+			spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);		
 			SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), index, observation.length);
 			spazioCompOL.insert(initial);
 			spazioCompOL.setInitial(initial);
-			buildSpace(initial,  enabledTransitions(observation, index), observation, index);
+			buildSpace(initial, enabledTransitions(observation, index), observation, index);
 			net.restoreState(initial);
+			spazioCompOL.potatura();
+			spazioCompOL.ridenominazione();
 		}
 		return spazioCompOL;
 	}
@@ -66,5 +72,11 @@ public class SpazioComportamentaleObs {
 			}		
 		}
 		return enabledTransitions;
+	}
+	
+	public SpaceAutomaObsLin getMidSpazioComportamentale() {
+		if(spazioCompOL == null)
+			return new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
+		return spazioCompOL;
 	}
 }

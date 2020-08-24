@@ -5,6 +5,12 @@ newevent e2
 newevent e3
 readcommands C2.txt
 readcommands C3.txt
-linkcfas L2
-linkcfas L3
+robot linkcfas L2
+C3
+C2
+endrobot
+robot linkcfas L3
+C2
+C3
+endrobot
 savenet net1

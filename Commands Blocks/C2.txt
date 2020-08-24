@@ -2,7 +2,31 @@ newcfa C2
 newstate 20
 newstate 21
 setinitial 20
-newtransition t2a
-newtransition t2b
+robot newtransition t2a
+20 //stato sorgente
+21 //stato sorgente
+y //eventi input?
+e2 //evento input
+L2 //link input
+y //eventi output?
+e3 //evento output
+L3 //link eventi output
+n //altri eventi output?
+y //label oss?
+o2 //label oss
+n //label rel?
+endrobot
+robot newtransition t2b
+21 //stato sorgente
+20 //stato sorgente
+n //eventi input?
+y //eventi output?
+e3 //evento output
+L3 //link eventi output
+n //altri eventi output?
+n //label oss?
+y //label rel?
+r //label rel
+endrobot
 savecfa
 back

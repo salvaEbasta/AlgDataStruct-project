@@ -27,12 +27,19 @@ public class CurrentNet implements Serializable{
 		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
 	}
 	
-	public SpaceAutomaComportamentale generateSpace() {
-		if(sac == null) {
-			sac = new SpazioComportamentale(net).generaSpazioComportamentale();
-			sac.potatura();
-			sac.ridenominazione();
-		}
+	public void setSpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
+		this.sac = sac;
+	}
+	
+	public void addObservation(ObservableLabel[] obs, SpaceAutomaObsLin saol) {
+		listaOsservazioni.put(obs, saol);
+	}
+	
+	public boolean hasGeneratedSpace() {
+		return sac != null;
+	}	
+	
+	public SpaceAutomaComportamentale getGeneratedSpace() {
 		return sac;
 	}	
 	
@@ -40,17 +47,15 @@ public class CurrentNet implements Serializable{
 		return net;
 	}
 	
-	public SpaceAutomaObsLin generateSpaceObs(ObservableLabel[] labels) {
-		SpaceAutomaObsLin saol = null;
+	public boolean hasGeneratedSpaceObs(ObservableLabel[] labels) {
+		return listaOsservazioni.containsKey(labels);
+	}
+	
+	public SpaceAutomaObsLin getGeneratedSpaceObs(ObservableLabel[] labels) {
 		if(listaOsservazioni.containsKey(labels))
-			saol = listaOsservazioni.get(labels);
-		else {
-			saol = new SpazioComportamentaleObs(net).generaSpazioOsservazione(labels);
-			saol.potatura();
-			saol.ridenominazione();
-			listaOsservazioni.put(labels, saol);
-		}
-		return saol;
+			return listaOsservazioni.get(labels);
+		else 
+			return null;
 	}
 	
 	public String generatedSpacesDescription(){
