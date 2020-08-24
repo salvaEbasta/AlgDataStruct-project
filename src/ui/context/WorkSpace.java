@@ -173,6 +173,11 @@ public class WorkSpace {
 		return false;
 	}	
 	
+	public void resetCFA() {
+		this.savedStates = new HashSet<>();
+		this.savedTransitions = new HashSet<>();
+	}
+	
 	public void reset() {
 		this.savedCFAs = new HashSet<>();
 		this.savedLinks = new HashSet<>();
