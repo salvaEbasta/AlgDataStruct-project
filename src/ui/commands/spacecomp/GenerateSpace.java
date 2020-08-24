@@ -87,7 +87,7 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 			if(!futureSAC.isDone())
 				futureSAC.cancel(true);
 		} catch (InterruptedException | CancellationException e) {
-			//uw.close();
+			
 			context.getIOStream().writeln("");
 		} catch (ExecutionException e1) {
 			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
@@ -118,7 +118,6 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		executor.shutdownNow();
 		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
 		context.getIOStream().writeln(result.toString());
-		
 		context.getCurrentNet().setSpaceAutomaComportamentale(result);
 		
 		return true;

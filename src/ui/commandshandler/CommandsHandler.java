@@ -116,7 +116,6 @@ public class CommandsHandler implements Closeable{
 						ArrayList<String> autoLines = new ArrayList<String>();
 						while(i<commandsList.size() && !stripComments(commandsList.get(++i)).equals("endrobot"))
 							autoLines.add(stripComments(commandsList.get(i)));	
-						i--;
 						Thread robot = new Thread(new RobotWriter(autoLines));
 						robot.start();						
 					}			
@@ -125,7 +124,7 @@ public class CommandsHandler implements Closeable{
 			}
 		}
 		else if(!contains(command)) 
-			context.getIOStream().writeln(Constants.ERROR_UNKNOWN_COMMAND);
+			context.getIOStream().writeln(String.format(Constants.ERROR_UNKNOWN_COMMAND, command));
 		else if(cList.stream()
 				.filter((c)->c.hasName(command))
 				.findFirst().get()

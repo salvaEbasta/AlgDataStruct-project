@@ -32,8 +32,6 @@ public class SpazioComportamentale implements Callable<SpaceAutomaComportamental
 
 	private void buildSpace(SpaceState state, Set<ComportamentalTransition> enabledTransitions) {
 
-		// try { Thread.sleep(1000); } catch (InterruptedException e) { 			 }
-
 		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);

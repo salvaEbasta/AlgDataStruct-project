@@ -6,16 +6,18 @@ import java.util.concurrent.Callable;
 
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
-import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.SpaceTransition;
 
 public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
 	
 	private CFSMnetwork net;
-	private ObservableLabel[] observation;
+	private ObservationsList observation;
+	private int index = 0;
 	private SpaceAutomaObsLin spazioCompOL;
 	
-	public SpazioComportamentaleObs(CFSMnetwork net, ObservableLabel[] observation) {
+	
+	public SpazioComportamentaleObs(CFSMnetwork net, ObservationsList observation) {
 		this.net = net;		
 		this.observation = observation;
 	}
@@ -23,12 +25,11 @@ public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
 	@Override
 	public SpaceAutomaObsLin call() {
 		if(spazioCompOL == null) {
-			int index = 0;
 			spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);		
-			SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), index, observation.length);
+			SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), index, observation.size());
 			spazioCompOL.insert(initial);
 			spazioCompOL.setInitial(initial);
-			buildSpace(initial, enabledTransitions(observation, index), observation, index);
+			buildSpace(initial, enabledTransitions());
 			net.restoreState(initial);
 			spazioCompOL.potatura();
 			spazioCompOL.ridenominazione();
@@ -36,38 +37,38 @@ public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
 		return spazioCompOL;
 	}
 	
-	private void buildSpace(SpaceStateObs state, Set<ComportamentalTransition> enabledTransitions, ObservableLabel[] observation, int index) {
+	private void buildSpace(SpaceStateObs state, Set<ComportamentalTransition> enabledTransitions) {
 		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);
-				scattoTransizione(state, transition, observation, index); 
+				scattoTransizione(state, transition); 
 			}		
 		} else if (enabledTransitions.size()==1)
-			scattoTransizione(state, enabledTransitions.iterator().next(), observation, index);
+			scattoTransizione(state, enabledTransitions.iterator().next());
 		else 
 			spazioCompOL.insert(state);
 	}
 	
-	private void scattoTransizione(SpaceStateObs source, ComportamentalTransition transition, ObservableLabel[] observation, int index) {
+	private void scattoTransizione(SpaceStateObs source, ComportamentalTransition transition) {
 		net.transitionTo(transition);
-		if(index<observation.length && transition.observableLabel().equals(observation[index]))
+		if(index<observation.size() && transition.observableLabel().equals(observation.get(index)))
 			index++;
-		SpaceStateObs destination = new SpaceStateObs(net.getActualStates(), net.getActiveEvents(), index, observation.length);
+		SpaceStateObs destination = new SpaceStateObs(net.getActualStates(), net.getActiveEvents(), index, observation.size());
 		if(!spazioCompOL.insert(destination)) {
 			SpaceStateObs toSearch = destination;
 			destination = spazioCompOL.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
 		}
 		SpaceTransition<SpaceStateObs> spaceTransition = new SpaceTransition<SpaceStateObs>(source, destination, transition);
 		if(spazioCompOL.add(spaceTransition))
-			buildSpace(destination, enabledTransitions(observation, index), observation, index);	
+			buildSpace(destination, enabledTransitions());	
 	}
 	
-	private Set<ComportamentalTransition> enabledTransitions(ObservableLabel[] observation, int index) {
+	private Set<ComportamentalTransition> enabledTransitions() {
 		Set<ComportamentalTransition> enabledTransitions = new HashSet<ComportamentalTransition>();	
 		for(ComportamentalTransition transition: net.enabledTransitions()) {
 			if(transition.observableLabel().isEmpty())
 				enabledTransitions.add(transition);
-			else if(index<observation.length && transition.observableLabel().equals(observation[index])) {
+			else if(index<observation.size() && transition.observableLabel().equals(observation.get(index))) {
 				enabledTransitions.add(transition);
 			}		
 		}

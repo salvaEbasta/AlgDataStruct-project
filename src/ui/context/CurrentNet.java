@@ -5,33 +5,30 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.SpaceAutomaComportamentale;
-import spazio_comportamentale.SpazioComportamentale;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
-import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
 public class CurrentNet implements Serializable{
-	
-	//RENDERE TUTTO SERIALIZABLE -> VA SALVATA RETE CON RISULTATI
-	
+		
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
-	private HashMap<ObservableLabel[], SpaceAutomaObsLin> listaOsservazioni;
+	private HashMap<ObservationsList, SpaceAutomaObsLin> listaOsservazioni;
 	
 	public CurrentNet(CFSMnetwork net) {
 		this.net = net;
-		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
+		listaOsservazioni = new HashMap<ObservationsList, SpaceAutomaObsLin>();
 	}
 	
 	public void setSpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
 		this.sac = sac;
 	}
 	
-	public void addObservation(ObservableLabel[] obs, SpaceAutomaObsLin saol) {
+	public void addObservation(ObservationsList obs, SpaceAutomaObsLin saol) {
 		listaOsservazioni.put(obs, saol);
 	}
 	
@@ -47,11 +44,11 @@ public class CurrentNet implements Serializable{
 		return net;
 	}
 	
-	public boolean hasGeneratedSpaceObs(ObservableLabel[] labels) {
+	public boolean hasGeneratedSpaceObs(ObservationsList labels) {
 		return listaOsservazioni.containsKey(labels);
 	}
 	
-	public SpaceAutomaObsLin getGeneratedSpaceObs(ObservableLabel[] labels) {
+	public SpaceAutomaObsLin getGeneratedSpaceObs(ObservationsList labels) {
 		if(listaOsservazioni.containsKey(labels))
 			return listaOsservazioni.get(labels);
 		else 
@@ -71,7 +68,7 @@ public class CurrentNet implements Serializable{
 	public void reset() {
 		net = null;
 		sac = null;
-		listaOsservazioni = new HashMap<ObservableLabel[], SpaceAutomaObsLin>();
+		listaOsservazioni = new HashMap<ObservationsList, SpaceAutomaObsLin>();
 	}
 	
 	public boolean hasObservableLabel(String label) {
@@ -87,7 +84,7 @@ public class CurrentNet implements Serializable{
 	
 	public String observationDescription() {
 		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n\n");
-		for(Entry<ObservableLabel[], SpaceAutomaObsLin> entry: listaOsservazioni.entrySet())
+		for(Entry<ObservationsList, SpaceAutomaObsLin> entry: listaOsservazioni.entrySet())
 			sb.append(entry.getValue()).append("\n\n");
 		return sb.toString();
 	}

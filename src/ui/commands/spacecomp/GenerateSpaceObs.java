@@ -1,6 +1,5 @@
 package ui.commands.spacecomp;
 
-import java.util.ArrayList;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -10,8 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import comportamental_fsm.labels.ObservableLabel;
-import spazio_comportamentale.SpaceAutomaComportamentale;
-import spazio_comportamentale.SpazioComportamentale;
+import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 import ui.commands.general.CommandInterface;
@@ -34,25 +32,24 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		}
 		
 		CurrentNet net = context.getCurrentNet();				
-		ArrayList<ObservableLabel> labelList = new ArrayList<ObservableLabel>();
+		ObservationsList obsList = new ObservationsList();
 		String ans = "";
 		context.getIOStream().writeln(context.getCurrentNet().obsLabel());
 		do {
 			String label = context.getIOStream().read("Inserire nome per l'etichetta di Osservabilità: ");
 			if(context.getCurrentNet().hasObservableLabel(label)) {
-				labelList.add(new ObservableLabel(label));
+				obsList.add(new ObservableLabel(label));
 				ans = context.getIOStream().yesOrNo("Inserire un'altra label di Osservabilità? ");
 			} else 
 				context.getIOStream().writeln("La label di Osservabilità inserita non esiste nella rete!");
 		}while(!ans.equalsIgnoreCase("n"));
 		
-		ObservableLabel[] obsList = labelList.toArray(new ObservableLabel[0]);
 		
 		SpaceAutomaObsLin result = null;	
 		if(net.hasGeneratedSpaceObs(obsList)) {
 			result = net.getGeneratedSpaceObs(obsList);
 			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-					labelList.toString() + ":\n*****************************************************");
+					obsList.toString() + ":\n*****************************************************");
 			context.getIOStream().writeln(result.toString());		
 			return true;
 		}
@@ -134,7 +131,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		}	
 	
 		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-						labelList.toString() + ":\n*****************************************************");
+						obsList.toString() + ":\n*****************************************************");
 		context.getIOStream().writeln(result.toString());
 		
 		context.getCurrentNet().addObservation(obsList, result);
