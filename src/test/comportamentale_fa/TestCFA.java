@@ -16,6 +16,7 @@ import comportamental_fsm.ComportamentalTransition;
 import comportamental_fsm.Event;
 import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
 import fsm_algorithms.RegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
@@ -84,10 +85,10 @@ class TestCFA {
 	}
 	
 	@Test
-	void spazioComportamentale() {		
+	void spazioComportamentale() throws Exception{		
 		CFSMnetwork net = initialize();
 		SpazioComportamentale sc = new SpazioComportamentale(net);
-		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
+		SpaceAutomaComportamentale computedSpace = sc.call();
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
 		System.out.println(computedSpace.toString());	
 		computedSpace.potatura();
@@ -100,11 +101,13 @@ class TestCFA {
 	}
 	
 	@Test
-	void spazioComportamentaleOssLineare() {		
+	void spazioComportamentaleOssLineare() throws Exception{		
 		CFSMnetwork net = initialize();
-		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
-		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
-		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
+		ObservationsList obsLin = new ObservationsList();
+		obsLin.add(new ObservableLabel("o3"));
+		obsLin.add(new ObservableLabel("o2"));
+		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
+		SpaceAutomaObsLin computedSpace = sc.call();
 		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
 		System.out.println(computedSpace.toString());	
 		computedSpace.potatura();
@@ -116,17 +119,19 @@ class TestCFA {
 	}
 	
 	@Test
-	void diagnostica() {
+	void diagnostica() throws Exception{
 		CFSMnetwork net = initialize();
-		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net);
-		ObservableLabel[] obsLin = {new ObservableLabel("o3"), new ObservableLabel("o2")};
-		SpaceAutomaObsLin computedSpace = sc.generaSpazioOsservazione(obsLin);
+		ObservationsList obsLin = new ObservationsList();
+		obsLin.add(new ObservableLabel("o3"));
+		obsLin.add(new ObservableLabel("o2"));
+		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
+		SpaceAutomaObsLin computedSpace = sc.call();
 		computedSpace.potatura();
 		computedSpace.ridenominazione();
 		String output = RegexBuilder.relevanceRegex(computedSpace, new BuilderSpaceComportamentaleObsLin());
-		//System.out.println("Result: "+output);
+		System.out.println("Result: "+output);
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
-		assertTrue(output.equals("((εε)((εε)|(f((r((εε)|(fε)))|ε))))"));
+		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
 	}
 	
 	@Test

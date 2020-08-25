@@ -68,8 +68,13 @@ class TestClosureSpace {
 	private static SpaceAutomaComportamentale build_ComportamenalSpace_pg38() {
 		CFSMnetwork pg26 = initialize_pg26();
 		SpazioComportamentale sc = new SpazioComportamentale(pg26);
-		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
-		computedSpace.potatura();
+		SpaceAutomaComportamentale computedSpace = null;
+		try {
+			computedSpace = sc.call();
+			computedSpace.potatura();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return computedSpace;
 	}
 	

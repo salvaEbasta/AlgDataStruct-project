@@ -3,8 +3,10 @@ package test.diagnosticatore;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
@@ -68,11 +70,16 @@ class TestSilentClosure {
 		return new CFSMnetwork(listLink);
 	}
 	
-	private static SpaceAutomaComportamentale build_ComportamenalSpace_pg38() {
+	private static SpaceAutomaComportamentale build_ComportamenalSpace_pg38(){
 		CFSMnetwork pg26 = initialize_pg26();
 		SpazioComportamentale sc = new SpazioComportamentale(pg26);
-		SpaceAutomaComportamentale computedSpace = sc.generaSpazioComportamentale();
-		computedSpace.potatura();
+		SpaceAutomaComportamentale computedSpace = null;
+		try {
+			computedSpace = sc.call();
+			computedSpace.potatura();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return computedSpace;
 	}
 	
@@ -102,7 +109,22 @@ class TestSilentClosure {
 		
 		ClosureBuilder.decorate(closure);
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().equals("fε|frε|frf|εε"));
+		String diagnosis = closure.diagnosis();
+		
+		List<String> portions = new ArrayList<String>();
+		StringBuilder sb = new StringBuilder();
+		for(int i=0; i<diagnosis.length(); i++)
+			if(diagnosis.charAt(i)=='|') {
+				portions.add(sb.toString());
+				sb.setLength(0);
+			}else
+				sb.append(diagnosis.charAt(i));
+		portions.add(sb.toString());
+		assertTrue(portions.size() == 4);
+		assertTrue(portions.contains("fε"));
+		assertTrue(portions.contains("frε"));
+		assertTrue(portions.contains("frf"));
+		assertTrue(portions.contains("εε"));
 	}
 	
 	@Test
