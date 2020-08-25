@@ -100,6 +100,8 @@ class TestCFA {
 		 listLink.add(l2); listLink.add(l3);
 		
 		return new CFSMnetwork(listLink);
+		
+		
 	}
 	
 	private HashMap<String, ComportamentalState> statesToHashMap(ComportamentalState... states) {
