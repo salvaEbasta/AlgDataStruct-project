@@ -15,8 +15,8 @@ import comportamental_fsm.Event;
 import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
-import diagnosticatore.ClosureBuilder;
 import diagnosticatore.ClosureSpace;
+import diagnosticatore.algorithms.DiagnosticatoreBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpazioComportamentale;
 
@@ -79,9 +79,9 @@ class TestClosureSpace {
 	}
 	
 	@Test
-	void test_pg69() {
+	void test_pg69() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		ClosureSpace pg69 = ClosureBuilder.buildSpace(pg38);
+		ClosureSpace pg69 = new DiagnosticatoreBuilder(pg38).call();
 		System.out.println(pg69.toString());
 		
 		assertTrue(pg69.states().size() == 7);

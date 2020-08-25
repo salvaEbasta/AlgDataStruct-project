@@ -16,9 +16,9 @@ import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
-import diagnosticatore.ClosureBuilder;
 import diagnosticatore.ClosureSpace;
-import diagnosticatore.DiagnosiLineare;
+import diagnosticatore.algorithms.DiagnosticatoreBuilder;
+import diagnosticatore.algorithms.LinearDiagnosis;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpazioComportamentale;
 
@@ -80,9 +80,9 @@ public class TestDiagnosiLineare {
 		return computedSpace;
 	}
 	
-	private static ClosureSpace build_closureS_pg69() {
+	private static ClosureSpace build_closureS_pg69() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		return ClosureBuilder.buildSpace(pg38);
+		return new DiagnosticatoreBuilder(pg38).call();
 	}
 	
 	@Test
@@ -94,7 +94,7 @@ public class TestDiagnosiLineare {
 		O.add(new ObservableLabel("o3"));
 		O.add(new ObservableLabel("o2"));
 		
-		String diagnosis = new DiagnosiLineare(pg69, O).call();
+		String diagnosis = new LinearDiagnosis(pg69, O).call();
 		//System.out.println(diagnosis);
 		// risultato = (rf|fr)(fr|f|frf|ε)
 		

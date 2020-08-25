@@ -322,26 +322,4 @@ class TestOtherNet {
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
 	}
-
-	
-	@Test
-	void enabledTransitions() {
-		CFSMnetwork net = initialize();
-		Set<ComportamentalTransition> enabledT = new HashSet<ComportamentalTransition>();
-		enabledT.add(t3a);
-		assertTrue(net.enabledTransitions().equals(enabledT));
-		net.transitionTo(t3a);
-		enabledT.remove(t3a);
-		enabledT.add(t2a);
-		assertTrue(net.enabledTransitions().equals(enabledT));
-	}
-	
-	@Test
-	void test_silentTransitions() {
-		CFSMnetwork net = initialize();
-		assertTrue(!t3a.isSilent());
-		assertTrue(!t2a.isSilent());
-		assertTrue(t2b.isSilent());
-	}
-
 }

@@ -18,8 +18,9 @@ import comportamental_fsm.Event;
 import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
-import diagnosticatore.ClosureBuilder;
 import diagnosticatore.SilentClosure;
+import diagnosticatore.algorithms.SilentClosureBuilder;
+import diagnosticatore.algorithms.ClosureDecorator;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;
@@ -83,7 +84,7 @@ class TestSilentClosure {
 	}
 	
 	@Test
-	void test_pg65_2() {
+	void test_pg65_2() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -99,7 +100,7 @@ class TestSilentClosure {
 		}
 		System.out.println("key: "+key);
 		System.out.println("State: "+rename.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 7);
@@ -108,7 +109,7 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 5);
 		assertTrue(closure.exitStates().size() == 3);
 		
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		String diagnosis = closure.diagnosis();
 		
@@ -129,7 +130,7 @@ class TestSilentClosure {
 	}
 	
 	@Test
-	void test_pg65_1() {
+	void test_pg65_1() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -145,7 +146,7 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		//System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 1);
@@ -154,13 +155,13 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
 
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
-	void test_pg65_10() {
+	void test_pg65_10() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -176,7 +177,7 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		//System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 1);
@@ -185,13 +186,13 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
 		
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
-	void test_pg65_8() {
+	void test_pg65_8() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -207,7 +208,7 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 3);
@@ -216,13 +217,13 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 2);
 		assertTrue(closure.exitStates().size() == 2);
 
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
-	void test_pg65_11() {
+	void test_pg65_11() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -238,7 +239,7 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		//System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 5);
@@ -247,13 +248,13 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 2);
 		assertTrue(closure.exitStates().size() == 2);
 
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
-	void test_pg65_12() {
+	void test_pg65_12() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
@@ -269,7 +270,7 @@ class TestSilentClosure {
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
+		SilentClosure closure = new SilentClosureBuilder(pg38, rename.get(key)).call();
 		
 		//System.out.println(closure.toString());
 		assertTrue(closure.states().size() == 4);
@@ -278,15 +279,15 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 2);
 		assertTrue(closure.exitStates().size() == 2);
 
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().isEmpty());
 	}
 	
 	@Test
-	void test_pg65_initialState() {
+	void test_pg65_initialState() throws Exception{
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, pg38.initialState());
+		SilentClosure closure = new SilentClosureBuilder(pg38, pg38.initialState()).call();
 		//System.out.println(closure.toString());
 		
 		assertTrue(closure.states().contains(pg38.initialState()) && closure.states().size() == 1);
@@ -294,13 +295,13 @@ class TestSilentClosure {
 		assertTrue(closure.acceptingStates().size() == 1);
 		assertTrue(closure.exitStates().size() == 1);
 
-		ClosureBuilder.decorate(closure);
+		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		assertTrue(closure.diagnosis().equals("ε"));
 	}
 	
 	@Test
-	void test_equals() {
+	void test_equals() throws Exception{
 		SilentClosure c1 = new SilentClosure("1");
 		SilentClosure c2 = new SilentClosure("1");
 		SilentClosure c3 = new SilentClosure("3");
@@ -308,7 +309,7 @@ class TestSilentClosure {
 		assertFalse(c1.equals(c3));
 
 		SpaceAutomaComportamentale pg38 = build_ComportamenalSpace_pg38();
-		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, pg38.initialState());
+		SilentClosure closure = new SilentClosureBuilder(pg38, pg38.initialState()).call();
 		c1 = new SilentClosure(closure.id());
 		assertTrue(closure.equals(c1));
 	}

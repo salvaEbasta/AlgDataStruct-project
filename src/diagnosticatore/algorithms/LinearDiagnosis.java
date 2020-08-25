@@ -1,4 +1,4 @@
-package diagnosticatore;
+package diagnosticatore.algorithms;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,14 +8,16 @@ import java.util.Set;
 import algorithm_interfaces.Algorithm;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
+import diagnosticatore.ClosureSpace;
+import diagnosticatore.SilentClosure;
 import utility.Constants;
 
-public class DiagnosiLineare extends Algorithm<String>{
+public class LinearDiagnosis extends Algorithm<String>{
 	private ClosureSpace cSpace;
 	private ObservationsList linearObs;
 	private StringBuilder R;
 	
-	public DiagnosiLineare(ClosureSpace diagnosticatore, ObservationsList linearObs) {
+	public LinearDiagnosis(ClosureSpace diagnosticatore, ObservationsList linearObs) {
 		super();
 		this.cSpace = diagnosticatore;
 		this.linearObs = linearObs;
