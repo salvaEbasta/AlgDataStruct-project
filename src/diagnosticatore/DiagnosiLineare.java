@@ -15,9 +15,9 @@ public class DiagnosiLineare extends Algorithm<String>{
 	private ObservationsList linearObs;
 	private StringBuilder R;
 	
-	public DiagnosiLineare(ClosureSpace cSpace, ObservationsList linearObs) {
+	public DiagnosiLineare(ClosureSpace diagnosticatore, ObservationsList linearObs) {
 		super();
-		this.cSpace = cSpace;
+		this.cSpace = diagnosticatore;
 		this.linearObs = linearObs;
 		this.R = new StringBuilder();
 	}
