@@ -35,6 +35,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	public Set<T> transitions() {
 		HashSet<T> tmp = new HashSet<T>();
 		
+		
 		structure.values().forEach(conn->{
 			tmp.addAll(conn.to());
 			tmp.addAll(conn.from());
