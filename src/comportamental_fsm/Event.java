@@ -12,6 +12,10 @@ public class Event implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String id;
 	
+	public Event(Event e) {
+		this.id = e.id;
+	}
+	
 	public Event(String id) {
 		this.id = id;
 	}
@@ -35,6 +39,12 @@ public class Event implements Serializable{
 	public boolean equals(Object otherEvent) {
 		Event ev = (Event) otherEvent;
 		return this.id.equals(ev.id);
+	}
+	
+	@Override
+	public Object clone() {
+		Event deepCopy = new Event(this);
+		return deepCopy;
 	}
 		
 }

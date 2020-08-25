@@ -1,10 +1,10 @@
 package spazio_comportamentale;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.Event;
+import comportamental_fsm.Link;
 import fsm_interfaces.State;
 
 public class SpaceState extends State{
@@ -13,23 +13,21 @@ public class SpaceState extends State{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<ComportamentalState> actualStates;
-	private ArrayList<Event> linkEvents;	
+	private HashMap<String, ComportamentalState> actualStates;
+	private HashMap<Link, Event> linkEvents;	
 	
 	
 	public SpaceState(String id) {
 		super(id);
 		this.actualStates = new HashMap<String, ComportamentalState>();
-		this.linkEvents = new ArrayList<Event>();
+		this.linkEvents = new HashMap<Link, Event>();
 	}
 	
-	public SpaceState(HashMap<String, ComportamentalState> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceState(HashMap<String, ComportamentalState> actualStates, HashMap<Link, Event> linkEvents) {
 		super("");
 		this.actualStates = actualStates;
-		this.linkEvents = new ArrayList<Event>();
-		for(Event event: linkEvents) {
-			this.linkEvents.add(new Event(event.id()));
-		}
+		this.linkEvents = new HashMap<Link, Event>();
+		linkEvents.forEach((link, event)->this.linkEvents.put(link, (Event)event.clone()));
 		setId(content());
 	}
 	
@@ -40,27 +38,27 @@ public class SpaceState extends State{
 	public boolean isFinal() {
 		if(linkEvents.isEmpty())
 			return false;
-		for(Event event: linkEvents) {
+		for(Event event: linkEvents.values()) {
 			if(!event.isEmpty())
 				return false;
 		}
 		return true;
 	}
 	
-	public ArrayList<ComportamentalState> getStates() {
+	public HashMap<String, ComportamentalState> getStates() {
 		return actualStates;
 	}
 	
 	public boolean hasState(ComportamentalState s) {
-		return this.actualStates.contains(s);
+		return this.actualStates.keySet().contains(s.id());
 	}
 	
-	public ArrayList<Event> getEvents() {
+	public HashMap<Link, Event> getEvents() {
 		return linkEvents;
 	}
 	
 	public boolean hasEvent(Event e) {
-		return linkEvents.contains(e);
+		return linkEvents.values().contains(e);
 	}
 	
 	private String content() {
@@ -75,15 +73,11 @@ public class SpaceState extends State{
 	public String toString() {
 		if(actualStates.isEmpty())
 			return id();
-		StringBuilder sb = new StringBuilder(String.format("Stato %s => %s",id, actualStates.get(0).id()));
-		for(int i=1; i<actualStates.size(); i++) {
-			sb.append(" ").append(actualStates.get(i).id());
-		}
+		StringBuilder sb = new StringBuilder(String.format("Stato %s => [",id));
+		actualStates.forEach((automa_id, state)->sb.append(String.format(" %s(%s)", automa_id, state.toString())));
 		sb.append(" |");
-		for(Event event: linkEvents) {
-			sb.append(" ").append(event.id());
-		}
-		sb.append(isFinal()? " [Stato Finale]": "");
+		linkEvents.forEach((l, e)->sb.append(String.format(" %s(%s)", l.id(), e)));
+		sb.append(isFinal()? "] [Stato Finale]": "]");
 		return sb.toString();
 	}
 	
@@ -92,19 +86,8 @@ public class SpaceState extends State{
 		if(otherStatus==null || !SpaceState.class.isAssignableFrom(otherStatus.getClass()))
 			return false;
 		final SpaceState other = (SpaceState) otherStatus;		
-		
-		if(actualStates.size()!=other.actualStates.size())
-			return false;
-		else if(linkEvents.size()!=other.linkEvents.size())
-			return false;
-		else {
-			for(int i=0; i < actualStates.size(); i++)
-				if(!actualStates.get(i).equals(other.actualStates.get(i)))
-					return false;
-			for(int i=0; i < linkEvents.size(); i++)
-				if(!linkEvents.get(i).equals(other.linkEvents.get(i)))
-					return false;
-			return true;
-		}
+
+		return actualStates.equals(other.actualStates) 
+				&& linkEvents.equals(other.linkEvents);
 	}
 }
