@@ -36,6 +36,6 @@ public class State implements StateInterface, Serializable {
 		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
 			return false;
 		final State tmp = (State) obj;
-		return this.id.equals(tmp.id);
+		return id.equals(tmp.id);
 	}
 }

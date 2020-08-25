@@ -50,7 +50,7 @@ public class SpaceState extends State{
 	}
 	
 	public boolean hasState(ComportamentalState s) {
-		return this.actualStates.keySet().contains(s.id());
+		return this.actualStates.values().contains(s);
 	}
 	
 	public HashMap<Link, Event> getEvents() {

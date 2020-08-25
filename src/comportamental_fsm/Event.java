@@ -37,8 +37,10 @@ public class Event implements Serializable{
 	
 	@Override
 	public boolean equals(Object otherEvent) {
-		Event ev = (Event) otherEvent;
-		return this.id.equals(ev.id);
+		if(otherEvent==null || !this.getClass().isAssignableFrom(otherEvent.getClass()))
+			return false;
+		final Event ev = (Event) otherEvent;
+		return id.equals(ev.id);
 	}
 	
 	@Override

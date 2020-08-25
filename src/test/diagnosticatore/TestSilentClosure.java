@@ -92,8 +92,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
-				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))) {
 					key = e.getKey();
+					break;
+				}
 		}
 		System.out.println("key: "+key);
 		System.out.println("State: "+rename.get(key));
@@ -136,8 +138,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e2")))
-				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31")))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31"))){
 					key = e.getKey();
+					break;
+				}
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
@@ -165,8 +169,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
-				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("30")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("30"))){
 					key = e.getKey();
+					break;
+				}
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
@@ -194,8 +200,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
-				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31")))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31"))){
 					key = e.getKey();
+					break;
+				}
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
@@ -223,8 +231,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
-				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))){
 					key = e.getKey();
+					break;
+				}
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
@@ -252,8 +262,10 @@ class TestSilentClosure {
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
 			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e2")))
-				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))){
 					key = e.getKey();
+					break;
+				}
 		}
 		//System.out.println("key: "+key);
 		//System.out.println("State: "+ridenominazione.get(key));
