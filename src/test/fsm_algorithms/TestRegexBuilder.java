@@ -8,32 +8,35 @@ import finite_state_machine.FSMBuilder;
 import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
-import fsm_algorithms.RegexBuilder;
+import fsm_algorithms.RelevanceRegexBuilder;
 import fsm_interfaces.FiniteStateMachine;
 import utility.Constants;
 
 class TestRegexBuilder {
 	@Test
-	void test_benchmarkC1() {
+	void test_benchmarkC1() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
-		String result = RegexBuilder.relevanceRegex(C1, new FSMBuilder());
+		String result = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(C1, new FSMBuilder()).call();
 		//System.out.println(result);
 		assertTrue(result.equalsIgnoreCase("ε((c|a)b)*(c|a)ε"));
 	}
 	
 	@Test
-	void test_pg50() {
+	void test_pg50() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String result = RegexBuilder.relevanceRegex(pg50, new FSMBuilder());
+		String result = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder()).call();
 		//System.out.println(result);
 		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(result.equalsIgnoreCase("  ( ε|f(r(fε| ε)|ε))"));
 	}
 	
 	@Test
-	void test_pg50_decorations_state4() {
+	void test_pg50_decorations_state4() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("4"));
+		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder(), 
+				new FiniteState("4")).call();
 		//System.out.println(regex);
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
@@ -43,9 +46,11 @@ class TestRegexBuilder {
 	}
 	
 	@Test
-	void test_pg50_decorations_state7() {
+	void test_pg50_decorations_state7() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("7"));
+		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder(), 
+				new FiniteState("7")).call();
 		//System.out.println(regex);
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
@@ -55,9 +60,11 @@ class TestRegexBuilder {
 	}
 	
 	@Test
-	void test_pg50_decorations_state8() {
+	void test_pg50_decorations_state8() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("8"));
+		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder(), 
+				new FiniteState("8")).call();
 		//System.out.println(regex);
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
@@ -67,9 +74,11 @@ class TestRegexBuilder {
 	}
 	
 	@Test
-	void test_pg50_decorations_state5() {
+	void test_pg50_decorations_state5() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = RegexBuilder.relevanceRegex(pg50, new FSMBuilder(), new FiniteState("5"));
+		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder(), 
+				new FiniteState("5")).call();
 		//System.out.println(regex);
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
@@ -98,6 +107,7 @@ class TestRegexBuilder {
 		//System.out.print(C1.toString());
 		return C1;
 	}
+	
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_pg50() {
 		FiniteStateMachine<FiniteState, FiniteTransition> C1 = new LinkedTransitionsFSA("pg50");
 		FiniteState _1 = new FiniteState("1");

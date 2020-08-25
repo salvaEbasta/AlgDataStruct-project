@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
-import fsm_algorithms.TransitionFinder;
+import fsm_algorithms.OneWayPathFinder;
+import fsm_algorithms.ParallelTransitionsFinder;
 import fsm_interfaces.FiniteStateMachine;
 
 public class TestTransitionFinder {
@@ -35,35 +36,35 @@ public class TestTransitionFinder {
 	}
 	
 	@Test
-	void noOneWayPath() {
+	void noOneWayPath() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> c1 = new LinkedTransitionsFSA("empty");
-		List<FiniteTransition> result = TransitionFinder.oneWayPath(c1);
+		List<FiniteTransition> result = new OneWayPathFinder<FiniteState, FiniteTransition>(c1).call();
 		
 		assertTrue(result.size() == 0);
 	}
 	
 	@Test
-	void test_oneWayPath() {
+	void test_oneWayPath() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
-		List<FiniteTransition> result = TransitionFinder.oneWayPath(c1);
+		List<FiniteTransition> result = new OneWayPathFinder<FiniteState, FiniteTransition>(c1).call();
 		
 		assertTrue(result.size() == 0);
 	}
 	
 	@Test
-	void noParallels() {
+	void noParallels() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
 		FiniteTransition t1c = c1.transitions().stream().filter(t->t.id().equals("t1c")).findAny().get();
 		c1.remove(t1c);
-		List<FiniteTransition> result = TransitionFinder.parallelTransitions(c1);
+		List<FiniteTransition> result = new ParallelTransitionsFinder<FiniteState, FiniteTransition>(c1).call();
 		
 		assertTrue(result.size() == 0);
 	}
 	
 	@Test
-	void test_findParallels() {
+	void test_findParallels() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> c1 = build_benchmarkC1();
-		List<FiniteTransition> result = TransitionFinder.parallelTransitions(c1);
+		List<FiniteTransition> result = new ParallelTransitionsFinder<FiniteState, FiniteTransition>(c1).call();
 		
 		assertTrue(result.size() == 2);
 	}

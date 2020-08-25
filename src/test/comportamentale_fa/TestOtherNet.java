@@ -22,6 +22,7 @@ import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
 import fsm_algorithms.RegexBuilder;
+import fsm_algorithms.RelevanceRegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -317,7 +318,7 @@ class TestOtherNet {
 		SpaceAutomaObsLin computedSpace = sc.call();
 		computedSpace.potatura();
 		computedSpace.ridenominazione();
-		String output = RegexBuilder.relevanceRegex(computedSpace, new BuilderSpaceComportamentaleObsLin());
+		String output = new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
 		System.out.println("Result: "+output);
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
