@@ -282,7 +282,8 @@ class TestCFA {
 		matchTr.removeAll(computedTrCopy);
 		
 		
-		assertTrue(computedStates.isEmpty() && computedTr.isEmpty());
+		assertTrue(computedStates.isEmpty() && matchStates.isEmpty()
+				&& computedTr.isEmpty()	&& matchTr.isEmpty());		
 	}
 	
 
