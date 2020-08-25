@@ -25,6 +25,8 @@ public class DiagnosiLineare extends Algorithm<String>{
 	@Override
 	public String call() throws Exception {
 		log.info(this.getClass().getSimpleName()+"::call...");
+		log.info("Executed on: "+cSpace.toString());
+		log.info("LinearObs: "+linearObs.toString());
 		
 		//Initialize stringBuilder
 		R.setLength(0);
@@ -63,6 +65,8 @@ public class DiagnosiLineare extends Algorithm<String>{
 			});
 			
 			X = X_new;
+			
+			log.info("New X: "+X);
 		}
 
 		//Remove not accepting states
@@ -79,7 +83,7 @@ public class DiagnosiLineare extends Algorithm<String>{
 		Iterator<SilentClosure> iter = X.keySet().iterator();
 		if(X.size() == 1) {
 			SilentClosure x = iter.next();
-			R.append(X.get(x).concat(x.diagnosis()));
+			R.append(X.get(x).concat("(").concat(x.diagnosis()).concat(")"));
 		} else {
 			SilentClosure x = iter.next();
 			R.append("(");
