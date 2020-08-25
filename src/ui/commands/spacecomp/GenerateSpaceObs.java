@@ -121,9 +121,9 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 					futureUserResponse.cancel(true);
 			}
 			else
-				result = spaceComp.getMidSpazioComportamentale();
+				result = spaceComp.midResult();
 		} catch (InterruptedException | TimeoutException e) {
-			result = spaceComp.getMidSpazioComportamentale();
+			result = spaceComp.midResult();
 			futureSAC.cancel(true);
 		} catch (ExecutionException e) {
 			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");

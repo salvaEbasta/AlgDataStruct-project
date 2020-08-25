@@ -1,4 +1,4 @@
-package commoninterfaces;
+package fsm_interfaces;
 
 import java.io.Serializable;
 import java.util.HashSet;

@@ -1,7 +1,7 @@
 package spazio_comportamentale;
 
-import commoninterfaces.Transition;
 import comportamental_fsm.ComportamentalTransition;
+import fsm_interfaces.Transition;
 
 public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	

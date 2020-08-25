@@ -3,8 +3,9 @@ package spazio_comportamentale;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-import commoninterfaces.Automa;
-import commoninterfaces.Interconnections;
+
+import fsm_interfaces.Automa;
+import fsm_interfaces.Interconnections;
 
 public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition<S>> {
 

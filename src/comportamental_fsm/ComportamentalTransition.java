@@ -2,9 +2,9 @@ package comportamental_fsm;
 
 import java.util.HashMap;
 
-import commoninterfaces.Transition;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
+import fsm_interfaces.Transition;
 
 public class ComportamentalTransition extends Transition<ComportamentalState>{
 	

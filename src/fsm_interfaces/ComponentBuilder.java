@@ -1,4 +1,4 @@
-package commoninterfaces;
+package fsm_interfaces;
 
 public interface ComponentBuilder<S extends StateInterface, T extends Transition<S>> {
 	S newState(String id);

@@ -3,8 +3,8 @@ package finite_state_machine;
 import java.util.HashSet;
 import java.util.Set;
 
-import commoninterfaces.Automa;
-import commoninterfaces.Interconnections;
+import fsm_interfaces.Automa;
+import fsm_interfaces.Interconnections;
 
 public class LinkedTransitionsFSA extends Automa<FiniteState, FiniteTransition>{
 	

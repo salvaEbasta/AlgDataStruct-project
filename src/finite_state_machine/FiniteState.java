@@ -1,6 +1,6 @@
 package finite_state_machine;
 
-import commoninterfaces.State;
+import fsm_interfaces.State;
 
 public class FiniteState extends State{
 

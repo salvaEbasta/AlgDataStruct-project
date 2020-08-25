@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import commoninterfaces.StateInterface;
+import fsm_interfaces.StateInterface;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;

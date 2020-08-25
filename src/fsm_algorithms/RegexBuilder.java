@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import commoninterfaces.FiniteStateMachine;
-import commoninterfaces.ComponentBuilder;
-import commoninterfaces.State;
-import commoninterfaces.Transition;
+import fsm_interfaces.ComponentBuilder;
+import fsm_interfaces.FiniteStateMachine;
+import fsm_interfaces.State;
+import fsm_interfaces.Transition;
 import utility.Constants;
 
 public class RegexBuilder {

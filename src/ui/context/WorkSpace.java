@@ -3,11 +3,11 @@ package ui.context;
 import java.util.HashSet;
 import java.util.Set;
 
-import commoninterfaces.State;
-import commoninterfaces.Transition;
 import comportamental_fsm.ComportamentalFSM;
 import comportamental_fsm.Event;
 import comportamental_fsm.Link;
+import fsm_interfaces.State;
+import fsm_interfaces.Transition;
 
 public class WorkSpace {
 	

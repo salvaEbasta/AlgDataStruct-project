@@ -2,9 +2,9 @@ package spazio_comportamentale;
 
 import java.util.ArrayList;
 
-import commoninterfaces.State;
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.Event;
+import fsm_interfaces.State;
 
 public class SpaceState extends State{
 	

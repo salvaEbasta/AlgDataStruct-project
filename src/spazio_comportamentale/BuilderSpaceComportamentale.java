@@ -1,6 +1,6 @@
 package spazio_comportamentale;
 
-import commoninterfaces.ComponentBuilder;
+import fsm_interfaces.ComponentBuilder;
 
 public class BuilderSpaceComportamentale implements ComponentBuilder<SpaceState, SpaceTransition<SpaceState>>{
 

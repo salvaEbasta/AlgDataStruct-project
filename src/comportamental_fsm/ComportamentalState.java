@@ -1,6 +1,6 @@
 package comportamental_fsm;
 
-import commoninterfaces.State;
+import fsm_interfaces.State;
 
 public class ComportamentalState extends State{
 		

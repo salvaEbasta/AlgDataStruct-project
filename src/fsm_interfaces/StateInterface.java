@@ -1,4 +1,4 @@
-package commoninterfaces;
+package fsm_interfaces;
 
 public interface StateInterface {
 	String id();

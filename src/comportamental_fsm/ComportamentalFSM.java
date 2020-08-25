@@ -3,7 +3,7 @@ package comportamental_fsm;
 import java.util.HashSet;
 import java.util.Set;
 
-import commoninterfaces.Automa;
+import fsm_interfaces.Automa;
 
 public class ComportamentalFSM extends Automa<ComportamentalState, ComportamentalTransition>{
 

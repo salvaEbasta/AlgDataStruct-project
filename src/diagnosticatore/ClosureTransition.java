@@ -1,6 +1,6 @@
 package diagnosticatore;
 
-import commoninterfaces.Transition;
+import fsm_interfaces.Transition;
 
 public class ClosureTransition extends Transition<SilentClosure>{
 	private static final long serialVersionUID = 1L;

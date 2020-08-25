@@ -4,12 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import algorithm_interfaces.MidResult;
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
 import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.SpaceTransition;
 
-public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
+public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>, MidResult<SpaceAutomaObsLin>{
 	
 	private CFSMnetwork net;
 	private ObservationsList observation;
@@ -75,7 +76,7 @@ public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>{
 		return enabledTransitions;
 	}
 	
-	public SpaceAutomaObsLin getMidSpazioComportamentale() {
+	public SpaceAutomaObsLin midResult() {
 		if(spazioCompOL == null)
 			return new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
 		return spazioCompOL;

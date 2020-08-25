@@ -2,9 +2,9 @@ package fsm_algorithms;
 
 import java.util.LinkedList;
 
-import commoninterfaces.FiniteStateMachine;
-import commoninterfaces.StateInterface;
-import commoninterfaces.Transition;
+import fsm_interfaces.FiniteStateMachine;
+import fsm_interfaces.StateInterface;
+import fsm_interfaces.Transition;
 
 
 public class TransitionFinder {

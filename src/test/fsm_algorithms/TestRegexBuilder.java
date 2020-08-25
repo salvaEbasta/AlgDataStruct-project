@@ -4,12 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import commoninterfaces.FiniteStateMachine;
 import finite_state_machine.FSMBuilder;
 import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
 import fsm_algorithms.RegexBuilder;
+import fsm_interfaces.FiniteStateMachine;
 import utility.Constants;
 
 class TestRegexBuilder {

@@ -1,4 +1,4 @@
-package commoninterfaces;
+package fsm_interfaces;
 
 import java.util.Set;
 

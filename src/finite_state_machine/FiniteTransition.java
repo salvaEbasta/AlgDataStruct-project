@@ -1,6 +1,6 @@
 package finite_state_machine;
 
-import commoninterfaces.Transition;
+import fsm_interfaces.Transition;
 
 public class FiniteTransition extends Transition<FiniteState>{
 	

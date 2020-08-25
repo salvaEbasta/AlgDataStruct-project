@@ -1,6 +1,6 @@
 package spazio_comportamentale.oss_lineare;
 
-import commoninterfaces.ComponentBuilder;
+import fsm_interfaces.ComponentBuilder;
 import spazio_comportamentale.SpaceTransition;
 
 public class BuilderSpaceComportamentaleObsLin implements ComponentBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>{

@@ -1,7 +1,7 @@
 package diagnosticatore;
 
-import commoninterfaces.ComponentBuilder;
-import commoninterfaces.Transition;
+import fsm_interfaces.ComponentBuilder;
+import fsm_interfaces.Transition;
 
 public class ClosureComponentBuilder implements ComponentBuilder<SilentClosure, Transition<SilentClosure>>{
 

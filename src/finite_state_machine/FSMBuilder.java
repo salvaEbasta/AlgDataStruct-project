@@ -1,6 +1,6 @@
 package finite_state_machine;
 
-import commoninterfaces.ComponentBuilder;
+import fsm_interfaces.ComponentBuilder;
 
 public class FSMBuilder implements ComponentBuilder<FiniteState, FiniteTransition>{
 

@@ -2,13 +2,13 @@ package ui.commands.newcfa;
 
 import java.util.HashMap;
 
-import commoninterfaces.Transition;
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.ComportamentalTransition;
 import comportamental_fsm.Event;
 import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
+import fsm_interfaces.Transition;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.OneParameter;
 import ui.context.Context;

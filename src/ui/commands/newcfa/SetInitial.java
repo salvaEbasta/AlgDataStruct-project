@@ -1,7 +1,7 @@
 package ui.commands.newcfa;
 
-import commoninterfaces.State;
 import comportamental_fsm.ComportamentalState;
+import fsm_interfaces.State;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.OneParameter;
 import ui.context.Context;

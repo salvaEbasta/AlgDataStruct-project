@@ -6,11 +6,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import commoninterfaces.FiniteStateMachine;
 import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
 import fsm_algorithms.TransitionFinder;
+import fsm_interfaces.FiniteStateMachine;
 
 public class TestTransitionFinder {
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {

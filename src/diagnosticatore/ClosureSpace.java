@@ -3,8 +3,8 @@ package diagnosticatore;
 import java.util.Iterator;
 import java.util.Set;
 
-import commoninterfaces.Automa;
-import commoninterfaces.Transition;
+import fsm_interfaces.Automa;
+import fsm_interfaces.Transition;
 
 public class ClosureSpace extends Automa<SilentClosure, Transition<SilentClosure>>{
 	private static final long serialVersionUID = 1L;

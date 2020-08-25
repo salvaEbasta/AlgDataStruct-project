@@ -3,10 +3,11 @@ package spazio_comportamentale;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import algorithm_interfaces.MidResult;
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
 
-public class SpazioComportamentale implements Callable<SpaceAutomaComportamentale>{
+public class SpazioComportamentale implements Callable<SpaceAutomaComportamentale>, MidResult<SpaceAutomaComportamentale>{
 
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale spazioComp;
@@ -57,7 +58,7 @@ public class SpazioComportamentale implements Callable<SpaceAutomaComportamental
 			buildSpace(destination, net.enabledTransitions());	
 	}
 
-	public SpaceAutomaComportamentale getMidSpazioComportamentale() {
+	public SpaceAutomaComportamentale midResult() {
 		if(spazioComp.states().isEmpty())
 			return new SpaceAutomaComportamentale("Spazio Comportamentale");	
 		return spazioComp;
