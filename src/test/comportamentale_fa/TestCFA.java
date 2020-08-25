@@ -23,6 +23,7 @@ import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
 import fsm_algorithms.RegexBuilder;
+import fsm_interfaces.Automa;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -33,6 +34,9 @@ import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
 class TestCFA {
+	
+	private ComportamentalFSM c2;
+	private ComportamentalFSM c3;	
 	
 	private ComportamentalState s20;
 	private ComportamentalState s21;
@@ -51,11 +55,11 @@ class TestCFA {
 	private Event emptyEv;
 	private Link l2;
 	private Link l3;
-
 	
-	CFSMnetwork initialize() {
+	
+	private CFSMnetwork initialize() {
 		//AUTOMATA C2
-		ComportamentalFSM c2 = new ComportamentalFSM("C2");
+		c2 = new ComportamentalFSM("C2");
 		s20 = new ComportamentalState("20");
 		s21 = new ComportamentalState("21");
 		c2.insert(s20);
@@ -63,7 +67,7 @@ class TestCFA {
 		c2.setInitial(s20);
 		
 		//AUTOMATA C3
-		ComportamentalFSM c3 = new ComportamentalFSM("C3");
+		c3 = new ComportamentalFSM("C3");
 		s30 = new ComportamentalState("30");
 		s31 = new ComportamentalState("31");
 		c3.insert(s30);
@@ -104,10 +108,10 @@ class TestCFA {
 		
 	}
 	
-	private HashMap<String, ComportamentalState> statesToHashMap(ComportamentalState... states) {
+	private HashMap<String, ComportamentalState> statesToHashMap(ComportamentalState stateC2, ComportamentalState stateC3) {
 		HashMap<String , ComportamentalState> map = new HashMap<String , ComportamentalState>();
-		for(ComportamentalState state: states)
-			map.put(state.id(), state);
+		map.put(c2.id(), stateC2);
+		map.put(c3.id(), stateC3);
 		return map;
 	}
 	
@@ -202,15 +206,12 @@ class TestCFA {
 		ArrayList<SpaceTransition<SpaceState>> computedTr = new ArrayList<SpaceTransition<SpaceState>>(computedSpace.transitions());
 		ArrayList<SpaceTransition<SpaceState>> matchTr = new ArrayList<SpaceTransition<SpaceState>>(toMatch.transitions());
 		ArrayList<SpaceTransition<SpaceState>> computedTrCopy = new ArrayList<SpaceTransition<SpaceState>>(computedTr);
-		
-		System.out.println(computedSpace.initialState().equals(sc0));
-		
+					
 		computedStates.removeAll(matchStates);
 		matchStates.removeAll(computedStatesCopy);
 		computedTr.removeAll(matchTr);
 		matchTr.removeAll(computedTrCopy);
-		
-		
+				
 		assertTrue(computedStates.isEmpty() && matchStates.isEmpty() &&
 				computedTr.isEmpty() && matchTr.isEmpty());		
 
@@ -232,22 +233,14 @@ class TestCFA {
 		} catch (Exception e) {
 			assertFalse(false);
 		}
-		SpaceStateObs sc1 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 0, obsList.size());
-		SpaceStateObs sc2 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)), 1, obsList.size());
-		SpaceStateObs sc3 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)), 2, obsList.size());
-		SpaceStateObs sc5 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc4 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc6 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)), 2, obsList.size());
-		SpaceStateObs sc7 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc8 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
+		SpaceStateObs sc1 = new SpaceStateObs(statesToHashMap(s20, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}), 0, obsList.size());
+		SpaceStateObs sc2 = new SpaceStateObs(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, emptyEv}), 1, obsList.size());
+		SpaceStateObs sc3 = new SpaceStateObs(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}), 2, obsList.size());
+		SpaceStateObs sc5 = new SpaceStateObs(statesToHashMap(s21, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}), 2, obsList.size());
+		SpaceStateObs sc4 = new SpaceStateObs(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}), 2, obsList.size());
+		SpaceStateObs sc6 = new SpaceStateObs(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}), 2, obsList.size());
+		SpaceStateObs sc7 = new SpaceStateObs(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}), 2, obsList.size());
+		SpaceStateObs sc8 = new SpaceStateObs(statesToHashMap(s20, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}), 2, obsList.size());
 		
 		toMatch.insert(sc1);
 		toMatch.insert(sc2);

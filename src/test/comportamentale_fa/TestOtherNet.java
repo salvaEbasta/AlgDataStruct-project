@@ -55,11 +55,14 @@ class TestOtherNet {
 	private Event op;
 	private Event cl;
 	private Event emptyEv;
+	private ComportamentalFSM s;
+	private ComportamentalFSM b;
+	private Link l;
 	
 	
 	CFSMnetwork initialize() {
 		//AUTOMA s
-		ComportamentalFSM s = new ComportamentalFSM("s");
+		s = new ComportamentalFSM("s");
 		s0 = new ComportamentalState("0");
 		s1 = new ComportamentalState("1");
 		s.insert(s0);
@@ -67,7 +70,7 @@ class TestOtherNet {
 		s.setInitial(s0);
 		
 		//AUTOMA b
-		ComportamentalFSM b = new ComportamentalFSM("b");
+		b = new ComportamentalFSM("b");
 		b0 = new ComportamentalState("0");
 		b1 = new ComportamentalState("1");
 		b.insert(b0);
@@ -77,7 +80,7 @@ class TestOtherNet {
 		op = new Event("op");
 		cl = new Event("cl");
 		emptyEv = new Event();
-		Link l = new Link("L", s, b);
+		l = new Link("L", s, b);
 		HashMap<Event, Link> outOP = new HashMap<Event, Link>();
 		outOP.put(op, l);
 		HashMap<Event, Link> outCL = new HashMap<Event, Link>();
@@ -117,6 +120,20 @@ class TestOtherNet {
 		listLink.add(l);
 		
 		return new CFSMnetwork(listLink);
+	}
+	
+	private HashMap<String, ComportamentalState> statesToHashMap(ComportamentalState states, ComportamentalState stateb) {
+		HashMap<String , ComportamentalState> map = new HashMap<String , ComportamentalState>();
+		map.put(s.id(), states);
+		map.put(b.id(), stateb);
+		return map;
+	}
+	
+	private HashMap<Link, Event> eventsToHashMap(Event[] events) {
+		HashMap<Link , Event> map = new HashMap<Link , Event>();
+		for(Event event: events)
+			map.put(l, event);
+		return map;
 	}
 	
 	@Test
