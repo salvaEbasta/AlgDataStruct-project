@@ -4,11 +4,11 @@ import ui.commands.base.LoadNet;
 import ui.commands.base.NewNet;
 import ui.commands.base.ShowNet;
 import ui.commands.base.SpaceComp;
-import ui.commands.general.Annulla;
 import ui.commands.general.Back;
 import ui.commands.general.Exit;
 import ui.commands.newcfa.NewState;
 import ui.commands.newcfa.NewTransition;
+import ui.commands.newcfa.ResetCFA;
 import ui.commands.newcfa.SaveCFA;
 import ui.commands.newcfa.SetInitial;
 import ui.commands.newcfa.ShowStates;
@@ -17,6 +17,7 @@ import ui.commands.newnet.LinkCFAs;
 import ui.commands.newnet.NewCFA;
 import ui.commands.newnet.NewEvent;
 import ui.commands.newnet.NewLink;
+import ui.commands.newnet.ResetNet;
 import ui.commands.newnet.SaveNet;
 import ui.commands.newnet.ShowCFAs;
 import ui.commands.newnet.ShowEvents;
@@ -39,10 +40,6 @@ public class CommandFactory {
 	 */
 	public Command exit() {
 		return new Command(CommandDescription.EXIT, new Exit());
-	}
-	
-	public Command annulla() {
-		return new Command(CommandDescription.ANNULLA, new Annulla());
 	}
 	
 	public Command back() {
@@ -97,6 +94,10 @@ public class CommandFactory {
 		return new Command(CommandDescription.SAVENET, new SaveNet());
 	}
 	
+	public Command resetNet() {
+		return new Command(CommandDescription.RESETNET, new ResetNet());
+	}
+	
 	public Command newState() {
 		return new Command(CommandDescription.NEWSTATE, new NewState());
 	}	
@@ -116,6 +117,10 @@ public class CommandFactory {
 	public Command saveCFA() {
 		return new Command(CommandDescription.SAVECFA, new SaveCFA());
 	}	
+	
+	public Command resetCFA() {
+		return new Command(CommandDescription.RESETCFA, new ResetCFA());
+	}
 	
 	public Command showCFAs() {
 		return new Command(CommandDescription.SHOWCFAS, new ShowCFAs());

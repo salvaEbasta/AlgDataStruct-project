@@ -8,12 +8,12 @@ package ui.commandshandler;
 public enum CommandDescription{
 	
 	EXIT("exit", "Esci dal programma","exit"),
-	ANNULLA("annulla", "Annulla l'operazione in corso e torna al menù principale","annulla"),
 	BACK("back", "Torna al menù precedente","back"),
 	READCOMMANDS("readcommands", "Legge ed esegue una serie di comandi da file txt","readcommands [fileName].txt"),
 	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
 	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet"), 
 	SHOWNET("shownet", "Mostra una descrizione della rete di CFA caricata","shownet"), 
+	RESETNET("resetnet", "Resetta tutti i dati creati per la rete(CFA, Eventi, Link...)","resetnet"), 
 	UPDATENET("updatenet", "Aggiorna il file della rete attualmente caricata","updatenet"), 
 	SPACECOMP("spacecomp", "Sottomenù per la generazione di Spazi Comportamentali da rete","spacecomp"), 
 	GENERATESPACE("generatespace", "Genera uno spazio comportamentale da una rete di CFA","generatespace"), 
@@ -23,6 +23,7 @@ public enum CommandDescription{
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),
 	SAVENET("savenet", "Salva la rete su file specificato","savenet [fileName]"),
+	RESETCFA("resetcfa", "Resetta tutti i dati creati per la CFA (Stati, Transizioni...)","resetcfa"), 
 	NEWSTATE("newstate", "Crea un nuovo Stato Comportamentale","newstate [id]"),
 	NEWEVENT("newevent", "Crea un nuovo Evento","newevent [id]"),
 	NEWTRANSITION("newtransition", "Crea una nuova Transizione Comportamentale","newtransition [id]"),

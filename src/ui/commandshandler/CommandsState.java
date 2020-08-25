@@ -35,7 +35,6 @@ public enum CommandsState implements InitCommandsList{
 		public ArrayList<Command> getCommandsList(){
 			ArrayList<Command> commandsList = new ArrayList<Command>();
 			commandsList.add(new CommandFactory().back());
-			commandsList.add(new CommandFactory().annulla());
 			commandsList.add(new CommandFactory().newCFA());
 			commandsList.add(new CommandFactory().newLink());
 			commandsList.add(new CommandFactory().newEvent());
@@ -44,6 +43,7 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().showLinks());
 			commandsList.add(new CommandFactory().showEvents());
 			commandsList.add(new CommandFactory().saveNet());
+			commandsList.add(new CommandFactory().resetNet());
 			return commandsList;
 		}
 	},
@@ -57,13 +57,13 @@ public enum CommandsState implements InitCommandsList{
 			public ArrayList<Command> getCommandsList(){
 				ArrayList<Command> commandsList = new ArrayList<Command>();
 				commandsList.add(new CommandFactory().back());
-				commandsList.add(new CommandFactory().annulla());
 				commandsList.add(new CommandFactory().newState());				
 				commandsList.add(new CommandFactory().newTransition());
 				commandsList.add(new CommandFactory().setInitial());
 				commandsList.add(new CommandFactory().showStates());
 				commandsList.add(new CommandFactory().showTransitions());
 				commandsList.add(new CommandFactory().saveCFA());
+				commandsList.add(new CommandFactory().resetCFA());
 				return commandsList;
 			}
 	},
