@@ -30,7 +30,7 @@ public class CFSMnetwork implements Serializable{
 				net.add(link.getDestination());
 		}
 		for(ComportamentalFSM cfa: net) {
-			cfa.setCurrent(cfa.initialState()); //imposta l'actual state allo stato iniziale (magari facciamo metodo setActualToInitial? )
+			cfa.initializeCurrentState();
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class CFSMnetwork implements Serializable{
 	
 	public HashMap<String, ComportamentalState> getInitialStates(){
 		HashMap<String, ComportamentalState> tmp = new HashMap<String, ComportamentalState>();
-		net.forEach(cfa -> tmp.put(cfa.id(),cfa.initialState()()));
+		net.forEach(cfa -> tmp.put(cfa.id(),cfa.initialState()));
 		return tmp;
 	}
 	
@@ -64,13 +64,10 @@ public class CFSMnetwork implements Serializable{
 	
 	public void restoreState(SpaceState stats) {
 		for(ComportamentalFSM cfa: net) {
-			cfa.setCurrent(stats.getStates().get(cfa.id()))
+			cfa.setCurrent(stats.getStates().get(cfa.id()));
 		}
-		for(int i=0; i<stats.getStates().size();i++) {
-			net.get(i).setCurrent(stats.getStates().get(i));
-		}
-		for(int i=0; i<stats.getEvents().size();i++) {
-			links.get(i).setEvent(stats.getEvents().get(i));
+		for(Link l: links) {
+			l.setEvent(stats.getEvents().get(l));
 		}
 	}
 	

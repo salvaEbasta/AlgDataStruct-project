@@ -55,6 +55,14 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 		return current;
 	}
 	
+	@Override 
+	public boolean initializeCurrentState() {
+		if(initial == null)
+			return false;
+		current = initial;
+		return true;
+	}
+	
 	@Override
 	public Set<T> to(S s) {
 		if (structure.containsKey(s))

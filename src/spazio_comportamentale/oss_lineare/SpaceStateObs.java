@@ -1,9 +1,11 @@
 package spazio_comportamentale.oss_lineare;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.Event;
+import comportamental_fsm.Link;
 import spazio_comportamentale.SpaceState;
 
 public class SpaceStateObs extends SpaceState{
@@ -15,7 +17,7 @@ public class SpaceStateObs extends SpaceState{
 	private int index;
 	private int ossSize;
 
-	public SpaceStateObs(ArrayList<ComportamentalState> actualStates, ArrayList<Event> linkEvents, int index, int ossSize) {
+	public SpaceStateObs(HashMap<String, ComportamentalState> actualStates, HashMap<Link, Event> linkEvents, int index, int ossSize) {
 		super(actualStates, linkEvents);
 		this.index = index;
 		this.ossSize = ossSize;	

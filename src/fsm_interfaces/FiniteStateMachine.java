@@ -8,6 +8,7 @@ public interface FiniteStateMachine<S extends StateInterface, T extends Transiti
 	public Set<S> states();
 	public S initialState();
 	public S currentState();
+	public boolean initializeCurrentState();
 	public Set<T> to(S s);
 	public Set<T> from(S s);
 	public boolean add(T t);
@@ -22,4 +23,5 @@ public interface FiniteStateMachine<S extends StateInterface, T extends Transiti
 	public T getAuto(S s);
 	public boolean hasState(S s);
 	public Object clone();
+
 }
