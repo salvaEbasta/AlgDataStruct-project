@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -47,6 +49,8 @@ class TestCFA {
 	private Event e2;
 	private Event e3;
 	private Event emptyEv;
+	private Link l2;
+	private Link l3;
 
 	
 	CFSMnetwork initialize() {
@@ -69,8 +73,8 @@ class TestCFA {
 		e2 = new Event("e2");
 		e3 = new Event("e3");
 		emptyEv = new Event();
-		Link l2 = new Link("L2", c3, c2);
-		Link l3 = new Link("L3", c2, c3);
+		l2 = new Link("L2", c3, c2);
+		l3 = new Link("L3", c2, c3);
 		HashMap<Event, Link> out = new HashMap<Event, Link>();
 		out.put(e3, l3);
 		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
@@ -98,6 +102,20 @@ class TestCFA {
 		return new CFSMnetwork(listLink);
 	}
 	
+	private HashMap<String, ComportamentalState> statesToHashMap(ComportamentalState... states) {
+		HashMap<String , ComportamentalState> map = new HashMap<String , ComportamentalState>();
+		for(ComportamentalState state: states)
+			map.put(state.id(), state);
+		return map;
+	}
+	
+	private HashMap<Link, Event> eventsToHashMap(Link[] links, Event[] events) {
+		HashMap<Link , Event> map = new HashMap<Link , Event>();
+		for(int i=0; i<links.length; i++)
+			map.put(links[i], events[i]);
+		return map;
+	}
+	
 	@Test
 	void spazioComportamentale() throws Exception{		
 		CFSMnetwork net = initialize();
@@ -109,32 +127,21 @@ class TestCFA {
 		} catch (Exception e) {
 			assertFalse(false);
 		}
-		SpaceState sc0 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc1 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc2 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc6 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc7 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc8 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, e3)));
-		SpaceState sc9 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc10 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc11 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, e3)));
-		SpaceState sc12 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc3 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc4 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc5 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
+		
+		
+		SpaceState sc0 = new SpaceState(statesToHashMap(s20, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}));
+		SpaceState sc1 = new SpaceState(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, emptyEv}));
+		SpaceState sc2 = new SpaceState(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}));
+		SpaceState sc6 = new SpaceState(statesToHashMap(s21, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}));
+		SpaceState sc7 = new SpaceState(statesToHashMap(s20, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}));
+		SpaceState sc8 = new SpaceState(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, e3}));
+		SpaceState sc9 = new SpaceState(statesToHashMap(s20, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, emptyEv}));
+		SpaceState sc10 = new SpaceState(statesToHashMap(s21, s30), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}));
+		SpaceState sc11 = new SpaceState(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, e3}));
+		SpaceState sc12 = new SpaceState(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{e2, emptyEv}));
+		SpaceState sc3 = new SpaceState(statesToHashMap(s21, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}));
+		SpaceState sc4 = new SpaceState(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, e3}));
+		SpaceState sc5 = new SpaceState(statesToHashMap(s20, s31), eventsToHashMap(new Link[]{l2, l3}, new Event[]{emptyEv, emptyEv}));
 		
 		toMatch.insert(sc0);
 		toMatch.insert(sc1);
@@ -184,6 +191,7 @@ class TestCFA {
 		toMatch.add(t45);
 		toMatch.add(t40);		
 		
+		toMatch.ridenominazione();
 		
 		ArrayList<SpaceState> computedStates = new ArrayList<SpaceState>(computedSpace.states());
 		ArrayList<SpaceState> matchStates = new ArrayList<SpaceState>(toMatch.states());
@@ -193,6 +201,7 @@ class TestCFA {
 		ArrayList<SpaceTransition<SpaceState>> matchTr = new ArrayList<SpaceTransition<SpaceState>>(toMatch.transitions());
 		ArrayList<SpaceTransition<SpaceState>> computedTrCopy = new ArrayList<SpaceTransition<SpaceState>>(computedTr);
 		
+		System.out.println(computedSpace.initialState().equals(sc0));
 		
 		computedStates.removeAll(matchStates);
 		matchStates.removeAll(computedStatesCopy);
