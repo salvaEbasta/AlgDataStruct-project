@@ -3,7 +3,6 @@ package test.diagnosticatore;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -96,8 +95,8 @@ class TestSilentClosure {
 				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31")))
 					key = e.getKey();
 		}
-		//System.out.println("key: "+key);
-		//System.out.println("State: "+ridenominazione.get(key));
+		System.out.println("key: "+key);
+		System.out.println("State: "+rename.get(key));
 		SilentClosure closure = ClosureBuilder.buildSilentClosure(pg38, rename.get(key));
 		
 		System.out.println(closure.toString());

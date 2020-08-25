@@ -106,6 +106,8 @@ public class TestDiagnosiLineare {
 		diagnosis = diagnosis.replaceAll("fε", "f");
 		//System.out.println(diagnosis);
 		assertTrue(diagnosis.equals("((rf|fr)|rf)(fr|f|frf|ε)") || 
-				diagnosis.equals("((fr|rf)|rf)(fr|f|frf|ε)"));
+				diagnosis.equals("((fr|rf)|rf)(fr|f|frf|ε)") ||
+				diagnosis.equals("((fr|rf)|rf)(f|ε|fr|frf)") || 
+				diagnosis.equals("((rf|fr)|rf)(f|ε|fr|frf)"));
 	}
 }

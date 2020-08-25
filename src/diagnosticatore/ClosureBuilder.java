@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fsm_algorithms.RegexBuilder;
+import fsm_interfaces.Transition;
 import spazio_comportamentale.BuilderSpaceComportamentale;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
@@ -99,7 +100,7 @@ public class ClosureBuilder {
 		}else {
 			sink = cSpace.getState(t.sink().id());
 		}
-		ClosureTransition newT = new ClosureTransition(t.id(), closure, sink);
+		Transition<SilentClosure> newT = new Transition<SilentClosure>(t.id(), closure, sink);
 		newT.setObservableLabel(t.observableLabel());
 		newT.setRelevantLabel(closure.decorationOf(t.source())+t.relevantLabelContent());
 		cSpace.add(newT);

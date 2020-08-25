@@ -86,7 +86,7 @@ public class SpaceState extends State{
 		if(otherStatus==null || !SpaceState.class.isAssignableFrom(otherStatus.getClass()))
 			return false;
 		final SpaceState other = (SpaceState) otherStatus;		
-
+		
 		return actualStates.equals(other.actualStates) 
 				&& linkEvents.equals(other.linkEvents);
 	}

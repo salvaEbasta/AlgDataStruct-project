@@ -1,13 +1,12 @@
 package spazio_comportamentale;
 
 import java.util.Set;
-import java.util.concurrent.Callable;
 
-import algorithm_interfaces.MidResult;
+import algorithm_interfaces.Algorithm;
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.ComportamentalTransition;
 
-public class SpazioComportamentale implements Callable<SpaceAutomaComportamentale>, MidResult<SpaceAutomaComportamentale>{
+public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>{
 
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale spazioComp;
