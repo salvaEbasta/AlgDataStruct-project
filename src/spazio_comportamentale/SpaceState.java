@@ -1,6 +1,7 @@
 package spazio_comportamentale;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import comportamental_fsm.ComportamentalState;
 import comportamental_fsm.Event;
@@ -18,11 +19,11 @@ public class SpaceState extends State{
 	
 	public SpaceState(String id) {
 		super(id);
-		this.actualStates = new ArrayList<ComportamentalState>();
+		this.actualStates = new HashMap<String, ComportamentalState>();
 		this.linkEvents = new ArrayList<Event>();
 	}
 	
-	public SpaceState(ArrayList<ComportamentalState> actualStates, ArrayList<Event> linkEvents) {
+	public SpaceState(HashMap<String, ComportamentalState> actualStates, ArrayList<Event> linkEvents) {
 		super("");
 		this.actualStates = actualStates;
 		this.linkEvents = new ArrayList<Event>();
@@ -90,11 +91,9 @@ public class SpaceState extends State{
 	public boolean equals(Object otherStatus) {
 		if(otherStatus==null || !SpaceState.class.isAssignableFrom(otherStatus.getClass()))
 			return false;
-		final SpaceState other = (SpaceState) otherStatus;
+		final SpaceState other = (SpaceState) otherStatus;		
 		
-		if(!id().equals(other.id))
-			return false;
-		else if(actualStates.size()!=other.actualStates.size())
+		if(actualStates.size()!=other.actualStates.size())
 			return false;
 		else if(linkEvents.size()!=other.linkEvents.size())
 			return false;

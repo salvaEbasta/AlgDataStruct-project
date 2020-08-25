@@ -39,12 +39,12 @@ public class SpazioComportamentaleObs implements Callable<SpaceAutomaObsLin>, Mi
 	}
 	
 	private void buildSpace(SpaceStateObs state, Set<ComportamentalTransition> enabledTransitions) {
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(1500);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);

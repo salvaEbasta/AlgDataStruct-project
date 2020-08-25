@@ -2,11 +2,12 @@ package comportamental_fsm;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.naming.ldap.StartTlsRequest;
 
 import comportamental_fsm.labels.ObservableLabel;
 import spazio_comportamentale.SpaceState;
@@ -28,11 +29,12 @@ public class CFSMnetwork implements Serializable{
 			if(!net.contains(link.getDestination()))
 				net.add(link.getDestination());
 		}
-		Collections.reverse(net); // temporaneo, serve solo per far uscire C2 prima di C3 (comodo per confrontare la soluzione)
 		for(ComportamentalFSM cfa: net) {
 			cfa.setCurrent(cfa.initialState()); //imposta l'actual state allo stato iniziale (magari facciamo metodo setActualToInitial? )
 		}
 	}
+	
+	
 	
 	public ArrayList<ComportamentalFSM> net(){
 	return net;
@@ -42,19 +44,28 @@ public class CFSMnetwork implements Serializable{
 	return links;
 	}
 	
-	public ArrayList<ComportamentalState> getInitialStates(){
-		return  net.stream().sequential().map(cfa -> cfa.initialState()).collect(Collectors.toCollection(ArrayList::new));
+	public HashMap<String, ComportamentalState> getInitialStates(){
+		HashMap<String, ComportamentalState> tmp = new HashMap<String, ComportamentalState>();
+		net.forEach(cfa -> tmp.put(cfa.id(),cfa.initialState()()));
+		return tmp;
 	}
 	
-	public ArrayList<ComportamentalState> getActualStates(){
-		return net.stream().sequential().map(cfa -> cfa.currentState()).collect(Collectors.toCollection(ArrayList::new));
+	public HashMap<String, ComportamentalState> getActualStates(){
+		HashMap<String, ComportamentalState> tmp = new HashMap<String, ComportamentalState>();
+		net.forEach(cfa -> tmp.put(cfa.id(),cfa.currentState()));
+		return tmp;
 	}
 	
-	public ArrayList<Event> getActiveEvents() {
-		return links.stream().sequential().map(link -> link.getEvent()).collect(Collectors.toCollection(ArrayList::new));
+	public  HashMap<Link, Event> getActiveEvents() {
+		HashMap<Link, Event> tmp = new HashMap<Link, Event>();
+		links.forEach(l -> tmp.put(l,l.getEvent()));
+		return tmp;
 	}
 	
 	public void restoreState(SpaceState stats) {
+		for(ComportamentalFSM cfa: net) {
+			cfa.setCurrent(stats.getStates().get(cfa.id()))
+		}
 		for(int i=0; i<stats.getStates().size();i++) {
 			net.get(i).setCurrent(stats.getStates().get(i));
 		}

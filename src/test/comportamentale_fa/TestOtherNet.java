@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -30,70 +31,90 @@ import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
-class TestCFA {
+class TestOtherNet {
 	
-	private ComportamentalState s20;
-	private ComportamentalState s21;
-	private ComportamentalState s30;
-	private ComportamentalState s31;
+	private ComportamentalState s0;
+	private ComportamentalState s1;
+	private ComportamentalState b0;
+	private ComportamentalState b1;
 	
 	
-	private ComportamentalTransition t2a;
-	private ComportamentalTransition t2b;
-	private ComportamentalTransition t3a;
-	private ComportamentalTransition t3b;
-	private ComportamentalTransition t3c;
+	private ComportamentalTransition ts1;
+	private ComportamentalTransition ts2;
+	private ComportamentalTransition ts3;
+	private ComportamentalTransition ts4;
+	private ComportamentalTransition tb1;
+	private ComportamentalTransition tb2;
+	private ComportamentalTransition tb3;
+	private ComportamentalTransition tb4;
+	private ComportamentalTransition tb5;
+	private ComportamentalTransition tb6;
+	private ComportamentalTransition tb7;
+	private ComportamentalTransition tb8;
 	
-	private Event e2;
-	private Event e3;
+	private Event op;
+	private Event cl;
 	private Event emptyEv;
-
+	
 	
 	CFSMnetwork initialize() {
-		//AUTOMATA C2
-		ComportamentalFSM c2 = new ComportamentalFSM("C2");
-		s20 = new ComportamentalState("20");
-		s21 = new ComportamentalState("21");
-		c2.insert(s20);
-		c2.insert(s21);
-		c2.setInitial(s20);
+		//AUTOMA s
+		ComportamentalFSM s = new ComportamentalFSM("s");
+		s0 = new ComportamentalState("0");
+		s1 = new ComportamentalState("1");
+		s.insert(s0);
+		s.insert(s1);
+		s.setInitial(s0);
 		
-		//AUTOMATA C3
-		ComportamentalFSM c3 = new ComportamentalFSM("C3");
-		s30 = new ComportamentalState("30");
-		s31 = new ComportamentalState("31");
-		c3.insert(s30);
-		c3.insert(s31);
-		c3.setInitial(s30);
+		//AUTOMA b
+		ComportamentalFSM b = new ComportamentalFSM("b");
+		b0 = new ComportamentalState("0");
+		b1 = new ComportamentalState("1");
+		b.insert(b0);
+		b.insert(b1);
+		b.setInitial(b0);
 		
-		e2 = new Event("e2");
-		e3 = new Event("e3");
+		op = new Event("op");
+		cl = new Event("cl");
 		emptyEv = new Event();
-		Link l2 = new Link("L2", c3, c2);
-		Link l3 = new Link("L3", c2, c3);
-		HashMap<Event, Link> out = new HashMap<Event, Link>();
-		out.put(e3, l3);
-		HashMap<Event, Link> out2 = new HashMap<Event, Link>();
-		out2.put(e2, l2);
+		Link l = new Link("L", s, b);
+		HashMap<Event, Link> outOP = new HashMap<Event, Link>();
+		outOP.put(op, l);
+		HashMap<Event, Link> outCL = new HashMap<Event, Link>();
+		outOP.put(cl, l);
 		
-		t2a = new ComportamentalTransition("t2a", s20, s21, e2, l2, out, new ObservableLabel("o2"), new RelevantLabel());
-		t2b = new ComportamentalTransition("t2b", s21, s20, out, new ObservableLabel(), new RelevantLabel("r"));
+		ts1 = new ComportamentalTransition("s1", s0, s1, outOP, new ObservableLabel("act"), new RelevantLabel());
+		ts2 = new ComportamentalTransition("s2", s1, s0, outCL, new ObservableLabel("sby"), new RelevantLabel());
+		ts3 = new ComportamentalTransition("s3", s0, s0, outCL, new ObservableLabel(), new RelevantLabel("f1"));
+		ts4 = new ComportamentalTransition("s4", s1, s1, outOP, new ObservableLabel(), new RelevantLabel("f2"));
+				
+		tb1 = new ComportamentalTransition("b1", b0, b1, op, l, new ObservableLabel("opn"), new RelevantLabel());
+		tb2 = new ComportamentalTransition("b2", b1, b0, cl, l, new ObservableLabel("cls"), new RelevantLabel());
+		tb3 = new ComportamentalTransition("b3", b0, b0, op, l, new ObservableLabel(), new RelevantLabel("f3"));
+		tb4 = new ComportamentalTransition("b4", b1, b1, cl, l, new ObservableLabel(), new RelevantLabel("f4"));
+		tb5 = new ComportamentalTransition("b5", b0, b0, cl, l, new ObservableLabel("nop"), new RelevantLabel());
+		tb6 = new ComportamentalTransition("b6", b1, b1, op, l, new ObservableLabel("nop"), new RelevantLabel());
+		tb7 = new ComportamentalTransition("b7", b0, b1, op, l, new ObservableLabel("opn"), new RelevantLabel("f5"));
+		tb8 = new ComportamentalTransition("b8", b1, b0, op, l, new ObservableLabel("cls"), new RelevantLabel("f6"));
 		
-		t3a = new ComportamentalTransition("t3a", s30, s31, out2, new ObservableLabel("o3"), new RelevantLabel());
-		t3b = new ComportamentalTransition("t3b", s31, s30, e3, l3, new ObservableLabel(), new RelevantLabel());
-		t3c = new ComportamentalTransition("t3c", s31, s31, e3, l3, new ObservableLabel(), new RelevantLabel("f"));
 		
+		s.add(ts1);
+		s.add(ts2);
+		s.add(ts3);
+		s.add(ts4);
 		
-		c2.add(t2a);
-		c2.add(t2b);
-		
-		c3.add(t3a);
-		c3.add(t3b);
-		c3.add(t3c);
+		b.add(tb1);
+		b.add(tb2);
+		b.add(tb3);
+		b.add(tb4);
+		b.add(tb5);
+		b.add(tb6);
+		b.add(tb7);
+		b.add(tb8);
 		
 		
 		ArrayList<Link> listLink = new ArrayList<Link>();
-		 listLink.add(l2); listLink.add(l3);
+		listLink.add(l);
 		
 		return new CFSMnetwork(listLink);
 	}
@@ -109,32 +130,22 @@ class TestCFA {
 		} catch (Exception e) {
 			assertFalse(false);
 		}
-		SpaceState sc0 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc1 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc2 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc6 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc7 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc8 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, e3)));
-		SpaceState sc9 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc10 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc11 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, e3)));
-		SpaceState sc12 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)));
-		SpaceState sc3 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
-		SpaceState sc4 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)));
-		SpaceState sc5 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)));
+		SpaceState sc0 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b0)), 
+				new ArrayList<Event>(Arrays.asList(emptyEv)));
+		SpaceState sc1 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b0)), 
+				new ArrayList<Event>(Arrays.asList(op)));
+		SpaceState sc2 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b0)), 
+				new ArrayList<Event>(Arrays.asList(cl)));
+		SpaceState sc3 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b1)), 
+				new ArrayList<Event>(Arrays.asList(emptyEv)));
+		SpaceState sc4 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b0)), 
+				new ArrayList<Event>(Arrays.asList(emptyEv)));
+		SpaceState sc5 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b1)), 
+				new ArrayList<Event>(Arrays.asList(cl)));
+		SpaceState sc6 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b1)), 
+				new ArrayList<Event>(Arrays.asList(op)));
+		SpaceState sc7 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b1)), 
+				new ArrayList<Event>(Arrays.asList(emptyEv)));
 		
 		toMatch.insert(sc0);
 		toMatch.insert(sc1);
@@ -144,46 +155,40 @@ class TestCFA {
 		toMatch.insert(sc5);
 		toMatch.insert(sc6);
 		toMatch.insert(sc7);
-		toMatch.insert(sc8);
-		toMatch.insert(sc9);
-		toMatch.insert(sc10);
-		toMatch.insert(sc11);
-		toMatch.insert(sc12);
 		
-		SpaceTransition<SpaceState> t01 = new SpaceTransition<SpaceState>(sc0, sc1, t3a);
-		SpaceTransition<SpaceState> t12 = new SpaceTransition<SpaceState>(sc1, sc2, t2a);
-		SpaceTransition<SpaceState> t26 = new SpaceTransition<SpaceState>(sc2, sc6, t3b);
-		SpaceTransition<SpaceState> t67 = new SpaceTransition<SpaceState>(sc6, sc7, t2b);
-		SpaceTransition<SpaceState> t612 = new SpaceTransition<SpaceState>(sc6, sc12, t3a);
-		SpaceTransition<SpaceState> t78 = new SpaceTransition<SpaceState>(sc7, sc8, t3a);
-		SpaceTransition<SpaceState> t89 = new SpaceTransition<SpaceState>(sc8, sc9, t3b);
-		SpaceTransition<SpaceState> t81 = new SpaceTransition<SpaceState>(sc8, sc1, t3c);
-		SpaceTransition<SpaceState> t910 = new SpaceTransition<SpaceState>(sc9, sc10, t2a);
-		SpaceTransition<SpaceState> t1011 = new SpaceTransition<SpaceState>(sc10, sc11, t3a);
-		SpaceTransition<SpaceState> t1112 = new SpaceTransition<SpaceState>(sc11, sc12, t3c);
-		SpaceTransition<SpaceState> t128 = new SpaceTransition<SpaceState>(sc12, sc8, t2b);
-		SpaceTransition<SpaceState> t23 = new SpaceTransition<SpaceState>(sc2, sc3, t3c);
-		SpaceTransition<SpaceState> t34 = new SpaceTransition<SpaceState>(sc3, sc4, t2b);
-		SpaceTransition<SpaceState> t45 = new SpaceTransition<SpaceState>(sc4, sc5, t3c);
-		SpaceTransition<SpaceState> t40 = new SpaceTransition<SpaceState>(sc4, sc0, t3b);
+		SpaceTransition<SpaceState> t01 = new SpaceTransition<SpaceState>(sc0, sc1, ts1);
+		SpaceTransition<SpaceState> t02 = new SpaceTransition<SpaceState>(sc0, sc2, ts3);
+		SpaceTransition<SpaceState> t14 = new SpaceTransition<SpaceState>(sc1, sc4, tb3);
+		SpaceTransition<SpaceState> t20 = new SpaceTransition<SpaceState>(sc2, sc0, tb5);
+		SpaceTransition<SpaceState> t42 = new SpaceTransition<SpaceState>(sc4, sc2, ts2);
+		SpaceTransition<SpaceState> t41 = new SpaceTransition<SpaceState>(sc4, sc1, ts4);
+		SpaceTransition<SpaceState> t13 = new SpaceTransition<SpaceState>(sc1, sc3, tb1);
+		SpaceTransition<SpaceState> t36 = new SpaceTransition<SpaceState>(sc3, sc6, ts4);
+		SpaceTransition<SpaceState> t63 = new SpaceTransition<SpaceState>(sc6, sc3, tb6);
+		SpaceTransition<SpaceState> t35 = new SpaceTransition<SpaceState>(sc3, sc5, ts2);
+		SpaceTransition<SpaceState> t50 = new SpaceTransition<SpaceState>(sc5, sc0, tb2);
+		SpaceTransition<SpaceState> t57 = new SpaceTransition<SpaceState>(sc5, sc7, tb4);
+		SpaceTransition<SpaceState> t75 = new SpaceTransition<SpaceState>(sc5, sc7, ts3);
+		SpaceTransition<SpaceState> t76 = new SpaceTransition<SpaceState>(sc7, sc6, ts1);
+		SpaceTransition<SpaceState> t64 = new SpaceTransition<SpaceState>(sc6, sc4, tb8);
+		SpaceTransition<SpaceState> t27 = new SpaceTransition<SpaceState>(sc2, sc7, tb7);
 		
 		toMatch.add(t01);
-		toMatch.add(t12);
-		toMatch.add(t26);
-		toMatch.add(t67);
-		toMatch.add(t612);
-		toMatch.add(t78);
-		toMatch.add(t89);
-		toMatch.add(t81);
-		toMatch.add(t910);
-		toMatch.add(t1011);
-		toMatch.add(t1112);
-		toMatch.add(t128);
-		toMatch.add(t23);
-		toMatch.add(t34);
-		toMatch.add(t45);
-		toMatch.add(t40);		
-		
+		toMatch.add(t02);
+		toMatch.add(t14);
+		toMatch.add(t20);
+		toMatch.add(t42);
+		toMatch.add(t41);
+		toMatch.add(t13);
+		toMatch.add(t36);
+		toMatch.add(t63);
+		toMatch.add(t35);
+		toMatch.add(t50);
+		toMatch.add(t57);
+		toMatch.add(t75);
+		toMatch.add(t76);
+		toMatch.add(t64);
+		toMatch.add(t27);				
 		
 		ArrayList<SpaceState> computedStates = new ArrayList<SpaceState>(computedSpace.states());
 		ArrayList<SpaceState> matchStates = new ArrayList<SpaceState>(toMatch.states());
@@ -193,6 +198,7 @@ class TestCFA {
 		ArrayList<SpaceTransition<SpaceState>> matchTr = new ArrayList<SpaceTransition<SpaceState>>(toMatch.transitions());
 		ArrayList<SpaceTransition<SpaceState>> computedTrCopy = new ArrayList<SpaceTransition<SpaceState>>(computedTr);
 		
+		System.out.println(computedSpace.toString());
 		
 		computedStates.removeAll(matchStates);
 		matchStates.removeAll(computedStatesCopy);
