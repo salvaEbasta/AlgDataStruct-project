@@ -102,18 +102,6 @@ class TestCFA {
 	void spazioComportamentale() throws Exception{		
 		CFSMnetwork net = initialize();
 		SpazioComportamentale sc = new SpazioComportamentale(net);
-<<<<<<< HEAD
-		SpaceAutomaComportamentale computedSpace = sc.call();
-		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());	
-		computedSpace.potatura();
-		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace);	
-		System.out.println("*************************\n\tRIDENOMINAZIONE:\n*************************");
-		System.out.println(computedSpace.ridenominazione());
-		System.out.println("*************************\n\tDOPO RIDENOMINAZIONE:\n*************************");	
-		System.out.println(computedSpace);
-=======
 		SpaceAutomaComportamentale toMatch = new SpaceAutomaComportamentale("Test");
 		SpaceAutomaComportamentale computedSpace = null;
 		try {
@@ -197,8 +185,7 @@ class TestCFA {
 		toMatch.add(t23);
 		toMatch.add(t34);
 		toMatch.add(t45);
-		toMatch.add(t40);
-		
+		toMatch.add(t40);		
 		
 		
 		ArrayList<SpaceState> computedStates = new ArrayList<SpaceState>(computedSpace.states());
@@ -218,31 +205,14 @@ class TestCFA {
 		
 		assertTrue(computedStates.isEmpty() && matchStates.isEmpty() &&
 				computedTr.isEmpty() && matchTr.isEmpty());		
->>>>>>> stash
+
 	}
 	
 	@Test
-<<<<<<< HEAD
-	void spazioComportamentaleOssLineare() throws Exception{		
-=======
+
 	void spazioComportamentaleOsservazioni() {
->>>>>>> stash
+
 		CFSMnetwork net = initialize();
-<<<<<<< HEAD
-		ObservationsList obsLin = new ObservationsList();
-		obsLin.add(new ObservableLabel("o3"));
-		obsLin.add(new ObservableLabel("o2"));
-		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
-		SpaceAutomaObsLin computedSpace = sc.call();
-		System.out.println("*************************\n\tPRIMA della POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());	
-		computedSpace.potatura();
-		System.out.println("*************************\n\tDOPO POTATURA:\n*************************");	
-		System.out.println(computedSpace.toString());
-		computedSpace.ridenominazione();
-		System.out.println("*************************\n\tDOPO RIDENOMINAZIONE:\n*************************");	
-		System.out.println(computedSpace);		
-=======
 		ObservationsList obsList = new ObservationsList();
 		obsList.add(new ObservableLabel("o3"));
 		obsList.add(new ObservableLabel("o2"));
@@ -313,10 +283,9 @@ class TestCFA {
 		
 		
 		assertTrue(computedStates.isEmpty() && computedTr.isEmpty());
->>>>>>> stash
 	}
 	
-<<<<<<< HEAD
+
 	@Test
 	void diagnostica() throws Exception{
 		CFSMnetwork net = initialize();
@@ -332,8 +301,7 @@ class TestCFA {
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
 	}
-=======
->>>>>>> stash
+
 	
 	@Test
 	void enabledTransitions() {
