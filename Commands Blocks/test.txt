@@ -1,0 +1,17 @@
+loadnet net
+spaceops
+robot generatespaceobs
+o3
+n
+n
+x
+endrobot
+robot generatespaceobs
+o3
+y
+o2
+n
+n
+x
+x
+endrobot
