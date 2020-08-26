@@ -29,7 +29,7 @@ import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
 
-class TestCFA {
+class TestMainNet {
 	
 	private ComportamentalFSM c2;
 	private ComportamentalFSM c3;	

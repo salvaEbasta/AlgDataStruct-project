@@ -41,7 +41,7 @@ class TestRegexBuilder {
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
-		regex = regex.strip();
+		regex = regex.trim();
 		assertTrue(regex.equals("f"));
 	}
 	
@@ -55,7 +55,7 @@ class TestRegexBuilder {
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
-		regex = regex.strip();
+		regex = regex.trim();
 		assertTrue(regex.equals("frf"));
 	}
 	
@@ -69,7 +69,7 @@ class TestRegexBuilder {
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
-		regex = regex.strip();
+		regex = regex.trim();
 		assertTrue(regex.equals("fr"));
 	}
 	
@@ -83,8 +83,8 @@ class TestRegexBuilder {
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
-		regex = regex.strip();
-		assertTrue(regex.isBlank());
+		regex = regex.trim();
+		assertTrue(regex.isEmpty());
 	}
 
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_benchmarkC1() {

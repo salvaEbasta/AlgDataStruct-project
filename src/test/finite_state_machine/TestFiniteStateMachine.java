@@ -15,7 +15,7 @@ class TestFiniteStateMachine {
 	@Test
 	void building_benchmarkC1() {
 		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
-		assertTrue(C1.id()=="C1");
+		assertTrue(C1.id().equals("C1"));
 		
 		FiniteState _10 = new FiniteState("10");
 		FiniteState _11 = new FiniteState("11");
@@ -116,25 +116,5 @@ class TestFiniteStateMachine {
 		assertTrue(C1.states().size() == 1 && C1.states().contains(_11));
 		assertTrue(C1.transitions().size() == 0);
 	}
-	
-	@Test
-	void prova() {
-		LinkedTransitionsFSA C1 = new LinkedTransitionsFSA("C1");
-		FiniteState _10 = new FiniteState("10");
-		FiniteState _11 = new FiniteState("11");
-		_11.setAccepting(true);
-		C1.insert(_11);
-		C1.insert(_10);
-		C1.setInitial(_10);
-		FiniteTransition t1a = new FiniteTransition("t1a", _10, _11);
-		t1a.setRelevantLabel("a");
-		FiniteTransition t1b = new FiniteTransition("t1b", _11, _10);
-		t1b.setRelevantLabel("b");
-		FiniteTransition t1c = new FiniteTransition("t1c", _10, _11);
-		t1c.setRelevantLabel("c");
-		assertTrue(C1.add(t1a));
-		assertTrue(C1.add(t1b));
-		assertFalse(C1.add(t1a));
-		assertTrue(C1.add(t1c));
-	}
+
 }
