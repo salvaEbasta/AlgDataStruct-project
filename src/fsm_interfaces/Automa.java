@@ -65,7 +65,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public Set<T> to(S s) {
-		if (structure.containsKey(s))
+		if (hasState(s))
 			return structure.get(s).to();
 		else
 			return new HashSet<T>();
@@ -82,7 +82,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public boolean setCurrent(S s) {
-		if (structure.containsKey(s)) {
+		if (hasState(s)) {
 			current = s;
 			return true;
 		}
@@ -91,7 +91,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public Set<T> from(S s) {
-		if (structure.containsKey(s))
+		if (hasState(s))
 			return structure.get(s).from();
 		else
 			return new HashSet<T>();
@@ -99,12 +99,14 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public boolean add(T t) {
-		return structure.get(t.source()).from().add(t) && structure.get(t.sink()).to().add(t);
+		if(structure.containsKey(t.source()) && structure.containsKey(t.sink()))
+			return structure.get(t.source()).from().add(t) && structure.get(t.sink()).to().add(t);
+		return false;
 	}
 	
 	@Override
 	public boolean insert(S s) {
-		if(!structure.containsKey(s)) {
+		if(!hasState(s)) {
 			structure.put(s, new Interconnections<S, T>());
 			return true;
 		}
@@ -119,7 +121,9 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public boolean remove(T t) {
-		return structure.get(t.source()).from().remove(t) && structure.get(t.sink()).to().remove(t);
+		if(structure.containsKey(t.source()) && structure.containsKey(t.sink()))
+			return structure.get(t.source()).from().remove(t) && structure.get(t.sink()).to().remove(t);
+		return false;
 	}
 	
 	@Override
@@ -134,12 +138,16 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	
 	@Override
 	public boolean hasAuto(S s) {
-		return structure.get(s).hasAuto();
+		if(hasState(s))
+			return structure.get(s).hasAuto();
+		return false;
 	}
 	
 	@Override
 	public T getAuto(S s) {
-		return structure.get(s).getAuto().iterator().next();
+		if(hasState(s))
+			return structure.get(s).getAuto().iterator().next();
+		return null;
 	}
 	
 	@Override

@@ -243,9 +243,9 @@ class TestOtherNet {
 		SpaceStateObs sc1 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(op), 1, obsList.size());
 		SpaceStateObs sc2 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(emptyEv), 1, obsList.size());
 		SpaceStateObs sc3 = new SpaceStateObs(statesToHashMap(s0, s0), eventToHashMap(cl), 2, obsList.size());
-		SpaceStateObs sc4 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 2, obsList.size());
+		SpaceStateObs sc4 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 3, obsList.size());
 
-		
+		toMatch.insert(sc0);
 		toMatch.insert(sc1);
 		toMatch.insert(sc2);
 		toMatch.insert(sc3);
@@ -286,8 +286,9 @@ class TestOtherNet {
 	void diagnostica() throws Exception{
 		CFSMnetwork net = initialize();
 		ObservationsList obsLin = new ObservationsList();
-		obsLin.add(new ObservableLabel("o3"));
-		obsLin.add(new ObservableLabel("o2"));
+		obsLin.add(new ObservableLabel("act"));
+		obsLin.add(new ObservableLabel("sby"));
+		obsLin.add(new ObservableLabel("nop"));
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
 		SpaceAutomaObsLin computedSpace = sc.call();
 		computedSpace.potatura();
