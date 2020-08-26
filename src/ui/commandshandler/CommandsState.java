@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Classe con il compito di rappresentare i vari stati in cui una lista di comandi si può trovare durante l'esecuzione del programma
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  */
 public enum CommandsState implements InitCommandsList{
 
@@ -21,7 +21,7 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().newNet());
 			commandsList.add(new CommandFactory().loadNet());
 			commandsList.add(new CommandFactory().showNet());
-			commandsList.add(new CommandFactory().spaceComp());
+			commandsList.add(new CommandFactory().spaceOps());
 			return commandsList;
 		}
 	},
@@ -79,6 +79,8 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().generateSpace());
 			commandsList.add(new CommandFactory().generateSpaceObs());
 			commandsList.add(new CommandFactory().showObservations());
+			commandsList.add(new CommandFactory().diagnosiObservations());
+			commandsList.add(new CommandFactory().diagnosiObservationsDiagnostic());
 			commandsList.add(new CommandFactory().updateNet());
 			return commandsList;
 		}
@@ -90,7 +92,7 @@ public enum CommandsState implements InitCommandsList{
 
 /**
  * Interfaccia con il compito di restituire una lista di comandi
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 interface InitCommandsList {	

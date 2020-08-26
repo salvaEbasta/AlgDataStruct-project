@@ -3,7 +3,7 @@ package ui.commandshandler;
 import ui.commands.base.LoadNet;
 import ui.commands.base.NewNet;
 import ui.commands.base.ShowNet;
-import ui.commands.base.SpaceComp;
+import ui.commands.base.SpaceOperations;
 import ui.commands.general.Back;
 import ui.commands.general.Exit;
 import ui.commands.newcfa.NewState;
@@ -22,6 +22,8 @@ import ui.commands.newnet.SaveNet;
 import ui.commands.newnet.ShowCFAs;
 import ui.commands.newnet.ShowEvents;
 import ui.commands.newnet.ShowLinks;
+import ui.commands.spacecomp.DiagnosiObs;
+import ui.commands.spacecomp.DiagnosiObsDiagn;
 import ui.commands.spacecomp.GenerateSpace;
 import ui.commands.spacecomp.GenerateSpaceObs;
 import ui.commands.spacecomp.ShowObservations;
@@ -62,8 +64,8 @@ public class CommandFactory {
 		return new Command(CommandDescription.UPDATENET, new UpdateNet());
 	}
 	
-	public Command spaceComp() {
-		return new Command(CommandDescription.SPACECOMP, new SpaceComp());
+	public Command spaceOps() {
+		return new Command(CommandDescription.SPACEOPS, new SpaceOperations());
 	}
 	
 	public Command generateSpace() {
@@ -76,6 +78,14 @@ public class CommandFactory {
 	
 	public Command showObservations() {
 		return new Command(CommandDescription.SHOWOBS, new ShowObservations());
+	}
+	
+	public Command diagnosiObservations() {
+		return new Command(CommandDescription.DIAGNOSIOBS, new DiagnosiObs());
+	}
+	
+	public Command diagnosiObservationsDiagnostic() {
+		return new Command(CommandDescription.DIAGNOSIOBSWD, new DiagnosiObsDiagn());
 	}
 	
 	public Command newCFA() {

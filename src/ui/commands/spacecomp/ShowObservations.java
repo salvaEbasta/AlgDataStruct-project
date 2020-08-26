@@ -18,6 +18,11 @@ public class ShowObservations implements CommandInterface, NoParameters{
 			return false;
 		}
 		
+		if(context.getCurrentNet().computedObsertvationsLenght() == 0) {
+			context.getIOStream().writeln("Nessuna Osservazione Lineare calcolata per questa rete");
+			return false;
+		}
+		
 		CurrentNet net = context.getCurrentNet();				
 		context.getIOStream().writeln(net.observationDescription());		
 		return true;

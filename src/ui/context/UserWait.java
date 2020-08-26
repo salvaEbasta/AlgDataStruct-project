@@ -3,16 +3,15 @@ package ui.context;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
-import spazio_comportamentale.SpaceAutoma;
 import ui.stream.InOutStream;
 import ui.stream.SimpleStreamAdapter;
 
-public class UserWait<S extends SpaceAutoma> implements Callable<String>{
+public class UserWait<T> implements Callable<String>{
 
 	private InOutStream io;
-	private Future<S> future;
+	private Future<T> future;
 	
-	public UserWait(InOutStream io, Future<S> future) {
+	public UserWait(InOutStream io, Future<T> future) {
 		try {
 			this.io = io.getClass().newInstance();
 		} catch (InstantiationException | IllegalAccessException e) {

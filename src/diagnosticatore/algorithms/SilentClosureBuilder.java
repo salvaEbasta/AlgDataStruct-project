@@ -4,16 +4,16 @@ import java.util.LinkedList;
 
 import algorithm_interfaces.Algorithm;
 import diagnosticatore.SilentClosure;
-import spazio_comportamentale.SpaceAutomaComportamentale;
-import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
+import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
+import spazio_comportamentale.oss_lineare.SpaceStateObs;
 
 public class SilentClosureBuilder extends Algorithm<SilentClosure>{
-	private SpaceAutomaComportamentale space;
-	private SpaceState state;
+	private SpaceAutomaObsLin space;
+	private SpaceStateObs state;
 	private SilentClosure closure;
 	
-	public SilentClosureBuilder(SpaceAutomaComportamentale space, SpaceState state) {
+	public SilentClosureBuilder(SpaceAutomaObsLin space, SpaceStateObs state) {
 		this.space = space;
 		this.state = state;
 	}
@@ -36,9 +36,9 @@ public class SilentClosureBuilder extends Algorithm<SilentClosure>{
 		
 		closure.insert(state);
 		closure.setInitial(state);
-		LinkedList<SpaceTransition<SpaceState>> queue = new LinkedList<SpaceTransition<SpaceState>>(space.from(state));
+		LinkedList<SpaceTransition<SpaceStateObs>> queue = new LinkedList<SpaceTransition<SpaceStateObs>>(space.from(state));
 		while(queue.size() > 0) {
-			SpaceTransition<SpaceState> current = queue.pop();
+			SpaceTransition<SpaceStateObs> current = queue.pop();
 			
 			log.info("Current transition: "+current);
 			

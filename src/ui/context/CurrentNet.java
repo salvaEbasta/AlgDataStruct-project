@@ -55,11 +55,24 @@ public class CurrentNet implements Serializable{
 			return null;
 	}
 	
-	public String generatedSpacesDescription(){
+	public Entry<ObservationsList, SpaceAutomaObsLin> getSpaceObsByIndex(int index){
+		if(index > listaOsservazioni.size())
+			return null;
+		int i=0;
+		for(Entry<ObservationsList, SpaceAutomaObsLin> entry: listaOsservazioni.entrySet()) {
+			if(i == index)
+				return entry;
+		}
+		return null;
+	}
+	
+	public int computedObsertvationsLenght() {
+		return listaOsservazioni.size();
+	}
+	
+	public String generatedObsSpacesDescription(){
 		StringBuilder sb = new StringBuilder("Spazi generati per la rete:\n");
-		if(sac != null)
-			sb.append(String.format("0 - %s\n", sac.id()));
-		int index = 1;
+		int index = 0;
 		for(SpaceAutomaObsLin spaceOL: listaOsservazioni.values())
 			sb.append(String.format("%d - %s\n", index++, spaceOL.id()));
 		return sb.toString();

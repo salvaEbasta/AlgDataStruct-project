@@ -5,7 +5,7 @@ import ui.commands.general.NoParameters;
 import ui.context.Context;
 import utility.Constants;
 
-public class SpaceComp implements CommandInterface, NoParameters{
+public class SpaceOperations implements CommandInterface, NoParameters{
 
 	/*
 	 * (non-Javadoc)
@@ -20,7 +20,7 @@ public class SpaceComp implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		context.getIOStream().writeln("Sottomenù di generazione Spazio Comportamentale.");
+		context.getIOStream().writeln("Sottomenù di operazioni su Spazi Comportamentali.");
 		context.getIOStream().writeln(Constants.INSERT_HELP);
 		return true;	
 		

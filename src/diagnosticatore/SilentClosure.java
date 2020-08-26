@@ -5,9 +5,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import fsm_interfaces.StateInterface;
-import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
+import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
+import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import utility.Constants;
 
 /**
@@ -17,16 +18,16 @@ import utility.Constants;
  * @author Matteo
  *
  */
-public class SilentClosure extends SpaceAutomaComportamentale implements StateInterface{
+public class SilentClosure extends SpaceAutomaObsLin implements StateInterface{
 	private static final long serialVersionUID = -5172582068115487212L;
-	private HashMap<SpaceState, String> decorations;
-	private HashSet<SpaceState> exiting;
+	private HashMap<SpaceStateObs, String> decorations;
+	private HashSet<SpaceStateObs> exiting;
 	private boolean accepting;
 	
 	public SilentClosure(String id) {
 		super(id);
-		decorations = new HashMap<SpaceState, String>();
-		exiting = new HashSet<SpaceState>();
+		decorations = new HashMap<SpaceStateObs, String>();
+		exiting = new HashSet<SpaceStateObs>();
 		accepting = false;
 	}
 	
@@ -38,7 +39,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		this.exiting = new HashSet<>(sc.exiting);
 	}
 	
-	public boolean insert(SpaceState s) {
+	public boolean insert(SpaceStateObs s) {
 		if(super.insert(s)) {
 			if(s.isFinal()) {
 				decorations.put(s, Constants.EPSILON);
@@ -49,7 +50,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		return false;
 	}
 	
-	public boolean remove(SpaceState s) {
+	public boolean remove(SpaceStateObs s) {
 		if(super.remove(s)) {
 			exiting.remove(s);
 			decorations.remove(s);
@@ -64,7 +65,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		return false;
 	}
 	
-	public void setExiting(SpaceState s) {
+	public void setExiting(SpaceStateObs s) {
 		if(super.hasState(s))
 			exiting.add(s);
 			if(!decorations.containsKey(s)) {
@@ -72,11 +73,11 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 			}
 	}
 	
-	public Set<SpaceState> decorableStates(){
+	public Set<SpaceStateObs> decorableStates(){
 		return decorations.keySet();
 	}
 	
-	public boolean decorate(SpaceState s, String decoration) {
+	public boolean decorate(SpaceStateObs s, String decoration) {
 		if(decorations.containsKey(s)) {
 			decorations.put(s, decoration);
 			return true;
@@ -84,7 +85,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		return false;
 	}
 	
-	public String decorationOf(SpaceState s) {
+	public String decorationOf(SpaceStateObs s) {
 		return decorations.get(s);
 	}
 	
@@ -99,13 +100,13 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		return sb.toString();
 	}
 	
-	public Set<SpaceState> exitStates(){
+	public Set<SpaceStateObs> exitStates(){
 		return exiting;
 	}
 	
 	@Override
-	public Set<SpaceState> acceptingStates(){
-		return new HashSet<SpaceState>(decorations.keySet());
+	public Set<SpaceStateObs> acceptingStates(){
+		return new HashSet<SpaceStateObs>(decorations.keySet());
 	}
 	
 	@Override
@@ -132,19 +133,19 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("SilentClosure: %s\n", id()));
 		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
-		for(SpaceState state: states()) {
+		for(SpaceStateObs state: states()) {
 			sb.append(state.toString());
-			Set<SpaceTransition<SpaceState>>  in = to(state);
-			Set<SpaceTransition<SpaceState>> out = from(state);
+			Set<SpaceTransition<SpaceStateObs>>  in = to(state);
+			Set<SpaceTransition<SpaceStateObs>> out = from(state);
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
-				for(SpaceTransition<SpaceState> inTransition: in) {
+				for(SpaceTransition<SpaceStateObs> inTransition: in) {
 					sb.append(String.format("\n\t\t* %s", inTransition));
 				}
 			}
 			if(!out.isEmpty()) {
 				sb.append("\n\t- Output Transitions:");
-				for(SpaceTransition<SpaceState> outTransition: out) {
+				for(SpaceTransition<SpaceStateObs> outTransition: out) {
 					sb.append(String.format("\n\t\t* %s", outTransition));
 				}
 			}

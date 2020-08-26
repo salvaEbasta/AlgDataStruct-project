@@ -137,7 +137,7 @@ public class CommandsHandler implements Closeable{
 						cList = CommandsState.NEWCFA.getCommandsList();	
 					else if(new CommandFactory().saveCFA().hasName(command)) 
 						cList = CommandsState.NEWNET.getCommandsList();	
-					else if(new CommandFactory().spaceComp().hasName(command)) 
+					else if(new CommandFactory().spaceOps().hasName(command)) 
 						cList = CommandsState.SPACECOMP.getCommandsList();			
 					else if(new CommandFactory().back().hasName(command)) {
 						if(equalsCommandsList(CommandsState.NEWCFA.getCommandsList()))

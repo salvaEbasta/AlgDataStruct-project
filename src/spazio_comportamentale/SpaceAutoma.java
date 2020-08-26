@@ -56,6 +56,18 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 	}
 	
 	/**
+	 * Controlla se uno stato ha una transizione entrante osservabile
+	 * @param s
+	 * @return
+	 */
+	public boolean hasEnteringObsTransitions(S s) {
+		if(hasState(s))
+			return super.structure.get(s).hasObservableEntering();
+		else
+			return false;
+	}
+	
+	/**
 	 * Svolge la ridenominazione
 	 */
 	public HashMap<Integer, S> ridenominazione() {

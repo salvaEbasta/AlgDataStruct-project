@@ -12,5 +12,9 @@ public class SpaceAutomaObsLin extends SpaceAutoma<SpaceStateObs>{
 	public SpaceAutomaObsLin(String id) {
 		super(id);
 	}
+	
+	public SpaceAutomaObsLin(SpaceAutomaObsLin saol) {
+		super(saol);
+	}
 
 }
