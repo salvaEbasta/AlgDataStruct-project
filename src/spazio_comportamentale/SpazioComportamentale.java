@@ -47,7 +47,7 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 		net.transitionTo(transition);	
 		if(spazioComp.states().size() == 20)
 			System.out.println();
-		SpaceState destination = new SpaceState(net.getActualStates(), net.getActiveEvents());
+		SpaceState destination = new SpaceState(net.getCurrentStates(), net.getActiveEvents());
 		if(!spazioComp.insert(destination)) {
 			SpaceState toSearch = destination;
 			destination = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();

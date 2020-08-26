@@ -51,7 +51,7 @@ public class SpaceCompCallable implements Callable<SpaceAutomaComportamentale>{
 		if(Thread.currentThread().isInterrupted())
 		    return;
 		net.transitionTo(transition);	
-		SpaceState destination = new SpaceState(net.getActualStates(), net.getActiveEvents());
+		SpaceState destination = new SpaceState(net.getCurrentStates(), net.getActiveEvents());
 		if(!spazioComp.insert(destination)) {
 			SpaceState toSearch = destination;
 			destination = spazioComp.states().stream().filter(s -> s.equals(toSearch)).iterator().next();

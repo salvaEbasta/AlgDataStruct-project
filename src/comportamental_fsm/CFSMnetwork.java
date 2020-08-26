@@ -47,7 +47,7 @@ public class CFSMnetwork implements Serializable{
 		return tmp;
 	}
 	
-	public HashMap<String, ComportamentalState> getActualStates(){
+	public HashMap<String, ComportamentalState> getCurrentStates(){
 		HashMap<String, ComportamentalState> tmp = new HashMap<String, ComportamentalState>();
 		net.forEach(cfa -> tmp.put(cfa.id(),cfa.currentState()));
 		return tmp;

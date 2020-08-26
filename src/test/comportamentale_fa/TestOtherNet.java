@@ -85,7 +85,7 @@ class TestOtherNet {
 		HashMap<Event, Link> outOP = new HashMap<Event, Link>();
 		outOP.put(op, l);
 		HashMap<Event, Link> outCL = new HashMap<Event, Link>();
-		outOP.put(cl, l);
+		outCL.put(cl, l);
 		
 		ts1 = new ComportamentalTransition("s1", s0, s1, outOP, new ObservableLabel("act"), new RelevantLabel());
 		ts2 = new ComportamentalTransition("s2", s1, s0, outCL, new ObservableLabel("sby"), new RelevantLabel());
@@ -130,10 +130,9 @@ class TestOtherNet {
 		return map;
 	}
 	
-	private HashMap<Link, Event> eventsToHashMap(Event[] events) {
+	private HashMap<Link, Event> eventToHashMap(Event event) {
 		HashMap<Link , Event> map = new HashMap<Link , Event>();
-		for(Event event: events)
-			map.put(l, event);
+		map.put(l, event);
 		return map;
 	}
 	
@@ -148,22 +147,14 @@ class TestOtherNet {
 		} catch (Exception e) {
 			assertFalse(false);
 		}
-		SpaceState sc0 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b0)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv)));
-		SpaceState sc1 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b0)), 
-				new ArrayList<Event>(Arrays.asList(op)));
-		SpaceState sc2 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b0)), 
-				new ArrayList<Event>(Arrays.asList(cl)));
-		SpaceState sc3 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b1)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv)));
-		SpaceState sc4 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b0)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv)));
-		SpaceState sc5 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b1)), 
-				new ArrayList<Event>(Arrays.asList(cl)));
-		SpaceState sc6 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s1, b1)), 
-				new ArrayList<Event>(Arrays.asList(op)));
-		SpaceState sc7 = new SpaceState(new ArrayList<ComportamentalState>(Arrays.asList(s0, b1)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv)));
+		SpaceState sc0 = new SpaceState(statesToHashMap(s0, b0), eventToHashMap(emptyEv));
+		SpaceState sc1 = new SpaceState(statesToHashMap(s1, b0), eventToHashMap(op));
+		SpaceState sc2 = new SpaceState(statesToHashMap(s0, b0), eventToHashMap(cl));
+		SpaceState sc3 = new SpaceState(statesToHashMap(s1, b1), eventToHashMap(emptyEv));
+		SpaceState sc4 = new SpaceState(statesToHashMap(s1, b0), eventToHashMap(emptyEv));
+		SpaceState sc5 = new SpaceState(statesToHashMap(s0, b1), eventToHashMap(cl));
+		SpaceState sc6 = new SpaceState(statesToHashMap(s1, b1), eventToHashMap(op));
+		SpaceState sc7 = new SpaceState(statesToHashMap(s0, b1), eventToHashMap(emptyEv));
 		
 		toMatch.insert(sc0);
 		toMatch.insert(sc1);
@@ -208,6 +199,8 @@ class TestOtherNet {
 		toMatch.add(t64);
 		toMatch.add(t27);				
 		
+		toMatch.ridenominazione();
+		
 		ArrayList<SpaceState> computedStates = new ArrayList<SpaceState>(computedSpace.states());
 		ArrayList<SpaceState> matchStates = new ArrayList<SpaceState>(toMatch.states());
 		ArrayList<SpaceState> computedStatesCopy = new ArrayList<SpaceState>(computedStates);
@@ -235,8 +228,9 @@ class TestOtherNet {
 
 		CFSMnetwork net = initialize();
 		ObservationsList obsList = new ObservationsList();
-		obsList.add(new ObservableLabel("o3"));
-		obsList.add(new ObservableLabel("o2"));
+		obsList.add(new ObservableLabel("act"));
+		obsList.add(new ObservableLabel("sby"));
+		obsList.add(new ObservableLabel("nop"));
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsList);
 		SpaceAutomaObsLin toMatch = new SpaceAutomaObsLin("Test con osservazione");
 		SpaceAutomaObsLin computedSpace = null;
@@ -245,48 +239,29 @@ class TestOtherNet {
 		} catch (Exception e) {
 			assertFalse(false);
 		}
-		SpaceStateObs sc1 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 0, obsList.size());
-		SpaceStateObs sc2 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(e2, emptyEv)), 1, obsList.size());
-		SpaceStateObs sc3 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)), 2, obsList.size());
-		SpaceStateObs sc5 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc4 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s21, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc6 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, e3)), 2, obsList.size());
-		SpaceStateObs sc7 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s31)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
-		SpaceStateObs sc8 = new SpaceStateObs(new ArrayList<ComportamentalState>(Arrays.asList(s20, s30)), 
-				new ArrayList<Event>(Arrays.asList(emptyEv, emptyEv)), 2, obsList.size());
+		SpaceStateObs sc0 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 0, obsList.size());
+		SpaceStateObs sc1 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(op), 1, obsList.size());
+		SpaceStateObs sc2 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(emptyEv), 1, obsList.size());
+		SpaceStateObs sc3 = new SpaceStateObs(statesToHashMap(s0, s0), eventToHashMap(cl), 2, obsList.size());
+		SpaceStateObs sc4 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 2, obsList.size());
+
 		
 		toMatch.insert(sc1);
 		toMatch.insert(sc2);
 		toMatch.insert(sc3);
-		toMatch.insert(sc5);
 		toMatch.insert(sc4);
-		toMatch.insert(sc6);
-		toMatch.insert(sc7);
-		toMatch.insert(sc8);
 		
-		SpaceTransition<SpaceStateObs> t12 = new SpaceTransition<SpaceStateObs>(sc1, sc2, t3a);
-		SpaceTransition<SpaceStateObs> t23 = new SpaceTransition<SpaceStateObs>(sc2, sc3, t2a);
-		SpaceTransition<SpaceStateObs> t35 = new SpaceTransition<SpaceStateObs>(sc3, sc5, t3b);
-		SpaceTransition<SpaceStateObs> t34 = new SpaceTransition<SpaceStateObs>(sc3, sc4, t3c);
-		SpaceTransition<SpaceStateObs> t46 = new SpaceTransition<SpaceStateObs>(sc4, sc6, t2b);
-		SpaceTransition<SpaceStateObs> t67 = new SpaceTransition<SpaceStateObs>(sc6, sc7, t3c);
-		SpaceTransition<SpaceStateObs> t68 = new SpaceTransition<SpaceStateObs>(sc6, sc8, t3b);
+		SpaceTransition<SpaceStateObs> t01 = new SpaceTransition<SpaceStateObs>(sc0, sc1, ts1);
+		SpaceTransition<SpaceStateObs> t12 = new SpaceTransition<SpaceStateObs>(sc1, sc2, tb3);
+		SpaceTransition<SpaceStateObs> t21 = new SpaceTransition<SpaceStateObs>(sc2, sc1, ts4);
+		SpaceTransition<SpaceStateObs> t23 = new SpaceTransition<SpaceStateObs>(sc2, sc3, ts2);
+		SpaceTransition<SpaceStateObs> t34 = new SpaceTransition<SpaceStateObs>(sc3, sc4, tb5);
 
-		
+		toMatch.add(t01);
 		toMatch.add(t12);
-		toMatch.add(t23);
-		toMatch.add(t35);
+		toMatch.add(t21);
+		toMatch.add(t23);	
 		toMatch.add(t34);
-		toMatch.add(t46);
-		toMatch.add(t67);
-		toMatch.add(t68);
 		
 		ArrayList<SpaceStateObs> computedStates = new ArrayList<SpaceStateObs>(computedSpace.states());
 		ArrayList<SpaceStateObs> matchStates = new ArrayList<SpaceStateObs>(toMatch.states());
@@ -295,8 +270,7 @@ class TestOtherNet {
 		ArrayList<SpaceTransition<SpaceStateObs>> computedTr = new ArrayList<SpaceTransition<SpaceStateObs>>(computedSpace.transitions());
 		ArrayList<SpaceTransition<SpaceStateObs>> matchTr = new ArrayList<SpaceTransition<SpaceStateObs>>(toMatch.transitions());
 		ArrayList<SpaceTransition<SpaceStateObs>> computedTrCopy = new ArrayList<SpaceTransition<SpaceStateObs>>(computedTr);
-		
-		
+				
 		computedStates.removeAll(matchStates);
 		matchStates.removeAll(computedStatesCopy);
 		computedTr.removeAll(matchTr);
@@ -322,5 +296,15 @@ class TestOtherNet {
 		System.out.println("Result: "+output);
 		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
 		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
+	}
+	
+	@Test
+	void enabledTransitions() {
+		CFSMnetwork net = initialize();
+		Set<ComportamentalTransition> enabledT = new HashSet<ComportamentalTransition>();
+		net.transitionTo(ts1);
+		enabledT.add(tb1);
+		enabledT.add(tb3);
+		assertTrue(net.enabledTransitions().equals(enabledT));
 	}
 }

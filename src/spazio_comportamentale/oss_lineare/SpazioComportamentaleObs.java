@@ -59,7 +59,7 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		net.transitionTo(transition);
 		if(index<observation.size() && transition.observableLabel().equals(observation.get(index)))
 			index++;
-		SpaceStateObs destination = new SpaceStateObs(net.getActualStates(), net.getActiveEvents(), index, observation.size());
+		SpaceStateObs destination = new SpaceStateObs(net.getCurrentStates(), net.getActiveEvents(), index, observation.size());
 		if(!spazioCompOL.insert(destination)) {
 			SpaceStateObs toSearch = destination;
 			destination = spazioCompOL.states().stream().filter(s -> s.equals(toSearch)).iterator().next();
