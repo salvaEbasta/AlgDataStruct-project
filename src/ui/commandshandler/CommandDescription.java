@@ -20,7 +20,7 @@ public enum CommandDescription{
 	GENERATESPACEOBS("generatespaceobs", "Genera una Osservazione Lineare da una rete di CFA","generatespaceobs"), 
 	SHOWOBS("showobs", "Mostra le Osservazioni Lineari effettuate sulla rete","showobs"), 
 	DIAGNOSIOBS("diagnosiobs", "Computa la diagnosi di un Osservazione Lineare già calcolata","diagnosiobs"), 
-	DIAGNOSIOBSWD("diagnosiobswd", "Computa la diagnosi di un Osservazione Lineare già calcolata, tramite Diagnosticatore","diagnosiobswd"), 
+	DIAGNOSIOBSWD("diagnosiobswd", "Computa diagnosi di Osservazione Lineare tramite Diagnosticatore","diagnosiobswd"), 
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),

@@ -1,6 +1,8 @@
 package comportamental_fsm.labels;
 
-public class ObservableLabel extends Label{
+import java.io.Serializable;
+
+public class ObservableLabel extends Label implements Serializable{
 
 	/**
 	 * 

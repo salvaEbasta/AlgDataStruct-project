@@ -1,4 +1,4 @@
-package ui.commands.spacecomp;
+package ui.commands.spaceops;
 
 import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
@@ -32,7 +32,7 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		if(context.getCurrentNet().computedObsertvationsLenght() == 0) {
+		if(context.getCurrentNet().computedObservationsLenght() == 0) {
 			context.getIOStream().writeln("Nessuna Osservazione Lineare calcolata per questa rete");
 			return false;
 		}
@@ -48,7 +48,7 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 				index = Integer.parseInt(ans);				
 			else
 				index = -1;
-		}while(index < 0 && index >= context.getCurrentNet().computedObsertvationsLenght());
+		}while(index < 0 || index >= context.getCurrentNet().computedObservationsLenght());
 		
 		Entry<ObservationsList, SpaceAutomaObsLin> obsSpace = context.getCurrentNet().getSpaceObsByIndex(index);		
 		
@@ -65,6 +65,7 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 			maxTime = Long.parseLong(maxString);
 		}
 		
+		long start = System.currentTimeMillis();
 		DiagnosticatoreBuilder diagnostBuilder = new DiagnosticatoreBuilder(obsSpace.getValue());
 		
 		ExecutorService executor = Executors.newFixedThreadPool(2);		
@@ -209,7 +210,10 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 		}	
 		executor.shutdownNow();
 		
-		context.getIOStream().writeln(String.format("Diagnosi trovata per l'osservazione %s tramite diagnosticatore: %s", obsSpace.getKey(), result));
+		long finish = System.currentTimeMillis();
+		double elapsed =  (double)(finish - start)/1000;
+		context.getIOStream().writeln(String.format("Diagnosi trovata per l'osservazione %s tramite diagnosticatore: %s\nTempo impiegato %.2fs",
+				obsSpace.getKey(), result, elapsed));
 		
 		return true;
 	}

@@ -1,4 +1,4 @@
-package ui.commands.spacecomp;
+package ui.commands.spaceops;
 
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;

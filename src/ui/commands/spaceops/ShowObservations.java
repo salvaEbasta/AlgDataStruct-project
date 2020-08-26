@@ -1,4 +1,4 @@
-package ui.commands.spacecomp;
+package ui.commands.spaceops;
 
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
@@ -18,7 +18,7 @@ public class ShowObservations implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		if(context.getCurrentNet().computedObsertvationsLenght() == 0) {
+		if(context.getCurrentNet().computedObservationsLenght() == 0) {
 			context.getIOStream().writeln("Nessuna Osservazione Lineare calcolata per questa rete");
 			return false;
 		}

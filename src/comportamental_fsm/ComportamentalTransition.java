@@ -45,6 +45,15 @@ public class ComportamentalTransition extends Transition<ComportamentalState>{
 		this.out = out;
 	}
 	
+	public ComportamentalTransition(String id, ComportamentalState source, ComportamentalState destination, ObservableLabel omega, RelevantLabel f) {
+		super(id, source, destination);
+		super.setObservableLabel(omega);
+		super.setRelevantLabel(f);
+		this.in = new Event();
+		this.inputLink = null;
+		this.out = new HashMap<Event, Link>();
+	}
+	
 	public Link getInputLink() {
 		return inputLink;
 	}

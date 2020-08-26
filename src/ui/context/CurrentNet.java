@@ -62,11 +62,12 @@ public class CurrentNet implements Serializable{
 		for(Entry<ObservationsList, SpaceAutomaObsLin> entry: listaOsservazioni.entrySet()) {
 			if(i == index)
 				return entry;
+			i++;
 		}
 		return null;
 	}
 	
-	public int computedObsertvationsLenght() {
+	public int computedObservationsLenght() {
 		return listaOsservazioni.size();
 	}
 	

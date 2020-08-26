@@ -1,4 +1,4 @@
-package ui.commands.spacecomp;
+package ui.commands.spaceops;
 
 import ui.commands.base.LoadNet;
 import ui.commands.general.CommandInterface;

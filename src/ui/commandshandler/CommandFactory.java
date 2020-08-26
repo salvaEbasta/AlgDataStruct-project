@@ -22,12 +22,12 @@ import ui.commands.newnet.SaveNet;
 import ui.commands.newnet.ShowCFAs;
 import ui.commands.newnet.ShowEvents;
 import ui.commands.newnet.ShowLinks;
-import ui.commands.spacecomp.DiagnosiObs;
-import ui.commands.spacecomp.DiagnosiObsDiagn;
-import ui.commands.spacecomp.GenerateSpace;
-import ui.commands.spacecomp.GenerateSpaceObs;
-import ui.commands.spacecomp.ShowObservations;
-import ui.commands.spacecomp.UpdateNet;
+import ui.commands.spaceops.DiagnosiObs;
+import ui.commands.spaceops.DiagnosiObsDiagn;
+import ui.commands.spaceops.GenerateSpace;
+import ui.commands.spaceops.GenerateSpaceObs;
+import ui.commands.spaceops.ShowObservations;
+import ui.commands.spaceops.UpdateNet;
 
 /**
  * Classe con il compito di fornire una nuova istanza di un comando
