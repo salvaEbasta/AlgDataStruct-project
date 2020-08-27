@@ -13,4 +13,4 @@ robot linkcfas L3
 C2
 C3
 endrobot
-savenet net
+savenet net1
