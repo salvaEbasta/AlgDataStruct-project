@@ -58,19 +58,19 @@ class TestOtherNet {
 	private Link l;
 	
 	
-	CFSMnetwork initialize() {
+	CFSMnetwork initialize(boolean obs) {
 		//AUTOMA s
 		s = new ComportamentalFSM("s");
-		s0 = new ComportamentalState("0");
-		s1 = new ComportamentalState("1");
+		s0 = new ComportamentalState("_0");
+		s1 = new ComportamentalState("_1");
 		s.insert(s0);
 		s.insert(s1);
 		s.setInitial(s0);
 		
 		//AUTOMA b
 		b = new ComportamentalFSM("b");
-		b0 = new ComportamentalState("0");
-		b1 = new ComportamentalState("1");
+		b0 = new ComportamentalState("0_");
+		b1 = new ComportamentalState("1_");
 		b.insert(b0);
 		b.insert(b1);
 		b.setInitial(b0);
@@ -95,7 +95,10 @@ class TestOtherNet {
 		tb4 = new ComportamentalTransition("b4", b1, b1, cl, l, new ObservableLabel(), new RelevantLabel("f4"));
 		tb5 = new ComportamentalTransition("b5", b0, b0, cl, l, new ObservableLabel("nop"), new RelevantLabel());
 		tb6 = new ComportamentalTransition("b6", b1, b1, op, l, new ObservableLabel("nop"), new RelevantLabel());
-		tb7 = new ComportamentalTransition("b7", b0, b1, op, l, new ObservableLabel("opn"), new RelevantLabel("f5"));
+		if(!obs)
+			tb7 = new ComportamentalTransition("b7", b0, b1, cl, l, new ObservableLabel("opn"), new RelevantLabel("f5"));
+		else
+			tb7 = new ComportamentalTransition("b7", b0, b1, op, l, new ObservableLabel("opn"), new RelevantLabel("f5"));
 		tb8 = new ComportamentalTransition("b8", b1, b0, op, l, new ObservableLabel("cls"), new RelevantLabel("f6"));
 		
 		
@@ -135,7 +138,7 @@ class TestOtherNet {
 	
 	@Test
 	void spazioComportamentale() throws Exception{		
-		CFSMnetwork net = initialize();
+		CFSMnetwork net = initialize(false);
 		SpazioComportamentale sc = new SpazioComportamentale(net);
 		SpaceAutomaComportamentale toMatch = new SpaceAutomaComportamentale("Test");
 		SpaceAutomaComportamentale computedSpace = null;
@@ -223,7 +226,7 @@ class TestOtherNet {
 
 	void spazioComportamentaleOsservazioni() {
 
-		CFSMnetwork net = initialize();
+		CFSMnetwork net = initialize(true);
 		ObservationsList obsList = new ObservationsList();
 		obsList.add(new ObservableLabel("act"));
 		obsList.add(new ObservableLabel("sby"));
@@ -281,7 +284,7 @@ class TestOtherNet {
 
 	@Test
 	void diagnostica() throws Exception{
-		CFSMnetwork net = initialize();
+		CFSMnetwork net = initialize(true);
 		ObservationsList obsLin = new ObservationsList();
 		obsLin.add(new ObservableLabel("act"));
 		obsLin.add(new ObservableLabel("sby"));
@@ -298,7 +301,7 @@ class TestOtherNet {
 	
 	@Test
 	void enabledTransitions() {
-		CFSMnetwork net = initialize();
+		CFSMnetwork net = initialize(false);
 		Set<ComportamentalTransition> enabledT = new HashSet<ComportamentalTransition>();
 		net.transitionTo(ts1);
 		enabledT.add(tb1);
