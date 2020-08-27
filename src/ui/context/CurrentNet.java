@@ -2,7 +2,6 @@ package ui.context;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 import comportamental_fsm.CFSMnetwork;
@@ -13,10 +12,6 @@ import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 
 public class CurrentNet implements Serializable{
-		
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
@@ -116,11 +111,7 @@ public class CurrentNet implements Serializable{
 	}
 	
 	public boolean hasDiagnosticatore() {
-		Iterator<Result> iter = results.values().iterator();
-		while(iter.hasNext()) 
-			if(!iter.next().diagnosticatoreNoResults())
-				return true;
-		return false;
+		return diagnosticatore !=null;
 	}
 	
 	public ClosureSpace getDiagnosticatore() {
