@@ -1,11 +1,8 @@
 loadnet net
 spaceops
-robot generatespaceobs
-o3
-n
+robot generatespace
 n
 x
-endrobot
 robot generatespaceobs
 o3
 y
