@@ -78,7 +78,7 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		};
 
 		task.start();
-		
+		boolean finished = true;
 		try {
 			if(maxTime == 0)
 				futureUserResponse.get();
@@ -110,6 +110,7 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 			else
 				result = spaceComp.midResult();
 		} catch (InterruptedException | TimeoutException e) {
+			finished = false;
 			result = spaceComp.midResult();
 			futureSAC.cancel(true);
 		} catch (ExecutionException e) {
@@ -119,7 +120,10 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		executor.shutdownNow();
 		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
 		context.getIOStream().writeln(result.toString());
-		context.getCurrentNet().setSpaceAutomaComportamentale(result);
+		if(finished)
+			context.getCurrentNet().setSpaceAutomaComportamentale(result);
+		else
+			context.getIOStream().writeln("Attenzione: l'esecuzione non è terminata correttamente!");
 		
 		return true;
 	}

@@ -31,7 +31,12 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 	}
 
 	private void buildSpace(SpaceState state, Set<ComportamentalTransition> enabledTransitions) {
-
+//		try {
+//			Thread.sleep(1550);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			
+//		}
 		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
 				net.restoreState(state);

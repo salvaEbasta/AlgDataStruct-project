@@ -174,7 +174,7 @@ class TestOtherNet {
 		SpaceTransition<SpaceState> t35 = new SpaceTransition<SpaceState>(sc3, sc5, ts2);
 		SpaceTransition<SpaceState> t50 = new SpaceTransition<SpaceState>(sc5, sc0, tb2);
 		SpaceTransition<SpaceState> t57 = new SpaceTransition<SpaceState>(sc5, sc7, tb4);
-		SpaceTransition<SpaceState> t75 = new SpaceTransition<SpaceState>(sc5, sc7, ts3);
+		SpaceTransition<SpaceState> t75 = new SpaceTransition<SpaceState>(sc7, sc5, ts3);
 		SpaceTransition<SpaceState> t76 = new SpaceTransition<SpaceState>(sc7, sc6, ts1);
 		SpaceTransition<SpaceState> t64 = new SpaceTransition<SpaceState>(sc6, sc4, tb8);
 		SpaceTransition<SpaceState> t27 = new SpaceTransition<SpaceState>(sc2, sc7, tb7);
