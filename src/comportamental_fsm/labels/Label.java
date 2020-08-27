@@ -27,11 +27,11 @@ public abstract class Label implements Serializable{
 		return label.equals(Constants.EPSILON);
 	}
 	
-	public boolean setLabel(String newLabel) {
+	public boolean setContent(String newLabel) {
 		this.label = newLabel;
 		return true;
 	}
-	public String getLabel() {
+	public String content() {
 		return label;
 	}
 	

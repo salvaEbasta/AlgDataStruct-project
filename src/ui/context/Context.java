@@ -58,7 +58,4 @@ public class Context {
 		currentCFA = null;
 		workspace.reset();
 	}
-
-	
-
 }

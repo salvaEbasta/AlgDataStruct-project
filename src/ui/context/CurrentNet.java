@@ -2,10 +2,13 @@ package ui.context;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Iterator;
+import java.util.Set;
+
 import comportamental_fsm.CFSMnetwork;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
+import diagnosticatore.ClosureSpace;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 
@@ -17,11 +20,14 @@ public class CurrentNet implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
-	private HashMap<ObservationsList, SpaceAutomaObsLin> listaOsservazioni;
+	private ClosureSpace diagnosticatore;
+	private HashMap<ObservationsList, Result> results;
 	
 	public CurrentNet(CFSMnetwork net) {
 		this.net = net;
-		listaOsservazioni = new HashMap<ObservationsList, SpaceAutomaObsLin>();
+		sac = null;
+		diagnosticatore = null;
+		results = new HashMap<ObservationsList, Result>();
 	}
 	
 	public void setSpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
@@ -29,14 +35,15 @@ public class CurrentNet implements Serializable{
 	}
 	
 	public void addObservation(ObservationsList obs, SpaceAutomaObsLin saol) {
-		listaOsservazioni.put(obs, saol);
+		results.put(obs, new Result());
+		results.get(obs).setObsSpace(saol);
 	}
 	
-	public boolean hasGeneratedSpace() {
+	public boolean hasComportamentalSpace() {
 		return sac != null;
 	}	
 	
-	public SpaceAutomaComportamentale getGeneratedSpace() {
+	public SpaceAutomaComportamentale getComportamentalSpace() {
 		return sac;
 	}	
 	
@@ -44,45 +51,44 @@ public class CurrentNet implements Serializable{
 		return net;
 	}
 	
-	public boolean hasGeneratedSpaceObs(ObservationsList labels) {
-		return listaOsservazioni.containsKey(labels);
+	public boolean hasLinObsCompSpace(ObservationsList labels) {
+		if(results.containsKey(labels))
+			return results.get(labels).hasObsSpace();
+		else
+			return false;
 	}
 	
-	public SpaceAutomaObsLin getGeneratedSpaceObs(ObservationsList labels) {
-		if(listaOsservazioni.containsKey(labels))
-			return listaOsservazioni.get(labels);
+	public SpaceAutomaObsLin getLinObsCompSpace(ObservationsList labels) {
+		if(results.containsKey(labels))
+			return results.get(labels).obsSpace();
 		else 
 			return null;
 	}
 	
-	public Entry<ObservationsList, SpaceAutomaObsLin> getSpaceObsByIndex(int index){
-		if(index > listaOsservazioni.size())
-			return null;
-		int i=0;
-		for(Entry<ObservationsList, SpaceAutomaObsLin> entry: listaOsservazioni.entrySet()) {
-			if(i == index)
-				return entry;
-			i++;
-		}
-		return null;
+	public HashMap<ObservationsList, SpaceAutomaObsLin> osbSpaces(){
+		HashMap<ObservationsList, SpaceAutomaObsLin> map = new HashMap<ObservationsList, SpaceAutomaObsLin>();
+		results.forEach((linObs, r)->map.put(linObs, r.obsSpace()));
+		return map;
 	}
 	
-	public int computedObservationsLenght() {
-		return listaOsservazioni.size();
+	public int observationsNumber() {
+		return results.size();
 	}
 	
-	public String generatedObsSpacesDescription(){
+	public String linObsCompSpacesDescription(){
 		StringBuilder sb = new StringBuilder("Spazi generati per la rete:\n");
 		int index = 0;
-		for(SpaceAutomaObsLin spaceOL: listaOsservazioni.values())
-			sb.append(String.format("%d - %s\n", index++, spaceOL.id()));
+		for(Result spaceOL: results.values())
+			sb.append(String.format("%d - %s\n", index++, spaceOL.obsSpace().id()));
 		return sb.toString();
 	}
 	
 	public void reset() {
 		net = null;
 		sac = null;
-		listaOsservazioni = new HashMap<ObservationsList, SpaceAutomaObsLin>();
+		diagnosticatore = null;
+		
+		results = new HashMap<ObservationsList, Result>();
 	}
 	
 	public boolean hasObservableLabel(String label) {
@@ -92,14 +98,15 @@ public class CurrentNet implements Serializable{
 	public String obsLabel() {
 		StringBuilder sb = new StringBuilder("Lista di etichette di Osservabilità nella rete:\n");
 		for(ObservableLabel obs : net.getObservabelLabels())
-			sb.append(String.format("* %s\n", obs.getLabel()));
+			sb.append(String.format("* %s\n", obs.content()));
 		return sb.toString();
 	}
 	
 	public String observationDescription() {
 		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n\n");
-		for(Entry<ObservationsList, SpaceAutomaObsLin> entry: listaOsservazioni.entrySet())
-			sb.append(entry.getValue()).append("\n\n");
+		for(Result entry: results.values())
+			sb.append(entry.obsSpace()).append("\n\n");
+		
 		return sb.toString();
 	}
 	
@@ -108,5 +115,39 @@ public class CurrentNet implements Serializable{
 		return net.toString();		
 	}
 	
-
+	public boolean hasDiagnosticatore() {
+		Iterator<Result> iter = results.values().iterator();
+		while(iter.hasNext()) 
+			if(!iter.next().diagnosticatoreNoResults())
+				return true;
+		return false;
+	}
+	
+	public ClosureSpace getDiagnosticatore() {
+		return diagnosticatore;
+	}
+	
+	public void setDiagnosticatore(ClosureSpace decorated) {
+		diagnosticatore = decorated;
+	}
+	
+	public void addObsSpaceResult(ObservationsList obs, String diagnosis, double time, long space) {
+		if(results.containsKey(obs)) {
+			results.get(obs).setObsSpaceDiagnosis(diagnosis);
+			results.get(obs).setObsSpaceTime(time);
+			results.get(obs).setObsSpaceSpace(space);
+		}
+	}
+	
+	public void addDiagnosticatoreResult(ObservationsList obs, String diagnosis, double time, long space) {
+		if(results.containsKey(obs)) {
+			results.get(obs).setObsSpaceDiagnosis(diagnosis);
+			results.get(obs).setObsSpaceTime(time);
+			results.get(obs).setObsSpaceSpace(space);
+		}
+	}
+	
+	public Set<ObservationsList> observations(){
+		return results.keySet();
+	}
 }

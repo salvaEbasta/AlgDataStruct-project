@@ -1,6 +1,8 @@
 package ui.commands.spaceops;
 
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -33,16 +35,25 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		if(context.getCurrentNet().computedObservationsLenght() == 0) {
+		if(context.getCurrentNet().observationsNumber() == 0) {
 			context.getIOStream().writeln("Nessuna Osservazione Lineare calcolata per questa rete");
 			return false;
 		}
 		
-		context.getIOStream().writeln(context.getCurrentNet().generatedObsSpacesDescription());
+		
+		StringBuilder sb = new StringBuilder("Spazi generati per la rete:\n");
+		ArrayList<ObservationsList> obsList = new ArrayList<>();
+		HashMap<ObservationsList, SpaceAutomaObsLin> obsMap = context.getCurrentNet().osbSpaces();
+		Iterator<ObservationsList> iter = obsMap.keySet().iterator();
+		while(iter.hasNext()) {
+			ObservationsList obs = iter.next();
+			sb.append(String.format("%d - %s\n", obsList.size(), obsMap.get(obs).id()));
+			obsList.add(obs);
+		}
 		
 		int index = 0;
 		do {
-			String ans = context.getIOStream().read("Inserire indice della Osservazione Lineare (oppure inserire 'exit' per uscire): ");
+			String ans = context.getIOStream().read("Inserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");
 			if(ans.equals("exit"))
 				return false;		
 			if(ans.matches("\\d+"))
@@ -50,11 +61,13 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			else
 				index = -1;
 			
-		}while(index < 0 || index >= context.getCurrentNet().computedObservationsLenght());
+		}while(index < 0 || index >= obsList.size());
 		
-		Entry<ObservationsList, SpaceAutomaObsLin> obsSpace = context.getCurrentNet().getSpaceObsByIndex(index);
+		//Entry<ObservationsList, SpaceAutomaObsLin> obsSpace = context.getCurrentNet().getSpaceObsByIndex(index);
+		ObservationsList obs = obsList.get(index);
+		SpaceAutomaObsLin obsSpace = obsMap.get(obs);
 		
-		String result = null;	
+		String result = null;
 			
 		String ans = context.getIOStream().yesOrNo("Vuoi inserire un tempo massimo per l'esecuzione?");
 		long maxTime = 0;
@@ -70,7 +83,7 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 		long start = System.currentTimeMillis();
 
 		RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>> diagnosi = 
-				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace.getValue(), new BuilderSpaceComportamentaleObsLin());	
+				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());	
 		
 		ExecutorService executor = Executors.newFixedThreadPool(2);		
 		Future<String> futureDiagnosi = executor.submit(diagnosi);
@@ -136,8 +149,9 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 
 		long finish = System.currentTimeMillis();
 		double elapsed =  (double)(finish - start)/1000;
-		context.getIOStream().writeln(String.format("Diagnosi trovata per l'osservazione %s: %s\nTempo impiegato %.2fs", obsSpace.getKey(), result, elapsed));
+		context.getIOStream().writeln(String.format("Diagnosi trovata per l'osservazione %s: %s\nTempo impiegato %.2fs", obs, result, elapsed));
 		
+		context.getCurrentNet().addObsSpaceResult(obs, result, elapsed, -1);
 		return true;
 	}
 

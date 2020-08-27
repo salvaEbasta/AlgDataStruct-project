@@ -30,7 +30,7 @@ public class Transition<S extends StateInterface> implements Serializable{
 	}	
 	
 	public String relevantLabelContent() {
-		return rel.getLabel();
+		return rel.content();
 	}
 	
 	public RelevantLabel relevantLabel() {
@@ -38,7 +38,7 @@ public class Transition<S extends StateInterface> implements Serializable{
 	}
 	
 	public String observableLabelContent() {
-		return obs.getLabel();
+		return obs.content();
 	}
 	
 	public ObservableLabel observableLabel() {
@@ -46,7 +46,7 @@ public class Transition<S extends StateInterface> implements Serializable{
 	}
 	
 	public boolean setObservableLabel(String newLabel) {
-		obs.setLabel(newLabel);
+		obs.setContent(newLabel);
 		return true;
 	}
 	
@@ -64,7 +64,7 @@ public class Transition<S extends StateInterface> implements Serializable{
 	}
 	
 	public boolean setRelevantLabel(String newLabel) {
-		this.rel.setLabel(newLabel);
+		this.rel.setContent(newLabel);
 		return true;
 	}
 	

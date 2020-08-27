@@ -6,15 +6,15 @@ import algorithm_interfaces.Algorithm;
 import diagnosticatore.ClosureSpace;
 import diagnosticatore.SilentClosure;
 import fsm_interfaces.Transition;
+import spazio_comportamentale.SpaceAutomaComportamentale;
+import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
-import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
-import spazio_comportamentale.oss_lineare.SpaceStateObs;
 
 public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
-	private SpaceAutomaObsLin space;
+	private SpaceAutomaComportamentale space;
 	private ClosureSpace cSpace;
 	
-	public DiagnosticatoreBuilder(SpaceAutomaObsLin space) {
+	public DiagnosticatoreBuilder(SpaceAutomaComportamentale space) {
 		this.space = space;
 	}
 	
@@ -42,8 +42,8 @@ public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
 		if(queue.size() > 0) {
 			SilentClosure closure = queue.pop();
 			cSpace.insert(closure);
-			for(SpaceStateObs s : closure.exitStates()) {
-				for(SpaceTransition<SpaceStateObs> t : space.from(s)) {
+			for(SpaceState s : closure.exitStates()) {
+				for(SpaceTransition<SpaceState> t : space.from(s)) {
 					if(!t.isSilent()) {
 						handleTransition(t, closure, queue);
 					}
@@ -53,7 +53,7 @@ public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
 		}
 	}
 	
-	private void handleTransition(SpaceTransition<SpaceStateObs> t, SilentClosure closure, LinkedList<SilentClosure> queue) throws Exception{
+	private void handleTransition(SpaceTransition<SpaceState> t, SilentClosure closure, LinkedList<SilentClosure> queue) throws Exception{
 		SilentClosure sink = null;
 		if(!cSpace.hasState(t.sink().id())) {
 			sink = new SilentClosureBuilder(space, t.sink()).call();

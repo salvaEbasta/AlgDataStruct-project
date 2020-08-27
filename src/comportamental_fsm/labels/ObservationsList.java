@@ -43,7 +43,11 @@ public class ObservationsList {
 	
 	@Override
 	public String toString() {
-		return obsList.toString();
+		StringBuilder sb = new StringBuilder("[");
+		obsList.forEach((obs)->sb.append(obs.content()+", "));
+		if(obsList.size()>0)
+			sb.delete(sb.length()-2, sb.length());
+		sb.append("]");
+		return sb.toString();
 	}
-
 }

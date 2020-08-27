@@ -46,8 +46,8 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		
 		
 		SpaceAutomaObsLin result = null;	
-		if(net.hasGeneratedSpaceObs(obsList)) {
-			result = net.getGeneratedSpaceObs(obsList);
+		if(net.hasLinObsCompSpace(obsList)) {
+			result = net.getLinObsCompSpace(obsList);
 			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
 					obsList.toString() + ":\n*****************************************************");
 			context.getIOStream().writeln(result.toString());		
