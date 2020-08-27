@@ -51,6 +51,8 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			obsList.add(obs);
 		}
 		
+		context.getIOStream().writeln(sb.toString());
+		
 		int index = 0;
 		do {
 			String ans = context.getIOStream().read("Inserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");

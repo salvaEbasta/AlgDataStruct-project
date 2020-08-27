@@ -1,10 +1,7 @@
 package ui.commands.spaceops;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -15,10 +12,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import comportamental_fsm.labels.ObservationsList;
-import diagnosticatore.ClosureSpace;
-import diagnosticatore.algorithms.DiagnosticatoreBuilder;
 import diagnosticatore.algorithms.LinearDiagnosis;
-import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
@@ -60,9 +54,12 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 			obsList.add(obs);
 		}
 		
+		context.getIOStream().writeln(sb.toString());
+		
+		
 		int index = 0;
 		do {
-			String ans = context.getIOStream().read("\nInserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");
+			String ans = context.getIOStream().read("Inserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");
 			if(ans.equals("exit"))
 				return false;		
 			if(ans.matches("\\d+"))
@@ -70,6 +67,7 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 			else
 				index = -1;
 		}while(index < 0 || index >= context.getCurrentNet().observationsNumber());
+		
 		
 		//Entry<ObservationsList, SpaceAutomaObsLin> obsSpace = context.getCurrentNet().getSpaceObsByIndex(index);
 		ObservationsList obs = obsList.get(index);

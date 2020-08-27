@@ -1,9 +1,21 @@
 package ui.context;
 
+import java.io.Serializable;
+
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 
-public class Result {
-	private class FinerResult{
+public class Result implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private class FinerResult implements Serializable{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private String diagnosis;
 		private double time;
 		private long space;

@@ -24,6 +24,7 @@ import ui.commands.newnet.ShowEvents;
 import ui.commands.newnet.ShowLinks;
 import ui.commands.spaceops.DiagnosiObs;
 import ui.commands.spaceops.DiagnosiObsDiagn;
+import ui.commands.spaceops.GenerateDiagnosticatore;
 import ui.commands.spaceops.GenerateSpace;
 import ui.commands.spaceops.GenerateSpaceObs;
 import ui.commands.spaceops.ShowObservations;
@@ -78,6 +79,10 @@ public class CommandFactory {
 	
 	public Command showObservations() {
 		return new Command(CommandDescription.SHOWOBS, new ShowObservations());
+	}
+	
+	public Command generateDiagnosticatore() {
+		return new Command(CommandDescription.GENERATEDIAGNOST, new GenerateDiagnosticatore());
 	}
 	
 	public Command diagnosiObservations() {

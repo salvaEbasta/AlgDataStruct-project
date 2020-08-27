@@ -33,6 +33,13 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		
 		SpaceAutomaComportamentale result = null;	
 			
+		if(net.hasComportamentalSpace()) {
+			result = net.getComportamentalSpace();
+			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
+			context.getIOStream().writeln(result.toString());		
+			return true;
+		}
+		
 		String ans = context.getIOStream().yesOrNo("Vuoi inserire un tempo massimo per l'esecuzione?");
 		long maxTime = 0;
 		

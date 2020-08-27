@@ -47,27 +47,27 @@ public enum CommandsState implements InitCommandsList{
 			return commandsList;
 		}
 	},
-		NEWCFA(){
-			
-			/*
-			 * (non-Javadoc)
-			 * @see main.new InitCommandsList#getCommandsList()
-			 */
-			@Override
-			public ArrayList<Command> getCommandsList(){
-				ArrayList<Command> commandsList = new ArrayList<Command>();
-				commandsList.add(new CommandFactory().back());
-				commandsList.add(new CommandFactory().newState());				
-				commandsList.add(new CommandFactory().newTransition());
-				commandsList.add(new CommandFactory().setInitial());
-				commandsList.add(new CommandFactory().showStates());
-				commandsList.add(new CommandFactory().showTransitions());
-				commandsList.add(new CommandFactory().saveCFA());
-				commandsList.add(new CommandFactory().resetCFA());
-				return commandsList;
-			}
+	NEWCFA(){
+		
+		/*
+		 * (non-Javadoc)
+		 * @see main.new InitCommandsList#getCommandsList()
+		 */
+		@Override
+		public ArrayList<Command> getCommandsList(){
+			ArrayList<Command> commandsList = new ArrayList<Command>();
+			commandsList.add(new CommandFactory().back());
+			commandsList.add(new CommandFactory().newState());				
+			commandsList.add(new CommandFactory().newTransition());
+			commandsList.add(new CommandFactory().setInitial());
+			commandsList.add(new CommandFactory().showStates());
+			commandsList.add(new CommandFactory().showTransitions());
+			commandsList.add(new CommandFactory().saveCFA());
+			commandsList.add(new CommandFactory().resetCFA());
+			return commandsList;
+		}
 	},
-	SPACECOMP(){
+	SPACEOPS(){
 		/*
 		 * (non-Javadoc)
 		 * @see main.new InitCommandsList#getCommandsList()
@@ -79,6 +79,7 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().generateSpace());
 			commandsList.add(new CommandFactory().generateSpaceObs());
 			commandsList.add(new CommandFactory().showObservations());
+			commandsList.add(new CommandFactory().generateDiagnosticatore());
 			commandsList.add(new CommandFactory().diagnosiObservations());
 			commandsList.add(new CommandFactory().diagnosiObservationsDiagnostic());
 			commandsList.add(new CommandFactory().updateNet());

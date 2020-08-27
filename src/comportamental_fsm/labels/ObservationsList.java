@@ -1,9 +1,14 @@
 package comportamental_fsm.labels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ObservationsList {
+public class ObservationsList implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<ObservableLabel> obsList;
 	
 	public ObservationsList() {
