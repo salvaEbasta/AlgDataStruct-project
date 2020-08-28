@@ -1,6 +1,5 @@
 package spazio_comportamentale.oss_lineare;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import comportamental_fsm.ComportamentalState;

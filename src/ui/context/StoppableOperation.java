@@ -1,5 +1,7 @@
 package ui.context;
 
+import java.util.AbstractMap;
+import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -14,7 +16,7 @@ import ui.stream.InOutStream;
 public class StoppableOperation {
 	
 	
-	public <O, A extends Algorithm<O>> O compute(InOutStream io, A algorithm) {
+	public <O, A extends Algorithm<O>> Entry<O, Stats> compute(InOutStream io, A algorithm) {
 		
 		O result = null;
 		
@@ -29,7 +31,9 @@ public class StoppableOperation {
 			maxTime = Long.parseLong(maxString);
 		}
 		
-		long start = System.currentTimeMillis();
+		Stats stats = new Stats();
+		stats.start();
+		
 		ExecutorService executor = Executors.newSingleThreadExecutor();		
 		Future<O> future = executor.submit(algorithm);
 		
@@ -61,16 +65,20 @@ public class StoppableOperation {
 			else
 				result = future.get();
 			
+			stats.stop();
 			io.writeln("\nEsecuzione completata, premi INVIO per vedere il risultato!");		
 			while(!inputThread.getState().equals(Thread.State.TERMINATED));
 		} catch (InterruptedException e) {
+			stats.stop();
 			result = algorithm.midResult();
 			future.cancel(true);
 			stopped = true;
 		} catch (ExecutionException e) {
+			stats.stop();
 			io.writeln("ERRORE: Impossibile eseguire l'operazione!");
 			return null;
 		} catch (TimeoutException e) {
+			stats.stop();
 			io.writeln("\nEsecuzione completata, premi INVIO per vedere il risultato!");		
 			result = algorithm.midResult();
 			future.cancel(true);
@@ -81,18 +89,20 @@ public class StoppableOperation {
 			stopped = true;
 		}
 		
-		long finish = System.currentTimeMillis();
-		double elapsed =  (double)(finish - start)/1000;
-		
-		io.writeln(String.format("Tempo Impiegato: %.2fs\n", elapsed));
+		stats.stop();
+		stats.setStopped(stopped);		
 		
 		if(stopped) {
 			io.writeln("--------------------------------------------------------------");	
 			io.writeln("|ATTENZIONE: il risultato ottenuto è un risultato intermedio!|");	
 			io.writeln("--------------------------------------------------------------\n");	
 		}
+
+		io.writeln(String.format("Tempo Impiegato: %.2fs\n", stats.getTime()));
+		io.writeln(String.format("Spazio Occupato: %.2fMB\n", stats.getSpace()));		
+				
 		
-		return result;
+		 return new AbstractMap.SimpleEntry<O, Stats>(result, stats);
 	}
 
 }

@@ -1,19 +1,14 @@
 package ui.commands.spaceops;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
+import java.util.Map.Entry;
 import diagnosticatore.ClosureSpace;
 import diagnosticatore.algorithms.DiagnosticatoreBuilder;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.UserWait;
+import ui.context.CurrentNet;
+import ui.context.Stats;
+import ui.context.StoppableOperation;
 import utility.Constants;
 
 public class GenerateDiagnosticatore implements CommandInterface, NoParameters{
@@ -34,86 +29,22 @@ public class GenerateDiagnosticatore implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		String ans = context.getIOStream().yesOrNo("Vuoi inserire un tempo massimo per l'esecuzione?");
-		long maxTime = 0;
+		Entry<ClosureSpace, Stats> result = null;
+		CurrentNet net = context.getCurrentNet();
 		
-		if(ans.equals("y")) {
-			String maxString = "";
-			do {
-				maxString = context.getIOStream().read("Inserire un tempo massimo in secondi per l'esecuzione: ");			
-			} while(!maxString.matches("\\d+"));
-			maxTime = Long.parseLong(maxString);
-		}
-		
-		long start = System.currentTimeMillis();
-		DiagnosticatoreBuilder diagnostBuilder = new DiagnosticatoreBuilder(context.getCurrentNet().getComportamentalSpace());
-		
-		ExecutorService executor = Executors.newFixedThreadPool(2);		
-		Future<ClosureSpace> futureDiagnosticatore = executor.submit(diagnostBuilder);
-		UserWait<ClosureSpace> uw = new UserWait<ClosureSpace>(context.getIOStream(), futureDiagnosticatore);
-		Future<String> futureUserResponse = executor.submit(uw);				
-		
-		ClosureSpace diagnosticatore = null;
-		
-		Thread task = new Thread() {			
-			public void run() {
-				while(true) {
-					if(futureDiagnosticatore.isDone()) {
-						futureUserResponse.cancel(true);
-						return;
-					}
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e) {
-						return;
-					}
-				}
-			}               
-		};
-
-		task.start();
-		
-		try {
-			if(maxTime == 0)
-				futureUserResponse.get();
-			else
-				futureUserResponse.get(maxTime, TimeUnit.SECONDS);
-			
-			if(!futureDiagnosticatore.isDone())
-				futureDiagnosticatore.cancel(true);
-		} catch (InterruptedException | CancellationException e) {
-			
-			context.getIOStream().writeln("");
-		} catch (ExecutionException e1) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
+		DiagnosticatoreBuilder diagnBuilder = new DiagnosticatoreBuilder(net.getComportamentalSpace());
+	
+		result = new StoppableOperation().compute(context.getIOStream(), diagnBuilder);
+		if(result == null)
 			return false;
-		} catch (TimeoutException e1) {
-			context.getIOStream().writeln("\nTempo Massimo Scaduto!");
+
+		boolean stopped = result.getValue().wasStopped();
+		
+		if(!stopped) {
+			context.getCurrentNet().setDiagnosticatore(result.getKey());
+			context.getIOStream().writeln(String.format("Diagnosticatore calcolato correttamente!"));
 		}
-
-
-		try {
-			if(futureDiagnosticatore.isDone() && !futureDiagnosticatore.isCancelled()) {
-				if(maxTime == 0)
-					diagnosticatore = futureDiagnosticatore.get(maxTime, TimeUnit.SECONDS);
-				else
-					diagnosticatore = futureDiagnosticatore.get();
-				if(!futureUserResponse.isDone())
-					futureUserResponse.cancel(true);
-			}
-			else
-				diagnosticatore = diagnostBuilder.midResult();
-		} catch (InterruptedException | TimeoutException e) {
-			diagnosticatore = diagnostBuilder.midResult();
-			futureDiagnosticatore.cancel(true);
-		} catch (ExecutionException e) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
-			return true;
-		}	
-		executor.shutdownNow();
-		context.getCurrentNet().setDiagnosticatore(diagnosticatore);
-		context.getIOStream().writeln(String.format("Diagnosticatore calcolato correttamente!"));
-		context.getIOStream().writeln(diagnosticatore.toString());
+		context.getIOStream().writeln(result.getKey().toString());
 		
 		return true;
 	}

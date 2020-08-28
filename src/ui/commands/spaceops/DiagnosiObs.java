@@ -3,14 +3,7 @@ package ui.commands.spaceops;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
+import java.util.Map.Entry;
 import comportamental_fsm.labels.ObservationsList;
 import fsm_algorithms.RelevanceRegexBuilder;
 import spazio_comportamentale.SpaceTransition;
@@ -20,7 +13,8 @@ import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.UserWait;
+import ui.context.Stats;
+import ui.context.StoppableOperation;
 import utility.Constants;
 
 public class DiagnosiObs implements CommandInterface, NoParameters{
@@ -65,95 +59,25 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			
 		}while(index < 0 || index >= obsList.size());
 		
-		//Entry<ObservationsList, SpaceAutomaObsLin> obsSpace = context.getCurrentNet().getSpaceObsByIndex(index);
 		ObservationsList obs = obsList.get(index);
 		SpaceAutomaObsLin obsSpace = obsMap.get(obs);
 		
-		String result = null;
-			
-		String ans = context.getIOStream().yesOrNo("Vuoi inserire un tempo massimo per l'esecuzione?");
-		long maxTime = 0;
-		
-		if(ans.equals("y")) {
-			String maxString = "";
-			do {
-				maxString = context.getIOStream().read("Inserire un tempo massimo in secondi per l'esecuzione: ");			
-			} while(!maxString.matches("\\d+"));
-			maxTime = Long.parseLong(maxString);
-		}
-		
-		long start = System.currentTimeMillis();
-
 		RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>> diagnosi = 
-				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());	
+				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());		
 		
-		ExecutorService executor = Executors.newFixedThreadPool(2);		
-		Future<String> futureDiagnosi = executor.submit(diagnosi);
-		UserWait<String> uw = new UserWait<String>(context.getIOStream(), futureDiagnosi);
-		Future<String> futureUserResponse = executor.submit(uw);				
-		
-		Thread task = new Thread() {			
-			public void run() {
-				while(true) {
-					if(futureDiagnosi.isDone()) {
-						futureUserResponse.cancel(true);
-						return;
-					}
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e) {
-						return;
-					}
-				}
-			}               
-		};
-
-		task.start();
-		
-		try {
-			if(maxTime == 0)
-				futureUserResponse.get();
-			else
-				futureUserResponse.get(maxTime, TimeUnit.SECONDS);
-			
-			if(!futureDiagnosi.isDone())
-				futureDiagnosi.cancel(true);
-		} catch (InterruptedException | CancellationException e) {
-			
-			context.getIOStream().writeln("");
-		} catch (ExecutionException e1) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
+	
+		Entry<String, Stats> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
+		if(result == null)
 			return false;
-		} catch (TimeoutException e1) {
-			context.getIOStream().writeln("\nTempo Massimo Scaduto!");
-		}
-
-
-		try {
-			if(futureDiagnosi.isDone() && !futureDiagnosi.isCancelled()) {
-				if(maxTime == 0)
-					result = futureDiagnosi.get(maxTime, TimeUnit.SECONDS);
-				else
-					result = futureDiagnosi.get();
-				if(!futureUserResponse.isDone())
-					futureUserResponse.cancel(true);
-			}
-			else
-				result = diagnosi.midResult();
-		} catch (InterruptedException | TimeoutException e) {
-			result = diagnosi.midResult();
-			futureDiagnosi.cancel(true);
-		} catch (ExecutionException e) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
-			return true;
-		}	
-		executor.shutdownNow();
-
-		long finish = System.currentTimeMillis();
-		double elapsed =  (double)(finish - start)/1000;
-		context.getIOStream().writeln(String.format("Diagnosi trovata per l'osservazione %s: %s\nTempo impiegato %.2fs", obs, result, elapsed));
 		
-		context.getCurrentNet().addObsSpaceResult(obs, result, elapsed, -1);
+		context.getIOStream().writeln(String.format("Diagnosi Lineare trovata per osservazione %s: %s", obs, result.getKey()));
+		
+		boolean stopped = result.getValue().wasStopped();
+		
+		if(!stopped)
+			context.getCurrentNet().addObsSpaceResult(obs, result.getKey(), result.getValue().getTime(), -1);
+		
+		
 		return true;
 	}
 

@@ -177,7 +177,9 @@ public class RelevanceRegexBuilder<S extends State, T extends Transition<S>> ext
 	
 	@Override
 	public String midResult() {
-		return regex;
+		String midResult = new String(regex);
+		regex = "";
+		return midResult;
 	}
 
 }

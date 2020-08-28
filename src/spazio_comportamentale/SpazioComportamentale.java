@@ -44,8 +44,6 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 		
 		if(enabledTransitions.size()>1) {
 			for(ComportamentalTransition transition: enabledTransitions) {
-				if(transition.id().equals("b8"))
-					System.out.println();
 				net.restoreState(state);
 				scattoTransizione(state, transition); 
 			}		

@@ -20,12 +20,12 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 	public SpazioComportamentaleObs(CFSMnetwork net, ObservationsList observation) {
 		this.net = net;		
 		this.observation = observation;
+		spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);
 	}
 	
 	@Override
 	public SpaceAutomaObsLin call() {
-		if(spazioCompOL == null) {
-			spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);		
+		if(spazioCompOL.states().isEmpty()) {		
 			SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), index, observation.size());
 			spazioCompOL.insert(initial);
 			spazioCompOL.setInitial(initial);
@@ -82,8 +82,8 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 	}
 	
 	public SpaceAutomaObsLin midResult() {
-		if(spazioCompOL == null)
-			return new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
-		return spazioCompOL;
+		SpaceAutomaObsLin midResult = new SpaceAutomaObsLin(spazioCompOL);
+		spazioCompOL =  new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
+		return midResult;
 	}
 }

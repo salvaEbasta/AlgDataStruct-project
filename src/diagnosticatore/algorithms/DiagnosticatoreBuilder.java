@@ -35,7 +35,9 @@ public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
 
 	@Override
 	public ClosureSpace midResult() {
-		return cSpace;
+		ClosureSpace midResult = new ClosureSpace(cSpace);
+		cSpace = new ClosureSpace(space.id());
+		return midResult;
 	}
 	
 	private void composeClosureSpace(LinkedList<SilentClosure> queue) throws Exception{

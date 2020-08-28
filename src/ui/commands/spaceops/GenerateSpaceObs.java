@@ -1,13 +1,6 @@
 package ui.commands.spaceops;
 
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
+import java.util.Map.Entry;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
@@ -16,7 +9,8 @@ import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.CurrentNet;
-import ui.context.UserWait;
+import ui.context.Stats;
+import ui.context.StoppableOperation;
 import utility.Constants;
 
 public class GenerateSpaceObs implements CommandInterface, NoParameters{
@@ -45,98 +39,33 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		}while(!ans.equalsIgnoreCase("n"));
 		
 		
-		SpaceAutomaObsLin result = null;	
 		if(net.hasLinObsCompSpace(obsList)) {
-			result = net.getLinObsCompSpace(obsList);
+			SpaceAutomaObsLin spaceAutoma = net.getLinObsCompSpace(obsList);
 			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
 					obsList.toString() + ":\n*****************************************************");
-			context.getIOStream().writeln(result.toString());		
+			context.getIOStream().writeln(spaceAutoma.toString());		
 			return true;
 		}
 
-		ans = context.getIOStream().yesOrNo("Vuoi inserire un tempo massimo per l'esecuzione?");
-		long maxTime = 0;
+		Entry<SpaceAutomaObsLin, Stats> result = null;			
 		
-		if(ans.equals("y")) {
-			String maxString = "";
-			do {
-				maxString = context.getIOStream().read("Inserire un tempo massimo in secondi per l'esecuzione: ");			
-			} while(!maxString.matches("\\d+"));
-			maxTime = Long.parseLong(maxString);
-		}
+		SpazioComportamentaleObs spaceComp = new SpazioComportamentaleObs(net.getNet(), obsList);
 	
-		
-		
-		SpazioComportamentaleObs spaceComp = new SpazioComportamentaleObs(net.getNet(), obsList);		
-		
-		ExecutorService executor = Executors.newFixedThreadPool(2);		
-		Future<SpaceAutomaObsLin> futureSAC = executor.submit(spaceComp);
-		UserWait<SpaceAutomaObsLin> uw = new UserWait<SpaceAutomaObsLin>(context.getIOStream(), futureSAC);
-		Future<String> futureUserResponse = executor.submit(uw);		
-
-		Thread task = new Thread() {			
-			public void run() {
-				while(true) {
-					if(futureSAC.isDone()) {
-						futureUserResponse.cancel(true);
-						return;
-					}
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e) {
-						return;
-					}
-				}
-			}               
-		};
-
-		task.start();
-		
-		try {
-			if(maxTime == 0)
-				futureUserResponse.get();
-			else
-				futureUserResponse.get(maxTime, TimeUnit.SECONDS);
-			
-			if(!futureSAC.isDone())
-				futureSAC.cancel(true);
-		} catch (InterruptedException | CancellationException e) {
-			//uw.close();
-			context.getIOStream().writeln("");
-		} catch (ExecutionException e1) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
+		result = new StoppableOperation().compute(context.getIOStream(), spaceComp);
+		if(result == null)
 			return false;
-		} catch (TimeoutException e1) {
-			context.getIOStream().writeln("\nTempo Massimo Scaduto!");
-		}
-
-
-		try {
-			if(futureSAC.isDone() && !futureSAC.isCancelled()) {
-				if(maxTime == 0)
-					result = futureSAC.get(maxTime, TimeUnit.SECONDS);
-				else
-					result = futureSAC.get();
-				if(!futureUserResponse.isDone())
-					futureUserResponse.cancel(true);
-			}
-			else
-				result = spaceComp.midResult();
-		} catch (InterruptedException | TimeoutException e) {
-			result = spaceComp.midResult();
-			futureSAC.cancel(true);
-		} catch (ExecutionException e) {
-			context.getIOStream().writeln("ERRORE: Impossibile completare l'esecuzione!");
-			return false;
-		}	
-	
+		
 		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-						obsList.toString() + ":\n*****************************************************");
-		context.getIOStream().writeln(result.toString());
+				obsList.toString() + ":\n*****************************************************");
+		context.getIOStream().writeln(result.getKey().toString());
 		
-		context.getCurrentNet().addObservation(obsList, result);
-		executor.shutdownNow();
+		boolean stopped = result.getValue().wasStopped();
+		
+		if(!stopped)
+			context.getCurrentNet().addObservation(obsList, result.getKey());
+		
 		return true;
+
 	}
 
 }

@@ -1,11 +1,14 @@
 package ui.commands.spaceops;
 
+import java.util.Map.Entry;
+
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpazioComportamentale;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.CurrentNet;
+import ui.context.Stats;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -23,12 +26,12 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 
 		CurrentNet net = context.getCurrentNet();	
 		
-		SpaceAutomaComportamentale result = null;	
+		Entry<SpaceAutomaComportamentale, Stats> result = null;	
 			
 		if(net.hasComportamentalSpace()) {
-			result = net.getComportamentalSpace();
+			SpaceAutomaComportamentale spaceAutoma = net.getComportamentalSpace();
 			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
-			context.getIOStream().writeln(result.toString());		
+			context.getIOStream().writeln(spaceAutoma.toString());		
 			return true;
 		}
 		
@@ -39,7 +42,13 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		if(result == null)
 			return false;
 		
-		context.getIOStream().writeln(result.toString());
+		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
+		context.getIOStream().writeln(result.getKey().toString());
+		
+		boolean stopped = result.getValue().wasStopped();
+		
+		if(!stopped)
+			context.getCurrentNet().setSpaceAutomaComportamentale(result.getKey());		
 		
 		return true;
 	}
