@@ -122,7 +122,7 @@ public class CurrentNet implements Serializable{
 		diagnosticatore = decorated;
 	}
 	
-	public void addObsSpaceResult(ObservationsList obs, String diagnosis, double time, long space) {
+	public void addObsSpaceResult(ObservationsList obs, String diagnosis, double time, double space) {
 		if(results.containsKey(obs)) {
 			results.get(obs).setObsSpaceDiagnosis(diagnosis);
 			results.get(obs).setObsSpaceTime(time);
@@ -130,7 +130,7 @@ public class CurrentNet implements Serializable{
 		}
 	}
 	
-	public void addDiagnosticatoreResult(ObservationsList obs, String diagnosis, double time, long space) {
+	public void addDiagnosticatoreResult(ObservationsList obs, String diagnosis, double time, double space) {
 		if(results.containsKey(obs)) {
 			results.get(obs).setObsSpaceDiagnosis(diagnosis);
 			results.get(obs).setObsSpaceTime(time);

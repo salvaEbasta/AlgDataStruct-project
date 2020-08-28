@@ -75,7 +75,7 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 		boolean stopped = result.getValue().wasStopped();
 		
 		if(!stopped)
-			context.getCurrentNet().addObsSpaceResult(obs, result.getKey(), result.getValue().getTime(), -1);
+			context.getCurrentNet().addObsSpaceResult(obs, result.getKey(), result.getValue().getTime(), result.getValue().getSpace());
 		
 		
 		return true;

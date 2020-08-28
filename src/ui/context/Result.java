@@ -18,14 +18,14 @@ public class Result implements Serializable{
 		private static final long serialVersionUID = 1L;
 		private String diagnosis;
 		private double time;
-		private long space;
+		private double space;
 		
 		public FinerResult() {diagnosis = null; time =- 1; space =- 1;}
 		public double time() {return time;}
-		public long space() {return space;}
+		public double space() {return space;}
 		public String diagnosis() {return diagnosis;};
 		public void setTime(double time) {this.time = time;}
-		public void setSpace(long space) {this.space = space;}
+		public void setSpace(double space) {this.space = space;}
 		public void setDiagnosis(String diagnosis) {this.diagnosis = diagnosis;}
 		public void reset() {diagnosis = null; time =- 1; space =- 1;}
 		public boolean isEmpty() {return diagnosis==null&&time<0&&space<0;}
@@ -52,10 +52,10 @@ public class Result implements Serializable{
 	public void setObsSpace(SpaceAutomaObsLin obsSpace) {this.obsSpace = obsSpace;}
 	public void setObsSpaceDiagnosis(String diagnosis) {spaceResult.setDiagnosis(diagnosis);}
 	public void setObsSpaceTime(double time) {spaceResult.setTime(time);}
-	public void setObsSpaceSpace(long space) {spaceResult.setSpace(space);}
+	public void setObsSpaceSpace(double space) {spaceResult.setSpace(space);}
 	public void setDiagnosticatoreDiagnosis(String diagnosis) {diagnosticatoreResult.setDiagnosis(diagnosis);}
 	public void setDiagnosticatoreTime(double time) {diagnosticatoreResult.setTime(time);}
-	public void setDiagnosticatoreSpace(long space) {diagnosticatoreResult.setSpace(space);}
+	public void setDiagnosticatoreSpace(double space) {diagnosticatoreResult.setSpace(space);}
 	
 	@Override
 	public String toString() {
