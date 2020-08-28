@@ -20,4 +20,4 @@ robot linkcfas L3
 C3
 C1
 endrobot
-savenet trinet
+savenet benchmark
