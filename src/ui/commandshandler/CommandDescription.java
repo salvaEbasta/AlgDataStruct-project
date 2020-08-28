@@ -11,7 +11,7 @@ public enum CommandDescription{
 	BACK("back", "Torna al menù precedente","back"),
 	READCOMMANDS("readcommands", "Legge ed esegue una serie di comandi da file txt","readcommands [fileName].txt"),
 	NEWNET("newnet", "Crea una nuova rete di FA Comportamentali","newnet"), 
-	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet"), 
+	LOADNET("loadnet", "Carica una rete di FA Comportamentali da file","loadnet [fileName]"), 
 	SHOWNET("shownet", "Mostra una descrizione della rete di CFA caricata","shownet"), 
 	RESETNET("resetnet", "Resetta tutti i dati creati per la rete (CFA, Eventi, Link...)","resetnet"), 
 	UPDATENET("updatenet", "Aggiorna il file della rete attualmente caricata","updatenet"), 
