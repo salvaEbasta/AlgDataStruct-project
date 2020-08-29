@@ -1,0 +1,51 @@
+newcfa m
+newstate m0
+newstate m1
+newstate m2
+setinitial m0
+robot newtransition t1m
+m0 //stato sorgente
+m1 //stato sorgente
+y //eventi input?
+e1 //evento input
+L1 //link input
+y //eventi output?
+e3 //evento output
+L3 //link output
+n //altri eventi output?
+n //label oss?
+y //label rel?
+f3 //label rel
+endrobot
+robot newtransition t2m
+m1 //stato sorgente
+m0 //stato sorgente
+y //eventi input?
+e2 //evento output
+L1 //link output
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition t3m
+m2 //stato sorgente
+m0 //stato sorgente
+n //eventi input?
+y //eventi output?
+e2 //evento output
+L3 //link output
+n //altri eventi output?
+y //label oss?
+o3 //label oss
+n //label rel?
+endrobot
+robot newtransition t34
+m2 //stato sorgente
+m2 //stato sorgente
+n //eventi input?
+n //eventi output?
+n //label oss?
+y //label rel?
+f4 //label rel
+endrobot
+savecfa
