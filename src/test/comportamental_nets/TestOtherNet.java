@@ -229,6 +229,7 @@ class TestOtherNet {
 		obsList.add(new ObservableLabel("sby"));
 		obsList.add(new ObservableLabel("nop"));
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsList);
+		
 		SpaceAutomaObsLin toMatch = new SpaceAutomaObsLin("Test con osservazione");
 		SpaceAutomaObsLin computedSpace = null;
 		try {
