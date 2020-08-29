@@ -1,7 +1,5 @@
 package spazio_comportamentale;
 
-import java.util.Set;
-
 public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 
 	/**
@@ -24,29 +22,4 @@ public class SpaceAutomaComportamentale extends SpaceAutoma<SpaceState>{
 		return deepCopy;
 	}
 	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("SpaceAutomaComportamentale: %s\n", id()));
-		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
-		for(SpaceState state: states()) {
-			sb.append(state.toString());
-			Set<SpaceTransition<SpaceState>>  in = to(state);
-			Set<SpaceTransition<SpaceState>> out = from(state);
-			if(!in.isEmpty()) {
-				sb.append("\n\t- Input Transitions:");
-				for(SpaceTransition<SpaceState> inTransition: in) {
-					sb.append(String.format("\n\t\t* %s", inTransition));
-				}
-			}
-			if(!out.isEmpty()) {
-				sb.append("\n\t- Output Transitions:");
-				for(SpaceTransition<SpaceState> outTransition: out) {
-					sb.append(String.format("\n\t\t* %s", outTransition));
-				}
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
 }

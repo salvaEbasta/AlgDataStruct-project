@@ -239,7 +239,7 @@ class TestOtherNet {
 		SpaceStateObs sc0 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 0, obsList.size());
 		SpaceStateObs sc1 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(op), 1, obsList.size());
 		SpaceStateObs sc2 = new SpaceStateObs(statesToHashMap(s1, b0), eventToHashMap(emptyEv), 1, obsList.size());
-		SpaceStateObs sc3 = new SpaceStateObs(statesToHashMap(s0, s0), eventToHashMap(cl), 2, obsList.size());
+		SpaceStateObs sc3 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(cl), 2, obsList.size());
 		SpaceStateObs sc4 = new SpaceStateObs(statesToHashMap(s0, b0), eventToHashMap(emptyEv), 3, obsList.size());
 
 		toMatch.insert(sc0);
@@ -267,9 +267,10 @@ class TestOtherNet {
 		ArrayList<SpaceTransition<SpaceStateObs>> computedTr = new ArrayList<SpaceTransition<SpaceStateObs>>(computedSpace.transitions());
 		ArrayList<SpaceTransition<SpaceStateObs>> matchTr = new ArrayList<SpaceTransition<SpaceStateObs>>(toMatch.transitions());
 		ArrayList<SpaceTransition<SpaceStateObs>> computedTrCopy = new ArrayList<SpaceTransition<SpaceStateObs>>(computedTr);
-				
+		
 		computedStates.removeAll(matchStates);
 		matchStates.removeAll(computedStatesCopy);
+		computedStates.contains(sc3);
 		computedTr.removeAll(matchTr);
 		matchTr.removeAll(computedTrCopy);
 		

@@ -55,14 +55,26 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		if(result == null)
 			return false;
 		
-		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-				obsList.toString() + ":\n*****************************************************");
-		context.getIOStream().writeln(result.getKey().toString());
-		
 		boolean stopped = result.getValue().wasStopped();
 		
-		if(!stopped)
-			context.getCurrentNet().addObservation(obsList, result.getKey());
+		boolean notraettoria = false;
+		if(!stopped) {
+			if(result.getKey().states().size() == 1 && result.getKey().transitions().isEmpty())
+				notraettoria = true;
+			else
+				context.getCurrentNet().addObservation(obsList, result.getKey());
+				
+		}
+		
+		
+		if(!notraettoria) {
+			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
+					obsList.toString() + ":\n*****************************************************");
+			context.getIOStream().writeln(result.getKey().toString());
+		}
+		else
+			context.getIOStream().writeln("ERRORE: Non esiste nessuna traettoria nello spazio per l'osservazione lineare ".concat(obsList.toString()));
+		
 		
 		return true;
 

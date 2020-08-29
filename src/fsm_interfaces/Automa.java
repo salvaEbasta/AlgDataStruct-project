@@ -3,6 +3,7 @@ package fsm_interfaces;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class Automa<S extends StateInterface, T extends Transition<S>> implements FiniteStateMachine<S, T>, Serializable, Cloneable{
@@ -170,10 +171,11 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("Automa: %s\n", id()));
 		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
-		for(S state: states()) {
+		for(Entry<S, Interconnections<S, T>> entry : structure.entrySet()) {
+			S state = entry.getKey();
 			sb.append(state.toString());
-			Set<T>  in = to(state);
-			Set<T> out = from(state);
+			Set<T>  in = entry.getValue().to();
+			Set<T> out = entry.getValue().to();
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
 				for(T inTransition: in) {
