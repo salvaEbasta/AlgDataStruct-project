@@ -3,10 +3,6 @@ package finite_state_machine;
 import fsm_interfaces.State;
 
 public class FiniteState extends State{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private boolean accepting;
 	
