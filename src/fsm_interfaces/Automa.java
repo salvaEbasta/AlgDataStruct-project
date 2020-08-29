@@ -175,7 +175,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 			S state = entry.getKey();
 			sb.append(state.toString());
 			Set<T>  in = entry.getValue().to();
-			Set<T> out = entry.getValue().to();
+			Set<T> out = entry.getValue().from();
 			if(!in.isEmpty()) {
 				sb.append("\n\t- Input Transitions:");
 				for(T inTransition: in) {

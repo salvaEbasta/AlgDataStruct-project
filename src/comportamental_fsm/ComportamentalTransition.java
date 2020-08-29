@@ -76,7 +76,10 @@ public class ComportamentalTransition extends Transition<ComportamentalState>{
 	
 	@Override
 	public String toString(){
-		StringBuilder sb = new StringBuilder(String.format("%s: ", id()));
+		StringBuilder sb = new StringBuilder();
+		sb.append(id().concat(":["));
+		sb.append(source().id()+"->"+sink().id());
+		sb.append(", "+observableLabel().toString()+", "+relevantLabel().toString()+"], ");
 		if(!isInputEventEmpty())
 			sb.append(String.format("%s(%s)", in.id(), inputLink.id()));
 		if(!isOutputEventsEmpty()) {
@@ -88,8 +91,6 @@ public class ComportamentalTransition extends Transition<ComportamentalState>{
 			}
 			sb.append("}");			
 		}
-		if(hasLabel())
-			sb.append(labels());
 		return sb.toString();
 	}
 
