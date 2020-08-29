@@ -13,7 +13,7 @@ import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.Stats;
+import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -66,7 +66,7 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());		
 		
 	
-		Entry<String, Stats> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
+		Entry<String, Performance> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
 		if(result == null)
 			return false;
 		

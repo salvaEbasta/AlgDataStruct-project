@@ -18,7 +18,7 @@ import spazio_comportamentale.SpazioComportamentale;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.Stats;
+import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -76,7 +76,7 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 		LinearDiagnosis diagnosi = new LinearDiagnosis(context.getCurrentNet().getDiagnosticatore(), obs);		
 		
 	
-		Entry<String, Stats> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
+		Entry<String, Performance> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
 		if(result == null)
 			return false;
 		

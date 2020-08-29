@@ -1,0 +1,23 @@
+newnet
+newlink L1
+newlink L2
+newlink L3
+newevent e1
+newevent e2
+newevent e3
+readcommands triC1.txt
+readcommands triC2.txt
+readcommands triC3.txt
+robot linkcfas L1
+C2
+C1
+endrobot
+robot linkcfas L2
+C2
+C3
+endrobot
+robot linkcfas L3
+C3
+C1
+endrobot
+savenet ours

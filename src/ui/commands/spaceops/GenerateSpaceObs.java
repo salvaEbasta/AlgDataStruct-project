@@ -9,7 +9,7 @@ import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.CurrentNet;
-import ui.context.Stats;
+import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -47,7 +47,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 			return true;
 		}
 
-		Entry<SpaceAutomaObsLin, Stats> result = null;			
+		Entry<SpaceAutomaObsLin, Performance> result = null;			
 		
 		SpazioComportamentaleObs spaceComp = new SpazioComportamentaleObs(net.getNet(), obsList);
 	

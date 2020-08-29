@@ -1,6 +1,6 @@
 package ui.context;
 
-public class Stats {
+public class Performance {
 	
 	private static final long MEGABYTE = 1024L * 1024L;
 	
@@ -13,6 +13,7 @@ public class Stats {
 	public void start() {
 		startTime = System.currentTimeMillis();
 		Runtime runtime = Runtime.getRuntime();
+		runtime.gc();
 		startSpace = runtime.totalMemory() - runtime.freeMemory();
 	}
 	

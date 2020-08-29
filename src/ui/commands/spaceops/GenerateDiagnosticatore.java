@@ -7,7 +7,7 @@ import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.CurrentNet;
-import ui.context.Stats;
+import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -29,7 +29,7 @@ public class GenerateDiagnosticatore implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		Entry<ClosureSpace, Stats> result = null;
+		Entry<ClosureSpace, Performance> result = null;
 		CurrentNet net = context.getCurrentNet();
 		
 		DiagnosticatoreBuilder diagnBuilder = new DiagnosticatoreBuilder(net.getComportamentalSpace());

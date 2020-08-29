@@ -8,7 +8,7 @@ import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.CurrentNet;
-import ui.context.Stats;
+import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
 
@@ -26,7 +26,7 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 
 		CurrentNet net = context.getCurrentNet();	
 		
-		Entry<SpaceAutomaComportamentale, Stats> result = null;	
+		Entry<SpaceAutomaComportamentale, Performance> result = null;	
 			
 		if(net.hasComportamentalSpace()) {
 			SpaceAutomaComportamentale spaceAutoma = net.getComportamentalSpace();
@@ -42,10 +42,12 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		if(result == null)
 			return false;
 		
+		boolean stopped = result.getValue().wasStopped();			
+		
 		context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO:\n*****************************************************");
 		context.getIOStream().writeln(result.getKey().toString());
 		
-		boolean stopped = result.getValue().wasStopped();
+		
 		
 		if(!stopped)
 			context.getCurrentNet().setSpaceAutomaComportamentale(result.getKey());		

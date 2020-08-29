@@ -16,7 +16,7 @@ import ui.stream.InOutStream;
 public class StoppableOperation {
 	
 	
-	public <O, A extends Algorithm<O>> Entry<O, Stats> compute(InOutStream io, A algorithm) {
+	public <O, A extends Algorithm<O>> Entry<O, Performance> compute(InOutStream io, A algorithm) {
 		
 		O result = null;
 		
@@ -31,7 +31,7 @@ public class StoppableOperation {
 			maxTime = Long.parseLong(maxString);
 		}
 		
-		Stats stats = new Stats();
+		Performance stats = new Performance();
 		stats.start();
 		
 		ExecutorService executor = Executors.newSingleThreadExecutor();		
@@ -102,7 +102,7 @@ public class StoppableOperation {
 		io.writeln(String.format("Spazio Occupato: %.2fMB\n", stats.getSpace()));		
 				
 		
-		 return new AbstractMap.SimpleEntry<O, Stats>(result, stats);
+		 return new AbstractMap.SimpleEntry<O, Performance>(result, stats);
 	}
 
 }
