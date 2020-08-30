@@ -1,0 +1,11 @@
+newnet
+newlink L
+newevent e1
+newevent e2
+readcommands oursS2s.txt
+readcommands oursR2s.txt
+robot linkcfas L
+r
+s
+endrobot
+savenet ours2s

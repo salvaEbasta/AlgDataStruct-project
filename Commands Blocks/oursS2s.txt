@@ -7,9 +7,10 @@ s0 //stato sorgente
 s1 //stato sorgente
 y //eventi input?
 e2 //evento input
-L1 //link input
+L //link input
 n //eventi output?
-n //label oss?
+y //label oss?
+o2 //label oss
 n //label rel?
 endrobot
 robot newtransition t2s
@@ -25,8 +26,8 @@ robot newtransition t3s
 s0 //stato sorgente
 s0 //stato sorgente
 y //eventi input?
-e3 //evento input
-L3 //link input
+e1 //evento input
+L //link input
 n //eventi output?
 n //label oss?
 n //label rel?
