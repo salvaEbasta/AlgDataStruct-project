@@ -2,6 +2,7 @@ package spazio_comportamentale;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import fsm_interfaces.Automa;
@@ -38,11 +39,10 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 	 */
 	public boolean potatura() {
 		int prevSize = states().size();
-		Set<S> setCopy = new HashSet<S>(states());
+		Set<S> setCopy = new LinkedHashSet<S>(states());
 		for(S state: setCopy) {
 			checkPotatura(state);
 		}
-		ridenominazione();
 		return states().size() != prevSize;
 	}
 	
@@ -88,30 +88,5 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		SpaceAutoma<S> deepCopy = (SpaceAutoma<S>) super.clone();
 		return deepCopy;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("SpaceAutoma: %s\n", id()));
-		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
-		for(S state: states()) {
-			sb.append(state.toString());
-			Set<SpaceTransition<S>>  in = to(state);
-			Set<SpaceTransition<S>> out = from(state);
-			if(!in.isEmpty()) {
-				sb.append("\n\t- Input Transitions:");
-				for(SpaceTransition<S> inTransition: in) {
-					sb.append(String.format("\n\t\t* %s", inTransition));
-				}
-			}
-			if(!out.isEmpty()) {
-				sb.append("\n\t- Output Transitions:");
-				for(SpaceTransition<S> outTransition: out) {
-					sb.append(String.format("\n\t\t* %s", outTransition));
-				}
-			}
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
+
 }

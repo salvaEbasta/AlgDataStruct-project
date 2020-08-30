@@ -3,6 +3,7 @@ package fsm_interfaces;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -43,7 +44,7 @@ public class Automa<S extends StateInterface, T extends Transition<S>> implement
 	}
 	@Override
 	public Set<S> states() {
-		return new HashSet<S>(structure.keySet());
+		return new LinkedHashSet<S>(structure.keySet());
 	}
 	
 	@Override
