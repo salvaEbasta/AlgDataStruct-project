@@ -7,7 +7,6 @@ import java.util.Set;
 import fsm_interfaces.StateInterface;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
-import spazio_comportamentale.SpaceTransition;
 import utility.Constants;
 
 /**
@@ -129,27 +128,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(String.format("SilentClosure: %s\n", id()));
-		sb.append(String.format("[Numero Stati: %d - Numero Transizioni: %d]\n", states().size(), transitions().size()));
-		for(SpaceState state: states()) {
-			sb.append(state.toString());
-			Set<SpaceTransition<SpaceState>>  in = to(state);
-			Set<SpaceTransition<SpaceState>> out = from(state);
-			if(!in.isEmpty()) {
-				sb.append("\n\t- Input Transitions:");
-				for(SpaceTransition<SpaceState> inTransition: in) {
-					sb.append(String.format("\n\t\t* %s", inTransition));
-				}
-			}
-			if(!out.isEmpty()) {
-				sb.append("\n\t- Output Transitions:");
-				for(SpaceTransition<SpaceState> outTransition: out) {
-					sb.append(String.format("\n\t\t* %s", outTransition));
-				}
-			}
-			sb.append("\n");
-		}
+		StringBuilder sb = new StringBuilder(super.toString()).append("\n");
 		sb.append("Decorations:");
 		decorations.forEach((k,v)->sb.append("\n\t- "+k.id()+": "+v));
 		sb.append("\nExiting States: "+exiting.toString());

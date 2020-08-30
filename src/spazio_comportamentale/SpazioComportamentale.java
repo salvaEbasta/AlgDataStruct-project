@@ -40,7 +40,6 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 			scattoTransizione(state, enabledTransitions.iterator().next());
 		else 
 			spazioComp.insert(state);
-		return;
 	}
 
 	private void scattoTransizione(SpaceState source, ComportamentalTransition transition) {
@@ -54,7 +53,6 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 		SpaceTransition<SpaceState> spaceTransition = new SpaceTransition<SpaceState>(source, destination, transition);
 		if(spazioComp.add(spaceTransition))
 			buildSpace(destination, net.enabledTransitions());	
-		return;
 	}
 
 	public SpaceAutomaComportamentale midResult() {	
