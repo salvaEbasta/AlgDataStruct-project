@@ -16,6 +16,8 @@ public class CurrentNet implements Serializable{
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
 	private ClosureSpace diagnosticatore;
+	private double diagnosticatoreTime;
+	private double diagnosticatoreSpace;
 	private HashMap<ObservationsList, Result> results;
 	
 	public CurrentNet(CFSMnetwork net) {
@@ -23,6 +25,8 @@ public class CurrentNet implements Serializable{
 		sac = null;
 		diagnosticatore = null;
 		results = new HashMap<ObservationsList, Result>();
+		diagnosticatoreSpace = -1;
+		diagnosticatoreTime = -1;
 	}
 	
 	public void setSpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
@@ -66,6 +70,10 @@ public class CurrentNet implements Serializable{
 		return map;
 	}
 	
+	public Set<ObservationsList> linObss(){
+		return results.keySet();
+	}
+	
 	public int observationsNumber() {
 		return results.size();
 	}
@@ -98,10 +106,8 @@ public class CurrentNet implements Serializable{
 	}
 	
 	public String observationDescription() {
-		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n\n");
-		for(Result entry: results.values())
-			sb.append(entry.obsSpace()).append("\n\n");
-		
+		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n");
+		results.forEach((o, r)->sb.append("* "+o.toString()+": "+r.toString()+"\n"));
 		return sb.toString();
 	}
 	
@@ -132,13 +138,53 @@ public class CurrentNet implements Serializable{
 	
 	public void addDiagnosticatoreResult(ObservationsList obs, String diagnosis, double time, double space) {
 		if(results.containsKey(obs)) {
-			results.get(obs).setObsSpaceDiagnosis(diagnosis);
-			results.get(obs).setObsSpaceTime(time);
-			results.get(obs).setObsSpaceSpace(space);
+			results.get(obs).setDiagnosticatoreDiagnosis(diagnosis);
+			results.get(obs).setDiagnosticatoreTime(time);
+			results.get(obs).setDiagnosticatoreSpace(space);
 		}
+	}
+	
+	public boolean addLinObs(ObservationsList obs) {
+		if(!results.containsKey(obs)) {
+			results.put(obs, new Result());
+			return true;
+		}
+		return false;
 	}
 	
 	public Set<ObservationsList> observations(){
 		return results.keySet();
+	}
+	
+	public boolean hasDiagnosticatorePerformance() {
+		return diagnosticatoreSpace > 0 && diagnosticatoreTime > 0;
+	}
+	
+	public void setDiagnosticatorePerformance(double time, double space) {
+		diagnosticatoreSpace = space;
+		diagnosticatoreTime = time;
+	}
+	
+	public double diagnosticatoreTime() {return diagnosticatoreTime;}
+	
+	public double diagnosticatoreSpace() {return diagnosticatoreSpace;}
+	
+	public void setObsSpaceGenerationPerformance(ObservationsList obs, double time, double space) {
+		if(results.containsKey(obs)) {
+			results.get(obs).setObsSpaceGenerationSpace(space);
+			results.get(obs).setObsSpaceGenerationTime(time);
+		}
+	}
+	
+	public double obsSpaceGenTime(ObservationsList obs) {
+		if(results.containsKey(obs))
+			return results.get(obs).obsSpaceGenTime();
+		return -1;
+	}
+	
+	public double obsSpaceGenSpace(ObservationsList obs) {
+		if(results.containsKey(obs))
+			return results.get(obs).obsSpaceGenSpace();
+		return -1;
 	}
 }

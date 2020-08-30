@@ -27,6 +27,10 @@ import ui.commands.spaceops.DiagnosiObsDiagn;
 import ui.commands.spaceops.GenerateDiagnosticatore;
 import ui.commands.spaceops.GenerateSpace;
 import ui.commands.spaceops.GenerateSpaceObs;
+import ui.commands.spaceops.NewLinObs;
+import ui.commands.spaceops.ShowCompSpace;
+import ui.commands.spaceops.ShowDiagnosticatore;
+import ui.commands.spaceops.ShowLinObsSpace;
 import ui.commands.spaceops.ShowObservations;
 import ui.commands.spaceops.UpdateNet;
 
@@ -157,6 +161,19 @@ public class CommandFactory {
 		return new Command(CommandDescription.SHOWTRANSITIONS, new ShowTransitions());
 	}
 
-		
+	public Command newLinObs() {
+		return new Command(CommandDescription.NEWLINOBS, new NewLinObs());
+	}
 	
+	public Command showCompSpace() {
+		return new Command(CommandDescription.SHOWCOMPSPACE, new ShowCompSpace());
+	}
+	
+	public Command showDiagnosticatore() {
+		return new Command(CommandDescription.SHOWDIAGNOSTICATORE, new ShowDiagnosticatore());
+	}
+	
+	public Command showLinObsCompSpace() {
+		return new Command(CommandDescription.SHOWLINOBSSPACE, new ShowLinObsSpace());
+	}
 }

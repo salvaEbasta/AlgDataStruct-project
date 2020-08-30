@@ -1,7 +1,9 @@
 package ui.commands.spaceops;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.Map.Entry;
-import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
@@ -26,30 +28,35 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		}
 		
 		CurrentNet net = context.getCurrentNet();				
-		ObservationsList obsList = new ObservationsList();
-		String ans = "";
-		context.getIOStream().writeln(context.getCurrentNet().obsLabel());
-		do {
-			String label = context.getIOStream().read("Inserire nome per l'etichetta di Osservabilità: ");
-			if(context.getCurrentNet().hasObservableLabel(label)) {
-				obsList.add(new ObservableLabel(label));
-				ans = context.getIOStream().yesOrNo("Inserire un'altra label di Osservabilità? ");
-			} else 
-				context.getIOStream().writeln("La label di Osservabilità inserita non esiste nella rete!");
-		}while(!ans.equalsIgnoreCase("n"));
-		
-		
-		if(net.hasLinObsCompSpace(obsList)) {
-			SpaceAutomaObsLin spaceAutoma = net.getLinObsCompSpace(obsList);
-			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-					obsList.toString() + ":\n*****************************************************");
-			context.getIOStream().writeln(spaceAutoma.toString());		
-			return true;
+		StringBuilder sb = new StringBuilder("Osservazioni Lineari disponibili:\n");
+		ArrayList<ObservationsList> obsList = new ArrayList<>();
+		Set<ObservationsList> obsSet = context.getCurrentNet().linObss();
+		Iterator<ObservationsList> iter = obsSet.iterator();
+		while(iter.hasNext()) {
+			ObservationsList obs = iter.next();
+			sb.append(String.format("%d - %s\n", obsList.size(), obs));
+			obsList.add(obs);
 		}
+		
+		context.getIOStream().writeln(sb.toString());
+		
+		int index = 0;
+		do {
+			String ans = context.getIOStream().read("Inserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");
+			if(ans.equals("exit"))
+				return false;		
+			if(ans.matches("\\d+"))
+				index = Integer.parseInt(ans);				
+			else
+				index = -1;
+			
+		}while(index < 0 || index >= obsList.size());
+		
+		ObservationsList obs = obsList.get(index);
 
 		Entry<SpaceAutomaObsLin, Performance> result = null;			
 		
-		SpazioComportamentaleObs spaceComp = new SpazioComportamentaleObs(net.getNet(), obsList);
+		SpazioComportamentaleObs spaceComp = new SpazioComportamentaleObs(net.getNet(), obs);
 	
 		result = new StoppableOperation().compute(context.getIOStream(), spaceComp);
 		if(result == null)
@@ -61,19 +68,20 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		if(!stopped) {
 			if(result.getKey().states().size() == 1 && result.getKey().transitions().isEmpty())
 				notraettoria = true;
-			else
-				context.getCurrentNet().addObservation(obsList, result.getKey());
-				
+			else {
+				context.getCurrentNet().addObservation(obs, result.getKey());
+				context.getCurrentNet().setObsSpaceGenerationPerformance(obs, result.getValue().getTime(), result.getValue().getSpace());
+			}
 		}
 		
 		
 		if(!notraettoria) {
 			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE GENERATO per osservazione " + 
-					obsList.toString() + ":\n*****************************************************");
+					obs.toString() + ":\n*****************************************************");
 			context.getIOStream().writeln(result.getKey().toString());
 		}
 		else
-			context.getIOStream().writeln("ERRORE: Non esiste nessuna traettoria nello spazio per l'osservazione lineare ".concat(obsList.toString()));
+			context.getIOStream().writeln("ERRORE: Non esiste nessuna traettoria nello spazio per l'osservazione lineare ".concat(obs.toString()));
 		
 		
 		return true;

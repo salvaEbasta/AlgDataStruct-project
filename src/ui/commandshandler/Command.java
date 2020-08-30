@@ -69,5 +69,4 @@ public class Command {
 		Command other = (Command) obj;
 		return this.description.equals(other.description);
 	}
-	
 }

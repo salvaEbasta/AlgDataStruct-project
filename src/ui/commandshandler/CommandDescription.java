@@ -6,7 +6,10 @@ package ui.commandshandler;
  *
  */
 public enum CommandDescription{
-	
+	SHOWLINOBSSPACE("showLinObsSpace", "Mostra lo spazio comportamentale relativo ad un'osservazione lineare fra quelle disponibili", "showLinObsSpace"),
+	SHOWDIAGNOSTICATORE("showDiagnosticatore", "Mostra il diagnosticatore della rete considerata", "showDiagnosticatore"),
+	SHOWCOMPSPACE("showCompSpace", "Mostra lo spazio comportamentale della rete considerata", "showCompSpace"),
+	NEWLINOBS("newLinObs", "Crea una nuova osservazione lineare", "newLinObs"),
 	EXIT("exit", "Esci dal programma","exit"),
 	BACK("back", "Torna al menù precedente","back"),
 	READCOMMANDS("readcommands", "Legge ed esegue una serie di comandi da file txt","readcommands [fileName].txt"),

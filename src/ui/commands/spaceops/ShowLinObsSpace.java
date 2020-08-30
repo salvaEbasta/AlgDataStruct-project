@@ -1,24 +1,17 @@
 package ui.commands.spaceops;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.Map.Entry;
+
 import comportamental_fsm.labels.ObservationsList;
-import fsm_algorithms.RelevanceRegexBuilder;
-import spazio_comportamentale.SpaceTransition;
-import spazio_comportamentale.oss_lineare.BuilderSpaceComportamentaleObsLin;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
-import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.Performance;
-import ui.context.StoppableOperation;
 import utility.Constants;
 
-public class DiagnosiObs implements CommandInterface, NoParameters{
+public class ShowLinObsSpace implements CommandInterface, NoParameters{
 
 	@Override
 	public boolean run(String[] args, Context context) {
@@ -35,17 +28,14 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		
 		StringBuilder sb = new StringBuilder("Osservazioni Lineari disponibili:\n");
 		ArrayList<ObservationsList> obsList = new ArrayList<>();
 		Set<ObservationsList> obsSet = context.getCurrentNet().linObss();
 		Iterator<ObservationsList> iter = obsSet.iterator();
 		while(iter.hasNext()) {
 			ObservationsList obs = iter.next();
-			if(context.getCurrentNet().hasLinObsCompSpace(obs)) {
-				sb.append(String.format("%d - %s\n", obsList.size(), obs));
-				obsList.add(obs);
-			}
+			sb.append(String.format("%d - %s\n", obsList.size(), obs));
+			obsList.add(obs);
 		}
 		
 		context.getIOStream().writeln(sb.toString());
@@ -63,25 +53,20 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 		}while(index < 0 || index >= obsList.size());
 		
 		ObservationsList obs = obsList.get(index);
-		SpaceAutomaObsLin obsSpace = context.getCurrentNet().getLinObsCompSpace(obs);
-		
-		RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>> diagnosi = 
-				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());		
-		
-	
-		Entry<String, Performance> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
-		if(result == null)
-			return false;
-		
-		context.getIOStream().writeln(String.format("Diagnosi Lineare trovata per osservazione %s: %s", obs, result.getKey()));
-		
-		boolean stopped = result.getValue().wasStopped();
-		
-		if(!stopped)
-			context.getCurrentNet().addObsSpaceResult(obs, result.getKey(), result.getValue().getTime(), result.getValue().getSpace());
 		
 		
-		return true;
+		if(context.getCurrentNet().hasLinObsCompSpace(obs)) {
+			SpaceAutomaObsLin spaceAutoma = context.getCurrentNet().getLinObsCompSpace(obs);
+			context.getIOStream().writeln("\nSPAZIO COMPORTAMENTALE relativo a "+obs+":\n*****************************************************");
+			context.getIOStream().writeln("Risorse utilizzate:");
+			context.getIOStream().writeln(String.format("\t* tempo: %.2f", context.getCurrentNet().obsSpaceGenTime(obs)));
+			context.getIOStream().writeln(String.format("\t* spazio: %.2f", context.getCurrentNet().obsSpaceGenSpace(obs)));
+			context.getIOStream().writeln(spaceAutoma.toString());	
+			return true;
+		} else {
+			context.getIOStream().writeln("Non è ancora stato generato uno spazio comportamentale relativo all'osservazione "+obs);
+			return true;
+		}
 	}
 
 }

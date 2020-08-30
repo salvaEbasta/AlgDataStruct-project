@@ -33,7 +33,7 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	@Override
 	public String toString() {
 		if(transition == null)
-			return String.format("%s:[%s->%s]", id(), source().id(), sink().id());
+			return String.format("%s:[%s->%s, %s, %s]", id(), source().id(), sink().id(), observableLabel(), relevantLabel());
 		return String.format("%s:[%s->%s, %s, %s]", id(), source().id(), sink().id(), transition.observableLabel(), transition.relevantLabel());
 	}
 }

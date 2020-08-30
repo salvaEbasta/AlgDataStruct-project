@@ -41,6 +41,7 @@ public class GenerateDiagnosticatore implements CommandInterface, NoParameters{
 		boolean stopped = result.getValue().wasStopped();
 		
 		if(!stopped) {
+			context.getCurrentNet().setDiagnosticatorePerformance(result.getValue().getTime(), result.getValue().getSpace());
 			context.getCurrentNet().setDiagnosticatore(result.getKey());
 			context.getIOStream().writeln(String.format("Diagnosticatore calcolato correttamente!"));
 		}

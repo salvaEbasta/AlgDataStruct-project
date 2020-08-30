@@ -76,10 +76,14 @@ public enum CommandsState implements InitCommandsList{
 		public ArrayList<Command> getCommandsList() {
 			ArrayList<Command> commandsList = new ArrayList<Command>();
 			commandsList.add(new CommandFactory().back());
-			commandsList.add(new CommandFactory().generateSpace());
-			commandsList.add(new CommandFactory().generateSpaceObs());
+			commandsList.add(new CommandFactory().newLinObs());
 			commandsList.add(new CommandFactory().showObservations());
+			commandsList.add(new CommandFactory().showCompSpace());
+			commandsList.add(new CommandFactory().generateSpace());
+			commandsList.add(new CommandFactory().showDiagnosticatore());
 			commandsList.add(new CommandFactory().generateDiagnosticatore());
+			commandsList.add(new CommandFactory().showLinObsCompSpace());
+			commandsList.add(new CommandFactory().generateSpaceObs());
 			commandsList.add(new CommandFactory().diagnosiObservations());
 			commandsList.add(new CommandFactory().diagnosiObservationsDiagnostic());
 			commandsList.add(new CommandFactory().updateNet());
