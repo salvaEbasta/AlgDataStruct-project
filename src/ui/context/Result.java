@@ -20,7 +20,7 @@ public class Result implements Serializable{
 		private double time;
 		private double space;
 		
-		public FinerResult() {diagnosis = null; time =- 1; space =- 1;}
+		public FinerResult() {diagnosis = null; time =0; space =0;}
 		public void setTime(double time) {this.time = time;}
 		public void setSpace(double space) {this.space = space;}
 		public void setDiagnosis(String diagnosis) {this.diagnosis = diagnosis;}
@@ -41,8 +41,8 @@ public class Result implements Serializable{
 		obsSpace = null;
 		spaceResult = new FinerResult();
 		diagnosticatoreResult = new FinerResult();
-		obsSpaceTime = -1;
-		obsSpaceSpace = -1;
+		obsSpaceTime = 0;
+		obsSpaceSpace = 0;
 	}
 	public boolean obsSpaceNoResults() {return spaceResult.isEmpty();}
 	public void resetObsSpaceResults() {spaceResult.reset();}

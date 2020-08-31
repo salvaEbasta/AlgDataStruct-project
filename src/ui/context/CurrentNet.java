@@ -25,8 +25,8 @@ public class CurrentNet implements Serializable{
 		sac = null;
 		diagnosticatore = null;
 		results = new HashMap<ObservationsList, Result>();
-		diagnosticatoreSpace = -1;
-		diagnosticatoreTime = -1;
+		diagnosticatoreSpace = 0;
+		diagnosticatoreTime = 0;
 	}
 	
 	public void setSpaceAutomaComportamentale(SpaceAutomaComportamentale sac) {
