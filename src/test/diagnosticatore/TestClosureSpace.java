@@ -155,6 +155,7 @@ class TestClosureSpace {
 		}
 		assertTrue(pg69.hasState(rename.get(key).id()));
 		SilentClosure x2 = pg69.getState(rename.get(key).id());
+		System.out.println("x2: "+x2.toString());
 		assertTrue(pg69.from(x1).iterator().next().sink().equals(x2));
 		assertTrue(pg69.to(x2).size()==4);
 		assertTrue(pg69.from(x2).size()==3);
