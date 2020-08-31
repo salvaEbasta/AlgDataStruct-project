@@ -326,8 +326,6 @@ class TestMainNet {
 		toMatch.insert(x5);
 		toMatch.insert(x6);
 		
-		x0.decorate(s, decoration)
-		
 		ObservableLabel o2 = new ObservableLabel("o2");
 		ObservableLabel o3 = new ObservableLabel("o3");
 		

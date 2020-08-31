@@ -97,22 +97,153 @@ class TestClosureSpace {
 		
 		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
 		System.out.println(rename);
+		
+		//x0
 		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
 		int key = -1;
 		while(iter.hasNext()) {
 			Entry<Integer, SpaceState> e = iter.next();
-			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event()))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("30"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x0 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.to(x0).size()==0);
+		assertTrue(pg69.from(x0).size()==1);
+		assertTrue(pg69.from(x0).iterator().next().observableLabelContent().equals("o3"));
+		assertTrue(pg69.from(x0).iterator().next().relevantLabelContent().equals("εε"));
+		assertTrue(x0.diagnosis().equals("ε"));
+		
+		//x1
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e2")) && e.getValue().hasEvent(new Event()))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x1 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.from(x0).iterator().next().sink().equals(x1));
+		assertTrue(pg69.to(x1).size()==2);
+		assertTrue(pg69.from(x1).size()==1);
+		assertTrue(pg69.from(x1).iterator().next().observableLabelContent().equals("o2"));
+		assertTrue(pg69.from(x1).iterator().next().relevantLabelContent().equals("εε"));
+		//System.out.println("Diagnosi: "+x1.diagnosis());
+		assertTrue(x1.diagnosis().equals("ε"));
+		
+		//x2
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event()))
 				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))) {
 					key = e.getKey();
 					break;
 				}
 		}
-		Set<Transition<SilentClosure>> transitions = pg69.transitions();
-		for(Transition<SilentClosure> t: transitions) {
-			RelevantLabel f = t.relevantLabel();
-			
-		}
-
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x2 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.from(x1).iterator().next().sink().equals(x2));
+		assertTrue(pg69.to(x2).size()==4);
+		assertTrue(pg69.from(x2).size()==3);
+		System.out.println("Diagnosi: "+x2.diagnosis());
+		assertTrue(x2.diagnosis().equals("ε|frf|f|fr"));
 		
+		//x5
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event()))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("30"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x5 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.to(x5).size()==3);
+		assertTrue(pg69.from(x5).size()==1);
+		assertTrue(pg69.from(x5).iterator().next().observableLabelContent().equals("o3"));
+		assertTrue(pg69.from(x5).iterator().next().relevantLabelContent().equals("εε"));
+		assertTrue(x5.diagnosis().equals("ε"));
+		
+		//x6
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x6 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.from(x5).iterator().next().sink().equals(x6));
+		assertTrue(pg69.to(x6).size()==1);
+		assertTrue(pg69.from(x6).size()==2);
+		assertTrue(x6.diagnosis().equals("ε"));
+		
+		//x3
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event("e3")) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("20")) && e.getValue().hasState(new ComportamentalState("31"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x3 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.to(x3).iterator().next().source().equals(x2));
+		assertTrue(pg69.to(x3).size()==1);
+		assertTrue(pg69.to(x3).iterator().next().observableLabelContent().equals("o3"));
+		assertTrue(pg69.to(x3).iterator().next().relevantLabelContent().equals("r"));
+		assertTrue(pg69.from(x3).size()==2);
+		assertTrue(x6.diagnosis().equals("ε"));
+		
+		//x4
+		rename.remove(key);
+		
+		iter = rename.entrySet().iterator();
+		key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e2")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		assertTrue(pg69.hasState(rename.get(key).id()));
+		SilentClosure x4 = pg69.getState(rename.get(key).id());
+		assertTrue(pg69.to(x4).size()==1);
+		assertTrue(pg69.to(x4).iterator().next().source().equals(x2));
+		assertTrue(pg69.to(x4).iterator().next().observableLabelContent().equals("o3"));
+		assertTrue(pg69.to(x4).iterator().next().relevantLabelContent().equals("ε"));
+		assertTrue(pg69.from(x4).size()==2);
+		assertTrue(x4.diagnosis().equals("ε"));
 	}
 }

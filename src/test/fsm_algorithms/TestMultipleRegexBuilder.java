@@ -15,7 +15,21 @@ import fsm_interfaces.FiniteStateMachine;
 import utility.Constants;
 
 class TestMultipleRegexBuilder {
-
+	@Test
+	void test_pg59() throws Exception{
+		FiniteStateMachine<FiniteState, FiniteTransition> pg59 = build_pg59();
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg59, 
+				new FSMBuilder()).call();
+		
+		assertTrue(result.size()==5);
+		assertTrue(result.get(new FiniteState("3")).equals("f"));
+		assertTrue(result.get(new FiniteState("6")).equals(Constants.EPSILON));
+		assertTrue(result.get(new FiniteState("7")).equals("(εr)"));
+		assertTrue(result.get(new FiniteState("5")).equals("((fr)f)"));
+		assertTrue(result.get(new FiniteState("0")).equals("((fr)ε)"));
+	}
+	
+	
 	@Test
 	void test_pg50() throws Exception{
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
@@ -29,6 +43,50 @@ class TestMultipleRegexBuilder {
 		assertTrue(result.get(new FiniteState("7")).equals("(((εεf)r)f)"));
 		assertTrue(result.get(new FiniteState("8")).equals("(((εεf)r)ε)"));
 		assertTrue(result.get(new FiniteState("5")).equals("(εεε)"));
+	}
+	
+	private static FiniteStateMachine<FiniteState, FiniteTransition> build_pg59() {
+		FiniteStateMachine<FiniteState, FiniteTransition> c = new LinkedTransitionsFSA("pg59");
+		FiniteState _2 = new FiniteState("2");
+		FiniteState _3 = new FiniteState("3");
+		FiniteState _6 = new FiniteState("6");
+		FiniteState _7 = new FiniteState("7");
+		FiniteState _4 = new FiniteState("4");
+		FiniteState _5 = new FiniteState("5");
+		FiniteState _0 = new FiniteState("0");
+		_3.setAccepting(true);
+		_6.setAccepting(true);
+		_7.setAccepting(true);
+		_5.setAccepting(true);
+		_0.setAccepting(true);
+		c.insert(_0);
+		c.insert(_2);
+		c.insert(_3);
+		c.insert(_6);
+		c.insert(_7);
+		c.insert(_4);
+		c.insert(_5);
+		c.setInitial(_2);
+
+		FiniteTransition t3c_0 = new FiniteTransition("t3c_0", _2, _3);
+		t3c_0.setRelevantLabel("f");
+		c.add(t3c_0);
+		FiniteTransition t3b_0 = new FiniteTransition("t3b_0", _2, _6);
+		t3b_0.setRelevantLabel(Constants.EPSILON);
+		c.add(t3b_0);
+		FiniteTransition t2b_0 = new FiniteTransition("t2b_0", _6, _7);
+		t2b_0.setRelevantLabel("r");
+		c.add(t2b_0);
+		FiniteTransition t2b_1 = new FiniteTransition("t2b_1", _3, _4);
+		t2b_1.setRelevantLabel("r");
+		c.add(t2b_1);
+		FiniteTransition t3b_1 = new FiniteTransition("t3b_1", _4, _0);
+		t3b_1.setRelevantLabel(Constants.EPSILON);
+		c.add(t3b_1);
+		FiniteTransition t3c_1 = new FiniteTransition("t3c_1", _4, _5);
+		t3c_1.setRelevantLabel("f");
+		c.add(t3c_1);
+		return c;
 	}
 	
 	private static FiniteStateMachine<FiniteState, FiniteTransition> build_pg50() {

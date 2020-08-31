@@ -25,9 +25,13 @@ public class SpaceTransition<S extends SpaceState> extends Transition<S> {
 	
 	@Override
 	public boolean equals(Object obj) {
-		SpaceTransition<S> other = (SpaceTransition<S>) obj;
-		return transition.equals(other.transition) && source().equals(other.source())
-				&& sink().equals(other.sink());
+		if(obj==null || !this.getClass().isAssignableFrom(obj.getClass()))
+			return false;
+		
+		final SpaceTransition<S> other = (SpaceTransition<S>) obj;
+		return super.equals(obj);
+		//return transition.equals(other.transition) && source().equals(other.source())
+		//		&& sink().equals(other.sink());
 	}
 	
 	@Override

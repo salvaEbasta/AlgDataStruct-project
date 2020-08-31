@@ -15,6 +15,7 @@ public class RelevanceRegexBuilder<S extends State, T extends Transition<S>> ext
 	private S last;
 	private String regex;
 	
+	@Deprecated
 	public RelevanceRegexBuilder(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder, S last) {
 		this.N = N;
 		this.builder = builder;
