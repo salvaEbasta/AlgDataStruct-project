@@ -1,8 +1,6 @@
 package diagnosticatore;
 
 import java.util.Iterator;
-import java.util.Set;
-
 import fsm_interfaces.Automa;
 import fsm_interfaces.Transition;
 

@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +19,11 @@ import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.RelevantLabel;
 import diagnosticatore.ClosureSpace;
+import diagnosticatore.SilentClosure;
 import diagnosticatore.algorithms.DiagnosticatoreBuilder;
+import fsm_interfaces.Transition;
 import spazio_comportamentale.SpaceAutomaComportamentale;
+import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;
 
 class TestClosureSpace {
@@ -88,5 +94,25 @@ class TestClosureSpace {
 		assertTrue(pg69.transitions().size() == 12);
 		
 		assertTrue(pg69.from(pg69.initialState()).size()==1);
+		
+		HashMap<Integer, SpaceState> rename = pg38.ridenominazione();
+		System.out.println(rename);
+		Iterator<Entry<Integer, SpaceState>> iter = rename.entrySet().iterator();
+		int key = -1;
+		while(iter.hasNext()) {
+			Entry<Integer, SpaceState> e = iter.next();
+			if(e.getValue().hasEvent(new Event()) && e.getValue().hasEvent(new Event("e3")))
+				if(e.getValue().hasState(new ComportamentalState("21")) && e.getValue().hasState(new ComportamentalState("31"))) {
+					key = e.getKey();
+					break;
+				}
+		}
+		Set<Transition<SilentClosure>> transitions = pg69.transitions();
+		for(Transition<SilentClosure> t: transitions) {
+			RelevantLabel f = t.relevantLabel();
+			
+		}
+
+		
 	}
 }
