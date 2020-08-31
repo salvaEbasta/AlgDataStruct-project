@@ -27,7 +27,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		CurrentNet net = context.getCurrentNet();				
+		CurrentNet net = context.getCurrentNet();
 		StringBuilder sb = new StringBuilder("Osservazioni Lineari disponibili:\n");
 		ArrayList<ObservationsList> obsList = new ArrayList<>();
 		Set<ObservationsList> obsSet = context.getCurrentNet().linObss();

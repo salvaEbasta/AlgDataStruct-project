@@ -44,7 +44,7 @@ public class SpazioComportamentale extends Algorithm<SpaceAutomaComportamentale>
 
 	private void scattoTransizione(SpaceState source, ComportamentalTransition transition) {
 		
-		net.transitionTo(transition);	
+		net.transitionTo(transition);
 		SpaceState destination = new SpaceState(net.getCurrentStates(), net.getActiveEvents());
 		if(!spazioComp.insert(destination)) {
 			SpaceState toSearch = destination;
