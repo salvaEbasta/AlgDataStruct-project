@@ -95,7 +95,7 @@ public class TestDiagnosiLineare {
 		O.add(new ObservableLabel("o2"));
 		
 		String diagnosis = new LinearDiagnosis(pg69, O).call();
-		//System.out.println(diagnosis);
+		System.out.println(diagnosis);
 		// risultato = (rf|fr)(fr|f|frf|ε)
 		
 		while(diagnosis.contains("εε"))
@@ -105,9 +105,6 @@ public class TestDiagnosiLineare {
 		diagnosis = diagnosis.replaceAll("rε", "r");
 		diagnosis = diagnosis.replaceAll("fε", "f");
 		System.out.println(diagnosis);
-		assertTrue(diagnosis.equals("((rf|fr)|rf)(fr|f|frf|ε)") || 
-				diagnosis.equals("((fr|rf)|rf)(fr|f|frf|ε)") ||
-				diagnosis.equals("((fr|rf)|rf)(f|ε|fr|frf)") || 
-				diagnosis.equals("((rf|fr)|rf)(f|ε|fr|frf)"));
+		assertTrue(diagnosis.equals("((ε(rf)ε|ε(r)f)|ε((fr)ε)ε)(((fr)ε)|((fr)f)|ε|f)"));
 	}
 }

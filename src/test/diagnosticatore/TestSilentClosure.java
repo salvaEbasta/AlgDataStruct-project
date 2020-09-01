@@ -111,9 +111,9 @@ class TestSilentClosure {
 		assertTrue(closure.exitStates().size() == 3);
 		
 		new ClosureDecorator(closure).call();
-		//System.out.println(closure.diagnosis());
+		System.out.println(closure.diagnosis());
 		String diagnosis = closure.diagnosis();
-		System.out.println(diagnosis);
+		//System.out.println(diagnosis);
 		List<String> portions = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<diagnosis.length(); i++)
@@ -125,10 +125,10 @@ class TestSilentClosure {
 		portions.add(sb.toString());
 		
 		assertTrue(portions.size() == 4);
-		assertTrue(portions.contains("fε"));
-		assertTrue(portions.contains("frε"));
-		assertTrue(portions.contains("frf"));
-		assertTrue(portions.contains("εε"));
+		assertTrue(portions.contains("f"));
+		assertTrue(portions.contains("((fr)ε)"));
+		assertTrue(portions.contains("((fr)f)"));
+		assertTrue(portions.contains("ε"));
 	}
 	
 	@Test

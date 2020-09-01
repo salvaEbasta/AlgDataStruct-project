@@ -29,6 +29,7 @@ public class SpaceState extends State{
 		this.linkEvents = new HashMap<Link, Event>();
 		linkEvents.forEach((link, event)->this.linkEvents.put(link, (Event)event.clone()));
 		setId(content());
+		setAccepting(isFinal());
 	}
 	
 	public void setId(String id) {

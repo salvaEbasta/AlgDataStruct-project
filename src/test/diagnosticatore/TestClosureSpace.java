@@ -157,8 +157,8 @@ class TestClosureSpace {
 		assertTrue(pg69.from(x1).iterator().next().sink().equals(x2));
 		assertTrue(pg69.to(x2).size()==4);
 		assertTrue(pg69.from(x2).size()==3);
-		System.out.println("Diagnosi: "+x2.diagnosis());
-		assertTrue(x2.diagnosis().equals("ε|frf|f|fr"));
+		//System.out.println("Diagnosi: "+x2.diagnosis());
+		assertTrue(x2.diagnosis().equals("((fr)ε)|((fr)f)|ε|f"));
 		
 		//x5
 		rename.remove(key);
@@ -219,7 +219,7 @@ class TestClosureSpace {
 		assertTrue(pg69.to(x3).iterator().next().source().equals(x2));
 		assertTrue(pg69.to(x3).size()==1);
 		assertTrue(pg69.to(x3).iterator().next().observableLabelContent().equals("o3"));
-		assertTrue(pg69.to(x3).iterator().next().relevantLabelContent().equals("r"));
+		assertTrue(pg69.to(x3).iterator().next().relevantLabelContent().equals("(εr)ε"));
 		assertTrue(pg69.from(x3).size()==2);
 		assertTrue(x6.diagnosis().equals("ε"));
 		
@@ -241,7 +241,7 @@ class TestClosureSpace {
 		assertTrue(pg69.to(x4).size()==1);
 		assertTrue(pg69.to(x4).iterator().next().source().equals(x2));
 		assertTrue(pg69.to(x4).iterator().next().observableLabelContent().equals("o3"));
-		assertTrue(pg69.to(x4).iterator().next().relevantLabelContent().equals("ε"));
+		assertTrue(pg69.to(x4).iterator().next().relevantLabelContent().equals("εε"));
 		assertTrue(pg69.from(x4).size()==2);
 		assertTrue(x4.diagnosis().equals("ε"));
 	}

@@ -176,29 +176,14 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 					for (T r2 : N.from(n)) {
 						if (r2.isAuto())
 							continue;
+						if(markings.values().stream().anyMatch(l -> l.contains(r2)))
+							continue;
 
 						String id = r1.id() + "-" + r2.id() + "_" + counter;
 						T tmp = builder.newTransition(id, r1.source(), r2.sink());
 						regexBuilder.setLength(0);
 
-						if (markings.values().stream().anyMatch(l -> l.contains(r2))) {
-							for (S state : markings.keySet())
-								if (markings.get(state).contains(r2)) {
-									mark = state;
-									break;
-								}
-
-							log.info("Selected mark: " + mark.id());
-
-							regexBuilder.append("(".concat(r1.relevantLabelContent()));
-							if (N.hasAuto(n))
-								regexBuilder.append("(".concat(N.getAuto(n).relevantLabelContent()).concat(")*"));
-							regexBuilder.append(r2.relevantLabelContent().concat(")"));
-
-							markings.get(mark).remove(r2);
-							markings.get(mark).add(tmp);
-
-						} else if (r2.sink().equals(nq) && n.isAccepting()) {
+						if (r2.sink().equals(nq) && n.isAccepting()) {
 							log.info("Selected mark: " + n.id());
 
 							if (N.hasAuto(n)) {
@@ -207,20 +192,18 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 								regexBuilder.append(")");
 							} else
 								regexBuilder.append(r1.relevantLabelContent());
-
+							
+							if(!markings.containsKey(n))
+								markings.put(n, new LinkedList<T>());
+							markings.get(n).add(tmp);
+							
 						} else if (N.hasAuto(n)) {
-
 							regexBuilder.append("(".concat(r1.relevantLabelContent()));
 							regexBuilder.append("(".concat(N.getAuto(n).relevantLabelContent()).concat(")*"));
 							regexBuilder.append(r2.relevantLabelContent().concat(")"));
-							
-
 						} else {
-
-
 							regexBuilder.append("(".concat(r1.relevantLabelContent()));
 							regexBuilder.append(r2.relevantLabelContent().concat(")"));
-							
 						}
 
 						tmp.setRelevantLabel(regexBuilder.toString());
@@ -229,15 +212,46 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 
 						log.info("New transition: " + tmp.toString());
 					}
+					
+					for(T r2 : N.from(n)) {
+						if(r2.isAuto())
+							continue;
 
+						if(markings.values().stream().allMatch(l -> !l.contains(r2)))
+							continue;
+						
+						String id = r1.id() + "-" + r2.id() + "_" + counter;
+						T tmp = builder.newTransition(id, r1.source(), r2.sink());
+						regexBuilder.setLength(0);
+						for (S state : markings.keySet())
+							if (markings.get(state).contains(r2)) {
+								mark = state;
+								break;
+							}
+
+						log.info("Selected mark: " + mark.id());
+
+						regexBuilder.append("(".concat(r1.relevantLabelContent()));
+						if (N.hasAuto(n))
+							regexBuilder.append("(".concat(N.getAuto(n).relevantLabelContent()).concat(")*"));
+						regexBuilder.append(r2.relevantLabelContent().concat(")"));
+
+						markings.get(mark).remove(r2);
+						markings.get(mark).add(tmp);
+
+						tmp.setRelevantLabel(regexBuilder.toString());
+						N.add(tmp);
+						counter++;
+
+						log.info("New transition: " + tmp.toString());
+					}
 				}
 				N.remove(n);
 			}
 			counter++;
-
+	
 			log.info("After procedure: " + N.toString());
 		}
-
 		mapping = new HashMap<S, String>();
 		markings.forEach((s, l) -> mapping.put(s, l.pop().relevantLabelContent()));
 
