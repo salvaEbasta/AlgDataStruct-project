@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Map.Entry;
 
 import org.junit.jupiter.api.Test;
@@ -21,7 +20,6 @@ import comportamental_fsm.labels.RelevantLabel;
 import diagnosticatore.ClosureSpace;
 import diagnosticatore.SilentClosure;
 import diagnosticatore.algorithms.DiagnosticatoreBuilder;
-import fsm_interfaces.Transition;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;

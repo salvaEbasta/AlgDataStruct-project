@@ -24,6 +24,7 @@ import diagnosticatore.algorithms.ClosureDecorator;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpazioComportamentale;
+import utility.Constants;
 
 class TestSilentClosure {
 	private static CFSMnetwork initialize_pg26() {
@@ -112,7 +113,7 @@ class TestSilentClosure {
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
 		String diagnosis = closure.diagnosis();
-		
+		System.out.println(diagnosis);
 		List<String> portions = new ArrayList<String>();
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<diagnosis.length(); i++)
@@ -122,6 +123,7 @@ class TestSilentClosure {
 			}else
 				sb.append(diagnosis.charAt(i));
 		portions.add(sb.toString());
+		
 		assertTrue(portions.size() == 4);
 		assertTrue(portions.contains("fε"));
 		assertTrue(portions.contains("frε"));
@@ -157,7 +159,7 @@ class TestSilentClosure {
 
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().isEmpty());
+		assertTrue(closure.diagnosis().equals(Constants.EPSILON));
 	}
 	
 	@Test
@@ -188,7 +190,7 @@ class TestSilentClosure {
 		
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().isEmpty());
+		assertTrue(closure.diagnosis().equals(Constants.EPSILON));
 	}
 	
 	@Test
@@ -219,7 +221,7 @@ class TestSilentClosure {
 
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().isEmpty());
+		assertTrue(closure.diagnosis().equals(Constants.EPSILON));
 	}
 	
 	@Test
@@ -250,7 +252,7 @@ class TestSilentClosure {
 
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().isEmpty());
+		assertTrue(closure.diagnosis().equals(Constants.EPSILON));
 	}
 	
 	@Test
@@ -281,7 +283,7 @@ class TestSilentClosure {
 
 		new ClosureDecorator(closure).call();
 		//System.out.println(closure.diagnosis());
-		assertTrue(closure.diagnosis().isEmpty());
+		assertTrue(closure.diagnosis().equals(Constants.EPSILON));
 	}
 	
 	@Test
