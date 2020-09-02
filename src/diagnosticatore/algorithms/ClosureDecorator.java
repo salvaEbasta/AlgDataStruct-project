@@ -22,7 +22,7 @@ public class ClosureDecorator extends Algorithm<SilentClosure>{
 		log.info(this.getClass().getSimpleName()+"::decorate("+closure.id()+")...");
 		
 		HashMap<SpaceState, String> decorations =  new MultipleRelRegexBuilder<SpaceState, SpaceTransition<SpaceState>>(
-				(SilentClosure)closure.clone(), 
+				new SilentClosure(closure), 
 				new BuilderSpaceComportamentale()).call();
 		decorations.forEach((s, str)->closure.decorate(s, str));
 		return closure;
