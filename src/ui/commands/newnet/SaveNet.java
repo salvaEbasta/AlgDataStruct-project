@@ -48,6 +48,7 @@ public class SaveNet implements CommandInterface, OneParameter{
 		if(saved) {
 			context.getIOStream().writeln(String.format("Rete di CFA salvata correttamente nel percorso %s!", fileName));
 			context.getWorkSpace().reset();
+			context.setNetFileName(fileName.concat(".ser"));
 		}
 		else
 			context.getIOStream().writeln(String.format("ERRORE: Impossibile salvare la rete CFA sul percorso %s!", fileName));

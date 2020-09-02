@@ -57,8 +57,6 @@ public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
 	private void handleTransition(SpaceTransition<SpaceState> t, SilentClosure closure, LinkedList<SilentClosure> queue) throws Exception{
 		SilentClosure sink = null;
 		if(!cSpace.hasState(t.sink().id())) {
-			if(t.sink().id().equals("2"))
-				System.out.println();
 			sink = new SilentClosureBuilder(space, t.sink()).call();
 			sink = new ClosureDecorator(sink).call();
 			cSpace.insert(sink);

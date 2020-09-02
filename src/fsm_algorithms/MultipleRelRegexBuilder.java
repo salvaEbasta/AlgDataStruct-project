@@ -13,6 +13,7 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 	private FiniteStateMachine<S, T> N;
 	private ComponentBuilder<S, T> builder;
 	private HashMap<S, String> mapping;
+	private S mark;
 
 	public MultipleRelRegexBuilder(FiniteStateMachine<S, T> N, ComponentBuilder<S, T> builder) {
 		this.N = N;
@@ -58,8 +59,8 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 		// main procedure
 		while (N.states().size() > 2 || markings.values().stream().anyMatch(l -> l.size() > 1)) {
 			regexBuilder.setLength(0);
-			S mark = null;
-
+			mark = null;
+			
 			// Find a path of a single transition to and from a state of the sequence
 			LinkedList<T> transitions = new OneWayPathFinder<S, T>(N).call();
 			if (findOneWayPath(transitions, markings)) {
@@ -93,7 +94,7 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 				log.info("New transition: " + tmp.toString());
 
 				// Find one way path were the last is marked
-			} else if (findOneWayPathMarked(transitions, markings, mark)) {
+			} else if (findOneWayPathMarked(transitions, markings)) {
 				log.info("Found one way path: " + transitions);
 
 				S source = transitions.getFirst().source();
@@ -134,7 +135,7 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 				log.info("New transition: " + union.toString());
 
 				// Find marked transitions that are parallel
-			} else if (findMarkedParallelTransitions(transitions, markings, mark)) {
+			} else if (findMarkedParallelTransitions(transitions, markings)) {
 				log.info("Found parallels: " + transitions);
 
 				T head = transitions.pop();
@@ -249,7 +250,8 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 				N.remove(n);
 			}
 			counter++;
-	
+			if(counter == 8)
+				System.out.println();
 			log.info("After procedure: " + N.toString());
 		}
 		mapping = new HashMap<S, String>();
@@ -322,12 +324,12 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 		}
 	}
 
-	private boolean findOneWayPathMarked(LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings, S mark)
+	private boolean findOneWayPathMarked(LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings)
 			throws Exception {
 		transitions.clear();
 		for (S s : N.states()) {
 			// log.info("State : "+s);
-			buildSequenceMarked(s, transitions, markings, mark);
+			buildSequenceMarked(s, transitions, markings);
 			// log.info("Result :"+sequence);
 			if (transitions.size() > 0)
 				break;
@@ -337,12 +339,12 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 		return transitions.size() > 0;
 	}
 
-	private void buildSequenceMarked(S s, LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings, S mark) {
+	private void buildSequenceMarked(S s, LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings) {
 		buildUpstream(s, transitions, markings);
-		buildDownstreamMarked(s, transitions, markings, mark);
+		buildDownstreamMarked(s, transitions, markings);
 	}
 
-	private void buildDownstreamMarked(S sink, LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings, S mark) {
+	private void buildDownstreamMarked(S sink, LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings) {
 		// log.info("Downstream of "+sink+": "+N.from(sink));
 		if (N.from(sink).size() == 1 && N.to(sink).size() == 1) {
 			T outT = N.from(sink).iterator().next();
@@ -357,12 +359,12 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 						break;
 					}
 				if (!marked)
-					buildDownstreamMarked(outT.sink(), transitions, markings, mark);
+					buildDownstreamMarked(outT.sink(), transitions, markings);
 			}
 		}
 	}
 
-	private boolean findMarkedParallelTransitions(LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings, S mark)
+	private boolean findMarkedParallelTransitions(LinkedList<T> transitions, HashMap<S, LinkedList<T>> markings)
 			throws Exception {
 		for (S state : markings.keySet()) {
 			LinkedList<T> marked = new LinkedList<T>(markings.get(state));

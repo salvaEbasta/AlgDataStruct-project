@@ -36,6 +36,7 @@ public class SilentClosure extends SpaceAutomaComportamentale implements StateIn
 		sc.decorations.forEach((k,v)->this.decorations.put(k, v));
 		this.exiting = new HashSet<>(sc.exiting);
 	}
+
 	
 	public boolean insert(SpaceState s) {
 		if(super.insert(s)) {

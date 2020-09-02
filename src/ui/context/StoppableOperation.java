@@ -75,7 +75,9 @@ public class StoppableOperation {
 			stopped = true;
 		} catch (ExecutionException e) {
 			stats.stop();
-			io.writeln("ERRORE: Impossibile eseguire l'operazione!");
+			e.printStackTrace();
+			io.writeln("ERRORE: Impossibile eseguire l'operazione! Premi INVIO per continuare");
+			while(!inputThread.getState().equals(Thread.State.TERMINATED));
 			return null;
 		} catch (TimeoutException e) {
 			stats.stop();

@@ -294,8 +294,7 @@ class TestOtherNet {
 		computedSpace.ridenominazione();
 		String output = new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
 		System.out.println("Result: "+output);
-		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
-		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)"));
+		assertTrue(output.equals("εf3(f2f3)*εε"));
 	}
 	
 	@Test

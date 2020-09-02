@@ -19,12 +19,7 @@ import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
-import diagnosticatore.ClosureSpace;
-import diagnosticatore.SilentClosure;
-import diagnosticatore.algorithms.ClosureDecorator;
-import diagnosticatore.algorithms.DiagnosticatoreBuilder;
 import fsm_algorithms.RelevanceRegexBuilder;
-import fsm_interfaces.Transition;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -288,106 +283,6 @@ class TestMainNet {
 				&& computedTr.isEmpty()	&& matchTr.isEmpty());		
 	}
 	
-
-	@Test
-	void diagnosticatore() {
-		CFSMnetwork net = initialize();
-		SpazioComportamentale sc = new SpazioComportamentale(net);
-		SpaceAutomaComportamentale computedSpace = null;
-		try {
-			computedSpace = sc.call();
-		} catch (Exception e) {
-			assertFalse(false);
-		}
-		
-		DiagnosticatoreBuilder db =  new DiagnosticatoreBuilder(computedSpace);
-		ClosureSpace diagnosticatore = null;
-		try {
-			diagnosticatore = db.call();
-		} catch (Exception e) {
-			assertFalse(false);
-		}
-		
-		ClosureSpace toMatch = new ClosureSpace(computedSpace.id());
-		
-		SilentClosure x0 = new SilentClosure("0");
-		SilentClosure x1 = new SilentClosure("1");
-		SilentClosure x2 = new SilentClosure("2");
-		SilentClosure x3 = new SilentClosure("3");
-		SilentClosure x4 = new SilentClosure("4");
-		SilentClosure x5 = new SilentClosure("5");
-		SilentClosure x6 = new SilentClosure("6");
-		
-		toMatch.insert(x0);
-		toMatch.insert(x1);
-		toMatch.insert(x2);
-		toMatch.insert(x3);
-		toMatch.insert(x4);
-		toMatch.insert(x5);
-		toMatch.insert(x6);
-		
-		ObservableLabel o2 = new ObservableLabel("o2");
-		ObservableLabel o3 = new ObservableLabel("o3");
-		
-		Transition<SilentClosure> x01 = new Transition<SilentClosure>("t3a", x0, x1);
-		x01.setObservableLabel(o3);
-		Transition<SilentClosure> x12 = new Transition<SilentClosure>("t2a", x1, x2);
-		x12.setObservableLabel(o2);
-		Transition<SilentClosure> x21 = new Transition<SilentClosure>("t3a", x2, x1);
-		x21.setObservableLabel(o3);
-		Transition<SilentClosure> x42 = new Transition<SilentClosure>("t2a", x4, x2);
-		x42.setObservableLabel(o2);
-		Transition<SilentClosure> x24 = new Transition<SilentClosure>("t3a", x2, x4);
-		x24.setObservableLabel(o3);
-		Transition<SilentClosure> x23 = new Transition<SilentClosure>("t3a", x2, x3);
-		x23.setObservableLabel(o3);
-		Transition<SilentClosure> x32 = new Transition<SilentClosure>("t2a", x3, x2);
-		x32.setObservableLabel(o2);
-		Transition<SilentClosure> x35 = new Transition<SilentClosure>("t2a", x3, x5);
-		x35.setObservableLabel(o2);
-		Transition<SilentClosure> x45 = new Transition<SilentClosure>("t2a", x4, x5);
-		x45.setObservableLabel(o2);
-		Transition<SilentClosure> x65 = new Transition<SilentClosure>("t2a", x6, x5);
-		x65.setObservableLabel(o2);
-		Transition<SilentClosure> x56 = new Transition<SilentClosure>("t3a", x5, x6);
-		x56.setObservableLabel(o3);
-		Transition<SilentClosure> x62 = new Transition<SilentClosure>("t2a", x6, x2);
-		x62.setObservableLabel(o2);	
-		
-		toMatch.add(x01);
-		toMatch.add(x12);
-		toMatch.add(x21);
-		toMatch.add(x42);
-		toMatch.add(x24);
-		toMatch.add(x23);
-		toMatch.add(x32);
-		toMatch.add(x35);
-		toMatch.add(x45);
-		toMatch.add(x65);
-		toMatch.add(x56);
-		toMatch.add(x62);
-		
-		ArrayList<SilentClosure> computedStates = new ArrayList<SilentClosure>(diagnosticatore.states());
-		ArrayList<SilentClosure>  matchStates = new ArrayList<SilentClosure>(toMatch.states());
-		ArrayList<SilentClosure>  computedStatesCopy = new ArrayList<SilentClosure> (computedStates);
-		
-		ArrayList<Transition<SilentClosure>> computedTr = new ArrayList<Transition<SilentClosure>>(diagnosticatore.transitions());
-		ArrayList<Transition<SilentClosure>> matchTr = new ArrayList<Transition<SilentClosure>>(toMatch.transitions());
-		ArrayList<Transition<SilentClosure>> computedTrCopy = new ArrayList<Transition<SilentClosure>>(computedTr);
-		
-		
-		computedStates.removeAll(matchStates);
-		matchStates.removeAll(computedStatesCopy);
-		computedTr.removeAll(matchTr);
-		matchTr.removeAll(computedTrCopy);
-		
-		
-		assertTrue(computedStates.isEmpty() && matchStates.isEmpty()
-				&& computedTr.isEmpty()	&& matchTr.isEmpty());		
-		
-	}
-	
-	
 	@Test
 	void diagnostica() throws Exception{
 		CFSMnetwork net = initialize();
@@ -421,7 +316,7 @@ class TestMainNet {
 	
 	@Test
 	void test_silentTransitions() {
-		CFSMnetwork net = initialize();
+		initialize();
 		assertTrue(!t3a.isSilent());
 		assertTrue(!t2a.isSilent());
 		assertTrue(t2b.isSilent());

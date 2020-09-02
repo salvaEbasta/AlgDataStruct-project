@@ -32,7 +32,7 @@ public class Main {
 			}
 		}));
 		
-		System.out.print(Constants.WELCOME);
+		ssa.write(Constants.WELCOME);
 		handler = new CommandsHandler(ssa);
 		do {
 			String command = ssa.read(Constants.EMPTY_STRING);			

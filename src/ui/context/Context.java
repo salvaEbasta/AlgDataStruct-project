@@ -9,6 +9,7 @@ public class Context {
 	private WorkSpace workspace;
 	private CurrentCFA currentCFA;	
 	private CurrentNet currentNet;
+	private String netFileName;
 	
 	
 	public Context(InOutStream io) {
@@ -43,6 +44,14 @@ public class Context {
 	
 	public CurrentCFA getCurrentCFA() {
 		return currentCFA;
+	}
+	
+	public String getNetFileName() {
+		return netFileName;
+	}
+	
+	public void setNetFileName(String fileName) {
+		netFileName = fileName;
 	}
 	
 	public boolean saveCFA() {

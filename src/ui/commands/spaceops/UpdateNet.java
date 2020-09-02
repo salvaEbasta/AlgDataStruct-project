@@ -1,6 +1,5 @@
 package ui.commands.spaceops;
 
-import ui.commands.base.LoadNet;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
@@ -24,7 +23,7 @@ public class UpdateNet implements CommandInterface, NoParameters{
 		}
 		
 				
-		String fileName = LoadNet.getFileName();
+		String fileName = context.getNetFileName();
 		boolean saved = new FileHandler().save(fileName, context.getCurrentNet());
 		if(saved)
 			context.getIOStream().writeln(String.format("Rete di CFA salvata correttamente nel percorso %s!", fileName));
