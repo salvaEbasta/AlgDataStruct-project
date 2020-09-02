@@ -10,10 +10,11 @@ y //eventi input?
 e1 //evento input
 L1 //link input
 y //eventi output?
-e3 //evento output
+e2 //evento output
 L3 //link output
 n //altri eventi output?
-n //label oss?
+y //label oss?
+o3 //label oss
 y //label rel?
 f3 //label rel
 endrobot
@@ -21,9 +22,9 @@ robot newtransition t2m
 m1 //stato sorgente
 m0 //stato sorgente
 y //eventi input?
-e2 //evento output
-L1 //link output
-n //eventi output?
+e1 //evento input
+L1 //link input
+n //eventi output
 n //label oss?
 n //label rel?
 endrobot
@@ -35,8 +36,7 @@ y //eventi output?
 e2 //evento output
 L3 //link output
 n //altri eventi output?
-y //label oss?
-o3 //label oss
+n //label oss?
 n //label rel?
 endrobot
 robot newtransition t34

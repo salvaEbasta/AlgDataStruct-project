@@ -9,7 +9,7 @@ r1 //stato sorgente
 n //eventi input?
 y //eventi output?
 e3 //evento output
-L3 //link output
+L2 //link output
 n //altri output?
 y //label oss?
 o1 //label oss?

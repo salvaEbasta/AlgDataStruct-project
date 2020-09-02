@@ -7,7 +7,7 @@ s0 //stato sorgente
 s1 //stato sorgente
 y //eventi input?
 e2 //evento input
-L1 //link input
+L3 //link input
 n //eventi output?
 n //label oss?
 n //label rel?
@@ -26,7 +26,7 @@ s0 //stato sorgente
 s0 //stato sorgente
 y //eventi input?
 e3 //evento input
-L3 //link input
+L2 //link input
 n //eventi output?
 n //label oss?
 n //label rel?
