@@ -6,10 +6,7 @@ package ui.commandshandler;
  *
  */
 public enum CommandDescription{
-	SHOWLINOBSSPACE("showLinObsSpace", "Mostra lo spazio comportamentale relativo ad un'osservazione lineare fra quelle disponibili", "showLinObsSpace"),
-	SHOWDIAGNOSTICATORE("showDiagnosticatore", "Mostra il diagnosticatore della rete considerata", "showDiagnosticatore"),
-	SHOWCOMPSPACE("showCompSpace", "Mostra lo spazio comportamentale della rete considerata", "showCompSpace"),
-	NEWLINOBS("newLinObs", "Crea una nuova osservazione lineare", "newLinObs"),
+	
 	EXIT("exit", "Esci dal programma","exit"),
 	BACK("back", "Torna al menù precedente","back"),
 	READCOMMANDS("readcommands", "Legge ed esegue una serie di comandi da file txt","readcommands [fileName].txt"),
@@ -25,6 +22,10 @@ public enum CommandDescription{
 	GENERATEDIAGNOST("diagnosticatore", "Genera un Diagnosticatore a partire dallo Spazio Comportamentale","diagnosticatore"), 
 	DIAGNOSIOBS("diagnosiobs", "Computa la diagnosi di un Osservazione Lineare già calcolata","diagnosiobs"), 
 	DIAGNOSIOBSWD("diagnosiobswd", "Computa diagnosi di Osservazione Lineare tramite Diagnosticatore","diagnosiobswd"), 
+	SHOWLINOBSSPACE("showLinObsSpace", "Mostra lo spazio comportamentale relativo ad un'osservazione lineare fra quelle disponibili", "showLinObsSpace"),
+	SHOWDIAGNOSTICATORE("showDiagnosticatore", "Mostra il diagnosticatore della rete considerata", "showDiagnosticatore"),
+	SHOWCOMPSPACE("showCompSpace", "Mostra lo spazio comportamentale della rete considerata", "showCompSpace"),
+	NEWLINOBS("newLinObs", "Crea una nuova osservazione lineare", "newLinObs"),
 	NEWCFA("newcfa", "Crea un nuovo FA Comportamentale","newcfa [id]"),
 	NEWLINK("newlink", "Crea un nuovo Link","newlink [id]"),
 	LINKCFAS("linkcfas", "Collega due CFA tramite un link","linkcfas [id]"),
