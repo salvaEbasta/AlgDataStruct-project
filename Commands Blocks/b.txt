@@ -1,10 +1,10 @@
 newcfa b
-newstate 0
-newstate 1
-setinitial 0
+newstate 0b
+newstate 1b
+setinitial 0b
 robot newtransition b1
-0 //stato sorgente
-1 //stato destinazione
+0b //stato sorgente
+1b //stato destinazione
 y //eventi input?
 op //evento input
 L //link evento input
@@ -14,8 +14,8 @@ opn //label oss
 n //label rel?
 endrobot
 robot newtransition b2
-1 //stato sorgente
-0 //stato destinazione
+1b //stato sorgente
+0b //stato destinazione
 y //eventi input?
 cl //evento input
 L //link evento input
@@ -25,8 +25,8 @@ cls //label oss
 n //label rel?
 endrobot
 robot newtransition b3
-0 //stato sorgente
-0 //stato destinazione
+0b //stato sorgente
+0b //stato destinazione
 y //eventi input?
 op //evento input
 L //link evento input
@@ -36,8 +36,8 @@ y //label rel?
 f3 //label rel
 endrobot
 robot newtransition b4
-1 //stato sorgente
-1 //stato destinazione
+1b //stato sorgente
+1b //stato destinazione
 y //eventi input?
 cl //evento input
 L //link evento input
@@ -47,8 +47,8 @@ y //label rel?
 f4 //label rel
 endrobot
 robot newtransition b5
-0 //stato sorgente
-0 //stato destinazione
+0b //stato sorgente
+0b //stato destinazione
 y //eventi input?
 cl //evento input
 L //link evento input
@@ -58,8 +58,8 @@ nop //label oss
 n //label rel?
 endrobot
 robot newtransition b6
-1 //stato sorgente
-1 //stato destinazione
+1b //stato sorgente
+1b //stato destinazione
 y //eventi input?
 op //evento input
 L //link evento input
@@ -69,10 +69,10 @@ nop //label oss
 n //label rel?
 endrobot
 robot newtransition b7
-0 //stato sorgente
-1 //stato destinazione
+0b //stato sorgente
+1b //stato destinazione
 y //eventi input?
-op //evento input
+cl //evento input
 L //link evento input
 n //eventi output?
 y //label oss?
@@ -81,8 +81,8 @@ y //label rel?
 f5 //label rel
 endrobot
 robot newtransition b8
-1 //stato sorgente
-0 //stato destinazione
+1b //stato sorgente
+0b //stato destinazione
 y //eventi input?
 op //evento input
 L //link evento input

@@ -1,13 +1,13 @@
 newcfa s
-newstate 0
-newstate 1
-setinitial 0
+newstate 0s
+newstate 1s
+setinitial 0s
 robot newtransition s1
-1 //stato sorgente
-0 //stato destinazione
+0s //stato sorgente
+1s //stato destinazione
 n //eventi input?
 y //eventi output?
-cl //evento output
+op //evento output
 L //link eventi output
 n //altri eventi output?
 y //label oss?
@@ -15,11 +15,11 @@ act //label oss
 n //label rel?
 endrobot
 robot newtransition s2
-0 //stato sorgente
-1 //stato destinazione
+1s //stato sorgente
+0s //stato destinazione
 n //eventi input?
 y //eventi output?
-op //evento output
+cl //evento output
 L //link eventi output
 n //altri eventi output?
 y //label oss?
@@ -27,8 +27,8 @@ sby //label oss
 n //label rel?
 endrobot
 robot newtransition s3
-0 //stato sorgente
-0 //stato destinazione
+0s //stato sorgente
+0s //stato destinazione
 n //eventi input?
 y //eventi output?
 cl //evento output
@@ -39,8 +39,8 @@ y //label rel?
 f1 //label rel
 endrobot
 robot newtransition s4
-1 //stato sorgente
-1 //stato destinazione
+1s //stato sorgente
+1s //stato destinazione
 n //eventi input?
 y //eventi output?
 op //evento output
