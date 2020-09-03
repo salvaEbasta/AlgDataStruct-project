@@ -15,8 +15,7 @@ public class ComportamentalTransition extends Transition<ComportamentalState>{
 	private static final long serialVersionUID = 1L;
 	private Event in;
 	private Link inputLink;
-	private HashMap<Event, Link> out; //Ad ogni evento in uscita è associato un link diverso, andrebbe scelta un'altra struttura dati perchè con l'hashmap
-									//è possibile inserire più volte lo stesso "valore" Link
+	private HashMap<Event, Link> out;
 	
 	public ComportamentalTransition(String id, ComportamentalState source, ComportamentalState destination, Event in, Link inputLink, HashMap<Event, Link> out, ObservableLabel omega, RelevantLabel f) {
 		super(id, source, destination);
