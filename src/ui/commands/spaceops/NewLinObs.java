@@ -20,7 +20,7 @@ public class NewLinObs implements CommandInterface, NoParameters{
 			return false;
 		}
 
-		CurrentNet net = context.getCurrentNet();				
+					
 		ObservationsList obsList = new ObservationsList();
 		String ans = "";
 		context.getIOStream().writeln(context.getCurrentNet().obsLabel());

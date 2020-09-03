@@ -21,6 +21,7 @@ import diagnosticatore.algorithms.DiagnosticatoreBuilder;
 import diagnosticatore.algorithms.LinearDiagnosis;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpazioComportamentale;
+import utility.RegexSimplifier;
 
 public class TestDiagnosiLineare {
 	private static CFSMnetwork initialize_pg26() {
@@ -88,6 +89,9 @@ public class TestDiagnosiLineare {
 	@Test
 	void test_pg82() throws Exception{
 		ClosureSpace pg69 = build_closureS_pg69();
+		ArrayList<RelevantLabel> relList = new ArrayList<RelevantLabel>();
+		relList.add(new RelevantLabel("f"));
+		relList.add(new RelevantLabel("r"));
 		ObservationsList O = new ObservationsList();
 		O.add(new ObservableLabel("o3"));
 		O.add(new ObservableLabel("o2"));
@@ -95,16 +99,9 @@ public class TestDiagnosiLineare {
 		O.add(new ObservableLabel("o2"));
 		
 		String diagnosis = new LinearDiagnosis(pg69, O).call();
-		System.out.println(diagnosis);
-		// risultato = (rf|fr)(fr|f|frf|ε)
-		
-		while(diagnosis.contains("εε"))
-			diagnosis = diagnosis.replaceAll("εε", "ε");
-		diagnosis = diagnosis.replaceAll("εr", "r");
-		diagnosis = diagnosis.replaceAll("εf", "f");
-		diagnosis = diagnosis.replaceAll("rε", "r");
-		diagnosis = diagnosis.replaceAll("fε", "f");
-		System.out.println(diagnosis);
-		assertTrue(diagnosis.equals("((ε(rf)ε|ε(r)f)|ε((fr)ε)ε)(((fr)ε)|((fr)f)|ε|f)"));
+		System.out.println("Regex: " + diagnosis);
+		diagnosis = new RegexSimplifier().simplify(diagnosis, relList);
+		System.out.println("Simplified: " + diagnosis);
+		assertTrue(diagnosis.equals("((((fr))ε|rf)|ε(rf))(((fr))|((fr)f)|ε|f)"));
 	}
 }

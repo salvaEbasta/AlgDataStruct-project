@@ -4,23 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import comportamental_fsm.labels.ObservationsList;
 import diagnosticatore.algorithms.LinearDiagnosis;
-import spazio_comportamentale.SpazioComportamentale;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
 import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
+import utility.RegexSimplifier;
 
 public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 
@@ -80,12 +72,13 @@ public class DiagnosiObsDiagn  implements CommandInterface, NoParameters{
 		if(result == null)
 			return false;
 		
-		context.getIOStream().writeln(String.format("Diagnosi Lineare (con Diagnosticatore) trovata per osservazione %s: %s", obs, result.getKey()));
+		String relDiagnosi = new RegexSimplifier().simplify(result.getKey(), context.getCurrentNet().getNet().getRelevantLabels());
+		context.getIOStream().writeln(String.format("Diagnosi Lineare (con Diagnosticatore) trovata per osservazione %s: %s", obs, relDiagnosi));
 		
 		boolean stopped = result.getValue().wasStopped();
 		
 		if(!stopped)
-			context.getCurrentNet().addDiagnosticatoreResult(obs, result.getKey(), result.getValue().getTime(), result.getValue().getSpace());
+			context.getCurrentNet().addDiagnosticatoreResult(obs, relDiagnosi, result.getValue().getTime(), result.getValue().getSpace());
 		
 		return true;
 	}

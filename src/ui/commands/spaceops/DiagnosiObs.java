@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.Map.Entry;
 import comportamental_fsm.labels.ObservationsList;
-import fsm_algorithms.RelevanceRegexBuilder;
+import fsm_algorithms.MultipleRelRegexBuilder;
 import spazio_comportamentale.SpaceTransition;
 import spazio_comportamentale.oss_lineare.BuilderSpaceComportamentaleObsLin;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
@@ -17,6 +17,7 @@ import ui.context.Context;
 import ui.context.Performance;
 import ui.context.StoppableOperation;
 import utility.Constants;
+import utility.RegexSimplifier;
 
 public class DiagnosiObs implements CommandInterface, NoParameters{
 
@@ -65,20 +66,30 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 		ObservationsList obs = obsList.get(index);
 		SpaceAutomaObsLin obsSpace = context.getCurrentNet().getLinObsCompSpace(obs);
 		
-		RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>> diagnosi = 
-				new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(obsSpace, new BuilderSpaceComportamentaleObsLin());		
+		MultipleRelRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>> diagnosi = 
+				new MultipleRelRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(new SpaceAutomaObsLin(obsSpace), new BuilderSpaceComportamentaleObsLin());		
 		
-	
-		Entry<String, Performance> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
+		
+		Entry<HashMap<SpaceStateObs, String>, Performance> result = new StoppableOperation().compute(context.getIOStream(), diagnosi);
 		if(result == null)
 			return false;
 		
-		context.getIOStream().writeln(String.format("Diagnosi Lineare trovata per osservazione %s: %s", obs, result.getKey()));
+		Iterator<String> iterator = result.getKey().values().iterator();
+		String relDiagnosi = null;
+		if(iterator.hasNext()) {
+			StringBuilder sbDiagn = new StringBuilder(iterator.next());
+			while(iterator.hasNext())
+				sbDiagn.append("|").append(iterator.next());
+			relDiagnosi = new RegexSimplifier().simplify(sbDiagn.toString(), context.getCurrentNet().getNet().getRelevantLabels());
+		} else 
+			relDiagnosi = Constants.EPSILON;
+			
+		context.getIOStream().writeln(String.format("Diagnosi Lineare trovata per osservazione %s: %s", obs, relDiagnosi));
 		
 		boolean stopped = result.getValue().wasStopped();
 		
 		if(!stopped)
-			context.getCurrentNet().addObsSpaceResult(obs, result.getKey(), result.getValue().getTime(), result.getValue().getSpace());
+			context.getCurrentNet().addObsSpaceResult(obs, relDiagnosi, result.getValue().getTime(), result.getValue().getSpace());
 		
 		
 		return true;

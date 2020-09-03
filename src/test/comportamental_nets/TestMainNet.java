@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,10 @@ import comportamental_fsm.Link;
 import comportamental_fsm.labels.ObservableLabel;
 import comportamental_fsm.labels.ObservationsList;
 import comportamental_fsm.labels.RelevantLabel;
-import fsm_algorithms.RelevanceRegexBuilder;
+import diagnosticatore.ClosureSpace;
+import diagnosticatore.algorithms.DiagnosticatoreBuilder;
+import diagnosticatore.algorithms.LinearDiagnosis;
+import fsm_algorithms.MultipleRelRegexBuilder;
 import spazio_comportamentale.SpaceAutomaComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
@@ -28,6 +32,8 @@ import spazio_comportamentale.oss_lineare.BuilderSpaceComportamentaleObsLin;
 import spazio_comportamentale.oss_lineare.SpaceAutomaObsLin;
 import spazio_comportamentale.oss_lineare.SpaceStateObs;
 import spazio_comportamentale.oss_lineare.SpazioComportamentaleObs;
+import utility.Constants;
+import utility.RegexSimplifier;
 
 class TestMainNet {
 	
@@ -284,21 +290,48 @@ class TestMainNet {
 	}
 	
 	@Test
-	void diagnostica() throws Exception{
+	void diagnosi() throws Exception{
 		CFSMnetwork net = initialize();
+		ArrayList<RelevantLabel> relList = new ArrayList<RelevantLabel>();
+		relList.add(new RelevantLabel("f"));
+		relList.add(new RelevantLabel("r"));
 		ObservationsList obsLin = new ObservationsList();
 		obsLin.add(new ObservableLabel("o3"));
-		obsLin.add(new ObservableLabel("o2"));
+		obsLin.add(new ObservableLabel("o2"));		
+
 		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
 		SpaceAutomaObsLin computedSpace = sc.call();
-		computedSpace.potatura();
-		computedSpace.ridenominazione();
-		String output = new RelevanceRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
+		HashMap<SpaceStateObs, String> output = new MultipleRelRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
+		Iterator<String> iterator = output.values().iterator();
+		String relDiagnosi = null;
+		if(iterator.hasNext()) {
+			StringBuilder sbDiagn = new StringBuilder(iterator.next());
+			while(iterator.hasNext())
+				sbDiagn.append("|").append(iterator.next());
+			relDiagnosi = new RegexSimplifier().simplify(sbDiagn.toString(), relList);		
+		} else 
+			relDiagnosi = Constants.EPSILON;
+		System.out.println("Result: "+relDiagnosi);
+		assertTrue(relDiagnosi.equals("ε|f|((fr))|((fr)f)"));
+	}
+	
+	@Test
+	void diagnosiDiagnosticatore() throws Exception{
+		CFSMnetwork net = initialize();
+		ArrayList<RelevantLabel> relList = new ArrayList<RelevantLabel>();
+		relList.add(new RelevantLabel("f"));
+		relList.add(new RelevantLabel("r"));
+		ObservationsList obsLin = new ObservationsList();
+		obsLin.add(new ObservableLabel("o3"));
+		obsLin.add(new ObservableLabel("o2"));		
+
+		SpazioComportamentale sc = new SpazioComportamentale(net);
+		SpaceAutomaComportamentale spazioC = sc.call();
+		ClosureSpace diagnosticatore = new DiagnosticatoreBuilder(spazioC).call();
+		String output = new LinearDiagnosis(diagnosticatore, obsLin).call();
+		output = new RegexSimplifier().simplify(output.toString(), relList);		
 		System.out.println("Result: "+output);
-		//simplifiedOutput = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
-		assertTrue(output.equals("εε(f(r(εε|fε)|ε)|εε)") || 
-				output.equals("εε(εε|f(ε|r(εε|fε)))") ||
-				output.equals("εε(f(r(fε|εε)|ε)|εε)"));
+		assertTrue(output.equals("(((fr))|((fr)f)|ε|f)"));
 	}
 
 	

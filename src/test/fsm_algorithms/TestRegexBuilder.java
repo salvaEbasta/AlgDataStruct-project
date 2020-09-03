@@ -2,13 +2,16 @@ package test.fsm_algorithms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import org.junit.jupiter.api.Test;
 
 import finite_state_machine.FSMBuilder;
 import finite_state_machine.FiniteState;
 import finite_state_machine.FiniteTransition;
 import finite_state_machine.LinkedTransitionsFSA;
-import fsm_algorithms.RelevanceRegexBuilder;
+import fsm_algorithms.MultipleRelRegexBuilder;
 import fsm_interfaces.FiniteStateMachine;
 import utility.Constants;
 
@@ -16,28 +19,28 @@ class TestRegexBuilder {
 	@Test
 	void test_benchmarkC1() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> C1 = build_benchmarkC1();
-		String result = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(C1, new FSMBuilder()).call();
-		//System.out.println(result);
-		assertTrue(result.equalsIgnoreCase("ε((c|a)b)*(c|a)ε"));
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(C1, new FSMBuilder()).call();
+		String output = toRegex(result);
+		System.out.println(output);
+		assertTrue(output.equalsIgnoreCase("(ε(((c|a)b))*(c|a))"));
 	}
 	
 	@Test
 	void test_pg50() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String result = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg50, 
 				new FSMBuilder()).call();
-		//System.out.println(result);
-		//simplifiedResult = "(f(r(f)?)?)?" = "eps|(f((r(f|eps))|eps))" = "ε|(f((r(f|ε))|ε))"
-		assertTrue(result.equalsIgnoreCase("  ( ε|f(r(fε| ε)|ε))"));
+		String output = toRegex(result);
+		assertTrue(output.equalsIgnoreCase("(εεf)|(εεε)|(((εεf)r)f)|(((εεf)r)ε)"));
 	}
 	
 	@Test
 	void test_pg50_decorations_state4() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
-				new FSMBuilder(), 
-				new FiniteState("4")).call();
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder()).call();		
 		//System.out.println(regex);
+		String regex = result.get(new FiniteState("4"));
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
@@ -48,10 +51,9 @@ class TestRegexBuilder {
 	@Test
 	void test_pg50_decorations_state7() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
-				new FSMBuilder(), 
-				new FiniteState("7")).call();
-		//System.out.println(regex);
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder()).call();
+		String regex = result.get(new FiniteState("7"));
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
@@ -62,10 +64,10 @@ class TestRegexBuilder {
 	@Test
 	void test_pg50_decorations_state8() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
-				new FSMBuilder(), 
-				new FiniteState("8")).call();
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder()).call();
 		//System.out.println(regex);
+		String regex = result.get(new FiniteState("8"));
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
@@ -76,10 +78,10 @@ class TestRegexBuilder {
 	@Test
 	void test_pg50_decorations_state5() throws Exception {
 		FiniteStateMachine<FiniteState, FiniteTransition> pg50 = build_pg50();
-		String regex = new RelevanceRegexBuilder<FiniteState, FiniteTransition>(pg50, 
-				new FSMBuilder(), 
-				new FiniteState("5")).call();
+		HashMap<FiniteState, String> result = new MultipleRelRegexBuilder<FiniteState, FiniteTransition>(pg50, 
+				new FSMBuilder()).call();
 		//System.out.println(regex);
+		String regex = result.get(new FiniteState("5"));
 		regex = regex.replace("(", "");
 		regex = regex.replace(")", "");
 		regex = regex.replace(Constants.EPSILON, "");
@@ -133,13 +135,13 @@ class TestRegexBuilder {
 		C1.setInitial(_1);
 		
 		FiniteTransition t3a = new FiniteTransition("t3a", _1, _2);
-		t3a.setRelevantLabel(" ");
+		t3a.setRelevantLabel(Constants.EPSILON);
 		C1.add(t3a);
 		FiniteTransition t2a = new FiniteTransition("t2a", _2, _3);
-		t2a.setRelevantLabel(" ");
+		t2a.setRelevantLabel(Constants.EPSILON);
 		C1.add(t2a);
 		FiniteTransition t3b_0 = new FiniteTransition("t3b_0", _3, _5);
-		t3b_0.setRelevantLabel(" ");
+		t3b_0.setRelevantLabel(Constants.EPSILON);
 		C1.add(t3b_0);
 		FiniteTransition t3c_0 = new FiniteTransition("t3c_0", _3, _4);
 		t3c_0.setRelevantLabel("f");
@@ -148,7 +150,7 @@ class TestRegexBuilder {
 		t2b.setRelevantLabel("r");
 		C1.add(t2b);
 		FiniteTransition t3b_1 = new FiniteTransition("t3b_1", _6, _8);
-		t3b_1.setRelevantLabel(" ");
+		t3b_1.setRelevantLabel(Constants.EPSILON);
 		C1.add(t3b_1);
 		FiniteTransition t3c_1 = new FiniteTransition("t3c_1", _6, _7);
 		t3c_1.setRelevantLabel("f");
@@ -156,5 +158,18 @@ class TestRegexBuilder {
 		
 		//System.out.print(C1.toString());
 		return C1;
+	}
+	
+	private String toRegex(HashMap<FiniteState, String> result) {
+		Iterator<String> iterator = result.values().iterator();
+		String relDiagnosi = null;
+		if(iterator.hasNext()) {
+			StringBuilder sbDiagn = new StringBuilder(iterator.next());
+			while(iterator.hasNext())
+				sbDiagn.append("|").append(iterator.next());
+			relDiagnosi = sbDiagn.toString();		
+		} else 
+			relDiagnosi = Constants.EPSILON;
+		return relDiagnosi;
 	}
 }

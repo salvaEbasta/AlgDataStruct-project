@@ -103,7 +103,8 @@ public class CurrentNet implements Serializable{
 		for(ObservableLabel obs : net.getObservabelLabels())
 			sb.append(String.format("* %s\n", obs.content()));
 		return sb.toString();
-	}
+	}	
+
 	
 	public String observationDescription() {
 		StringBuilder sb = new StringBuilder("Osservazioni effettuate sulla rete:\n");

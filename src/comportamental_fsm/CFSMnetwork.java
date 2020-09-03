@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import comportamental_fsm.labels.ObservableLabel;
+import comportamental_fsm.labels.RelevantLabel;
 import spazio_comportamentale.SpaceState;
 
 import java.util.Map.Entry;
@@ -110,6 +111,15 @@ public class CFSMnetwork implements Serializable{
 				obsList.add(t.observableLabel());
 		}));
 		return obsList;
+	}
+	
+	public ArrayList<RelevantLabel> getRelevantLabels(){
+		ArrayList<RelevantLabel> relList = new ArrayList<RelevantLabel>();
+		net.forEach(cfa -> cfa.transitions().forEach(t -> {
+			if(t.hasRelevantLabel() && !relList.contains(t.relevantLabel()))
+				relList.add(t.relevantLabel());
+		}));
+		return relList;
 	}
 	
 	public Set<ComportamentalTransition> enabledTransitions() {
