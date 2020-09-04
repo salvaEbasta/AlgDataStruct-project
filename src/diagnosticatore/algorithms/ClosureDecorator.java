@@ -8,6 +8,7 @@ import fsm_algorithms.MultipleRelRegexBuilder;
 import spazio_comportamentale.BuilderSpaceComportamentale;
 import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
+import utility.RegexSimplifier;
 
 public class ClosureDecorator extends Algorithm<SilentClosure>{
 	private SilentClosure closure;
@@ -23,7 +24,7 @@ public class ClosureDecorator extends Algorithm<SilentClosure>{
 		HashMap<SpaceState, String> decorations =  new MultipleRelRegexBuilder<SpaceState, SpaceTransition<SpaceState>>(
 				new SilentClosure(closure), 
 				new BuilderSpaceComportamentale()).call();
-		decorations.forEach((s, str)->closure.decorate(s, str));
+		decorations.forEach((s, str)->closure.decorate(s, new RegexSimplifier().simplify(str)));
 		return closure;
 	}
 
