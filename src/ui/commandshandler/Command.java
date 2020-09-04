@@ -5,7 +5,7 @@ import ui.context.Context;
 
 /**
  * Classe che consente di definire un comando a partire da una descrizione e di un compito
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 public class Command {

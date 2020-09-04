@@ -36,7 +36,7 @@ import ui.commands.spaceops.UpdateNet;
 
 /**
  * Classe con il compito di fornire una nuova istanza di un comando
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 public class CommandFactory {

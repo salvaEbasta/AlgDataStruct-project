@@ -21,7 +21,7 @@ import utility.FileHandler;
 /**
  * Classe in grado di gestire un insieme di comandi e di poter fare operazioni su di essi.<br>
  * La classe implementa il design pattern Singleton
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 public class CommandsHandler implements Closeable{

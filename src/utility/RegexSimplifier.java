@@ -7,6 +7,10 @@ import comportamental_fsm.labels.RelevantLabel;
 public class RegexSimplifier {
 	
 	
+	public String simmplify(String regex) {
+		return simplify(regex, new ArrayList<RelevantLabel>());
+	}
+	
 	public String simplify(String regex, ArrayList<RelevantLabel> relLabels) {
 		
 		String simplification = regex;

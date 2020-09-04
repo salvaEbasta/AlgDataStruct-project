@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * Classe che implementa l'interfaccia InOut utilizzando i più semplici input e output stream
- * @author Matteo Salvalai [715827], Lorenzo Maestrini[715780], Jacopo Mora [715149]
+ * @author Matteo Salvalai [715827], Jacopo Mora [715149]
  *
  */
 public class SimpleStreamAdapter implements InOutStream{
