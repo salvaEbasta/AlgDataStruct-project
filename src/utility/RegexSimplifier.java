@@ -33,7 +33,6 @@ public class RegexSimplifier {
 		}
 		
 		return simplification;
-		
 	}
 	
 	private ArrayList<String> simplifyStrings(ArrayList<RelevantLabel> relLabels){
@@ -54,8 +53,6 @@ public class RegexSimplifier {
 		}
 		
 		return toSimplify;
-		
-		
 	}
 
 }

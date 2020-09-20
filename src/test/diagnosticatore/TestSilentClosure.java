@@ -126,7 +126,7 @@ class TestSilentClosure {
 		
 		assertTrue(portions.size() == 4);
 		assertTrue(portions.contains("f"));
-		assertTrue(portions.contains("((fr)ε)"));
+		assertTrue(portions.contains("((fr))"));
 		assertTrue(portions.contains("((fr)f)"));
 		assertTrue(portions.contains("ε"));
 	}

@@ -49,9 +49,9 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 	private void checkPotatura(S state) {
 		if(!state.isFinal() && from(state).isEmpty() && states().contains(state)) {
 			Set<SpaceTransition<S>> inputTransitions = to(state);
-			remove(state);		
-			for(SpaceTransition<S> inputT : inputTransitions) 
-				checkPotatura(inputT.source());		
+			remove(state);
+			for(SpaceTransition<S> inputT : inputTransitions)
+				checkPotatura(inputT.source());
 		}
 	}
 	
@@ -75,10 +75,10 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		int i=0;
 		for(S state: states()) {
 			ridenominazione.put(i, state);
-			Interconnections<S, SpaceTransition<S>> interconnections = structure.get(state);	
+			Interconnections<S, SpaceTransition<S>> interconnections = structure.get(state);
 			structure.remove(state);
-			state.setId(Integer.toString(i++));			
-			structure.put(state, interconnections);			
+			state.setId(Integer.toString(i++));
+			structure.put(state, interconnections);
 		}
 		return ridenominazione;
 	}

@@ -42,14 +42,16 @@ public class SilentClosureBuilder extends Algorithm<SilentClosure>{
 			
 			log.info("Current transition: "+current);
 			
-			if(current.isSilent() && !closure.transitions().contains(current)) {
-				closure.insert(current.sink());
-				closure.add(current);
-				queue.addAll(space.from(current.sink()));
-			}else if(!closure.transitions().contains(current)){
-				log.info("Set exiting: "+current.source().id());
-				
-				closure.setExiting(current.source());
+			if(!closure.from(current.source()).contains(current)) {
+				if(current.isSilent()) {
+					closure.insert(current.sink());
+					closure.add(current);
+					queue.addAll(space.from(current.sink()));
+				} else {
+					log.info("Set exiting: "+current.source().id());
+					
+					closure.setExiting(current.source());
+				}
 			}
 		}
 	}

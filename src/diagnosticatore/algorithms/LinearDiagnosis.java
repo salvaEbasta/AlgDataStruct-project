@@ -86,7 +86,7 @@ public class LinearDiagnosis extends Algorithm<String>{
 		if(X.size() == 1) {
 			SilentClosure x = iter.next();
 			R.append(X.get(x).concat("(").concat(x.diagnosis()).concat(")"));
-		} else {
+		} else if(X.size() > 1){
 			SilentClosure x = iter.next();
 			R.append("(");
 			R.append(X.get(x).concat("(").concat(x.diagnosis()).concat(")"));
@@ -97,6 +97,8 @@ public class LinearDiagnosis extends Algorithm<String>{
 				R.append(X.get(x).concat("(").concat(x.diagnosis()).concat(")"));
 				R.append(")");
 			}
+		} else {
+			R.append(Constants.EPSILON);
 		}
 		
 		log.info("R: "+R.toString());

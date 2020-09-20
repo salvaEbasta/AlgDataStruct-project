@@ -158,7 +158,7 @@ class TestClosureSpace {
 		assertTrue(pg69.to(x2).size()==4);
 		assertTrue(pg69.from(x2).size()==3);
 		//System.out.println("Diagnosi: "+x2.diagnosis());
-		assertTrue(x2.diagnosis().equals("((fr)ε)|((fr)f)|ε|f"));
+		assertTrue(x2.diagnosis().equals("((fr))|((fr)f)|ε|f"));
 		
 		//x5
 		rename.remove(key);

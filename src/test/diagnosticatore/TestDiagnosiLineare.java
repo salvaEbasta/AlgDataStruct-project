@@ -102,6 +102,19 @@ public class TestDiagnosiLineare {
 		System.out.println("Regex: " + diagnosis);
 		diagnosis = new RegexSimplifier().simplify(diagnosis, relList);
 		System.out.println("Simplified: " + diagnosis);
-		assertTrue(diagnosis.equals("((((fr))ε|rf)|ε(rf))(((fr))|((fr)f)|ε|f)"));
+		assertTrue(diagnosis.equals("((rf|ε(rf))|ε((fr)))(((fr))|((fr)f)|ε|f)"));
+	}
+	
+	@Test
+	void test_pg69_o3_o2_o3() throws Exception{
+		ClosureSpace pg69 = build_closureS_pg69();
+		ObservationsList O = new ObservationsList();
+		O.add(new ObservableLabel("o3"));
+		O.add(new ObservableLabel("o2"));
+		O.add(new ObservableLabel("o3"));
+		
+		String diagnosis = new LinearDiagnosis(pg69, O).call();
+		System.out.println("Regex: " + diagnosis);
+		assertTrue(diagnosis.equals("ε"));
 	}
 }

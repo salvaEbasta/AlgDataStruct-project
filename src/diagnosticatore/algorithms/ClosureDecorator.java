@@ -10,6 +10,10 @@ import spazio_comportamentale.SpaceState;
 import spazio_comportamentale.SpaceTransition;
 import utility.RegexSimplifier;
 
+/**
+ * Classe che descrive la procedura di decorazione di una Chiusura Silenziosa
+ *
+ */
 public class ClosureDecorator extends Algorithm<SilentClosure>{
 	private SilentClosure closure;
 	

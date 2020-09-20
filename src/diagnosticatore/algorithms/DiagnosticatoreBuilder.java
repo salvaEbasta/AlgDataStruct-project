@@ -1,5 +1,6 @@
 package diagnosticatore.algorithms;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import algorithm_interfaces.Algorithm;
@@ -19,54 +20,57 @@ public class DiagnosticatoreBuilder extends Algorithm<ClosureSpace>{
 	}
 	
 	@Override
-	public ClosureSpace call() throws Exception {
+	public ClosureSpace call() throws Exception{
 		log.info(this.getClass().getSimpleName()+"::call("+space.id()+")...");
 		
 		cSpace = new ClosureSpace(space.id());
+		// colors: 1->gray; -1->black
+		HashMap<String, Integer> colors = new HashMap<String, Integer>();
+		
 		SilentClosure initial = new SilentClosureBuilder(space, space.initialState()).call();
 		initial = new ClosureDecorator(initial).call();
+		cSpace.insert(initial);
+		
+		colors.put(initial.id(), 0);
 		
 		LinkedList<SilentClosure> queue = new LinkedList<SilentClosure>();
 		queue.add(initial);
-		composeClosureSpace(queue);
+		
+		while(queue.size() > 0) {
+			SilentClosure u = queue.pop();
+			
+			for(SpaceState s: u.exitStates()) {
+				for(SpaceTransition<SpaceState> t : space.from(s)) {
+					if(t.isSilent()) 
+						continue;
+					
+					SilentClosure sink = null;
+					if(!colors.containsKey(t.sink().id())) {
+						sink = new SilentClosureBuilder(space, t.sink()).call();
+						sink = new ClosureDecorator(sink).call();
+						cSpace.insert(sink);
+						colors.put(sink.id(), 0);
+						queue.addLast(sink);
+					} else {
+						sink = cSpace.getState(t.sink().id());
+					}
+					Transition<SilentClosure> newT = new Transition<SilentClosure>(t.id(), u, sink);
+					newT.setObservableLabel(t.observableLabel());
+					newT.setRelevantLabel(u.decorationOf(t.source())+t.relevantLabelContent());
+					cSpace.add(newT);
+				}
+			}
+			colors.put(u.id(), -1);
+		}
+		
 		cSpace.setInitial(initial);
 		return cSpace;
 	}
-
+	
 	@Override
 	public ClosureSpace midResult() {
 		ClosureSpace midResult = new ClosureSpace(cSpace);
 		cSpace = new ClosureSpace(space.id());
 		return midResult;
-	}
-	
-	private void composeClosureSpace(LinkedList<SilentClosure> queue) throws Exception{
-		while(queue.size() > 0) {
-			SilentClosure closure = queue.pop();
-			cSpace.insert(closure);
-			for(SpaceState s : closure.exitStates()) {
-				for(SpaceTransition<SpaceState> t : space.from(s)) {
-					if(!t.isSilent()) {
-						handleTransition(t, closure, queue);
-					}
-				}
-			}
-		}
-	}
-	
-	private void handleTransition(SpaceTransition<SpaceState> t, SilentClosure closure, LinkedList<SilentClosure> queue) throws Exception{
-		SilentClosure sink = null;
-		if(!cSpace.hasState(t.sink().id())) {
-			sink = new SilentClosureBuilder(space, t.sink()).call();
-			sink = new ClosureDecorator(sink).call();
-			cSpace.insert(sink);
-			queue.add(sink);
-		}else {
-			sink = cSpace.getState(t.sink().id());
-		}
-		Transition<SilentClosure> newT = new Transition<SilentClosure>(t.id(), closure, sink);
-		newT.setObservableLabel(t.observableLabel());
-		newT.setRelevantLabel(closure.decorationOf(t.source())+t.relevantLabelContent());
-		cSpace.add(newT);
 	}
 }
