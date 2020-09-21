@@ -355,4 +355,20 @@ class TestMainNet {
 		assertTrue(t2b.isSilent());
 	}
 
+	
+	@Test
+	void linObs_o3_o2_o3() throws Exception{
+		CFSMnetwork net = initialize();
+
+		ObservationsList obsLin = new ObservationsList();
+		obsLin.add(new ObservableLabel("o3"));
+		obsLin.add(new ObservableLabel("o2"));
+		obsLin.add(new ObservableLabel("o3"));
+		
+		SpazioComportamentaleObs sc = new SpazioComportamentaleObs(net, obsLin);
+		SpaceAutomaObsLin computedSpace = sc.call();
+		
+		HashMap<SpaceStateObs, String> output = new MultipleRelRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
+		assertTrue(output.isEmpty());
+	}
 }
