@@ -36,8 +36,7 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			return false;
 		}
 		
-		
-		StringBuilder sb = new StringBuilder("Osservazioni Lineari disponibili:\n");
+		StringBuilder sb = new StringBuilder("Spazi Comportamentali relativi a Osservazioni Lineari disponibili:\n");
 		ArrayList<ObservationsList> obsList = new ArrayList<>();
 		Set<ObservationsList> obsSet = context.getCurrentNet().linObss();
 		Iterator<ObservationsList> iter = obsSet.iterator();
@@ -85,6 +84,7 @@ public class DiagnosiObs implements CommandInterface, NoParameters{
 			relDiagnosi = Constants.EPSILON;
 			
 		context.getIOStream().writeln(String.format("Diagnosi Lineare trovata per osservazione %s: %s", obs, relDiagnosi));
+		
 		
 		boolean stopped = result.getValue().wasStopped();
 		
