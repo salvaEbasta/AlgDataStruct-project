@@ -1,0 +1,58 @@
+newnet
+newlink RG
+newlink GR
+newlink RS
+newlink SR
+newlink RC
+newlink CR
+newlink AR
+newlink RA
+newevent eg1 //arrivato a destinazione
+newevent eg2 //destinazione aggiornata
+newevent eg3 //non arrivato a destinazione
+readcommands oursnet\G.txt
+newevent es1 //generato percorso andata
+newevent es2 //generato percorso ritorno
+newevent es3 //compiti terminati
+readcommands oursnet\S.txt
+newevent ec1 //nessun elemento rilevato
+newevent ec2 //ostacolo sulla strada
+newevent ec3 //trovato pomodoro raggiungibile
+readcommands oursnet\C.txt
+newevent ea1 //fine operazione
+newevent ea2 //errore non fatale
+newevent ea3 //errore fatale
+readcommands oursnet\A.txt
+newevent er1 //richiesta percorso andata
+newevent er2 //nuovo percorso
+newevent er3 //richiesta di controllo se arrivato a destinazione
+newevent er4 //richiesta percorso di ritorno
+newevent er5 //richiesta controllo condizioni di stop
+newevent er6 //trovato pomodoro
+readcommands oursnet\A.txt
+robot linkcfas RG
+R
+G
+robot linkcfas GR
+G
+R
+robot linkcfas RS
+R
+S
+robot linkcfas SR
+S
+R
+robot linkcfas RC
+R
+C
+robot linkcfas CR
+C
+R
+robot linkcfas AR
+A
+R
+robot linkcfas RA
+R
+A
+endrobot
+savenet other

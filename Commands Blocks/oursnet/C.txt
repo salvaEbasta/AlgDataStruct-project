@@ -1,0 +1,56 @@
+newcfa C
+newstate C1
+newstate C2
+newstate C3
+setinitial C1
+robot newtransition tc1
+C1 //stato sorgente
+C2 //stato destinazione
+y //eventi input?
+er5 //evento input
+RC //link evento input
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition tc2
+C2 //stato sorgente
+C3 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition tc3
+C2 //stato sorgente
+C1 //stato destinazione
+n //eventi input?
+y //eventi output?
+ec2 //evento output
+CR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition tc4
+C3 //stato sorgente
+C1 //stato destinazione
+n //eventi input?
+y //eventi output?
+ec1 //evento output
+CR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition tc5
+C3 //stato sorgente
+C1 //stato destinazione
+n //eventi input?
+y //eventi output?
+ec3 //evento output
+CR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+savecfa

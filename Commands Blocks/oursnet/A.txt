@@ -1,0 +1,125 @@
+newcfa A
+newstate A1
+newstate A2
+newstate A3
+newstate A4
+newstate A5
+newstate A6
+newstate A7
+newstate A8
+newstate A9
+setinitial A1
+robot newtransition ta1
+A1 //stato sorgente
+A2 //stato destinazione
+y //eventi input?
+er6 //evento input
+RA //link evento input
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta2
+A2 //stato sorgente
+A3 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta3
+A3 //stato sorgente
+A4 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta4
+A4 //stato sorgente
+A5 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta5
+A4 //stato sorgente
+A9 //stato destinazione
+n //eventi input?
+y //eventi output?
+ea2 //evento output
+AR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta6
+A4 //stato sorgente
+A8 //stato destinazione
+n //eventi input?
+y //eventi output?
+ea2 //evento output
+AR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta7
+A5 //stato sorgente
+A6 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta8
+A4 //stato sorgente
+A8 //stato destinazione
+n //eventi input?
+y //eventi output?
+ea2 //evento output
+AR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta9
+A6 //stato sorgente
+A7 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta10
+A6 //stato sorgente
+A9 //stato destinazione
+n //eventi input?
+y //eventi output?
+ea3 //evento output
+AR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta11
+A7 //stato sorgente
+A8 //stato destinazione
+n //eventi input?
+n //eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition ta12
+A8 //stato sorgente
+A4 //stato destinazione
+n //eventi input?
+y //eventi output?
+ea1 //evento output
+AR //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+savecfa
