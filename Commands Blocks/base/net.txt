@@ -3,8 +3,8 @@ newlink L2
 newlink L3
 newevent e2
 newevent e3
-readcommands C2.txt
-readcommands C3.txt
+readcommands base\C2.txt
+readcommands base\C3.txt
 robot linkcfas L2
 C3
 C2

@@ -2,8 +2,8 @@ newnet
 newlink L
 newevent op
 newevent cl
-readcommands s.txt
-readcommands b.txt
+readcommands other\s.txt
+readcommands other\b.txt
 robot linkcfas L
 s
 b

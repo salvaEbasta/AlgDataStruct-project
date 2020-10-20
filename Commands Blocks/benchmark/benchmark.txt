@@ -5,19 +5,19 @@ newlink L3
 newevent e1
 newevent e2
 newevent e3
-readcommands oursS.txt
-readcommands oursR.txt
-readcommands oursM.txt
+readcommands benchmark\triC1.txt
+readcommands benchmark\triC2.txt
+readcommands benchmark\triC3.txt
 robot linkcfas L1
-r
-m
+C2
+C1
 endrobot
 robot linkcfas L2
-r
-s
+C2
+C3
 endrobot
 robot linkcfas L3
-m
-s
+C3
+C1
 endrobot
-savenet ours
+savenet benchmark
