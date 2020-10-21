@@ -113,7 +113,7 @@ n //label rel?
 endrobot
 robot newtransition ta12
 A8 //stato sorgente
-A4 //stato destinazione
+A1 //stato destinazione
 n //eventi input?
 y //eventi output?
 ea1 //evento output

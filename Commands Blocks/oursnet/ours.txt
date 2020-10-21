@@ -10,6 +10,12 @@ newlink RA
 newevent eg1 //arrivato a destinazione
 newevent eg2 //destinazione aggiornata
 newevent eg3 //non arrivato a destinazione
+newevent er1 //richiesta percorso andata
+newevent er2 //nuovo percorso
+newevent er3 //richiesta di controllo se arrivato a destinazione
+newevent er4 //richiesta percorso di ritorno
+newevent er5 //richiesta controllo condizioni di stop
+newevent er6 //trovato pomodoro
 readcommands oursnet\G.txt
 newevent es1 //generato percorso andata
 newevent es2 //generato percorso ritorno
@@ -23,36 +29,37 @@ newevent ea1 //fine operazione
 newevent ea2 //errore non fatale
 newevent ea3 //errore fatale
 readcommands oursnet\A.txt
-newevent er1 //richiesta percorso andata
-newevent er2 //nuovo percorso
-newevent er3 //richiesta di controllo se arrivato a destinazione
-newevent er4 //richiesta percorso di ritorno
-newevent er5 //richiesta controllo condizioni di stop
-newevent er6 //trovato pomodoro
-readcommands oursnet\A.txt
+readcommands oursnet\R.txt
 robot linkcfas RG
 R
 G
+endrobot
 robot linkcfas GR
 G
 R
+endrobot
 robot linkcfas RS
 R
 S
+endrobot
 robot linkcfas SR
 S
 R
+endrobot
 robot linkcfas RC
 R
 C
+endrobot
 robot linkcfas CR
 C
 R
+endrobot
 robot linkcfas AR
 A
 R
+endrobot
 robot linkcfas RA
 R
 A
 endrobot
-savenet other
+savenet oursnet

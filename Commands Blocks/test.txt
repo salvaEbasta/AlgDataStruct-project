@@ -1,3 +1,0 @@
-loadnet net1
-spaceops
-generatespace

@@ -55,4 +55,5 @@ GR //link eventi output
 n //altri eventi output?
 n //label oss?
 n //label rel?
+endrobot
 savecfa
