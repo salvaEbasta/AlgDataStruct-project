@@ -62,7 +62,7 @@ public class MultipleRelRegexBuilder<S extends State, T extends Transition<S>> e
 			mark = null;
 			
 			// Find a path of a single transition to and from a state of the sequence
-			LinkedList<T> transitions = new OneWayPathFinder<S, T>(N).call();
+			LinkedList<T> transitions = new LinkedList<T>();
 			if (findOneWayPath(transitions, markings)) {
 				log.info("Found one way path: " + transitions);
 
