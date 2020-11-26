@@ -5,9 +5,6 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-
-;
-
 public class RobotWriter implements Runnable{
 
 	private ArrayList<String> lines;
