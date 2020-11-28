@@ -1,0 +1,11 @@
+newnet
+newlink L
+newevent op
+newevent cl
+readcommands rete_alternativa\s.txt
+readcommands rete_alternativa\b.txt
+robot linkcfas L
+s
+b
+endrobot
+savenet alternativa

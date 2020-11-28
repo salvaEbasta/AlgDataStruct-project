@@ -23,7 +23,7 @@ public class LoadNet implements CommandInterface, OneParameter{
 		}
 		context.loadNet(loadedNet);
 		context.setNetFileName(fileName);
-		context.getIOStream().writeln("Rete caricata correttamente!");
+		context.getIOStream().writeln(String.format("Rete '%s' caricata correttamente!", args[0]));
 		return true;
 	}
 

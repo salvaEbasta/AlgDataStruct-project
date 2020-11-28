@@ -16,20 +16,20 @@ newevent er3 //richiesta di controllo se arrivato a destinazione
 newevent er4 //richiesta percorso di ritorno
 newevent er5 //richiesta controllo condizioni di stop
 newevent er6 //trovato pomodoro
-readcommands oursnet\G.txt
+readcommands raccolta\G.txt
 newevent es1 //generato percorso andata
 newevent es2 //generato percorso ritorno
 newevent es3 //compiti terminati
-readcommands oursnet\S.txt
+readcommands raccolta\S.txt
 newevent ec1 //nessun elemento rilevato
 newevent ec2 //ostacolo sulla strada
 newevent ec3 //trovato pomodoro raggiungibile
-readcommands oursnet\C.txt
+readcommands raccolta\C.txt
 newevent ea1 //fine operazione
 newevent ea2 //errore non fatale
 newevent ea3 //errore fatale
-readcommands oursnet\A.txt
-readcommands oursnet\R.txt
+readcommands raccolta\A.txt
+readcommands raccolta\R.txt
 robot linkcfas RG
 R
 G
@@ -62,4 +62,4 @@ robot linkcfas RA
 R
 A
 endrobot
-savenet oursnet
+savenet raccolta

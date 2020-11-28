@@ -46,7 +46,7 @@ public class SaveNet implements CommandInterface, OneParameter{
 		}
 		boolean saved = new FileHandler().save(fileName.concat(".ser"), context.createNewNet(net));
 		if(saved) {
-			context.getIOStream().writeln(String.format("Rete di CFA salvata correttamente nel percorso %s!", fileName));
+			context.getIOStream().writeln(String.format("Rete di CFA salvata correttamente con il nome '%s'!", args[0]));
 			context.getWorkSpace().reset();
 			context.setNetFileName(fileName.concat(".ser"));
 		}

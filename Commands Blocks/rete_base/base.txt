@@ -3,8 +3,8 @@ newlink L2
 newlink L3
 newevent e2
 newevent e3
-readcommands base\C2.txt
-readcommands base\C3.txt
+readcommands rete_base\C2.txt
+readcommands rete_base\C3.txt
 robot linkcfas L2
 C3
 C2
@@ -13,4 +13,4 @@ robot linkcfas L3
 C2
 C3
 endrobot
-savenet net
+savenet base
