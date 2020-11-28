@@ -41,8 +41,7 @@ public class SilentClosureBuilder extends Algorithm<SilentClosure>{
 			SpaceTransition<SpaceState> current = queue.pop();
 			
 			log.info("Current transition: "+current);
-			
-			if(!closure.from(current.source()).contains(current)) {
+			if(!closure.transitions().contains(current)) {
 				if(current.isSilent()) {
 					closure.insert(current.sink());
 					closure.add(current);
