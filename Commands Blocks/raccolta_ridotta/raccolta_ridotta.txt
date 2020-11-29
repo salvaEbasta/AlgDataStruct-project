@@ -31,4 +31,4 @@ robot linkcfas RA
 R
 A
 endrobot
-savenet raccolta
+savenet raccolta_ridotta
