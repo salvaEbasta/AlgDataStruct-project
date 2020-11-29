@@ -14,7 +14,7 @@ n //label rel?
 endrobot
 robot newtransition ts2
 S2 //stato sorgente
-S3 //stato destinazione
+S1 //stato destinazione
 n //eventi input?
 y //eventi output?
 es1 //evento output
