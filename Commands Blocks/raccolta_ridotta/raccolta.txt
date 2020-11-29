@@ -1,0 +1,34 @@
+newnet
+newlink RC
+newlink CR
+newlink AR
+newlink RA
+newevent er1
+newevent er2
+newevent er3
+newevent er4
+newevent ec1
+newevent ec2
+newevent ec3
+newevent ea1
+newevent ea2
+readcommands raccolta_ridotta\C.txt
+readcommands raccolta_ridotta\A.txt
+readcommands raccolta_ridotta\R.txt
+robot linkcfas RC
+R
+C
+endrobot
+robot linkcfas CR
+C
+R
+endrobot
+robot linkcfas AR
+A
+R
+endrobot
+robot linkcfas RA
+R
+A
+endrobot
+savenet raccolta
