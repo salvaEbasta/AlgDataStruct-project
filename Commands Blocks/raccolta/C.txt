@@ -7,7 +7,7 @@ robot newtransition tc1
 C1 //stato sorgente
 C2 //stato destinazione
 y //eventi input?
-er5 //evento input
+er3 //evento input
 RC //link evento input
 n //eventi output?
 n //label oss?
@@ -26,7 +26,7 @@ C2 //stato sorgente
 C1 //stato destinazione
 n //eventi input?
 y //eventi output?
-ec2 //evento output
+ec1 //evento output
 CR //link eventi output
 n //altri eventi output?
 n //label oss?
@@ -37,7 +37,7 @@ C3 //stato sorgente
 C1 //stato destinazione
 n //eventi input?
 y //eventi output?
-ec1 //evento output
+ec2 //evento output
 CR //link eventi output
 n //altri eventi output?
 n //label oss?

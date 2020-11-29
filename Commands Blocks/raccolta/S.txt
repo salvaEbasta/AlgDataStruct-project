@@ -1,9 +1,6 @@
 newcfa S
 newstate S1
 newstate S2
-newstate S3
-newstate S4
-newstate S5
 setinitial S1
 robot newtransition ts1
 S1 //stato sorgente
@@ -21,40 +18,6 @@ S3 //stato destinazione
 n //eventi input?
 y //eventi output?
 es1 //evento output
-SR //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition ts3
-S3 //stato sorgente
-S4 //stato destinazione
-y //eventi input?
-er2 //evento input
-RS //link evento input
-n //eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition ts4
-S4 //stato sorgente
-S5 //stato destinazione
-n //eventi input?
-y //eventi output?
-es2 //evento output
-SR //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition ts5
-S5 //stato sorgente
-S5 //stato destinazione
-y //eventi input?
-er2 //evento input
-RS //link evento input
-y //eventi output?
-es3 //evento output
 SR //link eventi output
 n //altri eventi output?
 n //label oss?

@@ -1,13 +1,12 @@
 newcfa G
 newstate G1
 newstate G2
-newstate G3
 setinitial G1
 robot newtransition tg1
 G1 //stato sorgente
 G2 //stato destinazione
 y //eventi input?
-er4 //evento input
+er2 //evento input
 RG //link evento input
 n //eventi output?
 n //label oss?
@@ -18,39 +17,7 @@ G2 //stato sorgente
 G1 //stato destinazione
 n //eventi input?
 y //eventi output?
-eg2 //evento output
-GR //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tg3
-G1 //stato sorgente
-G3 //stato destinazione
-y //eventi input?
-er3 //evento input
-RG //link evento input
-n //eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tg4
-G3 //stato sorgente
-G1 //stato destinazione
-n //eventi input?
-y //eventi output?
 eg1 //evento output
-GR //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tg5
-G3 //stato sorgente
-G1 //stato destinazione
-n //eventi input?
-y //eventi output?
-eg3 //evento output
 GR //link eventi output
 n //altri eventi output?
 n //label oss?

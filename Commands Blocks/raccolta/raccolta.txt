@@ -7,27 +7,20 @@ newlink RC
 newlink CR
 newlink AR
 newlink RA
-newevent eg1 //arrivato a destinazione
-newevent eg2 //destinazione aggiornata
-newevent eg3 //non arrivato a destinazione
-newevent er1 //richiesta percorso andata
-newevent er2 //nuovo percorso
-newevent er3 //richiesta di controllo se arrivato a destinazione
-newevent er4 //richiesta percorso di ritorno
-newevent er5 //richiesta controllo condizioni di stop
-newevent er6 //trovato pomodoro
+newevent eg1
+newevent er1
+newevent er2
+newevent er3
+newevent er4
+newevent es1
+newevent ec1
+newevent ec2
+newevent ec3
+newevent ea1
+newevent ea2
 readcommands raccolta\G.txt
-newevent es1 //generato percorso andata
-newevent es2 //generato percorso ritorno
-newevent es3 //compiti terminati
 readcommands raccolta\S.txt
-newevent ec1 //nessun elemento rilevato
-newevent ec2 //ostacolo sulla strada
-newevent ec3 //trovato pomodoro raggiungibile
 readcommands raccolta\C.txt
-newevent ea1 //fine operazione
-newevent ea2 //errore non fatale
-newevent ea3 //errore fatale
 readcommands raccolta\A.txt
 readcommands raccolta\R.txt
 robot linkcfas RG

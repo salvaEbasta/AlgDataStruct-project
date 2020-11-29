@@ -7,21 +7,8 @@ newstate R5
 newstate R6
 newstate R7
 newstate R8
-newstate R9
-newstate R10
-newstate R11
 setinitial R1
-robot newtransition ta1
-R1 //stato sorgente
-R11 //stato destinazione
-n //eventi input?
-n //eventi output?
-y //label oss?
-or1 //label oss
-y //label rel?
-fr1 //label rel
-endrobot
-robot newtransition tr2
+robot newtransition tr1
 R1 //stato sorgente
 R2 //stato destinazione
 n //eventi input?
@@ -32,196 +19,136 @@ n //altri eventi output?
 n //label oss?
 n //label rel?
 endrobot
-robot newtransition tr3
+robot newtransition tr2
 R2 //stato sorgente
 R3 //stato destinazione
 y //eventi input?
 es1 //evento input
 SR //link evento input
 y //eventi output?
-er4 //evento output
+er2 //evento output
 RG //link eventi output
 n //altri eventi output?
 n //label oss?
 n //label rel?
 endrobot
-robot newtransition tr4
-R2 //stato sorgente
-R3 //stato destinazione
-y //eventi input?
-es2 //evento input
-SR //link evento input
-y //eventi output?
-er4 //evento output
-RG //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tr5
+robot newtransition tr3
 R3 //stato sorgente
 R4 //stato destinazione
-y //eventi input?
-eg2 //evento input
-GR //link evento input
-y //eventi output?
-er3 //evento output
-RG //link eventi output
-n //altri eventi output?
-y //label oss?
-or2 //label oss
-n //label rel?
-endrobot
-robot newtransition tr6
-R4 //stato sorgente
-R2 //stato destinazione
 y //eventi input?
 eg1 //evento input
 GR //link evento input
 y //eventi output?
-er2 //evento output
-RS //link eventi output
+er3 //evento output
+RC //link eventi output
 n //altri eventi output?
-y //label oss?
-or2 //label oss
+n //label oss
 n //label rel?
 endrobot
-robot newtransition tr7
+robot newtransition tr4
+R4 //stato sorgente
+R6 //stato destinazione
+y //eventi input?
+ec3 //evento input
+CR //link evento input
+n //eventi output?
+y //label oss?
+or1 //label oss
+n //label rel?
+endrobot
+robot newtransition tr5
+R6 //stato sorgente
+R3 //stato destinazione
+n //eventi input?
+y //eventi output?
+er2 //evento output
+RG //link eventi output
+n //altri eventi output?
+n //label oss?
+n //label rel?
+endrobot
+robot newtransition tr6
 R4 //stato sorgente
 R5 //stato destinazione
 y //eventi input?
-eg3 //evento input
-GR //link evento input
+ec1 //evento input
+CR //link evento input
+n //eventi output?
+y //label oss?
+or2 //label oss
+y //label rel?
+ostacolo //label rel
+endrobot
+robot newtransition tr7
+R5 //stato sorgente
+R4 //stato destinazione
+n //eventi input?
 y //eventi output?
-er5 //evento output
+er3 //evento output
 RC //link eventi output
 n //altri eventi output?
 n //label oss?
 n //label rel?
 endrobot
 robot newtransition tr8
-R5 //stato sorgente
-R6 //stato destinazione
-n //eventi input?
-y //eventi output?
-ea2 //evento output
-AR //link eventi output
-n //altri eventi output?
-y //label oss?
-or4 //label oss
-y //label rel?
-fr2 //label rel
-endrobot
-robot newtransition tr9
-R6 //stato sorgente
-R5 //stato destinazione
-n //eventi input?
-y //eventi output?
-er5 //evento output
-RC //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tr10
-R5 //stato sorgente
+R4 //stato sorgente
 R7 //stato destinazione
 y //eventi input?
-ec1 //evento input
+ec2 //evento input
 CR //link evento input
 y //eventi output?
-er6 //evento output
+er4 //evento output
 RA //link eventi output
 n //altri eventi output?
-n //label oss?
+y //label oss?
+or2 //label oss
 n //label rel?
 endrobot
-robot newtransition tr11
+robot newtransition tr9
 R7 //stato sorgente
-R5 //stato destinazione
+R4 //stato destinazione
 y //eventi input?
 ea1 //evento input
 AR //link evento input
 y //eventi output?
-er5 //evento output
+er3 //evento output
 RC //link eventi output
 n //altri eventi output?
 y //label oss?
-or6 //label oss
+or3 //label oss
 n //label rel?
 endrobot
-robot newtransition tr12
-R5 //stato sorgente
+robot newtransition tr10
+R7 //stato sorgente
 R8 //stato destinazione
-y //eventi input?
-ec1 //evento input
-CR //link evento input
-n //eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tr13
-R8 //stato sorgente
-R4 //stato destinazione
-n //eventi input?
-y //eventi output?
-er3 //evento output
-RG //link eventi output
-n //altri eventi output?
-n //label oss?
-n //label rel?
-endrobot
-robot newtransition tr14
-R7 //stato sorgente
-R10 //stato destinazione
-y //eventi input?
-ea3 //evento input
-AR //link evento input
-n //eventi output?
-n //label oss?
-y //label rel?
-fr4 //label rel
-endrobot
-robot newtransition tr15
-R7 //stato sorgente
-R9 //stato destinazione
 y //eventi input?
 ea2 //evento input
 AR //link evento input
 n //eventi output?
-n //label oss?
+y //label oss?
+or4 //label oss
 y //label rel?
-fr3 //label rel
+err_raccolta //label rel
 endrobot
-robot newtransition tr16
-R9 //stato sorgente
+robot newtransition tr11
+R3 //stato sorgente
 R8 //stato destinazione
 y //eventi input?
-ea1 //evento input
-AR //link evento input
+eg1 //evento input
+GR //link evento input
 n //eventi output?
 y //label oss?
 or5 //label oss
 n //label rel?
 endrobot
-robot newtransition tr17
-R9 //stato sorgente
-R10 //stato destinazione
-y //eventi input?
-ea3 //evento input
-AR //link evento input
-n //eventi output?
-n //label oss?
-y //label rel?
-fr4 //label rel
-endrobot
-robot newtransition tr18
-R10 //stato sorgente
-R11 //stato destinazione
+robot newtransition tr12
+R1 //stato sorgente
+R8 //stato destinazione
 n //eventi input?
 n //eventi output?
 y //label oss?
-or7 //label oss
-n //label rel?
+or6 //label oss
+y //label rel?
+err_setup //label rel
 endrobot
 savecfa
