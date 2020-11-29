@@ -25,6 +25,7 @@ public class ShowObservations implements CommandInterface, NoParameters{
 		
 		CurrentNet net = context.getCurrentNet();				
 		context.getIOStream().writeln(net.observationDescription());		
+		
 		return true;
 	}
 

@@ -67,8 +67,8 @@ public class Result implements Serializable{
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("LinearObs Space: [time: %.2fs, space: %.2fMB]\n", obsSpaceTime, obsSpaceSpace));
-		sb.append("\t\tDiagnosis with LinearObs comp Space: [".concat(spaceResult.toString()).concat("]\n"));
-		sb.append("\t\tDiagnosis with Diagnosticatore: [".concat(diagnosticatoreResult.toString()).concat("]"));
+		sb.append("\t\t- Diagnosis with LinearObs comp Space:\t[".concat(spaceResult.toString()).concat("]\n"));
+		sb.append("\t\t- Diagnosis with Diagnosticatore:\t[".concat(diagnosticatoreResult.toString()).concat("]"));
 		return sb.toString();
 	}
 }
