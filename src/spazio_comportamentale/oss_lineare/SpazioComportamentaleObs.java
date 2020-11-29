@@ -23,7 +23,7 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);
 	}
 	
-	private Set<ComportamentalTransition> enabledTransitions(int j) {
+	private Set<ComportamentalTransition> enabledTransitions(int j) throws NoTraiettoriaException {
 		Set<ComportamentalTransition> enabledTransitions = new HashSet<ComportamentalTransition>();	
 		for(ComportamentalTransition transition: net.enabledTransitions()) {
 			if(transition.observableLabel().isEmpty())
@@ -32,6 +32,8 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 				enabledTransitions.add(transition);
 			}
 		}
+		if(enabledTransitions.isEmpty() && j < observation.size())
+			throw new NoTraiettoriaException();
 		return enabledTransitions;
 	}
 
@@ -42,7 +44,11 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), 0, observation.size());
 		spazioCompOL.insert(initial);
 		
-		explore(initial, enabledTransitions(0), 0);
+		try {
+			explore(initial, enabledTransitions(0), 0);
+		} catch(NoTraiettoriaException e) {
+			return new SpaceAutomaObsLin("_"+observation.toString());
+		}
 		
 		spazioCompOL.setInitial(initial);
 		net.restoreState(initial);
@@ -51,7 +57,7 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		return spazioCompOL;
 	}
 	
-	private void explore(SpaceStateObs state, Set<ComportamentalTransition> enabledTs, int i) {
+	private void explore(SpaceStateObs state, Set<ComportamentalTransition> enabledTs, int i) throws NoTraiettoriaException {
 		Iterator<ComportamentalTransition> iter = enabledTs.iterator();
 		while(iter.hasNext()) {
 			int j = i;
@@ -83,5 +89,16 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		SpaceAutomaObsLin midResult = new SpaceAutomaObsLin(spazioCompOL);
 		spazioCompOL =  new SpaceAutomaObsLin("Space Automa con Osservazione Lineare ".concat(observation.toString()));		
 		return midResult;
+	}
+	
+	public class NoTraiettoriaException extends Exception {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+
+		
 	}
 }

@@ -66,7 +66,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		
 		boolean notraettoria = false;
 		if(!stopped) {
-			if(result.getKey().states().size() == 1 && result.getKey().transitions().isEmpty())
+			if(result.getKey().states().isEmpty() && result.getKey().transitions().isEmpty())
 				notraettoria = true;
 			else {
 				context.getCurrentNet().addObservation(obs, result.getKey());
