@@ -32,7 +32,7 @@ import ui.commands.spaceops.ShowCompSpace;
 import ui.commands.spaceops.ShowDiagnosticatore;
 import ui.commands.spaceops.ShowLinObsSpace;
 import ui.commands.spaceops.ShowObservations;
-import ui.commands.spaceops.SpaceCompResults;
+import ui.commands.spaceops.ShowPerformance;
 import ui.commands.spaceops.UpdateNet;
 
 /**
@@ -74,8 +74,8 @@ public class CommandFactory {
 		return new Command(CommandDescription.SPACEOPS, new SpaceOperations());
 	}
 	
-	public Command spaceCompResults() {
-		return new Command(CommandDescription.SPACECOMPRESULTS, new SpaceCompResults());
+	public Command showPerformance() {
+		return new Command(CommandDescription.SHOWPERFORMANCE, new ShowPerformance());
 	}
 	
 	public Command generateSpace() {

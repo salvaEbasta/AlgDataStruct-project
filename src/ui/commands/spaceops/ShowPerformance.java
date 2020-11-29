@@ -6,7 +6,7 @@ import ui.context.Context;
 import ui.context.CurrentNet;
 import utility.Constants;
 
-public class SpaceCompResults implements CommandInterface, NoParameters{
+public class ShowPerformance implements CommandInterface, NoParameters{
 
 	@Override
 	public boolean run(String[] args, Context context) {
@@ -22,15 +22,18 @@ public class SpaceCompResults implements CommandInterface, NoParameters{
 		if(net.hasComportamentalSpace()) {
 			context.getIOStream().writeln("Risorse utilizzate per generazione Spazio Comportamentale:");
 			context.getIOStream().writeln(String.format("\t* tempo: %.2fs", net.spazioComportamentaleTime()));
-			context.getIOStream().writeln(String.format("\t* spazio: %.2fMB", net.spazioComportamentaleSpace()));
+			context.getIOStream().writeln(String.format("\t* spazio: %.2fMB", net.spazioComportamentaleSpace()));			
+		} else {
+			context.getIOStream().writeln("Impossibile visualizzare le performance della generazione dello spazio comportamentale: deve prima essere creato");
+		}
+		if(net.hasDiagnosticatore()) {
 			context.getIOStream().writeln("\n\nRisorse utilizzate per generazione Diagnosticatore:");
 			context.getIOStream().writeln(String.format("\t* tempo: %.2fs", net.diagnosticatoreTime()));
 			context.getIOStream().writeln(String.format("\t* spazio: %.2fMB", net.diagnosticatoreSpace()));
-			return true;
 		} else {
-			context.getIOStream().writeln("Impossibile visualizzare le performance della generazione dello spazio comportamentale: deve prima essere creato");
-			return true;
+			context.getIOStream().writeln("Impossibile visualizzare le performance della generazione del diagnosticatore: deve prima essere creato");
 		}
+		return true;
 	}
 
 }

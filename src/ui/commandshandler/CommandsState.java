@@ -79,7 +79,7 @@ public enum CommandsState implements InitCommandsList{
 			commandsList.add(new CommandFactory().newLinObs());
 			commandsList.add(new CommandFactory().showObservations());
 			commandsList.add(new CommandFactory().showCompSpace());
-			commandsList.add(new CommandFactory().spaceCompResults());
+			commandsList.add(new CommandFactory().showPerformance());
 			commandsList.add(new CommandFactory().generateSpace());
 			commandsList.add(new CommandFactory().showDiagnosticatore());
 			commandsList.add(new CommandFactory().generateDiagnosticatore());
