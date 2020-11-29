@@ -47,11 +47,11 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		
 		explore(initial, enabledTransitions());
 		
+		net.restoreState(initial);	
 		if(visited < observation.size())
 			return new SpaceAutomaObsLin("_"+observation.toString());
 		
 		spazioCompOL.setInitial(initial);
-		net.restoreState(initial);
 		spazioCompOL.potatura();
 		spazioCompOL.ridenominazione();
 		return spazioCompOL;
