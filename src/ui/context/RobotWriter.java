@@ -34,12 +34,17 @@ public class RobotWriter implements Runnable{
 
 		char[] chars = line.toCharArray();
 		for (char c : chars) {
+			boolean underscore = false;
+			 if(new Character(c).equals('_')) {
+		          c = '-';
+		          underscore = true;
+			 }
 			int code = KeyEvent.getExtendedKeyCodeForChar(c);
-			if(Character.isUpperCase(c))
+			if(Character.isUpperCase(c) || underscore)
 				robot.keyPress(KeyEvent.VK_SHIFT);
 			robot.keyPress(code);
 			robot.keyRelease(code);
-			if(Character.isUpperCase(c))
+			if(Character.isUpperCase(c) || underscore)
 				robot.keyRelease(KeyEvent.VK_SHIFT);
 		}
 		robot.keyPress(KeyEvent.VK_ENTER);
