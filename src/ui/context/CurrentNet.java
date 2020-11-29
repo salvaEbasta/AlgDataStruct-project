@@ -16,6 +16,8 @@ public class CurrentNet implements Serializable{
 	private CFSMnetwork net;
 	private SpaceAutomaComportamentale sac;
 	private ClosureSpace diagnosticatore;
+	private double scTime;
+	private double scSpace;
 	private double diagnosticatoreTime;
 	private double diagnosticatoreSpace;
 	private HashMap<ObservationsList, Result> results;
@@ -64,7 +66,15 @@ public class CurrentNet implements Serializable{
 			return null;
 	}
 	
-	public HashMap<ObservationsList, SpaceAutomaObsLin> osbSpaces(){
+	public double spazioComportamentaleTime() {
+		return scTime;
+	}
+	
+	public double spazioComportamentaleSpace() {
+		return scSpace;
+	}
+	
+	public HashMap<ObservationsList, SpaceAutomaObsLin> obsSpaces(){
 		HashMap<ObservationsList, SpaceAutomaObsLin> map = new HashMap<ObservationsList, SpaceAutomaObsLin>();
 		results.forEach((linObs, r)->map.put(linObs, r.obsSpace()));
 		return map;
@@ -159,6 +169,11 @@ public class CurrentNet implements Serializable{
 	
 	public boolean hasDiagnosticatorePerformance() {
 		return diagnosticatoreSpace > 0 && diagnosticatoreTime > 0;
+	}
+	
+	public void setSpazioComportamentalePerformance(double time, double space) {
+		scSpace = space;
+		scTime = time;
 	}
 	
 	public void setDiagnosticatorePerformance(double time, double space) {

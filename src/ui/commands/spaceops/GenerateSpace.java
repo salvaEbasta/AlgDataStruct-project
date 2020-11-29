@@ -49,8 +49,11 @@ public class GenerateSpace implements CommandInterface, NoParameters{
 		
 		
 		
-		if(!stopped)
-			context.getCurrentNet().setSpaceAutomaComportamentale(result.getKey());		
+		
+		if(!stopped) {
+			context.getCurrentNet().setSpaceAutomaComportamentale(result.getKey());	
+			context.getCurrentNet().setSpazioComportamentalePerformance(result.getValue().getTime(), result.getValue().getSpace());
+		}
 		
 		return true;
 	}

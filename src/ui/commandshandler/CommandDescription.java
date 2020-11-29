@@ -16,6 +16,7 @@ public enum CommandDescription{
 	RESETNET("resetnet", "Resetta tutti i dati creati per la rete (CFA, Eventi, Link...)","resetnet"), 
 	UPDATENET("updatenet", "Aggiorna il file della rete attualmente caricata","updatenet"), 
 	SPACEOPS("spaceops", "Sottomenù per le operazioni su Spazi Comportamentali","spaceops"), 
+	SPACECOMPRESULTS("spacecompresults", "Mostra prestazioni spaziali e temporali della generazione Spazio Comportamentale","spacecompresults"), 
 	GENERATESPACE("generatespace", "Genera uno spazio comportamentale da una rete di CFA","generatespace"), 
 	GENERATESPACEOBS("generatespaceobs", "Genera una Osservazione Lineare da una rete di CFA","generatespaceobs"), 
 	SHOWOBS("showobs", "Mostra le Osservazioni Lineari effettuate sulla rete","showobs"), 
