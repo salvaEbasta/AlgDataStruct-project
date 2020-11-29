@@ -37,7 +37,7 @@ public class RobotWriter implements Runnable{
 			boolean underscore = false;
 			 if(new Character(c).equals('_')) {
 		          c = '-';
-		          underscore = true;
+		          underscore = true;	          
 			 }
 			int code = KeyEvent.getExtendedKeyCodeForChar(c);
 			if(Character.isUpperCase(c) || underscore)
