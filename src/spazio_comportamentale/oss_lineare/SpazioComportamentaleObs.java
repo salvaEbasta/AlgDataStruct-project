@@ -16,24 +16,25 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 	private ObservationsList observation;
 	private SpaceAutomaObsLin spazioCompOL;
 	
+	private int visited;
+	
 	
 	public SpazioComportamentaleObs(CFSMnetwork net, ObservationsList observation) {
 		this.net = net;		
 		this.observation = observation;
 		spazioCompOL = new SpaceAutomaObsLin("Space Automa con Osservazione Lineare " + observation);
+		visited = 0;
 	}
 	
-	private Set<ComportamentalTransition> enabledTransitions(int j) throws NoTraiettoriaException {
+	private Set<ComportamentalTransition> enabledTransitions(){
 		Set<ComportamentalTransition> enabledTransitions = new HashSet<ComportamentalTransition>();	
 		for(ComportamentalTransition transition: net.enabledTransitions()) {
 			if(transition.observableLabel().isEmpty())
 				enabledTransitions.add(transition);
-			else if(j < observation.size() && transition.observableLabel().equals(observation.get(j))) {
+			else if(visited < observation.size() && transition.observableLabel().equals(observation.get(visited))) {
 				enabledTransitions.add(transition);
 			}
 		}
-		if(enabledTransitions.isEmpty() && j < observation.size())
-			throw new NoTraiettoriaException();
 		return enabledTransitions;
 	}
 
@@ -44,11 +45,10 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		SpaceStateObs initial = new SpaceStateObs(net.getInitialStates(), net.getActiveEvents(), 0, observation.size());
 		spazioCompOL.insert(initial);
 		
-		try {
-			explore(initial, enabledTransitions(0), 0);
-		} catch(NoTraiettoriaException e) {
+		explore(initial, enabledTransitions());
+		
+		if(visited < observation.size())
 			return new SpaceAutomaObsLin("_"+observation.toString());
-		}
 		
 		spazioCompOL.setInitial(initial);
 		net.restoreState(initial);
@@ -57,18 +57,17 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		return spazioCompOL;
 	}
 	
-	private void explore(SpaceStateObs state, Set<ComportamentalTransition> enabledTs, int i) throws NoTraiettoriaException {
+	private void explore(SpaceStateObs state, Set<ComportamentalTransition> enabledTs){
 		Iterator<ComportamentalTransition> iter = enabledTs.iterator();
 		while(iter.hasNext()) {
-			int j = i;
 			boolean keepGoing = false;
 			ComportamentalTransition t = iter.next();
 			net.restoreState(state);
 			net.transitionTo(t);
 			
 			if(!t.isSilent())
-				++j;
-			SpaceStateObs sink = new SpaceStateObs(net.getCurrentStates(), net.getActiveEvents(), j, observation.size());
+				++visited;
+			SpaceStateObs sink = new SpaceStateObs(net.getCurrentStates(), net.getActiveEvents(), visited, observation.size());
 			if(!spazioCompOL.hasState(sink)) {
 				spazioCompOL.insert(sink);
 				keepGoing = true;
@@ -81,7 +80,7 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 			}
 			spazioCompOL.add(new SpaceTransition<SpaceStateObs>(state, sink, t));
 			if(keepGoing)
-				explore(sink, enabledTransitions(j), j);
+				explore(sink, enabledTransitions());
 		}
 	}
 	
@@ -91,14 +90,4 @@ public class SpazioComportamentaleObs extends Algorithm<SpaceAutomaObsLin>{
 		return midResult;
 	}
 	
-	public class NoTraiettoriaException extends Exception {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-
-		
-	}
 }
