@@ -12,6 +12,7 @@ public class Exit implements CommandInterface, NoParameters{
 	public boolean run(String[] args, Context context) {
 		if(!check(args, context))
 			return false;
+		context.getIOStream().writeln("Programma terminato");
 		System.exit(0);
 		return true;
 	}

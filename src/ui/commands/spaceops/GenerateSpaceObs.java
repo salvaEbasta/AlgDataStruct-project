@@ -42,7 +42,7 @@ public class GenerateSpaceObs implements CommandInterface, NoParameters{
 		
 		int index = 0;
 		do {
-			String ans = context.getIOStream().read("Inserire indice dell' Osservazione Lineare (oppure inserire 'exit' per uscire): ");
+			String ans = context.getIOStream().read("Inserire indice dell'Osservazione Lineare (oppure inserire 'exit' per uscire): ");
 			if(ans.equals("exit"))
 				return false;		
 			if(ans.matches("\\d+"))

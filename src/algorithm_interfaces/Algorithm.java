@@ -14,7 +14,7 @@ public abstract class Algorithm<O> implements Callable<O>, MidResult<O> {
 	private Logger setupLog() {
 		Logger log = Logger.getLogger(this.getClass().getSimpleName());
 		System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tF %1$tT] [%4$-7s] %5$s %n");
-		log.setLevel(Level.INFO);
+		log.setLevel(Level.WARNING);
 		return log;
 	}
 }
