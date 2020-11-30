@@ -89,15 +89,18 @@ public class Performance {
 	    public void run() {
 	        running.set(true);
 	        stopped.set(false);
+        	Runtime runtime = Runtime.getRuntime();
+	        prevSpace = runtime.totalMemory() - runtime.freeMemory();
 	        while (running.get()) {
-	        	Runtime runtime = Runtime.getRuntime();
+	        	runtime = Runtime.getRuntime();
 	        	runtime.gc();
 		    	long newSpace = runtime.totalMemory() - runtime.freeMemory();
-		    	long diff = newSpace - prevSpace;
-		    	if(diff > 0)
-		    		sum += diff;    
+		    	if(newSpace > prevSpace)
+		    		sum += newSpace - prevSpace;
+		    	else if(newSpace < prevSpace)
+		    		prevSpace = newSpace;
 	            try {
-	                Thread.sleep(10);
+	                Thread.sleep(8);
 	            } catch (InterruptedException e){
 	                Thread.currentThread().interrupt();
 	            }            	
