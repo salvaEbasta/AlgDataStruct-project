@@ -91,6 +91,7 @@ public class Performance {
 	        stopped.set(false);
 	        while (running.get()) {
 	        	Runtime runtime = Runtime.getRuntime();
+	        	runtime.gc();
 		    	long newSpace = runtime.totalMemory() - runtime.freeMemory();
 		    	long diff = newSpace - prevSpace;
 		    	if(diff > 0)
