@@ -3,6 +3,7 @@ package spazio_comportamentale;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import fsm_interfaces.Automa;
@@ -39,20 +40,29 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 	 */
 	public boolean potatura() {
 		int prevSize = states().size();
-		Set<S> setCopy = new LinkedHashSet<S>(states());
-		for(S state: setCopy) {
-			checkPotatura(state);
+		LinkedList<S> setCopy = new LinkedList<S>(states());
+		while(setCopy.size() > 0) {
+			S state = setCopy.pop();
+			if(!state.isFinal() && !dfs(state))
+				remove(state);
 		}
 		return states().size() != prevSize;
 	}
 	
-	private void checkPotatura(S state) {
-		if(!state.isFinal() && from(state).isEmpty() && states().contains(state)) {
-			Set<SpaceTransition<S>> inputTransitions = to(state);
-			remove(state);
-			for(SpaceTransition<S> inputT : inputTransitions)
-				checkPotatura(inputT.source());
+	private boolean dfs(S state) {
+		HashSet<S> closedL = new HashSet<S>();
+		LinkedList<S> queue = new LinkedList<S>();
+		queue.add(state);
+		while(queue.size() > 0) {
+			S current = queue.pop();
+			if(current.isFinal())
+				return true;
+			if(closedL.contains(current))
+				continue;
+			closedL.add(current);
+			from(current).forEach(t->queue.addFirst(t.sink()));
 		}
+		return false;
 	}
 	
 	/**
