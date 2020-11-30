@@ -1,5 +1,7 @@
 package ui.context;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class Performance {
 	
 	private static final long MEGABYTE = 1024L * 1024L;
@@ -7,25 +9,26 @@ public class Performance {
 	private double time;
 	private long startTime;
 	private double space;
-	private long startSpace;
 	private boolean stopped;
+	
+	private SpaceCalculator sp;
 	
 	public void start() {
 		startTime = System.currentTimeMillis();
 		Runtime runtime = Runtime.getRuntime();
 		runtime.gc();
-		startSpace = runtime.totalMemory() - runtime.freeMemory();
+		sp = new SpaceCalculator();
+		sp.start();
 	}
 	
 	public void stop() {
-		if(startTime != 0 && startSpace != 0) {
+		if(startTime != 0 && sp.isRunning()) {
 			long finishTime = System.currentTimeMillis();
 			time =  (double)(finishTime - startTime)/1000;
-			Runtime runtime = Runtime.getRuntime();
-			long finishSpace = runtime.totalMemory() - runtime.freeMemory();
-			space = bytesToMegabytes(finishSpace - startSpace);
+			sp.interrupt();
+			space = bytesToMegabytes(sp.getSpaceConsumption());
 			startTime = 0;
-			startSpace = 0;
+			sp.reset();		
 		}
 	}
 	
@@ -49,4 +52,69 @@ public class Performance {
 		return stopped;
 	}
 
+	public class SpaceCalculator implements Runnable {
+		 
+	    private Thread worker;
+	    private AtomicBoolean running = new AtomicBoolean(false);
+	    private AtomicBoolean stopped = new AtomicBoolean(false);
+	    
+	    private long sum;
+	    private long prevSpace;
+	 
+	    public SpaceCalculator() {
+	    	sum = 0;
+	    	Runtime runtime = Runtime.getRuntime();
+			runtime.gc();
+	    	prevSpace = runtime.totalMemory() - runtime.freeMemory();
+	    } 
+
+	    public void start() {
+	        worker = new Thread(this);
+	        worker.start();
+	    }
+	    
+	    public void interrupt() {
+	        running.set(false);
+	        worker.interrupt();
+	    }
+	 
+	    boolean isRunning() {
+	        return running.get();
+	    }
+	 
+	    boolean isStopped() {
+	        return stopped.get();
+	    }
+	 
+	    public void run() {
+	        running.set(true);
+	        stopped.set(false);
+	        while (running.get()) {
+	        	Runtime runtime = Runtime.getRuntime();
+		    	long newSpace = runtime.totalMemory() - runtime.freeMemory();
+		    	long diff = newSpace - prevSpace;
+		    	if(diff > 0)
+		    		sum += diff;    
+	            try {
+	                Thread.sleep(10);
+	            } catch (InterruptedException e){
+	                Thread.currentThread().interrupt();
+	            }            	
+	        }
+	        stopped.set(true);
+	    }
+	    
+	    public void reset() {
+	    	if(isStopped()) {
+	    		sum = 0;
+		    	Runtime runtime = Runtime.getRuntime();
+				runtime.gc();
+		    	prevSpace = runtime.totalMemory() - runtime.freeMemory();
+	    	}	    		
+	    }
+	    
+	    public long getSpaceConsumption() {
+	    	return sum;
+	    }
+	}
 }
