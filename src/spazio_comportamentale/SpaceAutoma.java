@@ -2,7 +2,6 @@ package spazio_comportamentale;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -43,13 +42,13 @@ public class SpaceAutoma<S extends SpaceState> extends Automa<S, SpaceTransition
 		LinkedList<S> setCopy = new LinkedList<S>(states());
 		while(setCopy.size() > 0) {
 			S state = setCopy.pop();
-			if(!state.isFinal() && !dfs(state))
+			if(!state.isFinal() && !reachFinal(state))
 				remove(state);
 		}
 		return states().size() != prevSize;
 	}
 	
-	private boolean dfs(S state) {
+	private boolean reachFinal(S state) {
 		HashSet<S> closedL = new HashSet<S>();
 		LinkedList<S> queue = new LinkedList<S>();
 		queue.add(state);
