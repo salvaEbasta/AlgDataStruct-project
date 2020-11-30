@@ -369,6 +369,7 @@ class TestMainNet {
 		SpaceAutomaObsLin computedSpace = sc.call();
 		
 		HashMap<SpaceStateObs, String> output = new MultipleRelRegexBuilder<SpaceStateObs, SpaceTransition<SpaceStateObs>>(computedSpace, new BuilderSpaceComportamentaleObsLin()).call();
+		System.out.println(output.toString());
 		assertTrue(output.isEmpty());
 	}
 }
