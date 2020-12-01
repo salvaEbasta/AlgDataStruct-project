@@ -34,7 +34,7 @@ public class StoppableOperation {
 		Performance stats = new Performance();
 		stats.start();
 		
-		ExecutorService executor = Executors.newSingleThreadExecutor();		
+		ExecutorService executor = Executors.newCachedThreadPool();		
 		Future<O> future = executor.submit(algorithm);
 		
 		boolean stopped = false;

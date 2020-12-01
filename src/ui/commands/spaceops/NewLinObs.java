@@ -5,7 +5,6 @@ import comportamental_fsm.labels.ObservationsList;
 import ui.commands.general.CommandInterface;
 import ui.commands.general.NoParameters;
 import ui.context.Context;
-import ui.context.CurrentNet;
 import utility.Constants;
 
 public class NewLinObs implements CommandInterface, NoParameters{
