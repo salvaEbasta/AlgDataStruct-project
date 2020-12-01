@@ -95,8 +95,11 @@ public class Performance {
 	        	runtime = Runtime.getRuntime();
 	        	runtime.gc();
 		    	long newSpace = runtime.totalMemory() - runtime.freeMemory();
-		    	if(newSpace > prevSpace)
+		    	if(newSpace > prevSpace) {
 		    		sum += newSpace - prevSpace;
+		    		System.out.println("Spazio occupato: "+sum);
+		    	}
+		    		
 		    	prevSpace = newSpace;
 	            try {
 	                Thread.sleep(8);
