@@ -1,0 +1,64 @@
+robot newLinObs
+o3
+n
+endrobot
+robot newLinObs
+o2
+n
+endrobot
+robot newLinObs
+o3
+y
+o2
+n
+endrobot
+robot newLinObs
+o3
+y
+o2
+y
+o3
+n
+endrobot
+robot newLinObs
+o3
+y
+o2
+y
+o3
+y
+o2
+n
+endrobot
+robot newLinObs
+o3
+y
+o2
+y
+o3
+y
+o2
+y
+o3
+y
+o2
+n
+endrobot
+robot newLinObs
+o3
+y
+o2
+y
+o3
+y
+o2
+y
+o3
+y
+o2
+y
+o3
+y
+o2
+n
+endrobot
