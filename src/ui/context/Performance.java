@@ -97,8 +97,7 @@ public class Performance {
 		    	long newSpace = runtime.totalMemory() - runtime.freeMemory();
 		    	if(newSpace > prevSpace)
 		    		sum += newSpace - prevSpace;
-		    	else if(newSpace < prevSpace)
-		    		prevSpace = newSpace;
+		    	prevSpace = newSpace;
 	            try {
 	                Thread.sleep(8);
 	            } catch (InterruptedException e){
