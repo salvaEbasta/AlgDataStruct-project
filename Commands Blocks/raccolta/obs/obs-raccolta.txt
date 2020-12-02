@@ -1,0 +1,35 @@
+spaceops
+robot newLinObs
+or6
+n
+endrobot
+robot newLinObs
+or1
+y
+or5
+n
+endrobot
+robot newLinObs
+or1
+y
+or2
+y
+or4
+n
+endrobot
+robot newLinObs
+or1
+y
+or2
+y
+or2
+y
+or2
+y
+or3
+y
+or1
+y
+or5
+n
+endrobot

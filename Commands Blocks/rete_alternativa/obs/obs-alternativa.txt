@@ -1,0 +1,70 @@
+spaceops
+robot newLinObs
+act
+n
+endrobot
+robot newLinObs
+nop
+y
+act
+n
+endrobot
+robot newLinObs
+nop
+opn
+y
+sby
+n
+endrobot
+robot newLinObs
+act
+y
+sby
+y
+cls
+y
+act
+n
+endrobot
+robot newLinObs
+act
+y
+sby
+y
+cls
+y
+act
+y
+sby
+n
+endrobot
+robot newLinObs
+act
+y
+sby
+y
+cls
+y
+act
+y
+sby
+y
+nop
+n
+endrobot
+robot newLinObs
+act
+y
+sby
+y
+cls
+y
+act
+y
+sby
+y
+cls
+y
+act
+n
+endrobot
